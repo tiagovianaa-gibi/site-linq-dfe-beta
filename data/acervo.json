@@ -1,0 +1,85 @@
+{
+  "2024": [
+    {
+      "id": "2024-001",
+      "etapa_id": 1,
+      "quad_id": 3,
+      "tipo": "foto",
+      "titulo": "Etapa 1 — Apresentação completa",
+      "descricao": "Registro oficial da etapa de abertura do circuito 2024.",
+      "data": "2024-06-01",
+      "arquivo": "assets/acervo/2024/etapa1-arroxa-o-no.jpg",
+      "thumb": "assets/acervo/2024/thumb-etapa1-arroxa-o-no.jpg",
+      "tags": ["circuito", "etapa1", "oficial"],
+      "focal": { "x": 0.5, "y": 0.18 }
+    },
+    {
+      "id": "2024-002",
+      "etapa_id": 1,
+      "quad_id": null,
+      "tipo": "album",
+      "titulo": "Galeria Oficial — Etapa 1",
+      "descricao": "Álbum com fotos oficiais da etapa 1.",
+      "data": "2024-06-01",
+      "arquivo": "assets/acervo/2024/galeria-etapa1/",
+      "thumb": "assets/acervo/2024/thumb-galeria-etapa1.jpg",
+      "tags": ["galeria", "etapa1"]
+    },
+
+    {
+      "id": "2024-003",
+      "etapa_id": null,
+      "quad_id": null,
+      "tipo": "pdf",
+      "titulo": "Regulamento Geral 2024",
+      "descricao": "Documento oficial do circuito.",
+      "data": "2024-05-10",
+      "arquivo": "assets/acervo/2024/regulamento-geral-2024.pdf",
+      "thumb": "assets/banners/placeholder.jpg",
+      "tags": ["regulamento", "documento-oficial"]
+    }
+  ],
+
+  "2025": [
+    {
+      "id": "2025-001",
+      "etapa_id": 1,
+      "quad_id": 1,
+      "tipo": "foto",
+      "titulo": "Abertura do Circuito 2025",
+      "descricao": "Abertura oficial com participação das filiadas.",
+      "data": "2025-06-07",
+      "arquivo": "assets/acervo/2025/etapa1-abertura-amor-junino.jpg",
+      "thumb": "assets/acervo/2025/thumb-etapa1-abertura-amor-junino.jpg",
+      "tags": ["abertura", "circuito", "2025"],
+      "focal": { "x": 0.5, "y": 0.2 }
+    },
+    {
+      "id": "2025-002",
+      "etapa_id": 4,
+      "quad_id": 12,
+      "tipo": "video",
+      "titulo": "Final 2025 — Grupo Especial",
+      "descricao": "Apresentação completa da campeã do Grupo Especial.",
+      "data": "2025-07-05",
+      "arquivo": "assets/acervo/2025/final-2025-campea-especial.mp4",
+      "thumb": "assets/acervo/2025/thumb-final-2025-campea-especial.jpg",
+      "tags": ["final", "campea", "especial"]
+    },
+
+    {
+      "id": "2025-003",
+      "quad_id": 9,
+      "tipo": "foto",
+      "titulo": "Bastidores — Etapa 2",
+      "descricao": "Fotos dos bastidores.",
+      "data": "2025-06-14",
+      "arquivo": "assets/acervo/2025/etapa2-bastidores-formiga-da-roca.jpg",
+      "thumb": "",
+      "tags": ["bastidores", "etapa2"],
+      "focal": { "x": 0.5, "y": 0.18 }
+    }
+  ],
+
+  "2026": []
+}

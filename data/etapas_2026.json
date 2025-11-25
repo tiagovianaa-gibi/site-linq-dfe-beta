@@ -1,0 +1,49 @@
+[
+  {
+    "id": 1,
+    "nome": "1ª Etapa — Acesso",
+    "data": "em breve",
+    "cidade": "em breve",
+    "local": "em breve",
+    "quadrilhas": [3, 4],
+    "status": "em breve"
+  },
+  {
+    "id": 2,
+    "nome": "1ª Etapa — Especial",
+    "data": "em breve",
+    "cidade": "em breve",
+    "local": "em breve",
+    "quadrilhas": [3, 4],
+    "status": "em breve"
+  },
+  {
+    "id": 3,
+    "nome": "3ª Etapa — Acesso",
+    "data": "2026-06-20",
+    "cidade": "Paranoá/DF",
+    "local": "Quadra da Comunidade do Paranoá",
+    "quadrilhas": [3, 4],
+    "status": "em breve"
+  },
+  {
+    "id": 4,
+    "nome": "Final — Especial",
+    "data": "2026-06-27",
+    "cidade": "Brasília/DF",
+    "local": "Arena BRB Mané Garrincha",
+    "quadrilhas": [1, 2, 5],
+    "status": "em breve"
+  },
+  {
+    "id": 5,
+    "nome": "Final — Acesso",
+    "data": "2026-06-28",
+    "cidade": "Brasília/DF",
+    "local": "Arena BRB Mané Garrincha",
+    "quadrilhas": [3, 4],
+    "status": "em breve"
+  }
+]
+
+

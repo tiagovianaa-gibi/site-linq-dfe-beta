@@ -1,0 +1,26 @@
+INSTRUÇÕES PARA LOGOS
+=====================
+
+1. Logo Principal:
+   - Nome: linq-dfe.png
+   - Usado na navegação de todas as páginas
+   - Recomendado: altura de 40px, fundo transparente
+
+2. Logo Confebraq:
+   - Nome: confebraq.png
+   - Usado na seção de parceiros
+
+3. Outros Parceiros:
+   - Adicione os logos dos parceiros aqui
+   - Referencie no arquivo data/parceiros.json
+
+4. Formatos:
+   - PNG (com transparência) - recomendado
+   - SVG (escalável)
+   - JPG (se não precisar de transparência)
+
+5. Tamanhos recomendados:
+   - Logos pequenos: até 200px de largura
+   - Logos médios: até 400px de largura
+
+

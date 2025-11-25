@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Circuito | LINQ-DFE</title>
+  <meta name="description" content="Circuito de Quadrilhas Juninas do DF e Entorno — classificação, etapas e acervo." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- HEADER PADRÃO (igual ao da home) -->
+  <nav>
+    <div class="container">
+      <div class="logo">
+        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+        <span class="logo-text">LINQ-DFE</span>
+      </div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="circuito.html" class="active">Circuito</a></li>
+        <li><a href="filiadas.html">Filiadas</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+        <li><a href="noticias.html">Notícias</a></li>
+        <li><a href="acervo.html">Acervo</a></li>
+        <li><a href="diretoria.html">Diretoria</a></li>
+        <li><a href="transparencia.html">Transparência</a></li>
+        <li><a href="documentos.html">Documentos</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page">
+
+    <!-- TOPO DA PÁGINA -->
+    <section class="section page-hero container">
+      <h1 id="seasonTitle">Circuito 2026</h1>
+      <p id="seasonSubtitle" class="muted"></p>
+
+      <!-- PILLS DE ANO -->
+      <div id="seasonTabs" class="season-tabs"></div>
+    </section>
+
+    <!-- CONTEÚDO DINÂMICO DA TEMPORADA -->
+    <section id="seasonContent" class="section container stack"></section>
+
+    <!-- ATALHOS PARA PASSADOS (não repete conteúdo, só links) -->
+    <section class="section container stack">
+      <h2>Circuitos passados</h2>
+      <p class="muted">Reviva edições anteriores com classificação, etapas e acervo.</p>
+
+      <div id="pastCards" class="grid-2"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 LINQ-DFE - Liga de Quadrilhas Juninas do DF e Entorno</p>
+      <p>
+        <a href="transparencia.html">Transparência</a> |
+        <a href="documentos.html">Documentos</a> |
+        <a href="diretoria.html">Diretoria</a>
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/circuito.js"></script>
+</body>
+</html>

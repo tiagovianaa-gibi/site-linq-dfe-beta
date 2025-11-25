@@ -1,0 +1,25 @@
+INSTRUÇÕES PARA O VÍDEO HERO
+============================
+
+1. Coloque seu vídeo aqui com o nome: hero.mp4
+
+2. Formatos suportados:
+   - MP4 (recomendado)
+   - WebM
+
+3. Recomendações:
+   - Resolução: 1920x1080 (Full HD) ou superior
+   - Duração: 30-60 segundos (será em loop)
+   - Codec: H.264 para melhor compatibilidade
+   - Tamanho: tente manter abaixo de 10MB para melhor performance
+
+4. O vídeo será exibido em:
+   - Autoplay (muted inicialmente)
+   - Loop infinito
+   - Cover (preenche toda a área do hero)
+
+5. Controles de áudio:
+   - Inicialmente sem som (muted)
+   - Botões na página permitem ativar/silenciar
+
+

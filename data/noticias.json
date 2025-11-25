@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "titulo": "Inscrições 2026 abertas!",
+    "data": "2026-01-14",
+    "resumo": "A LINQ-DFE anuncia a abertura das inscrições para o Circuito 2026...",
+    "imagem": "assets/noticias/inscricoes-2026.jpg",
+    "tags": ["liga", "inscricoes", "2026"],
+    "conteudo": [
+      "Texto completo da notícia aqui..."
+    ]
+  },
+  {
+    "id": 2,
+    "titulo": "Chapa \"A Liga Não Para\" é eleita para dirigir a LINQ-DFE no triênio 2026–2028",
+    "data": "2025-12-13",
+    "resumo": "A Liga realizou neste sábado a eleição para a nova diretoria...",
+    "imagem": "assets/noticias/eleicao-liga-2026.jpg",
+    "tags": ["diretoria", "eleicao", "2026"],
+    "conteudo": [
+      "Texto completo aqui..."
+    ]
+  }
+]

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Perfil da Quadrilha - LINQ-DFE" />
+  <title>Quadrilha | LINQ-DFE</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <div class="logo">
+        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'"/>
+        <span class="logo-text">LINQ-DFE</span>
+      </div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="circuito.html">Circuito</a></li>
+        <li><a href="filiadas.html">Filiadas</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+        <li><a href="noticias.html">Notícias</a></li>
+        <li><a href="acervo.html">Acervo</a></li>
+        <li><a href="diretoria.html">Diretoria</a></li>
+        <li><a href="transparencia.html">Transparência</a></li>
+        <li><a href="documentos.html">Documentos</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section">
+      <div class="container">
+
+        <!-- Capa -->
+        <img
+          id="quadrilhaCover"
+          class="quadrilha-cover"
+          src="assets/banners/placeholder.jpg"
+          alt="Capa da quadrilha"
+          onerror="this.src='assets/banners/placeholder.jpg'"
+        />
+
+        <!-- Header -->
+        <div class="quadrilha-header">
+          <h1 id="quadrilhaNome">Nome da Quadrilha</h1>
+          <p id="quadrilhaResumo" class="mb-sm"></p>
+
+          <div class="meta">
+            <div class="meta-item">
+              <strong>Cidade:</strong> <span id="quadrilhaCidade">—</span>
+            </div>
+            <div class="meta-item">
+              <strong>Grupo:</strong> <span id="quadrilhaGrupo">—</span>
+            </div>
+            <div class="meta-item">
+              <strong>Instagram:</strong>
+              <a id="quadrilhaInstagram" class="instagram" href="#" target="_blank" rel="noopener noreferrer"></a>
+            </div>
+            <div class="meta-item">
+              <strong>Pontuação:</strong> <span id="quadrilhaPontos">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TEMPORADA 2025 -->
+        <h2>SOBRE A QUADRILHA</h2>
+        <div class="quadrilha-about" style="display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start">
+          <div class="quadrilha-about-main" id="quadrilhaSobre"></div>
+          <aside class="quadrilha-about-info">
+            <h3>Informações da quadrilha</h3>
+            <ul id="quadrilhaInfoList"></ul>
+          </aside>
+        </div>
+
+        <!-- HISTÓRICO -->
+        <section class="section" style="padding-top: 0;">
+          <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">Histórico no Circuito</h2>
+          <div id="historicoWrapper" class="table-wrapper"></div>
+        </section>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 LINQ-DFE - Liga de Quadrilhas Juninas do DF e Entorno</p>
+    </div>
+  </footer>
+
+  <!-- IMPORTANTE: manter como module -->
+  <script type="module" src="js/quadrilha.js"></script>
+</body>
+</html>
