@@ -1425,6 +1425,15 @@ body{
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-sm);
   padding: var(--spacing-md);
+  height: 100%; /* garante que preencham toda a linha */
+}
+
+.quadrilha-about-main,
+.quadrilha-about-info {
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md);
 }
 
 /* texto principal */
@@ -1471,65 +1480,4 @@ body{
     margin-right: 4px;
   }
 }
-/* ——— Imagem de capa mais flexível no mobile ——— */
-.quadrilha-cover{
-  width:100%;
-  height:clamp(180px, 32vw, 380px);
-  object-fit:cover;
-  border-radius:12px;
-}
 
-/* ——— Títulos com tamanho fluido ——— */
-h1#quadrilhaNome{ font-size:clamp(1.4rem, 3.5vw, 2.2rem); }
-.section-title{ font-size:clamp(1.2rem, 2.8vw, 1.8rem); }
-
-/* ——— Meta (Cidade/Grupo/Instagram/Pontos) com quebra boa ——— */
-.meta{ display:flex; flex-wrap:wrap; gap:8px 16px; }
-.meta-item{ min-width:220px; }
-
-/* ——— Grid “Sobre/Informações” fluido ——— */
-.quadrilha-about{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
-}
-.quadrilha-about-main,
-.quadrilha-about-info{
-  background:#fff;
-  border-radius:12px;
-  padding:16px;
-  box-shadow:0 2px 10px rgba(0,0,0,.04);
-}
-.quadrilha-about-main p{ line-height:1.6; }
-
-/* 2 colunas só em telas maiores */
-@media (min-width: 768px){
-  .quadrilha-about{ grid-template-columns: 2fr 1fr; gap:24px; }
-  .quadrilha-about-main,
-  .quadrilha-about-info{ padding:20px; }
-}
-
-/* ——— Lista da ficha técnica mais legível ——— */
-.quadrilha-about-info ul{ list-style:none; margin:0; padding:0; }
-.quadrilha-about-info li{
-  padding:10px 0;
-  border-top:1px solid #eee;
-}
-.quadrilha-about-info li:first-child{ border-top:0; }
-
-/* ——— Menu mais amigável no celular (scroll horizontal) ——— */
-nav ul{
-  display:flex;
-  gap:16px;
-  flex-wrap:nowrap;
-  overflow-x:auto;
-  white-space:nowrap;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-}
-nav ul::-webkit-scrollbar{ display:none; }
-nav a{ padding:10px 0; display:inline-block; }
-
-/* ——— Tabelas com rolagem horizontal no mobile ——— */
-.table-wrapper{ overflow-x:auto; }
-.table-wrapper table{ min-width:600px; }
