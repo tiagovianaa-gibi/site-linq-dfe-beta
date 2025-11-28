@@ -1425,15 +1425,6 @@ body{
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-sm);
   padding: var(--spacing-md);
-  height: 100%; /* garante que preencham toda a linha */
-}
-
-.quadrilha-about-main,
-.quadrilha-about-info {
-  background: var(--bg-card);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-sm);
-  padding: var(--spacing-md);
 }
 
 /* texto principal */
@@ -1542,4 +1533,3 @@ nav a{ padding:10px 0; display:inline-block; }
 /* ——— Tabelas com rolagem horizontal no mobile ——— */
 .table-wrapper{ overflow-x:auto; }
 .table-wrapper table{ min-width:600px; }
-
