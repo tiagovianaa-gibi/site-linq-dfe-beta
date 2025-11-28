@@ -388,27 +388,6 @@ main {
   flex-wrap: wrap;
 }
 
-.tab {
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: none;
-  border: none;
-  border-bottom: 3px solid transparent;
-  cursor: pointer;
-  font-weight: 500;
-  color: var(--text-secondary);
-  transition: all 0.2s;
-  margin-bottom: -2px;
-}
-
-.tab:hover {
-  color: var(--accent-primary);
-}
-
-.tab.active {
-  color: var(--accent-primary);
-  border-bottom-color: var(--accent-primary);
-}
-
 .tab-content {
   display: none;
 }
@@ -1290,10 +1269,6 @@ body{
   padding: 14px 16px;
 }
 .home-news .news-card img{
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  display: block;
   border-radius: 10px 10px 0 0;
 }
 /* ===== Campeãs Home ===== */
@@ -1379,20 +1354,6 @@ body{
     aspect-ratio: 16 / 10;
   }
 }
-.champion-card{
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  cursor: pointer;
-}
-/* deixa o card clicável */
-.champion-card{
-  pointer-events: auto;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  cursor: pointer;
-}
 
 /* só a imagem e o texto não capturam clique */
 .champion-card img,
@@ -1417,15 +1378,6 @@ body{
   gap: var(--spacing-lg);
   margin-top: var(--spacing-md);
   align-items: stretch; /* ou simplesmente remove essa linha */
-}
-
-.quadrilha-about-main,
-.quadrilha-about-info {
-  background: var(--bg-card);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-sm);
-  padding: var(--spacing-md);
-  height: 100%; /* garante que preencham toda a linha */
 }
 
 .quadrilha-about-main,
@@ -1480,4 +1432,3 @@ body{
     margin-right: 4px;
   }
 }
-
