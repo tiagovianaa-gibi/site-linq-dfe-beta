@@ -381,7 +381,7 @@ function renderQuadrilhaCard(q, docStatusLabel) {
 
   const documentosLinha = docStatusLabel
     ? `<p class="card-text"><strong>Documentos:</strong> ${docStatusLabel}</p>`
-    : `<p class="card-text"><strong>Documentos:</strong> ?"</p>`;
+    : `<p class="card-text"><strong>Documentos:</strong> --</p>`;
 
   return `
     <div class="card">
@@ -391,7 +391,7 @@ function renderQuadrilhaCard(q, docStatusLabel) {
           <strong>Sigla:</strong> ${q.sigla || q.id}
         </p>
         <p class="card-text">
-          <strong>Localidade:</strong> ${cidadeUf || "?""}
+          <strong>Localidade:</strong> ${cidadeUf || "?"}
         </p>
         <p class="card-text">
           <strong>Grupo atual:</strong> ${statusGrupo}
@@ -411,7 +411,7 @@ function mapTipoDocumento(tipo) {
     case "ATA_ELEICAO":
       return "Ata de eleição da diretoria";
     default:
-      return tipo || "?"";
+      return tipo || "?";
   }
 }
 
@@ -424,7 +424,7 @@ function mapStatusDocumento(status) {
     case "VENCIDO":
       return "Vencido";
     default:
-      return status || "?"";
+      return status || "?";
   }
 }
 
@@ -547,7 +547,7 @@ function mapTipoLancamento(tipo) {
     case "REPASSE":
       return "Repasse da Liga";
     default:
-      return tipo || "?"";
+      return tipo || "?";
   }
 }
 
@@ -560,7 +560,7 @@ function mapStatusLancamento(status) {
     case "CANCELADO":
       return "Cancelado";
     default:
-      return status || "?"";
+      return status || "?";
   }
 }
 
@@ -584,15 +584,15 @@ function renderFinanceiroRow(l, mapaQuadrilhas) {
   const nomeQuadrilha =
     (l.quadrilhaId && mapaQuadrilhas[l.quadrilhaId]) ||
     l.quadrilhaId ||
-    "?"";
+    "?";
 
   const tipoLabel = mapTipoLancamento(l.tipo);
   const statusLabel = mapStatusLancamento(l.status);
-  const ano = l.ano || "?"";
-  const descricao = l.descricao || "?"";
-  const valor = l.valor ? `R$ ${Number(l.valor).toFixed(2)}` : "?"";
-  const dataVenc = l.dataVencimento || "?"";
-  const dataPag = l.dataPagamento || "?"";
+  const ano = l.ano || "?";
+  const descricao = l.descricao || "?";
+  const valor = l.valor ? `R$ ${Number(l.valor).toFixed(2)}` : "--";
+  const dataVenc = l.dataVencimento || "?";
+  const dataPag = l.dataPagamento || "?";
 
   return `
     <tr>
@@ -703,10 +703,10 @@ async function loadFinanceiroForCurrentUser() {
 // ====== DOCUMENTOS: RENDER E CARREGAMENTO ======
 function renderDocumentoRow(d, mapaQuadrilhas) {
   const nomeQuadrilha =
-    (d.quadrilhaId && mapaQuadrilhas[d.quadrilhaId]) || d.quadrilhaId || "?"";
+    (d.quadrilhaId && mapaQuadrilhas[d.quadrilhaId]) || d.quadrilhaId || "?";
   const tipoLabel = mapTipoDocumento(d.tipo);
   const statusLabel = mapStatusDocumento(d.status);
-  const dataValidade = d.dataValidade || "?"";
+  const dataValidade = d.dataValidade || "?";
   const obs = d.observacoes || "";
 
   return `
@@ -1527,7 +1527,7 @@ if (newsList) {
 }
 // ====== NOTÍCIAS ?" HELPERS ======
 function mapStatusNoticia(status) {
-  if (!status) return "?"";
+  if (!status) return "?";
   const s = status.toString().toLowerCase();
 
   switch (s) {
