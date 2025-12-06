@@ -108,7 +108,6 @@ nav ul {
   flex-wrap: wrap;
 }
 
-
 nav a {
   text-decoration: none;
   color: var(--text-primary);
@@ -127,6 +126,59 @@ nav a:hover {
 nav a.active {
   background: var(--accent-primary);
   color: white;
+}
+
+/* Dropdown de Filiadas no menu */
+nav li.has-dropdown {
+  position: relative;
+}
+
+nav li.has-dropdown > a::after {
+  content: "▾";
+  margin-left: 6px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius);
+  padding: 0.35rem 0;
+  min-width: 220px;
+  max-height: 320px;
+  overflow-y: auto;
+  display: none;
+  z-index: 10000;
+}
+
+nav li.has-dropdown:hover .dropdown-menu,
+nav li.has-dropdown:focus-within .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 0.5rem 0.85rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.92rem;
+  border-radius: 0;
+}
+
+.dropdown-menu a:hover {
+  background: var(--bg-primary);
+  color: var(--accent-primary);
+}
+
+.dropdown-empty {
+  display: block;
+  padding: 0.75rem 0.85rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 /* Container Principal */

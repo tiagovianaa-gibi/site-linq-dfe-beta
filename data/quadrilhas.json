@@ -11,11 +11,25 @@
     "foto": "amor-junino.jpg",
     "foto_capa": "amor-junino-capa.jpg",
     "instagram": "@amorjuninooficial",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.75, "lng": -48.25 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.75,
+      "lng": -48.25
+    },
     "pontos2025": 625.6,
-    "notas_2025": { "total": 625.6 },
-    "historico": [{ "ano": 2025, "pontos": 625.6, "pos": 9 }],
+    "notas_2025": {
+      "total": 625.6
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 625.6,
+        "pos": 9
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Amor Junino é de Águas Lindas de Goiás/GO e tem 14 anos de história. Surgiu como um ponto de encontro para quem ama o São João e, com o tempo, virou uma verdadeira família junina, que acolhe crianças, jovens e adultos da cidade. Nos ensaios, nas viagens e nas apresentações, a Amor Junino é lugar de amizade, disciplina, superação e, principalmente, muito sentimento pelo movimento.",
       "tema_2025": "As Namoradeiras",
@@ -38,11 +52,25 @@
     "foto": "arraia-dos-matutos.jpg",
     "foto_capa": "arraia-dos-matutos-capa.jpg",
     "instagram": "@qjarraiadosmatutos",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.45, "lng": -47.61 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.45,
+      "lng": -47.61
+    },
     "pontos2025": 622.3,
-    "notas_2025": { "total": 622.3 },
-    "historico": [{ "ano": 2025, "pontos": 622.3, "pos": 12 }],
+    "notas_2025": {
+      "total": 622.3
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 622.3,
+        "pos": 12
+      }
+    ],
     "perfil": {
       "bio": "O Arraiá dos Matutos é de Planaltina/GO e tem 29 anos de história. Nascido do encontro de amigos apaixonados pelo São João, o grupo cresceu como uma grande família de matutos brincantes, juntando pais, filhos e vizinhos em torno da fogueira, do forró e das histórias do sertão. Ao longo de quase três décadas, a quadrilha se tornou um dos orgulhos de Planaltina, conhecida pelo sorriso fácil, pelo acolhimento e pelo jeito bem-humorado de contar causos em forma de dança.",
       "tema_2025": "O Santo e a Chuva",
@@ -65,11 +93,25 @@
     "foto": "arroxa-o-no.jpg",
     "foto_capa": "arroxa-o-no-capa.jpg",
     "instagram": "@quadrilhaarroxaono",
-    "focal": { "x": 0.52, "y": 0.22 },
-    "coords": { "lat": -15.7754, "lng": -47.7798 },
+    "focal": {
+      "x": 0.52,
+      "y": 0.22
+    },
+    "coords": {
+      "lat": -15.7754,
+      "lng": -47.7798
+    },
     "pontos2025": 629.2,
-    "notas_2025": { "total": 629.2 },
-    "historico": [{ "ano": 2025, "pontos": 629.2, "pos": 1 }],
+    "notas_2025": {
+      "total": 629.2
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 629.2,
+        "pos": 1
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Arroxa o Nó é do Paranoá/DF e tem 26 anos de história. Fundada em 1999 pela pernambucana Dona Lourdes, costureira que transformou a saudade da terra natal em festa, o grupo nasceu como grêmio recreativo para ampliar os espaços de lazer, convivência e expressão cultural na comunidade. Com o tempo, o Arroxa o Nó virou referência de resistência e acolhimento no Paranoá, reunindo gerações em torno da tradição junina e da cultura nordestina.",
       "tema_2025": "Ao Seu Encontro, Ô Linda Encanta",
@@ -92,11 +134,25 @@
     "foto": "caipirada.jpg",
     "foto_capa": "caipirada-capa.jpg",
     "instagram": "@caipiradaaoficial",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.45, "lng": -47.61 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.45,
+      "lng": -47.61
+    },
     "pontos2025": 627.4,
-    "notas_2025": { "total": 627.4 },
-    "historico": [{ "ano": 2025, "pontos": 627.4, "pos": 5 }],
+    "notas_2025": {
+      "total": 627.4
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 627.4,
+        "pos": 5
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Caipirada é de Planaltina/GO e tem 21 anos de história. Desde a fundação, o grupo tem como objetivo transmitir conhecimento sobre a cultura popular para diferentes públicos, levando alegria, tradição e educação cultural para crianças, jovens, adultos e idosos. A Caipirada é reconhecida por sua dedicação em preservar a identidade nordestina e a singularidade do coletivo, proporcionando aprendizado e diversão em cada apresentação.",
       "tema_2025": "Ele Está de Olho na Butique Dela",
@@ -119,11 +175,25 @@
     "foto": "chinelo-de-couro.jpg",
     "foto_capa": "chinelo-de-couro-capa.jpg",
     "instagram": "@juninachinelodecouro",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.9, "lng": -47.77 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.9,
+      "lng": -47.77
+    },
     "pontos2025": 535.6,
-    "notas_2025": { "total": 535.6 },
-    "historico": [{ "ano": 2025, "pontos": 535.6, "pos": 2 }],
+    "notas_2025": {
+      "total": 535.6
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 535.6,
+        "pos": 2
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Chinelo de Couro é de São Sebastião/DF e tem 22 anos de história. Desde sua fundação, se consolidou como um espaço de acolhimento e pertencimento para crianças, adolescentes e jovens da comunidade, integrando cultura, esporte e fé. Mais que dança, é lugar de aprendizado, amizade e transformação social, onde cada brincante encontra oportunidade de crescer e se expressar.",
       "tema_2025": "Respeite meu NÃO, valorize meu SIM",
@@ -146,11 +216,25 @@
     "foto": "coisas-da-roca.jpg",
     "foto_capa": "coisas-da-roca-capa.jpg",
     "instagram": "@juninacoisasdaroca",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.7754, "lng": -47.7798 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.7754,
+      "lng": -47.7798
+    },
     "pontos2025": 621.9,
-    "notas_2025": { "total": 621.9 },
-    "historico": [{ "ano": 2025, "pontos": 621.9, "pos": 14 }],
+    "notas_2025": {
+      "total": 621.9
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 621.9,
+        "pos": 14
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Coisas da Roça é de São Sebastião/Paranoá e tem 32 anos de história. Ao longo do tempo, se tornou referência em festivais e apresentações pelo Brasil, reunindo crianças, jovens e adultos em torno da cultura popular nordestina e do São João. O grupo é conhecido pelo humor, pela energia em quadra e pela criatividade, transformando cada espetáculo em uma experiência teatral e cultural única.",
       "tema_2025": "O Auto da Compadecida – Um Romance Mêi Coisado",
@@ -173,11 +257,25 @@
     "foto": "eita-bagaceira.jpg",
     "foto_capa": "eita-bagaceira-capa.jpg",
     "instagram": "@qjeitabagaceira",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.82, "lng": -48.1 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.82,
+      "lng": -48.1
+    },
     "pontos2025": 623.7,
-    "notas_2025": { "total": 623.7 },
-    "historico": [{ "ano": 2025, "pontos": 623.7, "pos": 11 }],
+    "notas_2025": {
+      "total": 623.7
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 623.7,
+        "pos": 11
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Eita Bagaceira é da Ceilândia/DF e tem 6 anos de trajetória. Criada em 2011 como Quadrilha Senhor Bom Jesus, nasceu para atender às festas juninas da paróquia local e rapidamente se transformou em referência pelo profissionalismo, energia e comprometimento de seus brincantes. Cada integrante contribui para a construção de apresentações envolventes, mantendo a tradição e a identidade da comunidade viva e pulsante.",
       "tema_2025": "Encantados: O Casamento de Maria da Conceição e o Mito do Homem das Figuras",
@@ -200,11 +298,25 @@
     "foto": "espalha-brasa.jpg",
     "foto_capa": "espalha-brasa-capa.jpg",
     "instagram": "@espalhabrasadf",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.7754, "lng": -47.7798 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.7754,
+      "lng": -47.7798
+    },
     "pontos2025": 622.3,
-    "notas_2025": { "total": 622.3 },
-    "historico": [{ "ano": 2025, "pontos": 622.3, "pos": 13 }],
+    "notas_2025": {
+      "total": 622.3
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 622.3,
+        "pos": 13
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Espalha Brasa é do Paranoá/DF e tem 15 anos de história. Fundada por Umarney Barbosa da Silva, nasceu com a missão de levar beleza, alegria e poesia aos arraiás, conquistando a comunidade com apresentações que misturam tradição e criatividade. Cada brincante da Espalha Brasa é parte de uma família que compartilha dedicação, amor pela cultura popular e a vontade de encantar o público.",
       "tema_2025": "Peleja Poética – Meu Coração Coroado",
@@ -227,11 +339,25 @@
     "foto": "formiga-da-roca.jpg",
     "foto_capa": "formiga-da-roca-capa.jpg",
     "instagram": "@juninaformigadaroca",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.9, "lng": -47.77 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.9,
+      "lng": -47.77
+    },
     "pontos2025": 629.2,
-    "notas_2025": { "total": 629.2 },
-    "historico": [{ "ano": 2025, "pontos": 629.2, "pos": 2 }],
+    "notas_2025": {
+      "total": 629.2
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 629.2,
+        "pos": 2
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Formiga da Roça é de São Sebastião/DF e tem 29 anos de história. Inspirada no nome das formigas da roça, símbolo de força, trabalho, garra e união, a quadrilha se tornou referência nas festas juninas do Distrito Federal. Cada brincante é parte de uma grande equipe que preserva a tipicidade do movimento, levando emoção, alegria e brasilidade a cada apresentação.",
       "tema_2025": "Homenagem a Raimundo Jacó",
@@ -254,11 +380,25 @@
     "foto": "fornalha.jpg",
     "foto_capa": "fornalha-capa.jpg",
     "instagram": "@quadrilhafornalha",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.75, "lng": -48.25 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.75,
+      "lng": -48.25
+    },
     "pontos2025": 531.9,
-    "notas_2025": { "total": 531.9 },
-    "historico": [{ "ano": 2025, "pontos": 531.9, "pos": 5 }],
+    "notas_2025": {
+      "total": 531.9
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 531.9,
+        "pos": 5
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Fornalha é de Águas Lindas de Goiás/GO e tem 10 anos de história. Criada pelo casal Paulo Victor e Mariza Alves, nasceu com o objetivo de ser a primeira quadrilha evangélica da cidade, transmitindo esperança, fé e alegria através da dança. Cada integrante compartilha a missão de levar mensagens de amor, inspiração e união, tornando cada apresentação um momento de reflexão e emoção.",
       "tema_2025": "O Auto do Pai Piedoso",
@@ -281,11 +421,25 @@
     "foto": "furacao.jpg",
     "foto_capa": "furacao-capa.jpg",
     "instagram": "@quadrilhajuninafuracaoofc",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.45, "lng": -47.61 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.45,
+      "lng": -47.61
+    },
     "pontos2025": 345.4,
-    "notas_2025": { "total": 345.4 },
-    "historico": [{ "ano": 2025, "pontos": 345.4, "pos": 10 }],
+    "notas_2025": {
+      "total": 345.4
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 345.4,
+        "pos": 10
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Furacão é de Planaltina/GO e tem 6 anos de história. Surgiu com o objetivo de animar a cidade e criar oportunidades de lazer e expressão para jovens, crescendo em apresentações em ruas, escolas e, posteriormente, em competições e festivais de Brasília. Cada brincante contribui para manter a energia e a cultura popular viva em cada apresentação.",
       "tema_2025": "Meu Pernambuco Querido, Balaio Cultural Amigo",
@@ -308,11 +462,25 @@
     "foto": "mala-veia.jpg",
     "foto_capa": "mala-veia-capa.jpg",
     "instagram": "@malaveia_oficial",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.82, "lng": -48.1 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.82,
+      "lng": -48.1
+    },
     "pontos2025": 625.2,
-    "notas_2025": { "total": 625.2 },
-    "historico": [{ "ano": 2025, "pontos": 625.2, "pos": 10 }],
+    "notas_2025": {
+      "total": 625.2
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 625.2,
+        "pos": 10
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Mala Véia é da Ceilândia Sul/DF e tem 45 anos de história. Fundada em 1980 por amigos nordestinos, tornou-se referência nacional no movimento junino, combinando tradição, resistência cultural e força narrativa. Cada brincante da Mala Véia carrega a missão de preservar as raízes sertanejas e transmitir emoção e alegria em cada apresentação.",
       "tema_2025": "O Sertanejo – No Som do Berrante na Dança do Amor",
@@ -335,11 +503,25 @@
     "foto": "matingueiros-do-sertao.jpg",
     "foto_capa": "matingueiros-do-sertao-capa.jpg",
     "instagram": "@matingueirosdosertao",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.87, "lng": -48.08 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.87,
+      "lng": -48.08
+    },
     "pontos2025": 531.8,
-    "notas_2025": { "total": 531.8 },
-    "historico": [{ "ano": 2025, "pontos": 531.8, "pos": 6 }],
+    "notas_2025": {
+      "total": 531.8
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 531.8,
+        "pos": 6
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Matingueiros do Sertão é de Samambaia/DF e tem 5 anos de história. Fundada para valorizar a cultura popular e os folguedos juninos, o grupo utiliza literatura, contos, canções e marchinhas tradicionais como fio condutor da dança, transformando cada apresentação em uma narrativa histórica e cultural.",
       "tema_2025": "O Original Não se Desoriginaliza",
@@ -362,11 +544,25 @@
     "foto": "matulao.jpg",
     "foto_capa": "matulao-capa.jpg",
     "instagram": "@juninamatulao_",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.83, "lng": -48.05 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.83,
+      "lng": -48.05
+    },
     "pontos2025": 537.6,
-    "notas_2025": { "total": 537.6 },
-    "historico": [{ "ano": 2025, "pontos": 537.6, "pos": 1 }],
+    "notas_2025": {
+      "total": 537.6
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 537.6,
+        "pos": 1
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Matulão é de Taguatinga/DF e tem 1 ano de história. Nascida como extensão da Flyer Cia de Dança, a Matulão busca unir tradição junina e elementos contemporâneos, promovendo inovação nas apresentações e oferecendo aos jovens bailarinos experiências artísticas completas. Cada integrante é parte de uma trupe que valoriza criatividade, disciplina e paixão pela cultura popular.",
       "tema_2025": "Sintonizados no Baião",
@@ -389,11 +585,25 @@
     "foto": "os-caboclos-do-sertao.jpg",
     "foto_capa": "os-caboclos-do-sertao-capa.jpg",
     "instagram": "@oscaboclosdosertao",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.45, "lng": -47.61 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.45,
+      "lng": -47.61
+    },
     "pontos2025": 533.8,
-    "notas_2025": { "total": 533.8 },
-    "historico": [{ "ano": 2025, "pontos": 533.8, "pos": 4 }],
+    "notas_2025": {
+      "total": 533.8
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 533.8,
+        "pos": 4
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Os Caboclos do Sertão é de Planaltina/GO e tem 19 anos de história. Desde sua fundação, o grupo se dedica a resgatar o folclore e a cultura nordestina através da dança de quadrilha, reunindo crianças, jovens e adultos para manter vivas as tradições e a alegria das festas de São João. Cada integrante contribui para criar um ambiente de aprendizado, convivência e celebração cultural, tornando cada apresentação única e envolvente.",
       "tema_2025": "Das Brincadeiras de Minha Infância no Sertão ao Casamento de Carolina e Joãozinho",
@@ -416,11 +626,25 @@
     "foto": "pinga-em-mim.jpg",
     "foto_capa": "pinga-em-mim-capa.jpg",
     "instagram": "@juninapingaemmim",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.7754, "lng": -47.7798 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.7754,
+      "lng": -47.7798
+    },
     "pontos2025": 626.7,
-    "notas_2025": { "total": 626.7 },
-    "historico": [{ "ano": 2025, "pontos": 626.7, "pos": 6 }],
+    "notas_2025": {
+      "total": 626.7
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 626.7,
+        "pos": 6
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Junina Pinga em Mim é de Paranoá/DF e tem 12 anos de história. Fundada em 2015 por crianças, jovens e adultos das cidades de Paranoá e Itapoã, o grupo se consolidou como uma grande família, dedicada não apenas a apresentações artísticas, mas também à transformação social por meio da dança. A diversidade é uma marca do grupo, que integra diferentes gêneros, orientações sexuais e raças, promovendo inclusão, alegria e igualdade no acesso à cultura popular brasileira.",
       "tema_2025": "O Auto da Cidade de Dom Inocêncio",
@@ -443,11 +667,25 @@
     "foto": "rasga-o-fole.jpg",
     "foto_capa": "rasga-o-fole-capa.jpg",
     "instagram": "@rasgaofoleoficial",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -16.07, "lng": -47.98 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -16.07,
+      "lng": -47.98
+    },
     "pontos2025": 627.7,
-    "notas_2025": { "total": 627.7 },
-    "historico": [{ "ano": 2025, "pontos": 627.7, "pos": 4 }],
+    "notas_2025": {
+      "total": 627.7
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 627.7,
+        "pos": 4
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Rasga o Fole é de Valparaíso de Goiás/GO e tem 16 anos de história. Fundada em 2008 com o objetivo de preservar e promover tradições culturais e literárias do São João, a quadrilha rapidamente se destacou em concursos regionais e apresentações pelo Centro-Oeste, tornando-se referência em criatividade, dança e expressão cultural.",
       "tema_2025": "Vivo por Amor e Quase Morro por Amar",
@@ -470,11 +708,25 @@
     "foto": "ribulico.jpg",
     "foto_capa": "ribulico-capa.jpg",
     "instagram": "@ribuoficial",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.82, "lng": -48.1 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.82,
+      "lng": -48.1
+    },
     "pontos2025": 628.4,
-    "notas_2025": { "total": 628.4 },
-    "historico": [{ "ano": 2025, "pontos": 628.4, "pos": 3 }],
+    "notas_2025": {
+      "total": 628.4
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 628.4,
+        "pos": 3
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Ribuliço é de Ceilândia/DF e tem 24 anos de história. Fundada em 2002, o grupo nasceu para oferecer lazer e difusão cultural aos jovens da comunidade da Expansão do Setor “O”. Com muito esforço e dedicação, a Ribuliço conquistou respeito e destaque no cenário das quadrilhas do Distrito Federal, sendo referência em profissionalismo, tradição e inovação.",
       "tema_2025": "Caminhos do meu São João",
@@ -486,32 +738,46 @@
     }
   },
   {
-  "id": 19,
-  "nome": "Sol de Maria",
-  "slug": "sol-de-maria",
-  "cidade": "Novo Gama/GO",
-  "uf": "GO",
-  "grupo": "Acesso",
-  "grupo_2025": "acesso",
-  "posicao_2025": 8,
-  "foto": "sol-de-maria.jpg",
-  "foto_capa": "sol-de-maria-capa.jpg",
-  "instagram": "@qjsoldemaria",
-  "focal": { "x": 0.5, "y": 0.2 },
-  "coords": { "lat": -16.06, "lng": -48.04 },
-  "pontos2025": 528.9,
-  "notas_2025": { "total": 528.9 },
-  "historico": [{ "ano": 2025, "pontos": 528.9, "pos": 8 }],
-  "perfil": {
-    "bio": "A Quadrilha Sol de Maria é de Novo Gama/GO e tem 3 anos de história. Nascida da união de dois grupos de brincantes, o grupo se profissionalizou em 2024 e vem realizando oficinas e apresentações pelo DF e Entorno, consolidando-se como referência em inovação e narrativa junina.",
-    "tema_2025": "A Chama que Irradia o Sonhar",
-    "temporada_2025_descricao": "Com 13 casais de brincantes, um casal de noivos e uma marcadora, a Sol de Maria se destaca pelo cuidado com figurinos e coreografias, que incorporam cores simbólicas e elementos visuais da narrativa, transmitindo fé, esperança e superação. Representando Novo Gama no circuito do DF e Entorno, o grupo encanta pelo vigor, criatividade e emoção.",
-    "idade_grupo": "3 anos",
-    "elenco_aproximado": "25 dançarinos",
-    "marcador": "Ana Carolina Nóbrega",
-    "casal_noivos_2025": "Anna Gouveia e Reny Braga"
-  }
-},
+    "id": 19,
+    "nome": "Sol de Maria",
+    "slug": "sol-de-maria",
+    "cidade": "Novo Gama/GO",
+    "uf": "GO",
+    "grupo": "Acesso",
+    "grupo_2025": "acesso",
+    "posicao_2025": 8,
+    "foto": "sol-de-maria.jpg",
+    "foto_capa": "sol-de-maria-capa.jpg",
+    "instagram": "@qjsoldemaria",
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -16.06,
+      "lng": -48.04
+    },
+    "pontos2025": 528.9,
+    "notas_2025": {
+      "total": 528.9
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 528.9,
+        "pos": 8
+      }
+    ],
+    "perfil": {
+      "bio": "A Quadrilha Sol de Maria é de Novo Gama/GO e tem 3 anos de história. Nascida da união de dois grupos de brincantes, o grupo se profissionalizou em 2024 e vem realizando oficinas e apresentações pelo DF e Entorno, consolidando-se como referência em inovação e narrativa junina.",
+      "tema_2025": "A Chama que Irradia o Sonhar",
+      "temporada_2025_descricao": "Com 13 casais de brincantes, um casal de noivos e uma marcadora, a Sol de Maria se destaca pelo cuidado com figurinos e coreografias, que incorporam cores simbólicas e elementos visuais da narrativa, transmitindo fé, esperança e superação. Representando Novo Gama no circuito do DF e Entorno, o grupo encanta pelo vigor, criatividade e emoção.",
+      "idade_grupo": "3 anos",
+      "elenco_aproximado": "25 dançarinos",
+      "marcador": "Ana Carolina Nóbrega",
+      "casal_noivos_2025": "Anna Gouveia e Reny Braga"
+    }
+  },
   {
     "id": 20,
     "nome": "Tengo Lengo",
@@ -524,11 +790,25 @@
     "foto": "tengo-lengo.jpg",
     "foto_capa": "tengo-lengo-capa.jpg",
     "instagram": "@tengolengooffc",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.82, "lng": -48.1 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.82,
+      "lng": -48.1
+    },
     "pontos2025": 526.7,
-    "notas_2025": { "total": 526.7 },
-    "historico": [{ "ano": 2025, "pontos": 526.7, "pos": 9 }],
+    "notas_2025": {
+      "total": 526.7
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 526.7,
+        "pos": 9
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Tengo Lengo é de Ceilândia/DF e tem 19 anos de história. Fundada em 2006 por um grupo de jovens da escola do Ensino Médio 9, a quadrilha cresceu e se profissionalizou, participando de eventos e competições em Brasília e região. Cada integrante contribui para manter viva a tradição junina, trazendo disciplina, dedicação e amor pela cultura nordestina em cada apresentação.",
       "tema_2025": "Os Nazarenos e a Peleja com Lampião",
@@ -551,11 +831,25 @@
     "foto": "tico-tico-no-fuba.jpg",
     "foto_capa": "tico-tico-no-fuba-capa.jpg",
     "instagram": "@juninaticotico",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.75, "lng": -48.25 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.75,
+      "lng": -48.25
+    },
     "pontos2025": 620.5,
-    "notas_2025": { "total": 620.5 },
-    "historico": [{ "ano": 2025, "pontos": 620.5, "pos": 15 }],
+    "notas_2025": {
+      "total": 620.5
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 620.5,
+        "pos": 15
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Tico Tico no Fubá é de Águas Lindas de Goiás/GO e tem 21 anos de história. Fundada em 2004, o grupo se consolidou como referência cultural, promovendo tradição, dança e valorização das raízes populares. Cada integrante contribui para criar um espaço de aprendizado, expressão artística e celebração da cultura nordestina.",
       "tema_2025": "Enquanto Tiver Amor, o Meu São João Não Morrerá",
@@ -578,11 +872,25 @@
     "foto": "vai-mas-nao-vai.jpg",
     "foto_capa": "vai-mas-nao-vai-capa.jpg",
     "instagram": "@juninavaimasnaovaioficial",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -16.25, "lng": -47.95 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -16.25,
+      "lng": -47.95
+    },
     "pontos2025": 625.8,
-    "notas_2025": { "total": 625.8 },
-    "historico": [{ "ano": 2025, "pontos": 625.8, "pos": 8 }],
+    "notas_2025": {
+      "total": 625.8
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 625.8,
+        "pos": 8
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Vai Mas Não Vai é de Luziânia/GO e tem 25 anos de história. Fundada a partir de brincadeiras de rua, o grupo rapidamente se consolidou como referência cultural e social, oferecendo oficinas, teatro, corte, costura e artesanato para a juventude, resgatando valores e tradições do São João.",
       "tema_2025": "O Aniversário de São João: Fé, Amor e Devoção!",
@@ -605,11 +913,25 @@
     "foto": "xamegar.jpg",
     "foto_capa": "xamegar-capa.jpg",
     "instagram": "@quadrilhaxamegar",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.7754, "lng": -47.7798 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.7754,
+      "lng": -47.7798
+    },
     "pontos2025": 626.0,
-    "notas_2025": { "total": 626.0 },
-    "historico": [{ "ano": 2025, "pontos": 626.0, "pos": 7 }],
+    "notas_2025": {
+      "total": 626.0
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 626.0,
+        "pos": 7
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Xamegar é de Paranoá/DF e tem 21 anos de história. Fundada para valorizar a cultura popular e as tradições juninas, o grupo rapidamente se destacou em apresentações e concursos locais, consolidando-se como referência na região.",
       "tema_2025": "Os Três Santos Juninos da Cultura Popular",
@@ -632,11 +954,25 @@
     "foto": "xem-nhem-nhem.jpg",
     "foto_capa": "xem-nhem-nhem-capa.jpg",
     "instagram": "@xemnhemnhem",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.98, "lng": -48.0 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.98,
+      "lng": -48.0
+    },
     "pontos2025": 531.0,
-    "notas_2025": { "total": 531.0 },
-    "historico": [{ "ano": 2025, "pontos": 531.0, "pos": 7 }],
+    "notas_2025": {
+      "total": 531.0
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 531.0,
+        "pos": 7
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Xém Nhem Nhém é de Santa Maria/DF e tem 18 anos de história. Fundada com o objetivo de valorizar a cultura popular brasileira através do teatro e da dança, o grupo se tornou referência na região por sua dedicação e paixão pelo São João. Cada integrante contribui para criar um espaço de pertencimento, aprendizado e emoção, tornando cada apresentação única e envolvente.",
       "tema_2025": "De Onde Vem a Água do Sertão?",
@@ -659,11 +995,25 @@
     "foto": "xique-xique.jpg",
     "foto_capa": "xique-xique-capa.jpg",
     "instagram": "@quadrilhaxiquexique",
-    "focal": { "x": 0.5, "y": 0.2 },
-    "coords": { "lat": -15.45, "lng": -47.61 },
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.45,
+      "lng": -47.61
+    },
     "pontos2025": 535.4,
-    "notas_2025": { "total": 535.4 },
-    "historico": [{ "ano": 2025, "pontos": 535.4, "pos": 3 }],
+    "notas_2025": {
+      "total": 535.4
+    },
+    "historico": [
+      {
+        "ano": 2025,
+        "pontos": 535.4,
+        "pos": 3
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Xique Xique é de Planaltina/GO e tem 18 anos de história. Desde 2007, atua como guardiã da cultura popular nordestina, oferecendo oportunidades de lazer, aprendizado e transformação social para crianças, jovens e adultos. Com cerca de 200 participantes, o grupo se destaca por integrar diferentes públicos, promovendo inclusão e arte como ferramenta de desenvolvimento humano.",
       "tema_2025": "Não Troco Meu Oxente Pelo OK de Ninguém",

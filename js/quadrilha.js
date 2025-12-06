@@ -140,8 +140,8 @@ function renderQuadrilhaInfo(quad, historico) {
 
   // Título e metadados
   if (nomeEl) nomeEl.textContent = quad.nome;
-  if (cidadeEl) cidadeEl.textContent = quad.cidade || '?"';
-  if (grupoEl) grupoEl.textContent = quad.grupo || '?"';
+  if (cidadeEl) cidadeEl.textContent = quad.cidade || '—';
+  if (grupoEl) grupoEl.textContent = quad.grupo || '—';
 
   if (instagramEl) {
     if (quad.instagram) {
@@ -149,7 +149,7 @@ function renderQuadrilhaInfo(quad, historico) {
       const handle = quad.instagram.startsWith('@') ? quad.instagram.slice(1) : quad.instagram;
       instagramEl.href = `https://instagram.com/${handle}`;
     } else {
-      instagramEl.textContent = '?"';
+      instagramEl.textContent = '—';
       instagramEl.removeAttribute('href');
     }
   }
@@ -163,7 +163,7 @@ function renderQuadrilhaInfo(quad, historico) {
       const posStr = ultimo.pos ? ` (${ultimo.pos}º lugar)` : '';
       pontosEl.textContent = `${pontos} pts ${ultimo.ano}${posStr}`;
     } else {
-      pontosEl.textContent = '?"';
+      pontosEl.textContent = '—';
     }
   }
 
@@ -183,7 +183,7 @@ function renderQuadrilhaInfo(quad, historico) {
   if (sobreEl) {
     const partes = [];
     if (perfil.bio) partes.push(`<p>${perfil.bio}</p>`);
-    if (perfil.tema_2025) partes.push(`<p><strong>Tema 2025:</strong> ?o${perfil.tema_2025}?.</p>`);
+    if (perfil.tema_2025) partes.push(`<p><strong>Tema 2025:</strong> "${perfil.tema_2025}".</p>`);
     const desc = perfil.temporada_2025_descricao || '';
     if (desc) partes.push(`<p>${desc}</p>`);
     sobreEl.innerHTML = partes.length ? partes.join('') : '<p>Em breve.</p>';
@@ -192,12 +192,12 @@ function renderQuadrilhaInfo(quad, historico) {
   // ===== Ficha =====
   if (infoListEl) {
     infoListEl.innerHTML = `
-      <li><strong>Cidade / UF:</strong> ${quad.cidade || '?"'}</li>
-      <li><strong>Idade do grupo:</strong> ${perfil.idade_grupo || '?"'}</li>
-      <li><strong>Elenco aproximado:</strong> ${perfil.elenco_aproximado || '?"'}</li>
-      <li><strong>Marcador:</strong> ${perfil.marcador || '?"'}</li>
-      <li><strong>Casal de noivos 2025:</strong> ${perfil.casal_noivos_2025 || '?"'}</li>
-      <li><strong>Temporada 2025:</strong> ${perfil.tema_2025 ? `?o${perfil.tema_2025}?` : '?"'}</li>
+      <li><strong>Cidade / UF:</strong> ${quad.cidade || '—'}</li>
+      <li><strong>Idade do grupo:</strong> ${perfil.idade_grupo || '—'}</li>
+      <li><strong>Elenco aproximado:</strong> ${perfil.elenco_aproximado || '—'}</li>
+      <li><strong>Marcador:</strong> ${perfil.marcador || '—'}</li>
+      <li><strong>Casal de noivos 2025:</strong> ${perfil.casal_noivos_2025 || '—'}</li>
+      <li><strong>Temporada 2025:</strong> ${perfil.tema_2025 ? `"${perfil.tema_2025}"` : '—'}</li>
     `;
   }
 }
