@@ -28,20 +28,20 @@
     <aside class="portal-sidebar">
       <nav>
         <ul>
-          <li><button class="portal-nav-link" data-section="dashboard">In�cio</button></li>
+          <li><button class="portal-nav-link" data-section="dashboard">Início</button></li>
           <li><button class="portal-nav-link" data-section="quadrilha">Quadrilhas</button></li>
           <li><button class="portal-nav-link" data-section="pessoas">Pessoas / Elenco</button></li>
           <li><button class="portal-nav-link" data-section="documentos">Documentos</button></li>
           <li><button class="portal-nav-link" data-section="financeiro">Financeiro</button></li>
           <li><button class="portal-nav-link" data-section="credenciamento">Credenciamento</button></li>
-          <li><button class="portal-nav-link" data-section="competicoes">Competi��es & Notas</button></li>
+          <li><button class="portal-nav-link" data-section="competicoes">Competições & Notas</button></li>
           <li><button class="portal-nav-link" data-section="regulamentos">Regulamentos</button></li>
-          <li><button class="portal-nav-link" data-section="noticias">Not�cias</button></li>
+          <li><button class="portal-nav-link" data-section="noticias">Notícias</button></li>
         </ul>
       </nav>
     </aside>
 
-    <!-- CONTE�DO PRINCIPAL -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="portal-content">
       <!-- DASHBOARD -->
       <section id="section-dashboard" class="portal-section">
@@ -50,7 +50,7 @@
             <p class="chip">Painel da Liga</p>
             <h1 class="section-title" style="text-align:left; margin-bottom: var(--spacing-xs);">Bem-vindo ao Portal da Liga</h1>
             <p id="portalUserRoleText" class="muted" style="margin:0;">
-              Voc� est� logado como <strong id="portalUserRoleLabel">Administrador da Liga</strong>. Este painel re�ne vis�o geral, documentos e pend�ncias.
+              Você está logado como <strong id="portalUserRoleLabel">Administrador da Liga</strong>. Este painel reúne visão geral, documentos e pendências.
             </p>
           </div>
           <div class="portal-hero-actions">
@@ -86,7 +86,7 @@
           <article class="card">
             <div class="card-body">
               <p class="muted" style="margin:0;">Financeiro</p>
-              <h3 class="card-title" style="margin-top: .35rem;">Cobran�as</h3>
+              <h3 class="card-title" style="margin-top: .35rem;">Cobranças</h3>
               <ul class="dashboard-list">
                 <li><strong id="statFinanceiroAberto">R$ 0,00</strong> em aberto</li>
                 <li><strong id="statFinanceiroPago">R$ 0,00</strong> pagos</li>
@@ -97,49 +97,49 @@
 
         <div class="card" style="margin-top: var(--spacing-lg);">
           <div class="card-body">
-            <h3 class="card-title" style="margin-bottom: var(--spacing-sm);">Pr�ximas a��es</h3>
+            <h3 class="card-title" style="margin-bottom: var(--spacing-sm);">Próximas ações</h3>
             <ul class="dashboard-list">
               <li>Atualizar documentos pendentes das quadrilhas</li>
-              <li>Conferir credenciamento das pr�ximas etapas</li>
+              <li>Conferir credenciamento das próximas etapas</li>
               <li>Publicar comunicados internos</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- NOT�CIAS -->
+      <!-- NOTÍCIAS -->
       <section id="section-noticias" class="portal-section" style="display:none;">
-        <h1 class="section-title">Not�cias</h1>
+        <h1 class="section-title">Notícias</h1>
         <p id="newsSubtitle">
-          Aqui voc� gerencia as not�cias que aparecem no site da Liga.
+          Aqui você gerencia as notícias que aparecem no site da Liga.
         </p>
 
         <div class="grid">
-          <!-- Lista de not�cias -->
+          <!-- Lista de notícias -->
           <div class="card">
             <div class="card-body">
-              <h3 class="card-title">Not�cias cadastradas</h3>
+              <h3 class="card-title">Notícias cadastradas</h3>
               <div id="newsList" class="news-list">
-                <p>Carregando not�cias...</p>
+                <p>Carregando notícias...</p>
               </div>
             </div>
           </div>
 
-          <!-- Formul�rio de cria��o/edi��o (s� para quem pode editar) -->
+          <!-- Formulário de criação/edição (só para quem pode editar) -->
           <div class="card" id="newsAdminCard" style="display:none;">
             <div class="card-body">
-              <h3 class="card-title" id="newsFormTitle">Nova not�cia</h3>
+              <h3 class="card-title" id="newsFormTitle">Nova notícia</h3>
 
               <form id="newsForm" class="portal-form">
                 <input type="hidden" id="newsId" />
 
                 <div class="form-group">
-                  <label for="newsTitulo">T�tulo</label>
+                  <label for="newsTitulo">Título</label>
                   <input id="newsTitulo" type="text" required />
                 </div>
 
                 <div class="form-group">
-                  <label for="newsResumo">Resumo / subt�tulo</label>
+                  <label for="newsResumo">Resumo / subtítulo</label>
                   <textarea id="newsResumo" rows="2"></textarea>
                 </div>
 
@@ -154,7 +154,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="newsTags">Tags (separadas por v�rgula)</label>
+                  <label for="newsTags">Tags (separadas por vírgula)</label>
                   <input id="newsTags" type="text" placeholder="giro cultural, circuito 2025" />
                 </div>
 
@@ -167,7 +167,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="newsConteudo">Conte�do (texto normal - linha em branco separa par�grafos e "##" cria subt�tulo)</label>
+                  <label for="newsConteudo">Conteúdo (texto normal - linha em branco separa parágrafos e "##" cria subtítulo)</label>
                   <textarea id="newsConteudo" rows="6" required></textarea>
                 </div>
 
@@ -178,9 +178,9 @@
                   </label>
                 </div>
 
-                <button type="submit" class="btn">Salvar not�cia</button>
+                <button type="submit" class="btn">Salvar notícia</button>
                 <button type="button" id="newsFormCancel" class="btn btn-light" style="margin-left:0.5rem; display:none;">
-                  Cancelar edi��o
+                  Cancelar edição
                 </button>
 
                 <p id="newsFormMessage" class="form-message"></p>
@@ -202,10 +202,10 @@
     <!-- O JS vai preencher aqui -->
   </div>
 
-  <!-- �REA DA LIGA: CADASTRO / USU�RIOS -->
+  <!-- ÁREA DA LIGA: CADASTRO / USUÁRIOS -->
   <div id="quadrilhaAdminArea" style="margin-top: 2rem; display: none;">
     <h3 class="section-title" style="font-size: 1.2rem;">
-      �rea da Liga - gest�o de quadrilhas e acessos
+      Área da Liga - gestão de quadrilhas e acessos
     </h3>
 
     <div class="grid">
@@ -215,7 +215,7 @@
           <h4 class="card-title">Cadastrar / editar quadrilha</h4>
           <form id="quadrilhaForm" class="portal-form">
             <div class="form-group">
-              <label for="qId">ID / Sigla (sem espa�os)</label>
+              <label for="qId">ID / Sigla (sem espaços)</label>
               <input id="qId" type="text" required />
             </div>
 
@@ -256,16 +256,16 @@
         </div>
       </div>
 
-      <!-- CARD: ADICIONAR / VINCULAR USU�RIO -->
+      <!-- CARD: ADICIONAR / VINCULAR USUÁRIO -->
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Vincular usu�rio a uma quadrilha</h4>
+          <h4 class="card-title">Vincular usuário a uma quadrilha</h4>
           <p class="card-text">
-            Esse formul�rio define o papel e a quadrilha de um usu�rio que j� tem login.
+            Esse formulário define o papel e a quadrilha de um usuário que já tem login.
           </p>
           <form id="userForm" class="portal-form">
             <div class="form-group">
-              <label for="userEmail">E-mail do usu�rio</label>
+              <label for="userEmail">E-mail do usuário</label>
               <input id="userEmail" type="email" required />
             </div>
 
@@ -292,7 +292,7 @@
               </select>
             </div>
 
-            <button type="submit" class="btn">Salvar usu�rio</button>
+            <button type="submit" class="btn">Salvar usuário</button>
             <p id="userFormMessage" class="form-message"></p>
           </form>
         </div>
@@ -305,10 +305,10 @@
         <section id="section-documentos" class="portal-section" style="display:none;">
         <h2 class="section-title">Documentos das quadrilhas</h2>
         <p id="docSubtitle">
-          Aqui voc� acompanha os principais documentos das quadrilhas (estatuto, CNPJ, certid�es, etc.).
+          Aqui você acompanha os principais documentos das quadrilhas (estatuto, CNPJ, certidões, etc.).
         </p>
 
-        <!-- FILTROS - vis�veis principalmente para a Liga -->
+        <!-- FILTROS - visíveis principalmente para a Liga -->
         <div class="card" id="docFiltersCard">
           <div class="card-body">
             <h4 class="card-title">Filtros</h4>
@@ -317,14 +317,14 @@
                 <label for="docFiltroQuadrilha">Quadrilha</label>
                 <select id="docFiltroQuadrilha">
                   <option value="">Todas</option>
-                  <!-- op��es via JS -->
+                  <!-- opções via JS -->
                 </select>
               </div>
               <div class="form-group">
                 <label for="docFiltroStatus">Status</label>
                 <select id="docFiltroStatus">
                   <option value="">Todos</option>
-                  <option value="VALIDO">V�lido</option>
+                  <option value="VALIDO">Válido</option>
                   <option value="PENDENTE">Pendente</option>
                   <option value="VENCIDO">Vencido</option>
                 </select>
@@ -334,7 +334,7 @@
                 <select id="docFiltroTipo">
                   <option value="">Todos</option>
                   <option value="ESTATUTO">Estatuto</option>
-                  <option value="ATA_ELEICAO">Ata de elei��o da diretoria</option>
+                  <option value="ATA_ELEICAO">Ata de eleição da diretoria</option>
                 </select>
               </div>
             </div>
@@ -352,8 +352,8 @@
                     <th>Quadrilha</th>
                     <th>Tipo</th>
                     <th>Status</th>
-                    <th>V�lido at�</th>
-                    <th>Observa��es</th>
+                    <th>Válido até</th>
+                    <th>Observações</th>
                   </tr>
                 </thead>
                 <tbody id="docTableBody">
@@ -364,7 +364,7 @@
           </div>
         </div>
 
-        <!-- �REA DA LIGA: CADASTRAR / ATUALIZAR DOCUMENTO -->
+        <!-- ÁREA DA LIGA: CADASTRAR / ATUALIZAR DOCUMENTO -->
         <div id="docAdminArea" style="margin-top: 1.5rem; display:none;">
           <div class="card">
             <div class="card-body">
@@ -374,7 +374,7 @@
                   <label for="docQuadrilhaId">Quadrilha</label>
                   <select id="docQuadrilhaId" required>
                     <option value="">Selecione...</option>
-                    <!-- op��es via JS -->
+                    <!-- opções via JS -->
                   </select>
                 </div>
 
@@ -383,13 +383,13 @@
                   <select id="docTipo" required>
                     <option value="">Selecione...</option>
                     <option value="ESTATUTO">Estatuto da quadrilha</option>
-                    <option value="ATA_ELEICAO">Ata de elei��o da diretoria</option>
+                    <option value="ATA_ELEICAO">Ata de eleição da diretoria</option>
                   </select>
                 </div>
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="docDataEmissao">Data de emiss�o</label>
+                    <label for="docDataEmissao">Data de emissão</label>
                     <input id="docDataEmissao" type="date" />
                   </div>
                   <div class="form-group">
@@ -401,14 +401,14 @@
                 <div class="form-group">
                   <label for="docStatus">Status</label>
                   <select id="docStatus" required>
-                    <option value="VALIDO">V�lido</option>
+                    <option value="VALIDO">Válido</option>
                     <option value="PENDENTE">Pendente</option>
                     <option value="VENCIDO">Vencido</option>
                   </select>
                 </div>
 
                 <div class="form-group">
-                  <label for="docObs">Observa��es</label>
+                  <label for="docObs">Observações</label>
                   <textarea id="docObs" rows="2"></textarea>
                 </div>
 
@@ -424,7 +424,7 @@
         <section id="section-financeiro" class="portal-section" style="display:none;">
         <h2 class="section-title">Financeiro das quadrilhas</h2>
         <p id="finSubtitle">
-          Aqui voc� acompanha cobran�as de joia, anuidades e repasses da Liga.
+          Aqui você acompanha cobranças de joia, anuidades e repasses da Liga.
         </p>
 
         <!-- FILTROS (principalmente para a Liga) -->
@@ -457,10 +457,10 @@
           </div>
         </div>
 
-        <!-- LISTA DE LAN�AMENTOS -->
+        <!-- LISTA DE LANÇAMENTOS -->
         <div class="card" style="margin-top: 1rem;">
           <div class="card-body">
-            <h4 class="card-title">Lan�amentos</h4>
+            <h4 class="card-title">Lançamentos</h4>
             <div class="table-wrapper">
               <table class="portal-table">
                 <thead>
@@ -468,7 +468,7 @@
                     <th>Quadrilha</th>
                     <th>Ano</th>
                     <th>Tipo</th>
-                    <th>Descri��o</th>
+                    <th>Descrição</th>
                     <th>Valor</th>
                     <th>Status</th>
                     <th>Vencimento</th>
@@ -476,18 +476,18 @@
                   </tr>
                 </thead>
                 <tbody id="finTableBody">
-                  <tr><td colspan="8">Nenhum lan�amento encontrado.</td></tr>
+                  <tr><td colspan="8">Nenhum lançamento encontrado.</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- �REA DA LIGA: NOVO LAN�AMENTO -->
+        <!-- ÁREA DA LIGA: NOVO LANÇAMENTO -->
         <div id="finAdminArea" style="margin-top: 1.5rem; display:none;">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Cadastrar lan�amento financeiro</h4>
+              <h4 class="card-title">Cadastrar lançamento financeiro</h4>
               <form id="finForm" class="portal-form">
                 <div class="form-group">
                   <label for="finQuadrilhaId">Quadrilha</label>
@@ -501,7 +501,7 @@
                     <label for="finTipo">Tipo</label>
                     <select id="finTipo" required>
                       <option value="">Selecione...</option>
-                      <option value="JOIA">Joia de filia��o</option>
+                      <option value="JOIA">Joia de filiação</option>
                       <option value="ANUIDADE">Anuidade</option>
                       <option value="REPASSE">Repasse da Liga</option>
                     </select>
@@ -513,7 +513,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="finDescricao">Descri��o</label>
+                  <label for="finDescricao">Descrição</label>
                   <input id="finDescricao" type="text" placeholder="Ex.: Joia 2025, Anuidade 2025..." required />
                 </div>
 
@@ -544,39 +544,39 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="finObs">Observa��es</label>
+                  <label for="finObs">Observações</label>
                   <textarea id="finObs" rows="2"></textarea>
                 </div>
 
-                <button type="submit" class="btn">Salvar lan�amento</button>
+                <button type="submit" class="btn">Salvar lançamento</button>
                 <p id="finFormMessage" class="form-message"></p>
               </form>
             </div>
           </div>
         </div>
       
-          <!-- NOT�CIAS -->
+          <!-- NOTÍCIAS -->
       
 
       <!-- PLACEHOLDERS DAS OUTRAS TELAS (vamos montar depois) -->
       <section id="section-pessoas" class="portal-section" style="display:none;">
         <h1 class="section-title">Pessoas / Elenco</h1>
-        <p>Cadastro e gest�o de elenco. Vamos montar depois.</p>
+        <p>Cadastro e gestão de elenco. Vamos montar depois.</p>
       </section>
 
       <section id="section-credenciamento" class="portal-section" style="display:none;">
         <h1 class="section-title">Credenciamento</h1>
-        <p>Escala��o por etapa e credenciamento no dia.</p>
+        <p>Escalação por etapa e credenciamento no dia.</p>
       </section>
 
       <section id="section-competicoes" class="portal-section" style="display:none;">
-        <h1 class="section-title">Competi��es &amp; Notas</h1>
-        <p>Configura��o de circuitos, etapas, notas e resultados.</p>
+        <h1 class="section-title">Competições &amp; Notas</h1>
+        <p>Configuração de circuitos, etapas, notas e resultados.</p>
       </section>
 
       <section id="section-penalidades" class="portal-section" style="display:none;">
         <h1 class="section-title">Penalidades</h1>
-        <p>Registro de ocorr�ncias e penalidades por etapa/circuito.</p>
+        <p>Registro de ocorrências e penalidades por etapa/circuito.</p>
       </section>
     </main>
   </div>
