@@ -32,7 +32,7 @@
           <li><button class="portal-nav-link" data-section="financeiro">Financeiro</button></li>
           <li><button class="portal-nav-link" data-section="credenciamento">Credenciamento</button></li>
           <li><button class="portal-nav-link" data-section="competicoes">Competições & Notas</button></li>
-          <li><button class="portal-nav-link" data-section="penalidades">Penalidades</button></li>
+          <li><button class="portal-nav-link" data-section="regulamentos">Regulamentos</button></li>
           <li><button class="portal-nav-link" data-section="noticias">Notícias</button></li>
         </ul>
       </nav>
@@ -42,17 +42,64 @@
     <main class="portal-content">
       <!-- DASHBOARD -->
       <section id="section-dashboard" class="portal-section">
-        <h1 class="section-title">Bem-vindo ao Portal da Liga</h1>
-        <p id="portalUserRoleText"></p>
+        <div class="portal-hero">
+          <div>
+            <p class="chip">Painel da Liga</p>
+            <h1 class="section-title" style="text-align:left; margin-bottom: var(--spacing-xs);">Bem-vindo ao Portal da Liga</h1>
+            <p id="portalUserRoleText" class="muted" style="margin:0;">
+              Você está logado como <strong id="portalUserRoleLabel">Administrador da Liga</strong>. Este painel reúne visão geral, documentos e pendências.
+            </p>
+          </div>
+          <div class="portal-hero-actions">
+            <a class="btn js-section-link" href="#section-documentos" data-section="documentos">Ver documentos</a>
+            <a class="btn btn-light js-section-link" href="#section-quadrilha" data-section="quadrilha">Ver quadrilhas</a>
+          </div>
+        </div>
 
-        <div class="grid">
-          <div class="card">
+        <div class="grid" style="margin-top: var(--spacing-lg); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--spacing-md);">
+          <article class="card">
             <div class="card-body">
-              <h3 class="card-title">Status geral</h3>
-              <p id="statusCardText">
-                Aqui depois vamos mostrar: situação da quadrilha, documentos, financeiro, eventos próximos...
-              </p>
+              <p class="muted" style="margin:0;">Status geral</p>
+              <h3 class="card-title" style="margin-top: .35rem;">Documentos das quadrilhas</h3>
+              <ul class="dashboard-list">
+                <li><strong id="statDocsOk">0</strong> com documentos em dia</li>
+                <li><strong id="statDocsPend">0</strong> pendentes</li>
+              </ul>
             </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <p class="muted" style="margin:0;">Quadros</p>
+              <h3 class="card-title" style="margin-top: .35rem;">Quadrilhas</h3>
+              <ul class="dashboard-list">
+                <li><strong id="statQuadrilhasTotal">0</strong> cadastradas</li>
+                <li><strong id="statQuadrilhasEspecial">0</strong> no Grupo Especial</li>
+                <li><strong id="statQuadrilhasAcesso">0</strong> no Grupo Acesso</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <p class="muted" style="margin:0;">Financeiro</p>
+              <h3 class="card-title" style="margin-top: .35rem;">Cobranças</h3>
+              <ul class="dashboard-list">
+                <li><strong id="statFinanceiroAberto">R$ 0,00</strong> em aberto</li>
+                <li><strong id="statFinanceiroPago">R$ 0,00</strong> pagos</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <div class="card" style="margin-top: var(--spacing-lg);">
+          <div class="card-body">
+            <h3 class="card-title" style="margin-bottom: var(--spacing-sm);">Próximas ações</h3>
+            <ul class="dashboard-list">
+              <li>Atualizar documentos pendentes das quadrilhas</li>
+              <li>Conferir credenciamento das próximas etapas</li>
+              <li>Publicar comunicados internos</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -142,7 +189,7 @@
 
 
       <!-- QUADRILHAS -->
-<section id="section-quadrilha" class="portal-section">
+      <section id="section-quadrilha" class="portal-section" style="display:none;">
   <h2 class="section-title">Quadrilhas</h2>
   <p id="quadrilhaSubtitle">
     Lista de quadrilhas cadastradas na Liga.
@@ -252,7 +299,7 @@
 </section>
 
       <!-- DOCUMENTOS -->
-      <section id="section-documentos" class="portal-section">
+        <section id="section-documentos" class="portal-section" style="display:none;">
         <h2 class="section-title">Documentos das quadrilhas</h2>
         <p id="docSubtitle">
           Aqui você acompanha os principais documentos das quadrilhas (estatuto, CNPJ, certidões, etc.).
@@ -371,7 +418,7 @@
       </section>
 
       <!-- FINANCEIRO -->
-        <section id="section-financeiro" class="portal-section">
+        <section id="section-financeiro" class="portal-section" style="display:none;">
         <h2 class="section-title">Financeiro das quadrilhas</h2>
         <p id="finSubtitle">
           Aqui você acompanha cobranças de joia, anuidades e repasses da Liga.
@@ -534,3 +581,4 @@
   <script type="module" src="js/portal-app.js"></script>
 </body>
 </html>
+

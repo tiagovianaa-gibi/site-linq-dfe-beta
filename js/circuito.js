@@ -1,4 +1,4 @@
-import { loadJSON } from "./shared.js";
+import { loadJSON, setActiveNav } from "./shared.js";
 
 const SEASONS = [2026, 2025, 2024, 2023, 2022];
 const CURRENT_SEASON = 2026;
@@ -20,6 +20,7 @@ function normalizeName(str = "") {
 document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
+  setActiveNav();
   selectedSeason = getSeasonFromURL();
   quadrilhas = await safeLoad("data/quadrilhas.json", []);
   historico = await safeLoad("data/historico_circuito.json", {});

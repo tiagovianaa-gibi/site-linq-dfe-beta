@@ -80,6 +80,15 @@ const docDataValidadeInput = document.getElementById("docDataValidade");
 const docStatusSelect = document.getElementById("docStatus");
 const docObsTextarea = document.getElementById("docObs");
 
+// Dashboard widgets
+const statDocsOk = document.getElementById("statDocsOk");
+const statDocsPend = document.getElementById("statDocsPend");
+const statQuadrilhasTotal = document.getElementById("statQuadrilhasTotal");
+const statQuadrilhasEspecial = document.getElementById("statQuadrilhasEspecial");
+const statQuadrilhasAcesso = document.getElementById("statQuadrilhasAcesso");
+const statFinanceiroAberto = document.getElementById("statFinanceiroAberto");
+const statFinanceiroPago = document.getElementById("statFinanceiroPago");
+
 // FINANCEIRO
 const finSubtitle = document.getElementById("finSubtitle");
 const finTableBody = document.getElementById("finTableBody");
@@ -100,6 +109,7 @@ const finDataVencimentoInput = document.getElementById("finDataVencimento");
 const finDataPagamentoInput = document.getElementById("finDataPagamento");
 const finObsTextarea = document.getElementById("finObs");
 
+const userRoleLabelSpan = document.getElementById("portalUserRoleLabel");
 // NOTÍCIAS
 const newsList = document.getElementById("newsList");
 const newsForm = document.getElementById("newsForm");
@@ -136,6 +146,9 @@ const newsImagemInput = newsCoverInput;
 const newsConteudoTextarea = newsContentInput;
 
 
+// Dashboard widgets
+
+
 
 // ====== ESTADO EM MEMÓRIA ======
 let currentUserData = null;
@@ -143,6 +156,37 @@ let quadrilhasCache = null;
 let documentosCache = null;
 let financeiroCache = null;
 let noticiasCache = null;
+
+// Fallback local (teste/offline)
+const SAMPLE_QUADRILHAS = [
+  {
+    id: "arroxa-o-no",
+    nome: "Arroxa o Nó",
+    sigla: "ARROXA",
+    cidade: "Brasília",
+    uf: "DF",
+    grupo_atual: "ESPECIAL",
+  },
+];
+
+const SAMPLE_DOCS = [
+  {
+    id: "arroxa-o-no_ESTatuto",
+    quadrilhaId: "arroxa-o-no",
+    tipo: "ESTATUTO",
+    status: "VALIDO",
+    dataValidade: "2026-12-31",
+    observacoes: "Estatuto vigente",
+  },
+  {
+    id: "arroxa-o-no_ATA",
+    quadrilhaId: "arroxa-o-no",
+    tipo: "ATA_ELEICAO",
+    status: "VALIDO",
+    dataValidade: "2026-12-31",
+    observacoes: "Diretoria atual registrada",
+  },
+];
 
 
 // ====== FUNÇÕES AUXILIARES ======
@@ -210,6 +254,11 @@ function formatTimestampToPtBR(ts) {
   }
 }
 
+function formatCurrencyBR(value) {
+  const num = Number(value) || 0;
+  return `R$ ${num.toFixed(2)}`;
+}
+
 // ====== USUÁRIO LOGADO / PERFIL ======
 async function loadCurrentUserData(user) {
   // Primeiro tentamos buscar doc pelo e-mail
@@ -246,12 +295,14 @@ async function loadCurrentUserData(user) {
   }
 
   const papel = data.papel || "SEM_PAPEL";
+  let roleName = "Usu?rio";
   let roleText = "";
 
   switch (papel) {
     case "LIGA_ADMIN":
+      roleName = "Administrador da Liga";
       roleText =
-        "Você está logado como LIGA_ADMIN. Em breve você verá aqui o painel geral da Liga.";
+        "Você está logado como Administrador da Liga. Este painel reúne visão geral, documentos e pendências.";
       break;
     case "QUADRILHA_ADMIN":
       roleText =
@@ -274,7 +325,9 @@ async function loadCurrentUserData(user) {
         "Perfil ainda não configurado. Fale com a Liga para ajustar seu acesso.";
   }
 
-  setText(userRoleTextP, roleText);
+  if (userRoleTextP) {
+    userRoleTextP.innerHTML = roleText;
+  }
 
   // Áreas administrativas (quadrilha, docs, financeiro)
   if (quadrilhaAdminArea) {
@@ -296,19 +349,25 @@ async function fetchQuadrilhas() {
     return quadrilhasCache;
   }
 
-  const snap = await getDocs(collection(db, "quadrilhas"));
-  const items = [];
+  try {
+    const snap = await getDocs(collection(db, "quadrilhas"));
+    const items = [];
 
-  snap.forEach((docSnap) => {
-    items.push({
-      id: docSnap.id,
-      ...docSnap.data(),
+    snap.forEach((docSnap) => {
+      items.push({
+        id: docSnap.id,
+        ...docSnap.data(),
+      });
     });
-  });
 
-  quadrilhasCache = items;
-  populateQuadrilhaSelects(items);
-  return items;
+    quadrilhasCache = items.length ? items : SAMPLE_QUADRILHAS.slice();
+  } catch (err) {
+    console.warn("Falha ao carregar quadrilhas do Firestore, usando fallback local.", err);
+    quadrilhasCache = SAMPLE_QUADRILHAS.slice();
+  }
+
+  populateQuadrilhaSelects(quadrilhasCache);
+  return quadrilhasCache;
 }
 
 function renderQuadrilhaCard(q, docStatusLabel) {
@@ -372,17 +431,23 @@ function mapStatusDocumento(status) {
 async function fetchDocumentos() {
   if (documentosCache) return documentosCache;
 
-  const snap = await getDocs(collection(db, "documentos_quadrilha"));
-  const docs = [];
-  snap.forEach((docSnap) => {
-    docs.push({
-      id: docSnap.id,
-      ...docSnap.data(),
+  try {
+    const snap = await getDocs(collection(db, "documentos_quadrilha"));
+    const docs = [];
+    snap.forEach((docSnap) => {
+      docs.push({
+        id: docSnap.id,
+        ...docSnap.data(),
+      });
     });
-  });
 
-  documentosCache = docs;
-  return docs;
+    documentosCache = docs.length ? docs : SAMPLE_DOCS.slice();
+  } catch (err) {
+    console.warn("Falha ao carregar documentos do Firestore, usando fallback local.", err);
+    documentosCache = SAMPLE_DOCS.slice();
+  }
+
+  return documentosCache;
 }
 
 // Monta um mapa: quadrilhaId -> "OK" | "Pendente" | "Sem informação"
@@ -428,6 +493,48 @@ function buildDocumentStatusMap(docs) {
   });
 
   return statusPorQuadrilha;
+}
+
+function updateDashboardWidgets() {
+  // Quadrilhas
+  const quadrilhas = quadrilhasCache || [];
+  if (statQuadrilhasTotal) setText(statQuadrilhasTotal, quadrilhas.length.toString());
+  if (statQuadrilhasEspecial) {
+    const countEsp = quadrilhas.filter((q) =>
+      (q.grupo_atual || "").toUpperCase().includes("ESPECIAL")
+    ).length;
+    setText(statQuadrilhasEspecial, countEsp.toString());
+  }
+  if (statQuadrilhasAcesso) {
+    const countAcesso = quadrilhas.filter((q) =>
+      (q.grupo_atual || "").toUpperCase().includes("ACESSO")
+    ).length;
+    setText(statQuadrilhasAcesso, countAcesso.toString());
+  }
+
+  // Documentos
+  const docs = documentosCache || [];
+  const statusMap = buildDocumentStatusMap(docs);
+  let ok = 0;
+  let pend = 0;
+  Object.values(statusMap).forEach((st) => {
+    if (st === "OK") ok += 1;
+    else pend += 1;
+  });
+  if (statDocsOk) setText(statDocsOk, ok.toString());
+  if (statDocsPend) setText(statDocsPend, pend.toString());
+
+  // Financeiro
+  const fin = financeiroCache || [];
+  let aberto = 0;
+  let pago = 0;
+  fin.forEach((l) => {
+    const val = Number(l.valor) || 0;
+    if ((l.status || "").toUpperCase() === "PAGO") pago += val;
+    else if ((l.status || "").toUpperCase() === "ABERTO") aberto += val;
+  });
+  if (statFinanceiroAberto) setText(statFinanceiroAberto, formatCurrencyBR(aberto));
+  if (statFinanceiroPago) setText(statFinanceiroPago, formatCurrencyBR(pago));
 }
 
 // ====== FINANCEIRO ======
@@ -584,6 +691,7 @@ async function loadFinanceiroForCurrentUser() {
     finTableBody.innerHTML = visiveis
       .map((l) => renderFinanceiroRow(l, mapaQuadrilhas))
       .join("");
+    updateDashboardWidgets();
   } catch (error) {
     console.error("Erro ao carregar financeiro:", error);
     finTableBody.innerHTML =
@@ -669,12 +777,16 @@ async function loadDocumentosForCurrentUser() {
     if (!visiveis.length) {
       docTableBody.innerHTML =
         '<tr><td colspan="5">Nenhum documento encontrado.</td></tr>';
+      updateDashboardWidgets();
+      updateDashboardWidgets();
       return;
     }
 
     docTableBody.innerHTML = visiveis
       .map((d) => renderDocumentoRow(d, mapaQuadrilhas))
       .join("");
+    updateDashboardWidgets();
+    updateDashboardWidgets();
   } catch (error) {
     console.error("Erro ao carregar documentos:", error);
     docTableBody.innerHTML =
@@ -687,6 +799,7 @@ async function loadQuadrilhasForCurrentUser() {
   if (!quadrilhaContent || !quadrilhaSubtitle) return;
 
   quadrilhaContent.innerHTML = "<p>Carregando quadrilhas...</p>";
+
 
   try {
     const papel = currentUserData?.papel || "SEM_PAPEL";
@@ -1547,6 +1660,7 @@ onAuthStateChanged(auth, async (user) => {
 // -----------------------------
 document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.querySelectorAll('.portal-nav-link');
+  const heroLinks = document.querySelectorAll('.js-section-link');
   const sections = document.querySelectorAll('.portal-section');
 
   function showSection(sectionKey) {
@@ -1597,6 +1711,15 @@ document.addEventListener('DOMContentLoaded', () => {
           // outras abas, por enquanto, não têm carregamento dinâmico
           break;
       }
+    });
+  });
+
+  heroLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const key = link.dataset.section;
+      if (!key) return;
+      showSection(key);
     });
   });
 });

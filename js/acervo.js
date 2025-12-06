@@ -91,6 +91,8 @@ function renderMediaCard(item, quadrilhasMap){
 }
 
 function renderEtapaSection(etapa, items, quadrilhasMap, isHighlight){
+  if(!items.length) return null;
+
   const wrap = document.createElement("section");
   wrap.className = `etapa-section reveal ${isHighlight ? "etapa-highlight" : ""}`;
   wrap.id = `etapa-section-${etapa.id || "geral"}`;
@@ -115,14 +117,7 @@ function renderEtapaSection(etapa, items, quadrilhasMap, isHighlight){
   const grid = document.createElement("div");
   grid.className = "media-grid";
 
-  if(!items.length){
-    const empty = document.createElement("div");
-    empty.className = "muted";
-    empty.textContent = "Ainda não há mídia cadastrada para esta etapa.";
-    grid.appendChild(empty);
-  } else {
-    items.forEach(it => grid.appendChild(renderMediaCard(it, quadrilhasMap)));
-  }
+  items.forEach(it => grid.appendChild(renderMediaCard(it, quadrilhasMap)));
 
   wrap.appendChild(head);
   wrap.appendChild(grid);
@@ -158,7 +153,7 @@ function groupByEtapa(items){
 }
 
 (async function init(){
-  // Navegação será renderizada pelo components.js
+  setActiveNav();
 
   const params = new URLSearchParams(location.search);
   const paramYear = params.get("ano") || params.get("year");
@@ -217,7 +212,23 @@ function groupByEtapa(items){
 
   async function render(){
     const itemsRaw = (acervoAll[currentYear] || []).slice();
-    const etapas     = (await loadJSON(`data/etapas_${currentYear}.json`)) || [];
+
+    // Adiciona álbum externo do Drive para 2025
+    if (currentYear === "2025" && !itemsRaw.find(it => it.id === "drive-2025")) {
+      itemsRaw.unshift({
+        id: "drive-2025",
+        tipo: "album",
+        titulo: "Álbum de Fotos 2025 (Drive)",
+        descricao: "Galeria oficial de fotos do Circuito 2025 no Google Drive.",
+        data: "2025-12-31",
+        arquivo: "https://drive.google.com/drive/folders/16wyFhrqblzjYa8gHuerUU08ENciXo4Dx?usp=sharing",
+        thumb: "assets/banners/placeholder.jpg"
+      });
+    }
+    const mode = etapaFilterId ? "etapas" : (viewMode?.value || "todos");
+    const etapas = (mode === "etapas")
+      ? (await loadJSON(`data/etapas_${currentYear}.json`)) || []
+      : [];
 
     const items = autoAssignEtapa(itemsRaw, etapas);
 
@@ -233,8 +244,6 @@ function groupByEtapa(items){
     }
 
     content.innerHTML = "";
-
-    const mode = viewMode?.value || "etapas";
 
     if(mode === "todos" || !etapas.length){
       const grid = document.createElement("div");
@@ -256,28 +265,42 @@ function groupByEtapa(items){
     const byEtapa = groupByEtapa(filtered);
     const ordenadas = etapas.slice().sort((a,b)=> (a.data||"").localeCompare(b.data||""));
 
-    if(etapaFilterId){
-      // render apenas a etapa solicitada
-      const etapa = ordenadas.find(e => String(e.id) === etapaFilterId);
-      if(etapa){
-        const list = byEtapa.get(etapaFilterId) || [];
-        content.appendChild(renderEtapaSection(etapa, list, quadrilhasMap, true));
-      } else {
-        content.innerHTML = `<div class="muted">Etapa não encontrada neste ano.</div>`;
-      }
+  if(etapaFilterId){
+    // render apenas a etapa solicitada
+    const etapa = ordenadas.find(e => String(e.id) === etapaFilterId);
+    if(etapa){
+      const list = byEtapa.get(etapaFilterId) || [];
+      const sec = renderEtapaSection(etapa, list, quadrilhasMap, true);
+      if(sec) content.appendChild(sec);
     } else {
-      // render todas as etapas
-      ordenadas.forEach(et=>{
-        const list = byEtapa.get(String(et.id)) || [];
-        content.appendChild(renderEtapaSection(et, list, quadrilhasMap, false));
-      });
+      content.innerHTML = `<div class="muted">Etapa não encontrada neste ano.</div>`;
+    }
+  } else {
+    // render todas as etapas
+    let renderedCount = 0;
+    ordenadas.forEach(et=>{
+      const list = byEtapa.get(String(et.id)) || [];
+      const sec = renderEtapaSection(et, list, quadrilhasMap, false);
+      if(sec){
+        content.appendChild(sec);
+        renderedCount++;
+      }
+    });
 
-      const geral = byEtapa.get("geral") || [];
-      if(geral.length){
-        const fake = { id:"geral", nome:"Conteúdos gerais da Liga" };
-        content.appendChild(renderEtapaSection(fake, geral, quadrilhasMap, false));
+    const geral = byEtapa.get("geral") || [];
+    if(geral.length){
+      const fake = { id:"geral", nome:"Conteúdos gerais da Liga" };
+      const sec = renderEtapaSection(fake, geral, quadrilhasMap, false);
+      if(sec){
+        content.appendChild(sec);
+        renderedCount++;
       }
     }
+
+    if(renderedCount === 0){
+      content.innerHTML = `<div class="muted">Ainda não há mídia cadastrada para este ano.</div>`;
+    }
+  }
 
     // reveal
     const els = document.querySelectorAll(".reveal");
