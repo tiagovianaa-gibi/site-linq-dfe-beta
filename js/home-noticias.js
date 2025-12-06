@@ -1,63 +1,124 @@
-import { loadJSON } from "./shared.js";
+﻿import { loadJSON } from "./shared.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", loadHomeNews);
 
+const firebaseConfig = {
+  apiKey: "AIzaSyCm9ANrGwedzgdvCaSf05-qZsTPJMgrWOA",
+  authDomain: "portal-da-liga.firebaseapp.com",
+  projectId: "portal-da-liga",
+  storageBucket: "portal-da-liga.firebasestorage.app",
+  messagingSenderId: "129376570268",
+  appId: "1:129376570268:web:b13e414ee188a189869659",
+  measurementId: "G-2LS730BX44",
+};
+
+let firebaseApp = null;
+let firestoreDb = null;
+
+function ensureFirestore() {
+  if (firestoreDb) return firestoreDb;
+  firebaseApp = firebaseApp || initializeApp(firebaseConfig);
+  firestoreDb = getFirestore(firebaseApp);
+  return firestoreDb;
+}
+
+async function fetchNoticiasFirestore() {
+  try {
+    const db = ensureFirestore();
+    const snap = await getDocs(collection(db, "noticias"));
+    const items = [];
+    snap.forEach((doc) => {
+      const data = doc.data() || {};
+      const dataRef =
+        data.dataPublicacao || data.dataAtualizacao || data.dataCriacao || null;
+      const dataJs =
+        dataRef && dataRef.toDate ? dataRef.toDate() : dataRef ? new Date(dataRef) : null;
+      items.push({
+        id: doc.id,
+        titulo: data.titulo || "",
+        resumo: data.resumo || "",
+        imagem: data.imagemCapaUrl || data.imagem || "",
+        data: dataJs ? dataJs.toISOString() : "",
+        status: data.status || "",
+        slug: data.slug || "",
+      });
+    });
+    return items.filter((n) => (n.status || "").toLowerCase() === "publicada");
+  } catch (err) {
+    console.warn("Falha ao carregar notícias do Firestore, tentando JSON local.", err);
+    return null;
+  }
+}
+
+function mapJsonToNews(jsonList = []) {
+  return jsonList.map((n) => ({
+    id: n.id,
+    titulo: n.titulo || n.title || "",
+    resumo: n.resumo || n.excerpt || "",
+    imagem: n.imagemCapaUrl || n.imagem || n.image || n.foto || "",
+    data: n.data || n.date || "",
+    slug: n.slug || "",
+  }));
+}
+
 async function loadHomeNews() {
-  const grid = document.getElementById("homeNewsGrid");
+  const grid = document.getElementById("home-news-list");
   if (!grid) return;
 
-  const noticias = (await loadJSON("data/noticias.json")) || [];
+  let noticias = (await fetchNoticiasFirestore()) || [];
 
-  // aceita date OU data (pra não quebrar)
+  // fallback para JSON local se Firestore falhar
+  if (!noticias.length) {
+    const jsonLocal = (await loadJSON("data/noticias.json")) || [];
+    noticias = mapJsonToNews(jsonLocal);
+  }
+
+  // ordena por data decrescente
   noticias.sort((a, b) => {
-    const da = new Date(a.date || a.data || "2000-01-01");
-    const db = new Date(b.date || b.data || "2000-01-01");
+    const da = new Date(a.data || "2000-01-01").getTime();
+    const db = new Date(b.data || "2000-01-01").getTime();
     return db - da;
   });
 
-  const latest = noticias.slice(0, 2);
+  const latest = noticias.slice(0, 3);
 
   if (!latest.length) {
     grid.innerHTML = `<p class="muted">Nenhuma notícia cadastrada ainda.</p>`;
     return;
   }
 
-  grid.innerHTML = latest.map(n => {
-    const rawImg = n.imagem || n.image || n.foto || "";
-let imgSrc = rawImg;
+  grid.innerHTML = latest
+    .map((n) => {
+      const imgSrc = normalizeImagePath(n.imagem || "");
+      const imgHtml = imgSrc
+        ? `<img src="${imgSrc}" alt="${escapeHtml(n.titulo)}" onerror="this.closest('.news-card').classList.add('no-image'); this.remove();">`
+        : "";
 
-// se vier só o nome do arquivo, prefixa a pasta padrão
-if (
-  imgSrc &&
-  !imgSrc.startsWith("http") &&
-  !imgSrc.startsWith("assets/")
-) {
-  imgSrc = `assets/noticias/${imgSrc}`;
-}
+      const dataTxt = n.data ? formatDateBR(n.data) : "";
+      const url = n.slug
+        ? `noticia.html?slug=${encodeURIComponent(n.slug)}`
+        : `noticia.html?id=${encodeURIComponent(n.id || "")}`;
 
-    const imgHtml = imgSrc
-      ? `<img src="${imgSrc}" alt="${n.title || n.titulo || ""}" onerror="this.remove()">`
-      : "";
-
-    const titulo = n.title || n.titulo || "Notícia";
-    const resumo = n.excerpt || n.resumo || "";
-    const url = n.url || (n.id != null ? `noticia.html?id=${n.id}` : "noticias.html");
-    const dataIso = n.date || n.data;
-    const dataTxt = dataIso ? formatDateBR(dataIso) : "";
-
-    return `
-      <article class="news-card">
-        <a href="${url}">
-          ${imgHtml}
-          <div class="news-card-body">
-            ${dataTxt ? `<span class="news-date">${dataTxt}</span>` : ""}
-            <h3>${titulo}</h3>
-            ${resumo ? `<p>${resumo}</p>` : ""}
-          </div>
-        </a>
-      </article>
-    `;
-  }).join("");
+      return `
+        <article class="news-card">
+          <a href="${url}">
+            ${imgHtml}
+            <div class="news-card-body">
+              ${dataTxt ? `<span class="news-date">${dataTxt}</span>` : ""}
+              <h3>${escapeHtml(n.titulo)}</h3>
+              ${n.resumo ? `<p>${escapeHtml(n.resumo)}</p>` : ""}
+            </div>
+          </a>
+        </article>
+      `;
+    })
+    .join("");
 }
 
 function formatDateBR(isoDate) {
@@ -66,6 +127,30 @@ function formatDateBR(isoDate) {
   return d.toLocaleDateString("pt-BR", {
     day: "2-digit",
     month: "long",
-    year: "numeric"
+    year: "numeric",
   });
+}
+
+function escapeHtml(str = "") {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function normalizeImagePath(path = "") {
+  if (!path) return "";
+  // HTTP(S) fica como está
+  if (/^https?:\/\//i.test(path)) return path;
+
+  // Remove querystring e pega só o basename
+  const clean = path.split("?")[0];
+  const parts = clean.split("/");
+  const filename = parts.pop() || "";
+  if (!filename) return "";
+
+  // Se já está em assets/noticias com subpasta, força apenas o arquivo
+  return `assets/noticias/${filename}`;
 }

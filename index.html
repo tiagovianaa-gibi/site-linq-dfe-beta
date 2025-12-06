@@ -10,24 +10,27 @@
 <body>
   <!-- Navegação -->
   <nav>
-    <div class="container">
-      <div class="logo">
-        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
-        <span class="logo-text">LINQ-DFE</span>
-      </div>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="circuito.html">Circuito</a></li>
-        <li><a href="filiadas.html">Filiadas</a></li>
-        <li><a href="mapa.html">Mapa</a></li>
-        <li><a href="noticias.html">Notícias</a></li>
-        <li><a href="acervo.html">Acervo</a></li>
-        <li><a href="diretoria.html">Diretoria</a></li>
-        <li><a href="transparencia.html">Transparência</a></li>
-        <li><a href="documentos.html">Documentos</a></li>
-      </ul>
+  <div class="container">
+    <div class="logo">
+      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+      <span class="logo-text">LINQ-DFE</span>
     </div>
-  </nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="circuito.html">Circuito</a></li>
+      <li><a href="filiadas.html">Filiadas</a></li>
+      <li><a href="mapa.html">Mapa</a></li>
+      <li><a href="noticias.html" class="active">Notícias</a></li>
+      <li><a href="acervo.html">Acervo</a></li>
+      <li><a href="diretoria.html">Diretoria</a></li>
+      <li><a href="transparencia.html">Transparência</a></li>
+      <li><a href="documentos.html">Documentos</a></li>
+      <li class="portal-link">
+        <a href="portal.html">Portal da Liga</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
   <main>
     <!-- Hero Video -->
@@ -55,6 +58,20 @@
             <a href="filiadas.html" class="btn btn-outline" style="border-color: white; color: white;">Conhecer Filiadas</a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ===================== NOTÍCIAS ===================== -->
+    <section id="home-news" class="home-section">
+      <div class="home-section-header">
+        <h2 class="home-section-title">Notícias</h2>
+        <a href="noticias.html" class="btn btn-ghost">
+          Ver todas
+        </a>
+      </div>
+
+      <div id="home-news-list" class="home-cards home-news-grid">
+        <!-- Os cards de notícias são inseridos via JavaScript -->
       </div>
     </section>
 
@@ -138,48 +155,45 @@
 
     <!-- Acesso Rápido -->
     <section class="section">
-      <div class="container">
-        <h2 class="section-title">Acesso Rápido</h2>
-        <div class="grid">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">📺 TV da Liga</h3>
-              <p class="card-text">Vídeos e transmissões ao vivo. Em breve!</p>
-              <span class="badge badge-outline">Em breve</span>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">🗺️ Mapa</h3>
-              <p class="card-text">Localize todas as quadrilhas no mapa.</p>
-              <a href="mapa.html" class="btn">Ver Mapa</a>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">📋 Transparência</h3>
-              <p class="card-text">Documentos e informações oficiais.</p>
-              <a href="transparencia.html" class="btn">Acessar</a>
-            </div>
-          </div>
+  <div class="container">
+    <h2 class="section-title">Acesso Rápido</h2>
+    <div class="grid">
+
+      <!-- NOVO: Portal da Liga -->
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">🔐 Portal da Liga</h3>
+          <p class="card-text">
+            Área exclusiva para quadrilhas filiadas, diretoria e equipe técnica.
+          </p>
+          <a href="portal.html" class="btn">Acessar Portal</a>
         </div>
       </div>
-    </section>
 
-    <!-- Notícias -->
-<section class="home-news" id="homeNews">
-  <div class="container">
-    <div class="section-head">
-      <h2>Notícias</h2>
-      <a href="noticias.html" class="btn btn-ghost">Ver todas</a>
-    </div>
-
-    <div class="news-grid" id="homeNewsGrid">
-      <!-- JS preenche aqui -->
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">📺 TV da Liga</h3>
+          <p class="card-text">Vídeos e transmissões ao vivo. Em breve!</p>
+          <span class="badge badge-outline">Em breve</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">🗺️ Mapa</h3>
+          <p class="card-text">Localize todas as quadrilhas no mapa.</p>
+          <a href="mapa.html" class="btn">Ver Mapa</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">📋 Transparência</h3>
+          <p class="card-text">Documentos e informações oficiais.</p>
+          <a href="transparencia.html" class="btn">Acessar</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-
 
     <!-- Parceiros -->
     <section class="section">
@@ -201,7 +215,8 @@
     </div>
   </footer>
 
-  <script type="module" src="js/index.js"></script>
+    <script type="module" src="js/index.js"></script>
+  <script type="module" src="js/home-noticias.js"></script>
 </body>
 </html>
-<script type="module" src="js/home-noticias.js"></script>
+

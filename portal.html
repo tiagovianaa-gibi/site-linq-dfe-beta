@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal da Liga - Área restrita da LINQ-DFE">
+  <title>Portal da Liga | LINQ-DFE</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="portal-body">
+
+  <!-- Podemos reutilizar o mesmo nav, se quiser -->
+  <nav>
+    <div class="container">
+      <div class="logo">
+        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+        <span class="logo-text">LINQ-DFE</span>
+      </div>
+      <ul>
+        <li><a href="index.html">Voltar ao site</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="portal-main">
+    <section class="section">
+      <div class="container portal-login-container">
+        <div class="card portal-login-card">
+          <div class="card-body">
+            <h1 class="section-title" style="text-align:center; margin-bottom: var(--spacing-md);">
+              Portal da Liga
+            </h1>
+            <p style="text-align:center; margin-bottom: var(--spacing-lg);">
+              Acesso exclusivo para quadrilhas filiadas, diretoria da Liga, equipe de credenciamento e jurados.
+            </p>
+
+            <form id="portalLoginForm" class="form-vertical">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" required>
+
+              <label for="senha">Senha</label>
+              <input type="password" id="senha" name="senha" required>
+
+              <button type="submit" class="btn" style="width:100%; margin-top: var(--spacing-md);">
+                Entrar
+              </button>
+
+              <p style="text-align:center; margin-top: var(--spacing-md); font-size: 0.9rem;">
+                Esqueceu a senha? Procure a secretaria da Liga.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 LINQ-DFE - Liga de Quadrilhas Juninas do DF e Entorno</p>
+    </div>
+  </footer>
+
+  <!-- Depois a gente troca por JS com Firebase Auth -->
+  <script type="module" src="js/portal-login.js"></script>
+</body>
+</html>

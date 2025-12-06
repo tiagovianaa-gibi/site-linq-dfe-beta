@@ -108,6 +108,7 @@ nav ul {
   flex-wrap: wrap;
 }
 
+
 nav a {
   text-decoration: none;
   color: var(--text-primary);
@@ -1235,7 +1236,7 @@ body{
   margin-bottom: 16px;
 }
 .home-news {
-  padding: 48px 0;
+  padding: var(--spacing-xl) 0;
 }
 
 .home-news .section-head {
@@ -1243,19 +1244,84 @@ body{
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Seções da home (Campeãs, Destaques, Notícias, etc.) */
+.home-section {
+  max-width: 1200px;
+  margin: 0 auto 4rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Título centralizado, igual "Campeãs 2025" */
+.home-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+}
+
+/* Cabeçalho com título centralizado + botão "Ver todas" à direita */
+.home-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* título centralizado */
+  margin-bottom: 1.75rem;
+  position: relative;
+}
+
+.home-section-header .btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Grid de notícias, centralizado e com o mesmo "respiro" dos outros blocos */
+.home-news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.75rem;
+}
+
+/* Se quiser dar um pouco mais de destaque visual aos cards de notícias */
+.home-news-grid .news-card {
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  background: var(--bg-card);
 }
 
 .news-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.news-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.news-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .news-card a {
   color: inherit;
   text-decoration: none;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .news-card img {
@@ -1265,10 +1331,35 @@ body{
   display: block;
 }
 
-.news-card-body {
-  padding: 14px 16px;
+.news-card.no-image {
+  border: 1px solid var(--border-color);
 }
-.home-news .news-card img{
+
+.news-card-body {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  height: 100%;
+}
+
+.news-date {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.news-card-body h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.news-card-body p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.home-news .news-card img {
   border-radius: 10px 10px 0 0;
 }
 /* ===== Campeãs Home ===== */
@@ -1431,4 +1522,605 @@ body{
     min-width: auto;
     margin-right: 4px;
   }
+}
+
+/* ===== PORTAL DA LIGA ===== */
+
+.portal-body {
+  background: var(--bg-primary);
+}
+
+.portal-header {
+  background: #111827;
+  color: #fff;
+  padding: 0.5rem 0;
+}
+
+.portal-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.portal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.portal-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.portal-logo {
+  height: 32px;
+  margin-right: 0.5rem;
+}
+
+.portal-user-name {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.portal-layout {
+  display: flex;
+  min-height: calc(100vh - 56px);
+}
+
+.portal-sidebar {
+  width: 240px;
+  background: #111827;
+  color: #e5e7eb;
+  padding: 1rem 0.5rem;
+}
+
+/* IMPORTANTE: neutraliza o estilo global de nav dentro do sidebar */
+.portal-sidebar nav {
+  position: static;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.portal-sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.portal-sidebar li {
+  margin-bottom: 0.25rem;
+}
+
+.portal-nav-link {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.portal-nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.portal-nav-link.is-active {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-weight: 600;
+}
+
+.portal-nav-link.is-active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+
+.portal-content {
+  flex: 1;
+  padding: 1.5rem 1rem;
+}
+
+.portal-section {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* espaçamento vertical entre blocos do portal */
+.portal-section + .portal-section {
+  margin-top: 2.5rem;
+}
+
+.portal-form .form-group {
+  margin-bottom: 0.75rem;
+}
+
+.portal-form label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+  color: var(--text-secondary);
+}
+
+.portal-form input,
+.portal-form select {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+.portal-form input:focus,
+.portal-form select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px rgba(211, 47, 47, 0.15);
+}
+
+.portal-form .form-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.portal-form .form-row .form-group {
+  flex: 1;
+}
+
+.form-message {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.portal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.portal-table th,
+.portal-table td {
+  border: 1px solid var(--border-color);
+  padding: 0.4rem 0.5rem;
+  text-align: left;
+}
+
+.portal-table th {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+.portal-table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+.portal-form textarea {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  resize: vertical;
+}
+/* ===== Portal - menu lateral ativo ===== */
+.portal-nav-link.is-active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Corrige nav dentro da sidebar para não usar o nav fixo do site público */
+.portal-sidebar nav {
+  position: static;
+  top: auto;
+  left: auto;
+  right: auto;
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
+}
+
+/* ===== Portal - lista de notícias ===== */
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.news-item {
+  padding: 0.5rem 0.25rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.news-item:last-child {
+  border-bottom: none;
+}
+
+.news-item-main {
+  flex: 1;
+}
+
+.news-item-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.news-item-meta {
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.news-item-meta span {
+  white-space: nowrap;
+}
+
+/* status / selos */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-publicada {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+.status-rascunho {
+  background: rgba(234, 179, 8, 0.12);
+  color: #b45309;
+}
+
+.status-destaque {
+  background: rgba(59, 130, 246, 0.14);
+  color: #1d4ed8;
+}
+
+.news-item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.news-item-actions .btn-sm {
+  width: 90px;
+}
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.news-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+}
+
+.news-item-main h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+.news-item-meta {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.news-item-summary {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.news-item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+/* Notícia - página de detalhe */
+.noticia-page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.noticia-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.65) 100%), var(--capa) center/cover no-repeat;
+  min-height: 320px;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: var(--shadow-md);
+}
+
+.noticia-hero__overlay {
+  padding: var(--spacing-lg);
+  color: #fff;
+  width: 100%;
+}
+
+.noticia-hero h1 {
+  font-size: 2rem;
+  line-height: 1.25;
+  margin: 0;
+  text-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.noticia-meta {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+}
+
+.noticia-resumo {
+  margin-top: var(--spacing-sm);
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.noticia-body {
+  background: var(--bg-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  margin-top: calc(var(--spacing-lg) * -0.4);
+  position: relative;
+  z-index: 1;
+  line-height: 1.75;
+  font-size: 1.02rem;
+}
+
+.noticia-body p + p {
+  margin-top: 1rem;
+}
+
+.noticia-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--spacing-sm);
+}
+
+.tag-chip {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.9rem;
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 768px) {
+  .noticia-hero {
+    min-height: 240px;
+  }
+
+  .noticia-hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .noticia-body {
+    padding: var(--spacing-md);
+    margin-top: calc(var(--spacing-md) * -0.3);
+  }
+}
+/* Override de layout da notícia */
+.noticia-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: var(--spacing-lg);
+}
+
+.noticia-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  background: #0f172a;
+  min-height: 320px;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: var(--shadow-md);
+  margin-top: var(--spacing-lg);
+}
+
+.noticia-hero__img {
+  position: absolute;
+  inset: 0;
+}
+
+.noticia-hero__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.noticia-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.75) 100%);
+}
+
+.noticia-hero__overlay {
+  position: relative;
+  padding: var(--spacing-lg);
+  color: #fff;
+  width: 100%;
+  z-index: 1;
+}
+
+.noticia-hero h1 {
+  font-size: 2rem;
+  line-height: 1.25;
+  margin: 0;
+  text-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.noticia-meta {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+}
+
+.noticia-resumo {
+  margin-top: var(--spacing-sm);
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.noticia-body {
+  background: var(--bg-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  margin-top: -12px;
+  position: relative;
+  z-index: 1;
+  line-height: 1.75;
+  font-size: 1.02rem;
+}
+
+.noticia-body p + p { margin-top: 1rem; }
+
+.noticia-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--spacing-sm);
+}
+
+.tag-chip {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.9rem;
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 768px) {
+  .noticia-hero {
+    min-height: 240px;
+  }
+
+  .noticia-hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .noticia-body {
+    padding: var(--spacing-md);
+    margin-top: -8px;
+  }
+}
+/* Ajuste de afastamento do topo para página de notícia */
+body.page-noticia main {
+  margin-top: 120px;
+}
+
+body.page-noticia .noticia-hero {
+  margin-top: var(--spacing-xl);
+}
+
+body.page-noticia .noticia-page {
+  padding-top: 0;
+}
+/* News page: hero behind fixed nav */
+body.page-noticia main {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body.page-noticia .noticia-hero {
+  margin-top: 0;
+}
+
+body.page-noticia .noticia-page {
+  padding-top: 0;
+}
+/* Correção final: hero abaixo do menu fixo na página de notícia */
+body.page-noticia main {
+  margin-top: 90px !important;
+  padding-top: 0 !important;
+}
+
+body.page-noticia .noticia-hero {
+  margin-top: var(--spacing-md) !important;
+}
+
+/* Tags das notícias na listagem */
+.news-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.news-tag {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent-primary);
+  color: var(--accent-primary);
+  background: transparent;
+}
+
+.news-tag-more {
+  opacity: 0.7;
+}
+
+/* Esconde visualmente mantendo acessível para leitores de tela */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

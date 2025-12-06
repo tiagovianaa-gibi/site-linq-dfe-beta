@@ -1,0 +1,536 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal da Liga - Dashboard | LINQ-DFE</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="portal-body">
+  <header class="portal-header">
+    <div class="container portal-header-inner">
+      <div class="portal-header-left">
+        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" class="portal-logo" onerror="this.style.display='none'">
+        <span class="logo-text">Portal da Liga</span>
+      </div>
+      <div class="portal-header-right">
+        <span id="portalUserName" class="portal-user-name"></span>
+        <button id="logoutButton" class="btn btn-outline">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="portal-layout">
+    <!-- MENU LATERAL -->
+    <aside class="portal-sidebar">
+      <nav>
+        <ul>
+          <li><button class="portal-nav-link" data-section="dashboard">Início</button></li>
+          <li><button class="portal-nav-link" data-section="quadrilha">Quadrilhas</button></li>
+          <li><button class="portal-nav-link" data-section="pessoas">Pessoas / Elenco</button></li>
+          <li><button class="portal-nav-link" data-section="documentos">Documentos</button></li>
+          <li><button class="portal-nav-link" data-section="financeiro">Financeiro</button></li>
+          <li><button class="portal-nav-link" data-section="credenciamento">Credenciamento</button></li>
+          <li><button class="portal-nav-link" data-section="competicoes">Competições & Notas</button></li>
+          <li><button class="portal-nav-link" data-section="penalidades">Penalidades</button></li>
+          <li><button class="portal-nav-link" data-section="noticias">Notícias</button></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="portal-content">
+      <!-- DASHBOARD -->
+      <section id="section-dashboard" class="portal-section">
+        <h1 class="section-title">Bem-vindo ao Portal da Liga</h1>
+        <p id="portalUserRoleText"></p>
+
+        <div class="grid">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">Status geral</h3>
+              <p id="statusCardText">
+                Aqui depois vamos mostrar: situação da quadrilha, documentos, financeiro, eventos próximos...
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTÍCIAS -->
+      <section id="section-noticias" class="portal-section" style="display:none;">
+        <h1 class="section-title">Notícias</h1>
+        <p id="newsSubtitle">
+          Aqui você gerencia as notícias que aparecem no site da Liga.
+        </p>
+
+        <div class="grid">
+          <!-- Lista de notícias -->
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">Notícias cadastradas</h3>
+              <div id="newsList" class="news-list">
+                <p>Carregando notícias...</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulário de criação/edição (só para quem pode editar) -->
+          <div class="card" id="newsAdminCard" style="display:none;">
+            <div class="card-body">
+              <h3 class="card-title" id="newsFormTitle">Nova notícia</h3>
+
+              <form id="newsForm" class="portal-form">
+                <input type="hidden" id="newsId" />
+
+                <div class="form-group">
+                  <label for="newsTitulo">Título</label>
+                  <input id="newsTitulo" type="text" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="newsResumo">Resumo / subtítulo</label>
+                  <textarea id="newsResumo" rows="2"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="newsImagem">URL da imagem de capa</label>
+                  <input id="newsImagem" type="text" placeholder="https://..." />
+                  <div class="form-group" style="margin-top:0.5rem;">
+                    <input id="newsImagemFile" type="file" accept="image/*" style="display:none;">
+                    <button type="button" class="btn btn-light" id="newsUploadBtn">Enviar imagem</button>
+                    <span id="newsUploadStatus" style="margin-left:0.5rem; font-size:0.9rem;"></span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="newsTags">Tags (separadas por vírgula)</label>
+                  <input id="newsTags" type="text" placeholder="giro cultural, circuito 2025" />
+                </div>
+
+                <div class="form-group">
+                  <label for="newsStatus">Status</label>
+                  <select id="newsStatus">
+                    <option value="publicada">Publicada</option>
+                    <option value="rascunho">Rascunho</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="newsConteudo">Conteúdo (texto normal — linha em branco separa parágrafos e "##" cria subtítulo)</label>
+                  <textarea id="newsConteudo" rows="6" required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>
+                    <input type="checkbox" id="newsDestaqueHome" />
+                    Destacar na home do site
+                  </label>
+                </div>
+
+                <button type="submit" class="btn">Salvar notícia</button>
+                <button type="button" id="newsFormCancel" class="btn btn-light" style="margin-left:0.5rem; display:none;">
+                  Cancelar edição
+                </button>
+
+                <p id="newsFormMessage" class="form-message"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- QUADRILHAS -->
+<section id="section-quadrilha" class="portal-section">
+  <h2 class="section-title">Quadrilhas</h2>
+  <p id="quadrilhaSubtitle">
+    Lista de quadrilhas cadastradas na Liga.
+  </p>
+
+  <div id="quadrilhaContent" class="grid" style="margin-top: 1rem;">
+    <!-- O JS vai preencher aqui -->
+  </div>
+
+  <!-- ÁREA DA LIGA: CADASTRO / USUÁRIOS -->
+  <div id="quadrilhaAdminArea" style="margin-top: 2rem; display: none;">
+    <h3 class="section-title" style="font-size: 1.2rem;">
+      Área da Liga — gestão de quadrilhas e acessos
+    </h3>
+
+    <div class="grid">
+      <!-- CARD: CADASTRAR / EDITAR QUADRILHA -->
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Cadastrar / editar quadrilha</h4>
+          <form id="quadrilhaForm" class="portal-form">
+            <div class="form-group">
+              <label for="qId">ID / Sigla (sem espaços)</label>
+              <input id="qId" type="text" required />
+            </div>
+
+            <div class="form-group">
+              <label for="qNome">Nome da quadrilha</label>
+              <input id="qNome" type="text" required />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="qCidade">Cidade</label>
+                <input id="qCidade" type="text" />
+              </div>
+              <div class="form-group">
+                <label for="qUF">UF</label>
+                <input id="qUF" type="text" maxlength="2" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="qGrupo">Grupo atual</label>
+              <select id="qGrupo">
+                <option value="">Selecione...</option>
+                <option value="ESPECIAL">Especial</option>
+                <option value="ACESSO">Acesso</option>
+                <option value="INICIANTE">Iniciante</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="qInstagram">Instagram</label>
+              <input id="qInstagram" type="text" />
+            </div>
+
+            <button type="submit" class="btn">Salvar quadrilha</button>
+            <p id="quadrilhaFormMessage" class="form-message"></p>
+          </form>
+        </div>
+      </div>
+
+      <!-- CARD: ADICIONAR / VINCULAR USUÁRIO -->
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Vincular usuário a uma quadrilha</h4>
+          <p class="card-text">
+            Esse formulário define o papel e a quadrilha de um usuário que já tem login.
+          </p>
+          <form id="userForm" class="portal-form">
+            <div class="form-group">
+              <label for="userEmail">E-mail do usuário</label>
+              <input id="userEmail" type="email" required />
+            </div>
+
+            <div class="form-group">
+              <label for="userNome">Nome (opcional, para exibir no portal)</label>
+              <input id="userNome" type="text" />
+            </div>
+
+            <div class="form-group">
+              <label for="userPapel">Papel</label>
+              <select id="userPapel" required>
+                <option value="">Selecione...</option>
+                <option value="LIGA_ADMIN">Administrador da Liga</option>
+                <option value="QUADRILHA_ADMIN">Administrador da quadrilha</option>
+                <option value="CREDENCIAMENTO">Equipe de credenciamento</option>
+                <option value="JURADO">Jurado</option>
+              </select>
+            </div>
+
+            <div class="form-group" id="userQuadrilhaGroup">
+              <label for="userQuadrilhaId">Quadrilha</label>
+              <select id="userQuadrilhaId">
+                <option value="">Selecione...</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn">Salvar usuário</button>
+            <p id="userFormMessage" class="form-message"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+      <!-- DOCUMENTOS -->
+      <section id="section-documentos" class="portal-section">
+        <h2 class="section-title">Documentos das quadrilhas</h2>
+        <p id="docSubtitle">
+          Aqui você acompanha os principais documentos das quadrilhas (estatuto, CNPJ, certidões, etc.).
+        </p>
+
+        <!-- FILTROS - visíveis principalmente para a Liga -->
+        <div class="card" id="docFiltersCard">
+          <div class="card-body">
+            <h4 class="card-title">Filtros</h4>
+            <div class="portal-form form-row">
+              <div class="form-group">
+                <label for="docFiltroQuadrilha">Quadrilha</label>
+                <select id="docFiltroQuadrilha">
+                  <option value="">Todas</option>
+                  <!-- opções via JS -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="docFiltroStatus">Status</label>
+                <select id="docFiltroStatus">
+                  <option value="">Todos</option>
+                  <option value="VALIDO">Válido</option>
+                  <option value="PENDENTE">Pendente</option>
+                  <option value="VENCIDO">Vencido</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="docFiltroTipo">Tipo</label>
+                <select id="docFiltroTipo">
+                  <option value="">Todos</option>
+                  <option value="ESTATUTO">Estatuto</option>
+                  <option value="ATA_ELEICAO">Ata de eleição da diretoria</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTA DE DOCUMENTOS -->
+        <div class="card" style="margin-top: 1rem;">
+          <div class="card-body">
+            <h4 class="card-title">Lista de documentos</h4>
+            <div class="table-wrapper">
+              <table class="portal-table">
+                <thead>
+                  <tr>
+                    <th>Quadrilha</th>
+                    <th>Tipo</th>
+                    <th>Status</th>
+                    <th>Válido até</th>
+                    <th>Observações</th>
+                  </tr>
+                </thead>
+                <tbody id="docTableBody">
+                  <tr><td colspan="5">Carregando documentos...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ÁREA DA LIGA: CADASTRAR / ATUALIZAR DOCUMENTO -->
+        <div id="docAdminArea" style="margin-top: 1.5rem; display:none;">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Cadastrar / atualizar documento</h4>
+              <form id="docForm" class="portal-form">
+                <div class="form-group">
+                  <label for="docQuadrilhaId">Quadrilha</label>
+                  <select id="docQuadrilhaId" required>
+                    <option value="">Selecione...</option>
+                    <!-- opções via JS -->
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="docTipo">Tipo de documento</label>
+                  <select id="docTipo" required>
+                    <option value="">Selecione...</option>
+                    <option value="ESTATUTO">Estatuto da quadrilha</option>
+                    <option value="ATA_ELEICAO">Ata de eleição da diretoria</option>
+                  </select>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="docDataEmissao">Data de emissão</label>
+                    <input id="docDataEmissao" type="date" />
+                  </div>
+                  <div class="form-group">
+                    <label for="docDataValidade">Data de validade</label>
+                    <input id="docDataValidade" type="date" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="docStatus">Status</label>
+                  <select id="docStatus" required>
+                    <option value="VALIDO">Válido</option>
+                    <option value="PENDENTE">Pendente</option>
+                    <option value="VENCIDO">Vencido</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="docObs">Observações</label>
+                  <textarea id="docObs" rows="2"></textarea>
+                </div>
+
+                <button type="submit" class="btn">Salvar documento</button>
+                <p id="docFormMessage" class="form-message"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FINANCEIRO -->
+        <section id="section-financeiro" class="portal-section">
+        <h2 class="section-title">Financeiro das quadrilhas</h2>
+        <p id="finSubtitle">
+          Aqui você acompanha cobranças de joia, anuidades e repasses da Liga.
+        </p>
+
+        <!-- FILTROS (principalmente para a Liga) -->
+        <div class="card" id="finFiltersCard">
+          <div class="card-body">
+            <h4 class="card-title">Filtros</h4>
+            <div class="portal-form form-row">
+              <div class="form-group">
+                <label for="finFiltroQuadrilha">Quadrilha</label>
+                <select id="finFiltroQuadrilha">
+                  <option value="">Todas</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="finFiltroAno">Ano</label>
+                <select id="finFiltroAno">
+                  <option value="">Todos</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="finFiltroStatus">Status</label>
+                <select id="finFiltroStatus">
+                  <option value="">Todos</option>
+                  <option value="ABERTO">Em aberto</option>
+                  <option value="PAGO">Pago</option>
+                  <option value="CANCELADO">Cancelado</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTA DE LANÇAMENTOS -->
+        <div class="card" style="margin-top: 1rem;">
+          <div class="card-body">
+            <h4 class="card-title">Lançamentos</h4>
+            <div class="table-wrapper">
+              <table class="portal-table">
+                <thead>
+                  <tr>
+                    <th>Quadrilha</th>
+                    <th>Ano</th>
+                    <th>Tipo</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th>Vencimento</th>
+                    <th>Pagamento</th>
+                  </tr>
+                </thead>
+                <tbody id="finTableBody">
+                  <tr><td colspan="8">Nenhum lançamento encontrado.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ÁREA DA LIGA: NOVO LANÇAMENTO -->
+        <div id="finAdminArea" style="margin-top: 1.5rem; display:none;">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Cadastrar lançamento financeiro</h4>
+              <form id="finForm" class="portal-form">
+                <div class="form-group">
+                  <label for="finQuadrilhaId">Quadrilha</label>
+                  <select id="finQuadrilhaId" required>
+                    <option value="">Selecione...</option>
+                  </select>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="finTipo">Tipo</label>
+                    <select id="finTipo" required>
+                      <option value="">Selecione...</option>
+                      <option value="JOIA">Joia de filiação</option>
+                      <option value="ANUIDADE">Anuidade</option>
+                      <option value="REPASSE">Repasse da Liga</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="finAno">Ano</label>
+                    <input id="finAno" type="number" min="2000" max="2100" required />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="finDescricao">Descrição</label>
+                  <input id="finDescricao" type="text" placeholder="Ex.: Joia 2025, Anuidade 2025..." required />
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="finValor">Valor (R$)</label>
+                    <input id="finValor" type="number" step="0.01" min="0" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="finStatus">Status</label>
+                    <select id="finStatus" required>
+                      <option value="ABERTO">Em aberto</option>
+                      <option value="PAGO">Pago</option>
+                      <option value="CANCELADO">Cancelado</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="finDataVencimento">Data de vencimento</label>
+                    <input id="finDataVencimento" type="date" />
+                  </div>
+                  <div class="form-group">
+                    <label for="finDataPagamento">Data de pagamento</label>
+                    <input id="finDataPagamento" type="date" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="finObs">Observações</label>
+                  <textarea id="finObs" rows="2"></textarea>
+                </div>
+
+                <button type="submit" class="btn">Salvar lançamento</button>
+                <p id="finFormMessage" class="form-message"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      
+          <!-- NOTÍCIAS -->
+      
+
+      <!-- PLACEHOLDERS DAS OUTRAS TELAS (vamos montar depois) -->
+      <section id="section-pessoas" class="portal-section" style="display:none;">
+        <h1 class="section-title">Pessoas / Elenco</h1>
+        <p>Cadastro e gestão de elenco. Vamos montar depois.</p>
+      </section>
+
+      <section id="section-credenciamento" class="portal-section" style="display:none;">
+        <h1 class="section-title">Credenciamento</h1>
+        <p>Escalação por etapa e credenciamento no dia.</p>
+      </section>
+
+      <section id="section-competicoes" class="portal-section" style="display:none;">
+        <h1 class="section-title">Competições &amp; Notas</h1>
+        <p>Configuração de circuitos, etapas, notas e resultados.</p>
+      </section>
+
+      <section id="section-penalidades" class="portal-section" style="display:none;">
+        <h1 class="section-title">Penalidades</h1>
+        <p>Registro de ocorrências e penalidades por etapa/circuito.</p>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="js/portal-app.js"></script>
+</body>
+</html>

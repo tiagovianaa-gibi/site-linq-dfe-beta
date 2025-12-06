@@ -1,37 +1,63 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Notícia - LINQ-DFE">
-  <title>Notícia | LINQ-DFE</title>
+  <meta name="description" content="Leia a notícia completa do Portal da Liga da LINQ-DFE, com informações sobre o movimento junino do Distrito Federal e Entorno.">
+  <title>Notícia | Portal da Liga - LINQ-DFE</title>
+
+  <!-- Estilos globais -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="page-noticia">
+  <!-- Navegação principal -->
   <nav>
-    <div class="container">
-      <div class="logo">
-        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
-        <span class="logo-text">LINQ-DFE</span>
-      </div>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="circuito.html">Circuito</a></li>
-        <li><a href="filiadas.html">Filiadas</a></li>
-        <li><a href="mapa.html">Mapa</a></li>
-        <li><a href="noticias.html">Notícias</a></li>
-        <li><a href="acervo.html">Acervo</a></li>
-        <li><a href="diretoria.html">Diretoria</a></li>
-        <li><a href="transparencia.html">Transparência</a></li>
-        <li><a href="documentos.html">Documentos</a></li>
-      </ul>
+  <div class="container">
+    <div class="logo">
+      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+      <span class="logo-text">LINQ-DFE</span>
     </div>
-  </nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="circuito.html">Circuito</a></li>
+      <li><a href="filiadas.html">Filiadas</a></li>
+      <li><a href="mapa.html">Mapa</a></li>
+      <li><a href="noticias.html" class="active">Notícias</a></li>
+      <li><a href="acervo.html">Acervo</a></li>
+      <li><a href="diretoria.html">Diretoria</a></li>
+      <li><a href="transparencia.html">Transparência</a></li>
+      <li><a href="documentos.html">Documentos</a></li>
+      <li class="portal-link">
+        <a href="portal.html">Portal da Liga</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
   <main>
-    <div id="noticiaContent">
-      <div class="loading">Carregando...</div>
-    </div>
+    <section class="section">
+      <div class="container">
+        <!-- breadcrumb simples / voltar -->
+        <p class="mb-sm">
+          <a href="noticias.html" class="link">&larr; Voltar para notícias</a>
+        </p>
+
+        <!-- Aqui o JS vai injetar TODO o conteúdo da notícia -->
+        <div id="noticiaContent">
+          <div class="loading">
+            Carregando notícia...
+          </div>
+        </div>
+
+        <!-- bloco para mais notícias / relacionadas, se o JS quiser usar -->
+        <section class="home-news" aria-label="Mais notícias" id="noticiaMaisNoticias" style="display:none;">
+          <div class="section-head">
+            <h2 class="section-title" style="font-size:1.4rem;">Mais notícias</h2>
+          </div>
+          <div class="news-grid" id="noticiaRelacionadas"></div>
+        </section>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -40,6 +66,7 @@
     </div>
   </footer>
 
+  <!-- Script da página de notícia individual -->
   <script type="module" src="js/noticia.js"></script>
 </body>
 </html>
