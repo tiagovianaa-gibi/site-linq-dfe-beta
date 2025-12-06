@@ -9,7 +9,6 @@
 </head>
 <body>
   <nav>
-    <nav>
   <div class="container">
     <div class="logo">
       <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
@@ -20,11 +19,11 @@
       <li><a href="circuito.html">Circuito</a></li>
       <li><a href="filiadas.html">Filiadas</a></li>
       <li><a href="mapa.html">Mapa</a></li>
-      <li><a href="noticias.html" class="active">Notícias</a></li>
+      <li><a href="noticias.html">Notícias</a></li>
       <li><a href="acervo.html">Acervo</a></li>
       <li><a href="diretoria.html">Diretoria</a></li>
       <li><a href="transparencia.html">Transparência</a></li>
-      <li><a href="documentos.html">Documentos</a></li>
+      <li><a href="documentos.html" class="active">Documentos</a></li>
       <li class="portal-link">
         <a href="portal.html">Portal da Liga</a>
       </li>
@@ -32,46 +31,60 @@
   </div>
 </nav>
 
-  <main>
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">Documentos</h1>
-        <p class="section-subtitle">Formulários, regulamentos e identidade visual</p>
+<main class="page-docs">
+  <!-- Cabeçalho da página -->
+  <section class="page-docs-header">
+    <h1 class="page-docs-title">Documentos</h1>
+    <p class="page-docs-subtitle">
+      Formulários, regulamentos e identidade visual
+    </p>
+  </section>
 
-        <div class="grid" id="documentosGrid">
-          <!-- VOCÊ SÓ MUDA AQUI: Adicione seus documentos -->
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">📄 Formulário de Filiação</h3>
-              <p class="card-text">Formulário para novas quadrilhas se filiarem à LINQ-DFE</p>
-              <a href="#" class="btn" target="_blank">Baixar</a>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">📋 Regulamento de Filiação</h3>
-              <p class="card-text">Normas e requisitos para filiação</p>
-              <a href="#" class="btn" target="_blank">Baixar</a>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">🎨 Manual de Identidade Visual</h3>
-              <p class="card-text">Guia de uso da marca LINQ-DFE</p>
-              <a href="#" class="btn" target="_blank">Baixar</a>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">📝 Regulamento Técnico 2026</h3>
-              <p class="card-text">Critérios de avaliação e julgamento</p>
-              <a href="#" class="btn" target="_blank">Baixar</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+  <!-- Grid de cards -->
+  <section class="page-docs-grid">
+
+    <article class="doc-card">
+      <h2 class="doc-card-title">Formulário de Filiação</h2>
+      <p class="doc-card-description">
+        Formulário para novas quadrilhas se filiarem à LINQ-DFE.
+      </p>
+      <a href="assets/docs/formulario-filiacao.pdf" class="btn btn-primary" target="_blank" rel="noopener">
+        Baixar
+      </a>
+    </article>
+
+    <article class="doc-card">
+      <h2 class="doc-card-title">Regulamento de Filiação</h2>
+      <p class="doc-card-description">
+        Normas e requisitos para filiação.
+      </p>
+      <a href="assets/docs/regulamento-filiacao.pdf" class="btn btn-primary" target="_blank" rel="noopener">
+        Baixar
+      </a>
+    </article>
+
+    <article class="doc-card">
+      <h2 class="doc-card-title">Manual de Identidade Visual</h2>
+      <p class="doc-card-description">
+        Guia de uso da marca LINQ-DFE.
+      </p>
+      <a href="assets/docs/manual-identidade-visual.pdf" class="btn btn-primary" target="_blank" rel="noopener">
+        Baixar
+      </a>
+    </article>
+
+    <article class="doc-card">
+      <h2 class="doc-card-title">Regulamento Técnico 2026</h2>
+      <p class="doc-card-description">
+        Critérios de avaliação e julgamento.
+      </p>
+      <a href="assets/docs/regulamento-tecnico-2026.pdf" class="btn btn-primary" target="_blank" rel="noopener">
+        Baixar
+      </a>
+    </article>
+
+  </section>
+</main>
 
   <footer>
     <div class="container">
