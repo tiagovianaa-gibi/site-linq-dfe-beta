@@ -125,15 +125,17 @@ function renderQuadrilhaInfo(quad, historico) {
 
   const perfil = quad.perfil || {};
 
-  // Capa
+  // Capa (usa foto_capa se existir, com focal para rosto)
   if (coverEl) {
-    const basePath = 'assets/fotos-quadrilhas/';
-    const file = quad.foto_capa || quad.foto;
-    const src = file ? basePath + file : getQuadrilhaPhoto(quad);
-    coverEl.src = src;
+    coverEl.src = getQuadrilhaPhoto(quad, true);
     coverEl.alt = quad.nome;
     coverEl.onerror = function () { this.src = 'assets/banners/placeholder.jpg'; };
-    if (quad.focal) applyFocal(coverEl, quad.focal);
+    coverEl.style.objectFit = 'cover';
+    if (quad.focal) {
+      applyFocal(coverEl, quad.focal);
+    } else {
+      coverEl.style.objectPosition = '50% 25%';
+    }
   }
 
   // Título e metadados
