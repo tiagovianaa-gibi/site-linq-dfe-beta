@@ -102,6 +102,58 @@ export function applyFaceCrop(img) {
   img.style.objectPosition = '50% 30%'; // sobe o foco para preservar rosto
 }
 
+/** Dropdown de Filiadas no menu principal */
+async function initQuadrilhaDropdown() {
+  const li = document.querySelector('nav li.has-dropdown');
+  const menu = document.querySelector('.nav-quadrilha-menu');
+  if (!li || !menu) return;
+
+  // Evita reprocessar
+  if (menu.dataset.loaded === 'true') return;
+
+  const data = await loadJSON('data/quadrilhas.json');
+  if (!Array.isArray(data) || !data.length) {
+    menu.innerHTML = '<span class="dropdown-empty">Não foi possível carregar.</span>';
+    return;
+  }
+
+  const sorted = [...data].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+  menu.innerHTML = sorted
+    .map(q => `<a href="quadrilha.html?id=${q.id}">${q.nome}</a>`)
+    .join('');
+  menu.dataset.loaded = 'true';
+}
+
+function setupFiliadasDropdown() {
+  const filLink = document.querySelector('nav a[href$="filiadas.html"]');
+  if (!filLink) return;
+  const li = filLink.closest('li') || filLink.parentElement;
+  if (!li) return;
+
+  // Marca como dropdown e cria container do menu
+  li.classList.add('has-dropdown');
+
+  // Evita adicionar duas vezes
+  if (!li.querySelector('.nav-quadrilha-menu')) {
+    const menu = document.createElement('div');
+    menu.className = 'dropdown-menu nav-quadrilha-menu';
+    li.appendChild(menu);
+  }
+
+  initQuadrilhaDropdown();
+}
+
+// Executa assim que o DOM estiver pronto
+const runWhenReady = (fn) => {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fn, { once: true });
+  } else {
+    fn();
+  }
+};
+
+runWhenReady(setupFiliadasDropdown);
+
 /**
  * Formata data para exibição
  */
