@@ -1,4 +1,4 @@
-// js/portal-app.js
+﻿// js/portal-app.js
 // Lado "logado" do Portal da Liga: verifica usuário, busca papel e controla navegação
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -27,7 +27,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 
-// 🔴 Mesma config do portal-login.js
+// Y" Mesma config do portal-login.js
 const firebaseConfig = {
   apiKey: "AIzaSyCm9ANrGwedzgdvCaSf05-qZsTPJMgrWOA",
   authDomain: "portal-da-liga.firebaseapp.com",
@@ -150,7 +150,7 @@ const newsConteudoTextarea = newsContentInput;
 
 
 
-// ====== ESTADO EM MEMÓRIA ======
+// ====== ESTADO EM MEM"RIA ======
 let currentUserData = null;
 let quadrilhasCache = null;
 let documentosCache = null;
@@ -189,7 +189,7 @@ const SAMPLE_DOCS = [
 ];
 
 
-// ====== FUNÇÕES AUXILIARES ======
+// ====== FUN?.ES AUXILIARES ======
 function setText(el, text) {
   if (el) el.textContent = text;
 }
@@ -381,7 +381,7 @@ function renderQuadrilhaCard(q, docStatusLabel) {
 
   const documentosLinha = docStatusLabel
     ? `<p class="card-text"><strong>Documentos:</strong> ${docStatusLabel}</p>`
-    : `<p class="card-text"><strong>Documentos:</strong> —</p>`;
+    : `<p class="card-text"><strong>Documentos:</strong> ?"</p>`;
 
   return `
     <div class="card">
@@ -391,7 +391,7 @@ function renderQuadrilhaCard(q, docStatusLabel) {
           <strong>Sigla:</strong> ${q.sigla || q.id}
         </p>
         <p class="card-text">
-          <strong>Localidade:</strong> ${cidadeUf || "—"}
+          <strong>Localidade:</strong> ${cidadeUf || "?""}
         </p>
         <p class="card-text">
           <strong>Grupo atual:</strong> ${statusGrupo}
@@ -411,7 +411,7 @@ function mapTipoDocumento(tipo) {
     case "ATA_ELEICAO":
       return "Ata de eleição da diretoria";
     default:
-      return tipo || "—";
+      return tipo || "?"";
   }
 }
 
@@ -424,7 +424,7 @@ function mapStatusDocumento(status) {
     case "VENCIDO":
       return "Vencido";
     default:
-      return status || "—";
+      return status || "?"";
   }
 }
 
@@ -547,7 +547,7 @@ function mapTipoLancamento(tipo) {
     case "REPASSE":
       return "Repasse da Liga";
     default:
-      return tipo || "—";
+      return tipo || "?"";
   }
 }
 
@@ -560,7 +560,7 @@ function mapStatusLancamento(status) {
     case "CANCELADO":
       return "Cancelado";
     default:
-      return status || "—";
+      return status || "?"";
   }
 }
 
@@ -584,15 +584,15 @@ function renderFinanceiroRow(l, mapaQuadrilhas) {
   const nomeQuadrilha =
     (l.quadrilhaId && mapaQuadrilhas[l.quadrilhaId]) ||
     l.quadrilhaId ||
-    "—";
+    "?"";
 
   const tipoLabel = mapTipoLancamento(l.tipo);
   const statusLabel = mapStatusLancamento(l.status);
-  const ano = l.ano || "—";
-  const descricao = l.descricao || "—";
-  const valor = l.valor ? `R$ ${Number(l.valor).toFixed(2)}` : "—";
-  const dataVenc = l.dataVencimento || "—";
-  const dataPag = l.dataPagamento || "—";
+  const ano = l.ano || "?"";
+  const descricao = l.descricao || "?"";
+  const valor = l.valor ? `R$ ${Number(l.valor).toFixed(2)}` : "?"";
+  const dataVenc = l.dataVencimento || "?"";
+  const dataPag = l.dataPagamento || "?"";
 
   return `
     <tr>
@@ -703,10 +703,10 @@ async function loadFinanceiroForCurrentUser() {
 // ====== DOCUMENTOS: RENDER E CARREGAMENTO ======
 function renderDocumentoRow(d, mapaQuadrilhas) {
   const nomeQuadrilha =
-    (d.quadrilhaId && mapaQuadrilhas[d.quadrilhaId]) || d.quadrilhaId || "—";
+    (d.quadrilhaId && mapaQuadrilhas[d.quadrilhaId]) || d.quadrilhaId || "?"";
   const tipoLabel = mapTipoDocumento(d.tipo);
   const statusLabel = mapStatusDocumento(d.status);
-  const dataValidade = d.dataValidade || "—";
+  const dataValidade = d.dataValidade || "?"";
   const obs = d.observacoes || "";
 
   return `
@@ -794,7 +794,7 @@ async function loadDocumentosForCurrentUser() {
   }
 }
 
-// ====== QUADRILHAS: CARREGAMENTO DA SEÇÃO ======
+// ====== QUADRILHAS: CARREGAMENTO DA SE?fO ======
 async function loadQuadrilhasForCurrentUser() {
   if (!quadrilhaContent || !quadrilhaSubtitle) return;
 
@@ -1001,7 +1001,7 @@ if (quadrilhaForm) {
   });
 }
 
-// ====== FUNÇÕES: PAPEL E QUADRILHA ======
+// ====== FUN?.ES: PAPEL E QUADRILHA ======
 function papelPrecisaQuadrilha(papel) {
   // agora só administrador de quadrilha precisa de quadrilha definida
   return papel === "QUADRILHA_ADMIN";
@@ -1026,7 +1026,7 @@ function atualizarVisibilidadeQuadrilhaPorPapel() {
   }
 }
 
-// ====== FORMULÁRIO: VINCULAR USUÁRIO À QUADRILHA ======
+// ====== FORMULÁRIO: VINCULAR USUÁRIO ? QUADRILHA ======
 if (userForm) {
   userForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -1155,7 +1155,7 @@ if (docForm) {
   });
 }
 
-// ====== FORMULÁRIO: NOVO LANÇAMENTO FINANCEIRO ======
+// ====== FORMULÁRIO: NOVO LAN?AMENTO FINANCEIRO ======
 if (finForm) {
   finForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -1525,9 +1525,9 @@ if (newsList) {
     }
   });
 }
-// ====== NOTÍCIAS – HELPERS ======
+// ====== NOTÍCIAS ?" HELPERS ======
 function mapStatusNoticia(status) {
-  if (!status) return "—";
+  if (!status) return "?"";
   const s = status.toString().toLowerCase();
 
   switch (s) {
@@ -1620,7 +1620,7 @@ if (newsImageFileInput) {
 }
 
 
-// ====== BOTÃO SAIR ======
+// ====== BOTfO SAIR ======
 if (logoutButton) {
   logoutButton.addEventListener("click", async () => {
     try {
@@ -1723,5 +1723,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+
 
 

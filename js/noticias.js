@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    NOTICIAS.JS - Lista de noticias (site publico)
    - Busca do Firestore (colecao "noticias")
    ============================================ */
@@ -9,6 +9,10 @@ import {
   getFirestore,
   collection,
   getDocs,
+  query,
+  orderBy,
+  limit,
+  startAfter,
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -25,6 +29,12 @@ let firebaseApp = null;
 let firestoreDb = null;
 let noticias = [];
 let currentSearch = '';
+let lastVisible = null;
+let hasMore = false;
+
+const CACHE_KEY = 'noticiasCacheV1';
+const CACHE_TTL = 10 * 60 * 1000; // 10 minutos
+const PAGE_SIZE = 12;
 
 function ensureFirestore() {
   if (firestoreDb) return firestoreDb;
@@ -55,19 +65,24 @@ function mapFirestoreNoticia(docSnap) {
 }
 
 async function loadNoticiasData() {
+  const cached = readCache();
+  if (cached && !currentSearch) {
+    noticias = cached;
+    renderNoticias();
+  }
+
   try {
-    const db = ensureFirestore();
-    const snap = await getDocs(collection(db, 'noticias'));
-    const items = [];
-    snap.forEach((docSnap) => items.push(mapFirestoreNoticia(docSnap)));
-    // filtra publicadas em qualquer capitalizaÇõÇœo
-    return items.filter((n) => {
-      const status = (n.status || '').toString().toLowerCase();
-      return status === 'publicada';
-    });
+    let firstPage = await fetchNoticiasPage(true);
+    // se vier vazio (ex.: sem indice ou campo dataPublicacao), usa fallback completo
+    if (!firstPage.length) {
+      firstPage = await fetchNoticiasFullFallback();
+    }
+
+    noticias = firstPage;
+    writeCache(noticias);
+    renderNoticias();
   } catch (err) {
     console.error('Nao foi possivel carregar noticias do Firestore.', err);
-    return [];
   }
 }
 
@@ -78,10 +93,94 @@ function getImagem(noticia) {
   );
 }
 
+function readCache() {
+  try {
+    const raw = sessionStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed?.items || !Array.isArray(parsed.items)) return null;
+    const fresh = Date.now() - (parsed.timestamp || 0) < CACHE_TTL;
+    if (!fresh) return null;
+    return parsed.items;
+  } catch (e) {
+    return null;
+  }
+}
+
+function writeCache(items) {
+  try {
+    sessionStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify({
+        items,
+        timestamp: Date.now(),
+      })
+    );
+  } catch (e) {
+    // ignore storage errors
+  }
+}
+
+async function fetchNoticiasPage(reset = false) {
+  try {
+    const db = ensureFirestore();
+    let q = query(
+      collection(db, 'noticias'),
+      orderBy('dataPublicacao', 'desc'),
+      limit(PAGE_SIZE)
+    );
+
+    if (!reset && lastVisible) {
+      q = query(
+        collection(db, 'noticias'),
+        orderBy('dataPublicacao', 'desc'),
+        startAfter(lastVisible),
+        limit(PAGE_SIZE)
+      );
+    }
+
+    const snap = await getDocs(q);
+    const docs = snap.docs || [];
+    lastVisible = docs.length ? docs[docs.length - 1] : null;
+    hasMore = docs.length === PAGE_SIZE;
+
+    const items = [];
+    docs.forEach((docSnap) => items.push(mapFirestoreNoticia(docSnap)));
+
+    return items.filter((n) => {
+      const status = (n.status || '').toString().toLowerCase();
+      return status === 'publicada';
+    });
+  } catch (err) {
+    console.error('Nao foi possivel carregar noticias do Firestore.', err);
+    hasMore = false;
+    return [];
+  }
+}
+
+async function fetchNoticiasFullFallback() {
+  try {
+    const db = ensureFirestore();
+    const snap = await getDocs(collection(db, 'noticias'));
+    const items = [];
+    snap.forEach((docSnap) => items.push(mapFirestoreNoticia(docSnap)));
+    hasMore = false;
+    return items.filter((n) => {
+      const status = (n.status || '').toString().toLowerCase();
+      return status === 'publicada';
+    });
+  } catch (err) {
+    console.error('Nao foi possivel carregar noticias (fallback).', err);
+    hasMore = false;
+    return [];
+  }
+}
+
 function renderNoticias() {
   const container = document.getElementById('noticiasList');
   const manchetesGrid = document.getElementById('manchetesGrid');
   const emptyState = document.getElementById('noticiasEmptyState');
+  const loadMoreBtn = document.getElementById('noticiasLoadMore');
   if (!container) return;
 
   let filtered = [...noticias].sort((a, b) => {
@@ -142,6 +241,7 @@ function renderNoticias() {
   container.innerHTML = '';
   if (filtered.length === 0) {
     if (emptyState) emptyState.classList.remove('hidden');
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
     return;
   }
   if (emptyState) emptyState.classList.add('hidden');
@@ -206,10 +306,15 @@ function renderNoticias() {
 
     container.appendChild(card);
   });
+
+  if (loadMoreBtn) {
+    loadMoreBtn.style.display = hasMore ? 'inline-flex' : 'none';
+    loadMoreBtn.disabled = !hasMore;
+  }
 }
 
 async function init() {
-  noticias = await loadNoticiasData();
+  await loadNoticiasData();
 
   renderNoticias();
 
@@ -223,7 +328,29 @@ async function init() {
     searchInput.addEventListener('input', debouncedSearch);
   }
 
+  const loadMoreBtn = document.getElementById('noticiasLoadMore');
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', async () => {
+      loadMoreBtn.disabled = true;
+      let more = await fetchNoticiasPage(false);
+      if (!more.length) {
+        more = await fetchNoticiasFullFallback();
+      }
+      if (more && more.length) {
+        noticias = noticias.concat(more);
+        writeCache(noticias);
+        renderNoticias();
+      } else {
+        hasMore = false;
+        renderNoticias();
+      }
+      loadMoreBtn.disabled = false;
+    });
+  }
+
   setActiveNav();
 }
 
 init();
+
+

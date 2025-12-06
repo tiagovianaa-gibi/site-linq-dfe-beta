@@ -1,7 +1,7 @@
-/* ============================================
+﻿/* ============================================
    MAPA.JS - Lógica do mapa com Leaflet
    ============================================
-   VOCÊ SÓ MUDA AQUI: nada, funciona automaticamente
+   VOCS S" MUDA AQUI: nada, funciona automaticamente
 */
 
 import { loadJSON, setActiveNav, debounce } from './shared.js';
@@ -187,7 +187,7 @@ function createCityPopup(cidadeData) {
            "
            onmouseover="this.style.background='#b71c1c';"
            onmouseout="this.style.background='var(--accent-primary)';">
-          Ver Perfil →
+          Ver Perfil ?'
         </a>
       </div>
     `;
@@ -245,3 +245,5 @@ async function init() {
 }
 
 init();
+
+

@@ -1,6 +1,9 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="HUB Junino oficial da LINQ-DFE - Liga de Quadrilhas Juninas do DF e Entorno">
@@ -20,14 +23,12 @@
       <li><a href="circuito.html">Circuito</a></li>
       <li><a href="filiadas.html">Filiadas</a></li>
       <li><a href="mapa.html">Mapa</a></li>
-      <li><a href="noticias.html">Notícias</a></li>
+      <li><a href="noticias.html">Not&iacute;cias</a></li>
       <li><a href="acervo.html">Acervo</a></li>
       <li><a href="diretoria.html">Diretoria</a></li>
-      <li><a href="transparencia.html">Transparência</a></li>
+      <li><a href="transparencia.html">Transpar&ecirc;ncia</a></li>
       <li><a href="documentos.html">Documentos</a></li>
-      <li class="portal-link">
-        <a href="portal.html">Portal da Liga</a>
-      </li>
+      <li><a href="portal.html">Portal da Liga</a></li>
     </ul>
   </div>
 </nav>
@@ -41,27 +42,29 @@
       </video>
     </section>
 
-    <!-- Controles de Áudio -->
+    <!-- Controles de áudio -->
     <section class="audio-controls">
-      <button id="btnAtivarSom" onclick="ativarSom()">🔊 Ativar som do vídeo</button>
-      <button id="btnSilenciar" onclick="silenciarSom()" disabled style="display: none;">🔇 Silenciar som</button>
+      <button id="btnAtivarSom" onclick="ativarSom()">Ativar som do vídeo</button>
+      <button id="btnSilenciar" onclick="silenciarSom()" disabled style="display: none;">Silenciar som</button>
     </section>
 
-    <!-- Bloco Inscrições 2026 -->
+    <!-- Bloco Circuito 2026 -->
     <section class="section">
       <div class="container">
         <div class="card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; padding: var(--spacing-xl); text-align: center;">
-          <h2 style="font-size: 2rem; margin-bottom: var(--spacing-md);">2026 vem aí! 🎉</h2>
-          <p style="font-size: 1.2rem; margin-bottom: var(--spacing-lg);">Inscrições abertas para o Circuito 2026</p>
+          <p class="chip" style="background: rgba(255,255,255,0.12); color: #fff; display: inline-flex;">Circuito 2026</p>
+          <h2 style="font-size: 2.2rem; margin-bottom: var(--spacing-sm);">Inscrições abertas</h2>
+          <p style="font-size: 1.1rem; margin-bottom: var(--spacing-lg); opacity:.95;">Garanta a participação da sua quadrilha, veja regulamentos e acompanhe as datas oficiais.</p>
           <div style="display: flex; gap: var(--spacing-md); justify-content: center; flex-wrap: wrap;">
-            <a href="circuito.html" class="btn" style="background: white; color: var(--accent-primary);">Ver Circuito</a>
-            <a href="filiadas.html" class="btn btn-outline" style="border-color: white; color: white;">Conhecer Filiadas</a>
+            <a href="circuito.html" class="btn" style="background: white; color: var(--accent-primary);">Ver circuito</a>
+            <a href="documentos.html" class="btn btn-outline" style="border-color: white; color: white;">Documentos</a>
+            <a href="filiadas.html" class="btn btn-outline" style="border-color: white; color: white;">Conhecer filiadas</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== NOTÍCIAS ===================== -->
+    <!-- ===================== Notícias ===================== -->
     <section id="home-news" class="home-section">
       <div class="home-section-header">
         <h2 class="home-section-title">Notícias</h2>
@@ -71,85 +74,18 @@
       </div>
 
       <div id="home-news-list" class="home-cards home-news-grid">
-        <!-- Os cards de notícias são inseridos via JavaScript -->
+        <!-- Os cards de Notícias são inseridos via JavaScript -->
       </div>
     </section>
-
-    <!-- O HUB Junino -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section-title">O HUB Junino</h2>
-        <div class="grid">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Comunidade</h3>
-              <p class="card-text">Fórum e interação entre quadrilhas. Em breve!</p>
-              <span class="badge badge-outline">Em breve</span>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Acervo</h3>
-              <p class="card-text">Fotos e vídeos de todas as temporadas.</p>
-              <a href="acervo.html" class="btn">Acessar</a>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Bazar Junino</h3>
-              <p class="card-text">Compre e venda de produtos juninos. Em breve!</p>
-              <span class="badge badge-outline">Em breve</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Campeãs 2025 -->
-    <section class="champions">
-  <div class="container">
-    <h2 class="section-title center">Campeãs 2025</h2>
-
-    <div class="champions-grid">
-      <!-- CARD 1 -->
-      <article class="champion-card">
-        <img src="assets/fotos-quadrilhas/arroxa-o-no.jpg" alt="Arroxa o Nó">
-        <div class="champion-overlay">
-          <h3>🏆 Arroxa o Nó</h3>
-          <div class="champion-meta">
-            <span>Campeã Especial 2025</span>
-            <span>629.2 pts</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- CARD 2 -->
-      <article class="champion-card">
-        <img src="assets/fotos-quadrilhas/matulao.jpg" alt="Matulão">
-        <div class="champion-overlay">
-          <h3>🏆 Matulão</h3>
-          <div class="champion-meta">
-            <span>Campeã Acesso 2025</span>
-            <span>537.6 pts</span>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
 
     <!-- Destaques 2025 -->
     <section class="section">
       <div class="container">
         <h2 class="section-title">Destaques 2025</h2>
-        
         <h3 class="section-subtitle" style="text-align: left; font-size: 1.5rem; margin-top: var(--spacing-lg);">Grupo Especial</h3>
         <div class="grid grid-large" id="destaquesEspecial"></div>
-        
         <h3 class="section-subtitle" style="text-align: left; font-size: 1.5rem; margin-top: var(--spacing-lg);">Grupo Acesso</h3>
         <div class="grid grid-large" id="destaquesAcesso"></div>
-        
       </div>
     </section>
 
@@ -157,14 +93,13 @@
     <section class="section">
   <div class="container">
     <h2 class="section-title">Acesso Rápido</h2>
-    <div class="grid">
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--spacing-md);">
 
-      <!-- NOVO: Portal da Liga -->
       <div class="card">
         <div class="card-body">
-          <h3 class="card-title">🔐 Portal da Liga</h3>
+          <h3 class="card-title">Portal da Liga</h3>
           <p class="card-text">
-            Área exclusiva para quadrilhas filiadas, diretoria e equipe técnica.
+            Área exclusiva para quadrilhas filiadas e diretoria.
           </p>
           <a href="portal.html" class="btn">Acessar Portal</a>
         </div>
@@ -172,23 +107,25 @@
 
       <div class="card">
         <div class="card-body">
-          <h3 class="card-title">📺 TV da Liga</h3>
-          <p class="card-text">Vídeos e transmissões ao vivo. Em breve!</p>
-          <span class="badge badge-outline">Em breve</span>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title">🗺️ Mapa</h3>
+          <h3 class="card-title">Mapa</h3>
           <p class="card-text">Localize todas as quadrilhas no mapa.</p>
           <a href="mapa.html" class="btn">Ver Mapa</a>
         </div>
       </div>
+
       <div class="card">
         <div class="card-body">
-          <h3 class="card-title">📋 Transparência</h3>
+          <h3 class="card-title">Transparência</h3>
           <p class="card-text">Documentos e informações oficiais.</p>
           <a href="transparencia.html" class="btn">Acessar</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Acervo</h3>
+          <p class="card-text">Fotos e vídeos de todas as temporadas.</p>
+          <a href="acervo.html" class="btn">Abrir acervo</a>
         </div>
       </div>
     </div>
@@ -205,19 +142,23 @@
   </main>
 
   <footer>
-    <div class="container">
-      <p>&copy; 2026 LINQ-DFE - Liga de Quadrilhas Juninas do DF e Entorno</p>
-      <p>
-        <a href="transparencia.html">Transparência</a> |
-        <a href="documentos.html">Documentos</a> |
-        <a href="diretoria.html">Diretoria</a>
-      </p>
-    </div>
-  </footer>
+  <div class="container">
+    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+  </div>
+</footer>
 
     <script type="module" src="js/index.js"></script>
   <script type="module" src="js/home-noticias.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
 
 

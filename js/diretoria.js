@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    DIRETORIA.JS - Lógica da página de diretoria
    ============================================ */
 
@@ -11,7 +11,7 @@ function init() {
   // Ativa navegação
   setActiveNav();
   
-  // VOCÊ SÓ MUDA AQUI: Se quiser carregar de JSON, descomente:
+  // VOC�S S�" MUDA AQUI: Se quiser carregar de JSON, descomente:
   /*
   import { loadJSON } from './shared.js';
   const diretoria = await loadJSON('data/diretoria.json') || [];
@@ -20,5 +20,6 @@ function init() {
 }
 
 init();
+
 
 

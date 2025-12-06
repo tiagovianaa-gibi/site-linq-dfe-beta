@@ -1,4 +1,4 @@
-import { loadJSON, applyFocal, setActiveNav } from "./shared.js";
+﻿import { loadJSON, applyFocal, setActiveNav } from "./shared.js";
 
 const PLACEHOLDER = "assets/banners/placeholder.jpg";
 
@@ -37,7 +37,7 @@ function renderMediaCard(item, quadrilhasMap){
   if(item.tipo === "video"){
     const play = document.createElement("div");
     play.className = "play-badge";
-    play.textContent = "▶";
+    play.textContent = "-";
     imgWrap.appendChild(play);
   }
 
@@ -55,8 +55,8 @@ function renderMediaCard(item, quadrilhasMap){
   meta.className = "media-meta muted";
   meta.textContent = [
     item.data ? formatDateBR(item.data) : "",
-    q ? `${q.nome} • ${q.cidade}` : "Liga / Geral"
-  ].filter(Boolean).join(" — ");
+    q ? `${q.nome} ? ${q.cidade}` : "Liga / Geral"
+  ].filter(Boolean).join(" ?" ");
 
   const desc = document.createElement("p");
   desc.className = "media-desc";
@@ -109,7 +109,7 @@ function renderEtapaSection(etapa, items, quadrilhasMap, isHighlight){
     etapa.data ? formatDateBR(etapa.data) : "",
     etapa.local || "",
     etapa.cidade || ""
-  ].filter(Boolean).join(" • ");
+  ].filter(Boolean).join(" ? ");
 
   head.appendChild(title);
   head.appendChild(meta);
@@ -337,3 +337,5 @@ function groupByEtapa(items){
   render();
 
 })();
+
+

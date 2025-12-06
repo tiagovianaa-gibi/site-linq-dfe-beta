@@ -1,6 +1,6 @@
 ﻿// js/noticia.js
-// Página de detalhe de notícia da LINQ-DFE (site público)
-// Busca notícias no Firestore (coleção "noticias") e exibe com layout melhorado
+// Pgina de detalhe de Notícia da LINQ-DFE (site pblico)
+// Busca Notícias no Firestore (coleo "noticias") e exibe com layout melhorado
 
 import { formatDate, sanitizeHTML, setActiveNav, normalizeImageUrl } from "./shared.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -8,6 +8,8 @@ import {
   getFirestore,
   collection,
   getDocs,
+  doc,
+  getDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -25,12 +27,38 @@ let firestoreDb = null;
 let noticiaAtual = null;
 let outrasNoticias = [];
 let noticiasCache = [];
+const CACHE_KEY = "noticiasCacheV1";
+const CACHE_TTL = 10 * 60 * 1000; // 10 minutos
 
 function ensureFirestore() {
   if (firestoreDb) return firestoreDb;
   firebaseApp = firebaseApp || initializeApp(firebaseConfig);
   firestoreDb = getFirestore(firebaseApp);
   return firestoreDb;
+}
+
+function readCache() {
+  try {
+    const raw = sessionStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const fresh = Date.now() - (parsed?.timestamp || 0) < CACHE_TTL;
+    if (!fresh || !Array.isArray(parsed?.items)) return null;
+    return parsed.items;
+  } catch (e) {
+    return null;
+  }
+}
+
+function writeCache(items) {
+  try {
+    sessionStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify({ items, timestamp: Date.now() })
+    );
+  } catch (e) {
+    // ignore
+  }
 }
 
 function extractPlainText(html = "", maxLength = 160) {
@@ -184,7 +212,7 @@ function renderNoticia() {
   if (!noticiaAtual) {
     if (contentEl) {
       contentEl.innerHTML =
-        "<p>Não encontramos esta notícia. Ela pode ter sido removida ou o link está incorreto.</p>";
+        "<p>não encontramos esta Notícia. Ela pode ter sido removida ou o link est incorreto.</p>";
     }
     if (maisNoticiasSection) maisNoticiasSection.style.display = "none";
     return;
@@ -194,7 +222,7 @@ function renderNoticia() {
 
   const dataFormatada = data ? formatDate(data) : "";
   const categoriaLabel = categoria || "";
-  const metaText = [dataFormatada, categoriaLabel].filter(Boolean).join(" • ");
+  const metaText = [dataFormatada, categoriaLabel].filter(Boolean).join(" . ");
 
   const cover = normalizeImageUrl(imagem, "assets/banners/placeholder.jpg");
   const coverSafe = sanitizeHTML(cover);
@@ -332,8 +360,23 @@ async function fetchNoticias() {
       return status === "publicada";
     });
   } catch (error) {
-    console.error("Não foi possível carregar notícias do Firestore.", error);
+    console.error("não foi possvel carregar Notícias do Firestore.", error);
     return [];
+  }
+}
+
+async function fetchNoticiaById(id) {
+  if (!id) return null;
+  try {
+    const db = ensureFirestore();
+    const snap = await getDoc(doc(db, "noticias", id));
+    if (!snap.exists()) return null;
+    const mapped = mapFirestoreNoticia(snap);
+    if ((mapped.status || "").toLowerCase() !== "publicada") return null;
+    return mapped;
+  } catch (err) {
+    console.error("Erro ao buscar Notícia por id:", err);
+    return null;
   }
 }
 
@@ -344,17 +387,23 @@ async function loadNoticia() {
 
   const contentEl = document.getElementById("noticiaContent");
   if (contentEl) {
-    contentEl.innerHTML = "<p>Carregando notícia...</p>";
+    contentEl.innerHTML = "<p>Carregando Notícia...</p>";
   }
 
   try {
+    const cached = readCache();
+    if (cached) {
+      noticiasCache = cached;
+    }
+
     if (!noticiasCache.length) {
       noticiasCache = await fetchNoticias();
+      writeCache(noticiasCache);
     }
 
     if (!Array.isArray(noticiasCache) || !noticiasCache.length) {
       if (contentEl) {
-        contentEl.innerHTML = "<p>Nenhuma notícia encontrada.</p>";
+        contentEl.innerHTML = "<p>Nenhuma Notícia encontrada.</p>";
       }
       return;
     }
@@ -365,6 +414,13 @@ async function loadNoticia() {
       encontrada = noticiasCache.find(
         (item) => String(item.id) === String(idParam)
       );
+      if (!encontrada) {
+        encontrada = await fetchNoticiaById(idParam);
+        if (encontrada) {
+          noticiasCache = [encontrada, ...noticiasCache];
+          writeCache(noticiasCache);
+        }
+      }
     }
 
     if (!encontrada && slugParam) {
@@ -376,7 +432,7 @@ async function loadNoticia() {
     if (!encontrada) {
       if (contentEl) {
         contentEl.innerHTML =
-          "<p>Não encontramos esta notícia. Verifique se o link está correto.</p>";
+          "<p>não encontramos esta Notícia. Verifique se o link est correto.</p>";
       }
       return;
     }
@@ -394,10 +450,10 @@ async function loadNoticia() {
 
     renderNoticia();
   } catch (error) {
-    console.error("Erro ao carregar notícia:", error);
+    console.error("Erro ao carregar Notícia:", error);
     if (contentEl) {
       contentEl.innerHTML =
-        "<p>Erro ao carregar a notícia. Tente novamente mais tarde.</p>";
+        "<p>Erro ao carregar a Notícia. Tente novamente mais tarde.</p>";
     }
   }
 }
@@ -408,3 +464,5 @@ function init() {
 }
 
 window.addEventListener("DOMContentLoaded", init);
+
+

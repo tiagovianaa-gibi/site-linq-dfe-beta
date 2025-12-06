@@ -1,6 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Portal da Liga - Área restrita da LINQ-DFE">
@@ -8,28 +11,26 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="portal-body">
-
   <nav>
-    <div class="container">
-      <div class="logo">
-        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
-        <span class="logo-text">LINQ-DFE</span>
-      </div>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="circuito.html">Circuito</a></li>
-        <li><a href="filiadas.html">Filiadas</a></li>
-        <li><a href="mapa.html">Mapa</a></li>
-        <li><a href="noticias.html">Notícias</a></li>
-        <li><a href="acervo.html">Acervo</a></li>
-        <li><a href="diretoria.html">Diretoria</a></li>
-        <li><a href="transparencia.html">Transparência</a></li>
-        <li><a href="documentos.html">Documentos</a></li>
-        <li><a href="portal.html">Portal da Liga</a></li>
-      </ul>
+  <div class="container">
+    <div class="logo">
+      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+      <span class="logo-text">LINQ-DFE</span>
     </div>
-  </nav>
-
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="circuito.html">Circuito</a></li>
+      <li><a href="filiadas.html">Filiadas</a></li>
+      <li><a href="mapa.html">Mapa</a></li>
+      <li><a href="noticias.html">Not&iacute;cias</a></li>
+      <li><a href="acervo.html">Acervo</a></li>
+      <li><a href="diretoria.html">Diretoria</a></li>
+      <li><a href="transparencia.html">Transpar&ecirc;ncia</a></li>
+      <li><a href="documentos.html">Documentos</a></li>
+      <li><a href="portal.html">Portal da Liga</a></li>
+    </ul>
+  </div>
+</nav>
   <main class="portal-main">
     <section class="section">
       <div class="container portal-login-container">
@@ -41,18 +42,14 @@
             <p style="text-align:center; margin-bottom: var(--spacing-lg);">
               Acesso exclusivo para quadrilhas filiadas, diretoria da Liga, equipe de credenciamento e jurados.
             </p>
-
             <form id="portalLoginForm" class="form-vertical">
               <label for="email">E-mail</label>
               <input type="email" id="email" name="email" required>
-
               <label for="senha">Senha</label>
               <input type="password" id="senha" name="senha" required>
-
               <button type="submit" class="btn" style="width:100%; margin-top: var(--spacing-md);">
                 Entrar
               </button>
-
               <p style="text-align:center; margin-top: var(--spacing-md); font-size: 0.9rem;">
                 Esqueceu a senha? Procure a secretaria da Liga.
               </p>
@@ -62,15 +59,19 @@
       </div>
     </section>
   </main>
-
   <footer>
-    <div class="container">
-      <p>&copy; 2026 LINQ-DFE - Liga de Quadrilhas Juninas do DF e Entorno</p>
-    </div>
-  </footer>
-
+  <div class="container">
+    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+  </div>
+</footer>
   <!-- Depois a gente troca por JS com Firebase Auth -->
   <script type="module" src="js/portal-login.js"></script>
   <script type="module" src="js/shared.js"></script>
 </body>
 </html>
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-// js/portal-login.js
+﻿// js/portal-login.js
 // Login do Portal da Liga (Firebase Auth)
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -8,7 +8,7 @@ import {
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// 🔴 SUBSTITUA pelo config do SEU projeto Firebase
+// Y" SUBSTITUA pelo config do SEU projeto Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCm9ANrGwedzgdvCaSf05-qZsTPJMgrWOA",
   authDomain: "portal-da-liga.firebaseapp.com",
@@ -58,3 +58,5 @@ onAuthStateChanged(auth, (user) => {
     window.location.href = "portal-dashboard.html";
   }
 });
+
+

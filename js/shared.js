@@ -1,10 +1,10 @@
-/* ============================================
+﻿/* ============================================
    SHARED.JS - Funções Compartilhadas
    ============================================ */
 
 /**
  * Carrega um arquivo JSON
- * VOCÊ SÓ MUDA AQUI: caminho dos arquivos JSON em /data/
+ * VOCS S" MUDA AQUI: caminho dos arquivos JSON em /data/
  */
 export async function loadJSON(path) {
   try {
@@ -21,7 +21,7 @@ export async function loadJSON(path) {
 
 /**
  * Converte string para slug (sem acentos, com hífens)
- * Ex: "Arroxa o Nó" → "arroxa-o-no"
+ * Ex: "Arroxa o Nó" ?' "arroxa-o-no"
  */
 export function slugify(text) {
   if (!text) return '';
@@ -38,7 +38,7 @@ export function slugify(text) {
 
 /**
  * Aplica focal point na imagem (foco no rosto)
- * VOCÊ SÓ MUDA AQUI: ajuste focal no JSON (x, y de 0 a 1)
+ * VOCS S" MUDA AQUI: ajuste focal no JSON (x, y de 0 a 1)
  */
 export function applyFocal(img, focal) {
   if (!img || !focal) return;
@@ -70,8 +70,8 @@ export function setActiveNav() {
 
 /**
  * Retorna URL da foto da quadrilha
- * Prioridade: foto no JSON → slug automático → placeholder
- * VOCÊ SÓ MUDA AQUI: caminho das fotos em assets/fotos-quadrilhas/
+ * Prioridade: foto no JSON ?' slug automático ?' placeholder
+ * VOCS S" MUDA AQUI: caminho das fotos em assets/fotos-quadrilhas/
  */
 export function getQuadrilhaPhoto(quadrilha, useCapa = false) {
   // Se pedir capa e tiver foto_capa, usa ela
@@ -89,8 +89,17 @@ export function getQuadrilhaPhoto(quadrilha, useCapa = false) {
   if (slug) {
     return `assets/fotos-quadrilhas/${slug}.jpg`;
   }
-  
+
   return 'assets/banners/placeholder.jpg';
+}
+
+/**
+ * Aplica foco em rosto para cards de destaque (campeãs/destaques)
+ */
+export function applyFaceCrop(img) {
+  if (!img) return;
+  img.style.objectFit = 'cover';
+  img.style.objectPosition = '50% 30%'; // sobe o foco para preservar rosto
 }
 
 /**
@@ -165,7 +174,7 @@ export function normalize(str) {
  * - aceita string ou objeto { url }
  * - converte gs:// para URL https do Firebase Storage
  * - remove barras iniciais para funcionar no GitHub Pages
- * - codifica espaÇõos e caracteres especiais
+ * - codifica espa?õos e caracteres especiais
  */
 export function normalizeImageUrl(value, fallback = '') {
   let url = value;
@@ -197,15 +206,23 @@ export function normalizeImageUrl(value, fallback = '') {
     }
   }
 
-  // http/https mantÇ¸m como estÇ­
+  // http/https mant?¸m como est?­
   if (/^https?:\/\//i.test(url)) return url;
 
-  // Remove barra inicial para nÇœo quebrar caminho no GitHub Pages
+  // Remove barra inicial para n?"o quebrar caminho no GitHub Pages
   const clean = url.replace(/^\/+/, '');
   if (!clean) return fallback;
 
-  // Codifica espaÇõos e caracteres especiais sem quebrar slashes
+  // Se veio s?ü o nome do arquivo (ex.: "foto.jpg"), presume pasta de noticias
+  // para evitar 404 no GitHub Pages quando o Firestore salva apenas o basename
+  if (!clean.includes('/') && /\.(jpg|jpeg|png|gif|webp|avif)$/i.test(clean)) {
+    return `assets/noticias/${encodeURI(clean)}`;
+  }
+
+  // Codifica espa?õos e caracteres especiais sem quebrar slashes
   return encodeURI(clean);
 }
+
+
 
 

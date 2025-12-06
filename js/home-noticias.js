@@ -1,4 +1,4 @@
-import { loadJSON, normalizeImageUrl } from "./shared.js";
+﻿import { loadJSON, normalizeImageUrl } from "./shared.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore,
@@ -143,3 +143,5 @@ function escapeHtml(str = "") {
 function normalizeImagePath(path = "") {
   return normalizeImageUrl(path, "assets/banners/placeholder.jpg");
 }
+
+
