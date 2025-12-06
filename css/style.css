@@ -70,21 +70,21 @@ nav {
   background: var(--bg-card);
   box-shadow: var(--shadow-sm);
   z-index: 9999;
-  padding: 0.75rem 1rem;
+  padding: 0.45rem 1rem;
 }
 
 nav .container {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   gap: var(--spacing-sm);
 }
 
 nav .logo {
-  height: 34px;
+  height: 28px;
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
@@ -104,11 +104,15 @@ nav .logo-text {
 nav ul {
   display: flex;
   list-style: none;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-xs);
   flex-wrap: wrap;
+  align-items: center;
+  margin-left: var(--spacing-lg);
 }
 
 nav a {
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   color: var(--text-primary);
   font-weight: 500;
@@ -179,6 +183,43 @@ nav li.has-dropdown:focus-within .dropdown-menu {
   padding: 0.75rem 0.85rem;
   color: var(--text-secondary);
   font-size: 0.9rem;
+}
+
+/* ===== Mobile nav ===== */
+@media (max-width: 768px) {
+  nav {
+    padding: 0.65rem 0.5rem;
+  }
+  nav .container {
+    gap: var(--spacing-xs);
+  }
+  nav ul {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 6px;
+    gap: 0.35rem;
+    scrollbar-width: none;
+  }
+  nav ul::-webkit-scrollbar {
+    display: none;
+  }
+  nav a {
+    font-size: 0.92rem;
+    padding: 0.35rem 0.55rem;
+  }
+  .dropdown-menu {
+    left: 0;
+    right: auto;
+    min-width: 180px;
+    max-height: 260px;
+  }
+  nav li.has-dropdown:hover .dropdown-menu {
+    display: none; /* Em mobile o toggle é via clique */
+  }
+  nav li.has-dropdown.open .dropdown-menu {
+    display: block;
+  }
 }
 
 /* Container Principal */

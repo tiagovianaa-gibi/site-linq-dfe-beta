@@ -141,6 +141,22 @@ function setupFiliadasDropdown() {
   }
 
   initQuadrilhaDropdown();
+
+  // Toggle por clique em mobile
+  const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+  filLink.addEventListener('click', (e) => {
+    if (!isMobile()) return; // desktop segue hover padrão
+    e.preventDefault();
+    li.classList.toggle('open');
+  });
+
+  // Fecha ao tocar fora
+  document.addEventListener('click', (e) => {
+    if (!isMobile()) return;
+    if (!li.contains(e.target)) {
+      li.classList.remove('open');
+    }
+  });
 }
 
 // Executa assim que o DOM estiver pronto
