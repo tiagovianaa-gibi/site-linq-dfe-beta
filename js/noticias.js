@@ -3,7 +3,7 @@
    - Busca do Firestore (colecao "noticias")
    ============================================ */
 
-import { formatDate, setActiveNav, debounce } from './shared.js';
+import { formatDate, setActiveNav, debounce, normalizeImageUrl } from './shared.js';
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import {
   getFirestore,
@@ -72,7 +72,10 @@ async function loadNoticiasData() {
 }
 
 function getImagem(noticia) {
-  return noticia.imagem || 'assets/banners/placeholder.jpg';
+  return (
+    normalizeImageUrl(noticia.imagem, 'assets/banners/placeholder.jpg') ||
+    'assets/banners/placeholder.jpg'
+  );
 }
 
 function renderNoticias() {

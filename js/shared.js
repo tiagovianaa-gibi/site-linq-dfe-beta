@@ -160,4 +160,52 @@ export function normalize(str) {
     .replace(/[\u0300-\u036f]/g, '');
 }
 
+/**
+ * Normaliza uma URL de imagem para uso no site
+ * - aceita string ou objeto { url }
+ * - converte gs:// para URL https do Firebase Storage
+ * - remove barras iniciais para funcionar no GitHub Pages
+ * - codifica espaÇõos e caracteres especiais
+ */
+export function normalizeImageUrl(value, fallback = '') {
+  let url = value;
+
+  if (url && typeof url === 'object') {
+    if (typeof url.url === 'string') {
+      url = url.url;
+    } else if (typeof url.path === 'string') {
+      url = url.path;
+    } else if (Array.isArray(url) && url.length) {
+      url = url[0];
+    }
+  }
+
+  url = (url || '').toString().trim();
+  if (!url) return fallback;
+
+  // gs://bucket/path/file => https://firebasestorage.googleapis.com/v0/b/bucket/o/path/file?alt=media
+  if (/^gs:\/\//i.test(url)) {
+    try {
+      const withoutScheme = url.replace(/^gs:\/\//i, '');
+      const [bucket, ...rest] = withoutScheme.split('/');
+      const path = rest.join('/');
+      if (bucket && path) {
+        return `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(path)}?alt=media`;
+      }
+    } catch (e) {
+      // segue para fallback
+    }
+  }
+
+  // http/https mantÇ¸m como estÇ­
+  if (/^https?:\/\//i.test(url)) return url;
+
+  // Remove barra inicial para nÇœo quebrar caminho no GitHub Pages
+  const clean = url.replace(/^\/+/, '');
+  if (!clean) return fallback;
+
+  // Codifica espaÇõos e caracteres especiais sem quebrar slashes
+  return encodeURI(clean);
+}
+
 

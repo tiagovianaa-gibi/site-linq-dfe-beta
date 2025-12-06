@@ -2,7 +2,7 @@
 // Página de detalhe de notícia da LINQ-DFE (site público)
 // Busca notícias no Firestore (coleção "noticias") e exibe com layout melhorado
 
-import { formatDate, sanitizeHTML, setActiveNav } from "./shared.js";
+import { formatDate, sanitizeHTML, setActiveNav, normalizeImageUrl } from "./shared.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore,
@@ -43,10 +43,13 @@ function extractPlainText(html = "", maxLength = 160) {
 
 function toAbsoluteUrl(path) {
   if (!path) return window.location.href;
-  if (/^https?:\/\//i.test(path)) return path;
-  const base = window.location.origin.replace(/\/$/, "");
-  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  return base + normalizedPath;
+  const normalized = normalizeImageUrl(path, path);
+
+  try {
+    return new URL(normalized, window.location.href).href;
+  } catch (e) {
+    return window.location.href;
+  }
 }
 
 function updateSEO(noticia) {
@@ -77,9 +80,9 @@ function updateSEO(noticia) {
   }
 
   const url = window.location.href;
-  const imageUrl = noticia.imagem
-    ? toAbsoluteUrl(noticia.imagem)
-    : toAbsoluteUrl("/assets/img/share-default-linq.png");
+  const imageUrl = toAbsoluteUrl(
+    normalizeImageUrl(noticia.imagem, "assets/logos/linq-dfe.png")
+  );
 
   setOrCreateMeta('meta[name="description"]', "name", "description", safeDescription);
 
@@ -165,7 +168,7 @@ function updateSEO(noticia) {
       name: siteName,
       logo: {
         "@type": "ImageObject",
-        url: toAbsoluteUrl("/assets/img/logo-linqdf.png"),
+        url: toAbsoluteUrl("assets/logos/linq-dfe.png"),
       },
     },
   };
@@ -193,7 +196,7 @@ function renderNoticia() {
   const categoriaLabel = categoria || "";
   const metaText = [dataFormatada, categoriaLabel].filter(Boolean).join(" • ");
 
-  const cover = imagem || "assets/banners/placeholder.jpg";
+  const cover = normalizeImageUrl(imagem, "assets/banners/placeholder.jpg");
   const coverSafe = sanitizeHTML(cover);
   const tituloSafe = sanitizeHTML(titulo);
 
