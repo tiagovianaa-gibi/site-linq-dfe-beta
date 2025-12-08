@@ -146,8 +146,15 @@ function setupFiliadasDropdown() {
   const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
   filLink.addEventListener('click', (e) => {
     if (!isMobile()) return; // desktop segue hover padrão
-    e.preventDefault();
-    li.classList.toggle('open');
+
+    // Primeiro toque abre o dropdown; o segundo segue o link normalmente
+    if (!li.classList.contains('open')) {
+      e.preventDefault();
+      li.classList.add('open');
+      return;
+    }
+
+    li.classList.remove('open');
   });
 
   // Fecha ao tocar fora
