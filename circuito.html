@@ -1,72 +1,77 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
-<head>  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
-  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
+<head>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
   <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
-  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">   <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
-  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">   <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
-  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png"><meta charset="utf-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Circuito | LINQ-DFE</title>
-  <meta name="description" content="Circuito de Quadrilhas Juninas do DF e Entorno - classificacao, etapas e acervo." />
+  <meta name="description" content="Circuito de Quadrilhas Juninas do DF e Entorno – saiba o que é o Circuito, veja edições anteriores, acompanhe o Circuito 2026, acervo e regulamento oficial." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- HEADER PADRfO (igual ao da home) -->
   <nav>
-  <div class="container">
-    <div class="logo">
-      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
-      <span class="logo-text">LINQ-DFE</span>
-    </div>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="circuito.html">Circuito</a></li>
-      <li><a href="filiadas.html">Filiadas</a></li>
-      <li><a href="mapa.html">Mapa</a></li>
-      <li><a href="noticias.html">Not&iacute;cias</a></li>
-      <li><a href="acervo.html">Acervo</a></li>
-      <li><a href="diretoria.html">Diretoria</a></li>
-      <li><a href="documentos.html">Documentos</a></li>
-      <li><a href="portal.html">Portal da Liga</a></li>
-    </ul>
-  </div>
-</nav>
-  <main class="page">
-    <!-- TOPO DA PAGINA -->
-    <section class="section page-hero container">
-      <div class="stack" style="gap: var(--spacing-sm);">
-        <p class="chip">Calendario oficial</p>
-        <h1 id="seasonTitle">Circuito 2026</h1>
-        <p id="seasonSubtitle" class="muted"></p>
+    <div class="container">
+      <div class="logo">
+        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+        <span class="logo-text">LINQ-DFE</span>
       </div>
-      <div class="stack" style="gap: var(--spacing-sm); margin-top: var(--spacing-md);">
-        <div id="seasonTabs" class="season-tabs"></div>
-        <div id="seasonHighlights"></div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="circuito.html" class="active">Circuito</a></li>
+        <li><a href="filiadas.html">Filiadas</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+        <li><a href="noticias.html">Notícias</a></li>
+        <li><a href="acervo.html">Acervo</a></li>
+        <li><a href="diretoria.html">Diretoria</a></li>
+        <li><a href="documentos.html">Documentos</a></li>
+        <li><a href="portal.html">Portal da Liga</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page">
+    <section class="section container circuito-cover">
+      <div class="circuito-cover__content">
+        <p class="chip">Circuito Oficial</p>
+        <h1>Circuito de Quadrilhas Juninas do DF e Entorno</h1>
+        <p class="muted">Calendário, acervo, regulamento e bastidores do Circuito organizado pela LINQ-DFE.</p>
+        <div class="row" style="gap: 12px; margin-top: 12px;">
+          <a class="btn" href="circuito-2026.html">Ir para o Circuito 2026</a>
+          <a class="btn btn-outline" href="edicoes-anteriores.html">Edições anteriores</a>
+          <a class="btn btn-outline" href="acervo.html">Ver acervo</a>
+        </div>
       </div>
     </section>
-    <!-- CONTEUDO DINAMICO DA TEMPORADA -->
-    <section id="seasonContent" class="section container stack"></section>
+
+    <section class="section container">
+      <div class="circuito-hero-grid">
+        <div class="stack">
+          <p class="chip">Sobre</p>
+          <h2>O que é o Circuito</h2>
+          <p>Competição oficial da <strong>LINQ-DFE</strong> com quadrilhas profissionais, avaliadas em coreografia, figurino, casal de noivos, marcador, repertório e harmonia.</p>
+          <p class="muted">O Circuito movimenta a economia criativa, mantém vivo o São João no DF e Entorno e define a quadrilha campeã do Grupo Especial, que representa o DF no Concurso Nacional da CONFEBRAQ.</p>
+          <ul class="circuito-lista">
+            <li>Apresentações em arena, com infraestrutura e acessibilidade.</li>
+            <li>Julgamento por jurados especializados em quesitos técnicos e artísticos.</li>
+            <li>Publicação de notas, classificação e acesso/descenso ao final das etapas.</li>
+          </ul>
+        </div>
+        <div class="circuito-media">
+          <figure class="circuito-foto grande">
+            <img src="assets/fotos-quadrilhas/arroxa-o-no-capa.jpg" alt="Arroxa o Nó – campeã 2025 do Grupo Especial" onerror="this.style.display='none'">
+            <figcaption>Arroxa o Nó, campeã 2025 do Grupo Especial, representa o DF na CONFEBRAQ.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
   </main>
+
   <footer>
-  <div class="container">
-    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
-  </div>
-</footer>
-  <script type="module" src="js/circuito.js"></script>
+    <div class="container">
+      <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+    </div>
+  </footer>
 </body>
 </html>
-
-
-
-
-
-
-
