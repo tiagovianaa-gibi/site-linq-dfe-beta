@@ -47,6 +47,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 const functions = getFunctions(app, "us-central1");
+const functionsFallback = getFunctions(app);
 
 // Elementos básicos
 const userNameSpan = document.getElementById("portalUserName");
@@ -301,6 +302,30 @@ function setAIStatus(message, isError = false) {
   newsAIStatus.style.color = isError ? "var(--accent-primary)" : "";
 }
 
+async function callDraftCallable(payload, useFallback = false) {
+  const target = useFallback ? functionsFallback : functions;
+  const callable = httpsCallable(target, "generateNewsDraft");
+  return callable(payload);
+}
+
+function formatCallableError(err) {
+  if (!err) return "Não foi possível gerar o rascunho. Tente novamente.";
+  const code = err.code || "";
+  if (code === "functions/unauthenticated") {
+    return "Sessão expirada. Faça login novamente para gerar rascunhos.";
+  }
+  if (code === "functions/resource-exhausted") {
+    return "Limite diário atingido. Tente novamente amanhã.";
+  }
+  if (code === "functions/not-found") {
+    return "A função não está disponível. Verifique o deploy do backend.";
+  }
+  if (code === "functions/unavailable") {
+    return "Serviço temporariamente indisponível. Tente novamente.";
+  }
+  return err.message || "Não foi possível gerar o rascunho. Tente novamente.";
+}
+
 async function callGenerateNewsDraft(seedOverride) {
   if (!newsForm) return;
   if (!auth.currentUser) {
@@ -322,20 +347,35 @@ async function callGenerateNewsDraft(seedOverride) {
   setAIStatus("Gerando rascunho...");
 
   try {
-    const callable = httpsCallable(functions, "generateNewsDraft");
-    const response = await callable({
+    const requestPayload = {
       keywords,
       type,
       includeLinks,
       brief,
       seed,
-    });
+    };
+    let response;
+    try {
+      response = await callDraftCallable(requestPayload, false);
+    } catch (err) {
+      const shouldFallback =
+        err?.code === "functions/not-found" ||
+        err?.code === "functions/unavailable" ||
+        /not found|Failed to fetch/i.test(err?.message || "");
+      if (shouldFallback) {
+        response = await callDraftCallable(requestPayload, true);
+      } else {
+        throw err;
+      }
+    }
 
-    const payload = response?.data || {};
-    const titulo = sanitizePlainText(payload.titulo || "");
-    const resumo = sanitizePlainText(payload.resumo || "");
-    const tags = Array.isArray(payload.tags) ? payload.tags.map(sanitizePlainText) : [];
-    const conteudoPortal = sanitizePlainText(payload.conteudoPortal || "");
+    const responsePayload = response?.data || {};
+    const titulo = sanitizePlainText(responsePayload.titulo || "");
+    const resumo = sanitizePlainText(responsePayload.resumo || "");
+    const tags = Array.isArray(responsePayload.tags)
+      ? responsePayload.tags.map(sanitizePlainText)
+      : [];
+    const conteudoPortal = sanitizePlainText(responsePayload.conteudoPortal || "");
 
     if (newsTituloInput) newsTituloInput.value = titulo;
     if (newsResumoInput) newsResumoInput.value = resumo;
@@ -346,10 +386,7 @@ async function callGenerateNewsDraft(seedOverride) {
     setAIStatus("Rascunho gerado com sucesso.");
   } catch (err) {
     console.error("Erro ao gerar rascunho com IA:", err);
-    const message =
-      err?.message ||
-      "Não foi possível gerar o rascunho. Tente novamente.";
-    setAIStatus(message, true);
+    setAIStatus(formatCallableError(err), true);
   }
 }
 
