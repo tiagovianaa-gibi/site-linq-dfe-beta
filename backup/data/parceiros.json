@@ -1,0 +1,19 @@
+[
+  {
+    "nome": "Confebraq",
+    "logo": "assets/logos/confebraq.png",
+    "url": "https://confebraq.org.br"
+  },
+  {
+    "nome": "Governo do Distrito Federal",
+    "logo": "assets/logos/gdf.png",
+    "url": "https://www.df.gov.br"
+  },
+  {
+    "nome": "Secretaria de Cultura",
+    "logo": "assets/logos/secult.png",
+    "url": "https://cultura.df.gov.br"
+  }
+]
+
+
