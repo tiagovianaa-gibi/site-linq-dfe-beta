@@ -25,6 +25,8 @@
   <meta name="twitter:title" content="Quadrilha | LINQ-DFE" />
   <meta name="twitter:description" content="Perfil da Quadrilha - LINQ-DFE" />
   <meta name="twitter:image" content="assets/logos/linq-dfe.png" />
+  <link rel="preload" href="data/quadrilhas.json" as="fetch" crossorigin />
+  <link rel="preload" href="data/historico_circuito.json" as="fetch" crossorigin />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -56,6 +58,7 @@
           class="quadrilha-cover"
           src="assets/banners/placeholder.jpg"
           alt="Capa da quadrilha"
+          decoding="async"
           onerror="this.src='assets/banners/placeholder.jpg'"
         />
         <!-- Header -->
@@ -80,7 +83,7 @@
         </div>
         <!-- TEMPORADA 2025 -->
         <h2>SOBRE A QUADRILHA</h2>
-        <div class="quadrilha-about" style="display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start">
+        <div class="quadrilha-about">
           <div class="quadrilha-about-main" id="quadrilhaSobre"></div>
           <aside class="quadrilha-about-info">
             <h3>Informações da quadrilha</h3>
@@ -104,9 +107,6 @@
   <script type="module" src="js/quadrilha.js"></script>
 </body>
 </html>
-
-
-
 
 
 
