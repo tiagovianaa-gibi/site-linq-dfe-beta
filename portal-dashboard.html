@@ -6,7 +6,32 @@
   <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Language" content="pt-BR">
+  <meta name="description" content="Dashboard interno da LINQ-DFE para gestão de quadrilhas, documentos, credenciamento e informações administrativas do portal.">
+  <meta name="robots" content="noindex,nofollow">
   <title>Portal da Liga - Dashboard | LINQ-DFE</title>
+  <link rel="canonical" href="https://SEU-DOMINIO/portal-dashboard">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Portal da Liga - Dashboard | LINQ-DFE">
+  <meta property="og:description" content="Dashboard interno da LINQ-DFE para gestão de quadrilhas, documentos, credenciamento e informações administrativas do portal.">
+  <meta property="og:url" content="https://SEU-DOMINIO/portal-dashboard">
+  <meta property="og:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png">
+  <meta property="og:site_name" content="LINQ-DFE">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Portal da Liga - Dashboard | LINQ-DFE">
+  <meta name="twitter:description" content="Dashboard interno da LINQ-DFE para gestão de quadrilhas, documentos, credenciamento e informações administrativas do portal.">
+  <meta name="twitter:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "LINQ-DFE",
+      "url": "https://SEU-DOMINIO",
+      "logo": "https://SEU-DOMINIO/assets/logos/linq-dfe.png",
+      "sameAs": ["https://instagram.com/linqdfe"]
+    }
+  </script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="portal-body">
@@ -132,6 +157,42 @@
 
               <form id="newsForm" class="portal-form">
                 <input type="hidden" id="newsId" />
+
+                <div class="form-group" style="border: 1px solid var(--border-color); padding: var(--spacing-md); border-radius: var(--border-radius); background: var(--bg-primary);">
+                  <h4 style="margin: 0 0 var(--spacing-sm) 0;">Gerar com IA</h4>
+                  <label for="newsAIKeywords">Palavras-chave</label>
+                  <input
+                    id="newsAIKeywords"
+                    type="text"
+                    placeholder="eleição, circuito 2026, credenciamento..."
+                  />
+
+                  <div style="display: grid; gap: var(--spacing-sm); margin-top: var(--spacing-sm);">
+                    <label for="newsAIType">Tipo</label>
+                    <select id="newsAIType">
+                      <option value="COMUNICADO">COMUNICADO</option>
+                      <option value="NOTICIA">NOTICIA</option>
+                      <option value="GUIA">GUIA</option>
+                      <option value="EVENTO">EVENTO</option>
+                    </select>
+
+                    <label style="display: flex; align-items: center; gap: 0.5rem;">
+                      <input type="checkbox" id="newsAIIncludeLinks" checked />
+                      Incluir links internos
+                    </label>
+
+                    <label for="newsAIBrief">Brief / fatos confirmados (cole aqui)</label>
+                    <textarea id="newsAIBrief" rows="3"></textarea>
+                  </div>
+
+                  <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--spacing-sm);">
+                    <button type="button" class="btn btn-outline" id="newsAIGenerateBtn">Gerar rascunho</button>
+                    <button type="button" class="btn btn-outline" id="newsAIRegenerateBtn">Gerar outra versão</button>
+                    <button type="button" class="btn btn-light" id="newsAIClearBtn">Limpar</button>
+                  </div>
+
+                  <p id="newsAIStatus" class="form-message" style="margin-top: var(--spacing-sm);"></p>
+                </div>
 
                 <div class="form-group">
                   <label for="newsTitulo">Título</label>
@@ -584,8 +645,4 @@
   <script type="module" src="js/portal-app.js"></script>
 </body>
 </html>
-
-
-
-
 
