@@ -25,6 +25,10 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+import {
+  getFunctions,
+  httpsCallable,
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-functions.js";
 
 
 // Y" Mesma config do portal-login.js
@@ -42,6 +46,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
+const functions = getFunctions(app, "us-central1");
 
 // Elementos básicos
 const userNameSpan = document.getElementById("portalUserName");
@@ -132,11 +137,21 @@ const newsTagsInput = document.getElementById("newsTags");
 const newsStatusSelect = document.getElementById("newsStatus");
 const newsContentInput =
   document.getElementById("newsConteudo") || document.getElementById("newsContent");
+const newsAIKeywordsInput = document.getElementById("newsAIKeywords");
+const newsAITypeSelect = document.getElementById("newsAIType");
+const newsAIIncludeLinksCheckbox = document.getElementById("newsAIIncludeLinks");
+const newsAIBriefInput = document.getElementById("newsAIBrief");
+const newsAIGenerateBtn = document.getElementById("newsAIGenerateBtn");
+const newsAIRegenerateBtn = document.getElementById("newsAIRegenerateBtn");
+const newsAIClearBtn = document.getElementById("newsAIClearBtn");
+const newsAIStatus = document.getElementById("newsAIStatus");
 // Extras / aliases usados no CRUD de notícias
 const newsAdminCard = document.getElementById("newsAdminCard");
 const newsSubtitle = document.getElementById("newsSubtitle");
 const newsFormTitle = document.getElementById("newsFormTitle");
-const newsFormCancelBtn = document.getElementById("newsFormCancelBtn");
+const newsFormCancelBtn =
+  document.getElementById("newsFormCancelBtn") ||
+  document.getElementById("newsFormCancel");
 const newsDestaqueHomeCheckbox = document.getElementById("newsDestaqueHome");
 
 // Reaproveitando os mesmos inputs com outros nomes
@@ -203,10 +218,15 @@ function escapeHtml(text) {
     .replace(/>/g, "&gt;");
 }
 
+function sanitizePlainText(text) {
+  if (!text) return "";
+  return text.replace(/<script[\\s\\S]*?>[\\s\\S]*?<\\/script>/gi, "").replace(/[<>]/g, "");
+}
+
 // Converte texto puro em HTML seguro
 // - Linha em branco => novo parágrafo
 // - Linhas que começam com "## " viram <h2>
-function convertTextToHtml(raw) {
+function portalTextToHtml(raw) {
   if (!raw) return "";
 
   const lines = raw.split("\n");
@@ -229,13 +249,21 @@ function convertTextToHtml(raw) {
     blocks.push(current.join(" "));
   }
 
+  const linkifyInternal = (text) => {
+    return text.replace(
+      /(^|\\s)(\\/[^\\s]+?\\.html)/g,
+      (match, prefix, path) =>
+        `${prefix}<a href="${path}">${path}</a>`
+    );
+  };
+
   return blocks
     .map((block) => {
       if (block.startsWith("## ")) {
-        const text = block.slice(3);
-        return "<h2>" + escapeHtml(text) + "</h2>";
+        const text = linkifyInternal(escapeHtml(block.slice(3)));
+        return "<h2>" + text + "</h2>";
       }
-      return "<p>" + escapeHtml(block) + "</p>";
+      return "<p>" + linkifyInternal(escapeHtml(block)) + "</p>";
     })
     .join("\n\n");
 }
@@ -257,6 +285,94 @@ function formatTimestampToPtBR(ts) {
 function formatCurrencyBR(value) {
   const num = Number(value) || 0;
   return `R$ ${num.toFixed(2)}`;
+}
+
+function parseKeywords(raw) {
+  return (raw || "")
+    .split(",")
+    .map((k) => k.trim())
+    .filter(Boolean)
+    .slice(0, 12);
+}
+
+function setAIStatus(message, isError = false) {
+  if (!newsAIStatus) return;
+  newsAIStatus.textContent = message || "";
+  newsAIStatus.style.color = isError ? "var(--accent-primary)" : "";
+}
+
+async function callGenerateNewsDraft(seedOverride) {
+  if (!newsForm) return;
+  if (!auth.currentUser) {
+    setAIStatus("Faça login para gerar rascunhos com IA.", true);
+    return;
+  }
+
+  const keywords = parseKeywords(newsAIKeywordsInput?.value || "");
+  const type = newsAITypeSelect?.value || "NOTICIA";
+  const includeLinks = newsAIIncludeLinksCheckbox?.checked ?? true;
+  const brief = (newsAIBriefInput?.value || "").trim();
+  const seed = seedOverride ?? Math.floor(Math.random() * 1_000_000);
+
+  if (!keywords.length) {
+    setAIStatus("Informe ao menos uma palavra-chave para gerar o rascunho.", true);
+    return;
+  }
+
+  setAIStatus("Gerando rascunho...");
+
+  try {
+    const callable = httpsCallable(functions, "generateNewsDraft");
+    const response = await callable({
+      keywords,
+      type,
+      includeLinks,
+      brief,
+      seed,
+    });
+
+    const payload = response?.data || {};
+    const titulo = sanitizePlainText(payload.titulo || "");
+    const resumo = sanitizePlainText(payload.resumo || "");
+    const tags = Array.isArray(payload.tags) ? payload.tags.map(sanitizePlainText) : [];
+    const conteudoPortal = sanitizePlainText(payload.conteudoPortal || "");
+
+    if (newsTituloInput) newsTituloInput.value = titulo;
+    if (newsResumoInput) newsResumoInput.value = resumo;
+    if (newsTagsInput) newsTagsInput.value = tags.filter(Boolean).join(", ");
+    if (newsConteudoTextarea) newsConteudoTextarea.value = conteudoPortal;
+    if (newsStatusSelect) newsStatusSelect.value = "rascunho";
+
+    setAIStatus("Rascunho gerado com sucesso.");
+  } catch (err) {
+    console.error("Erro ao gerar rascunho com IA:", err);
+    const message =
+      err?.message ||
+      "Não foi possível gerar o rascunho. Tente novamente.";
+    setAIStatus(message, true);
+  }
+}
+
+if (newsAIGenerateBtn) {
+  newsAIGenerateBtn.addEventListener("click", () => {
+    callGenerateNewsDraft(Math.floor(Math.random() * 1_000_000));
+  });
+}
+
+if (newsAIRegenerateBtn) {
+  newsAIRegenerateBtn.addEventListener("click", () => {
+    callGenerateNewsDraft(Math.floor(Math.random() * 1_000_000));
+  });
+}
+
+if (newsAIClearBtn) {
+  newsAIClearBtn.addEventListener("click", () => {
+    if (newsAIKeywordsInput) newsAIKeywordsInput.value = "";
+    if (newsAIBriefInput) newsAIBriefInput.value = "";
+    if (newsAITypeSelect) newsAITypeSelect.value = "COMUNICADO";
+    if (newsAIIncludeLinksCheckbox) newsAIIncludeLinksCheckbox.checked = true;
+    setAIStatus("");
+  });
 }
 
 // ====== USUÁRIO LOGADO / PERFIL ======
@@ -1424,7 +1540,7 @@ if (newsForm) {
       return;
     }
 
-    const conteudoHtml = convertTextToHtml(conteudoRaw);
+    const conteudoHtml = portalTextToHtml(conteudoRaw);
 
     const tags = tagsRaw
       ? tagsRaw.split(",").map((t) => t.trim()).filter(Boolean)
@@ -1452,16 +1568,23 @@ if (newsForm) {
       };
 
       if (!id) {
-        await addDoc(collection(db, "noticias"), {
+        const payload = {
           ...baseData,
           dataCriacao: serverTimestamp(),
-        });
+        };
+        if (status === "publicada") {
+          payload.dataPublicacao = serverTimestamp();
+        }
+        await addDoc(collection(db, "noticias"), payload);
       } else {
-        await setDoc(
-          doc(db, "noticias", id),
-          baseData,
-          { merge: true }
-        );
+        const docRef = doc(db, "noticias", id);
+        const snapshot = await getDoc(docRef);
+        const existing = snapshot.exists() ? snapshot.data() : {};
+        const payload = { ...baseData };
+        if (status === "publicada" && !existing?.dataPublicacao) {
+          payload.dataPublicacao = serverTimestamp();
+        }
+        await setDoc(docRef, payload, { merge: true });
       }
 
       setText(newsFormMessage, "Notícia salva com sucesso.");
@@ -1723,7 +1846,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
-
-
-
-
