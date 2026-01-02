@@ -2530,3 +2530,24 @@ body.page-noticia .noticia-hero {
   color: #fff;
   font-size: 0.9rem;
 }
+
+/* Cards do Circuito */
+.circuito-cards {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: var(--spacing-sm);
+}
+.circuito-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+.circuito-card h3 {
+  margin-bottom: 8px;
+}
+.circuito-card .muted {
+  margin-top: 6px;
+}

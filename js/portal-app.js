@@ -296,114 +296,14 @@ function parseKeywords(raw) {
     .slice(0, 12);
 }
 
-function setAIStatus(message, isError = false) {
-  if (!newsAIStatus) return;
-  newsAIStatus.textContent = message || "";
-  newsAIStatus.style.color = isError ? "var(--accent-primary)" : "";
+// Desativa geração por IA no CRUD de notícias
+if (newsAIKeywordsInput) {
+  const aiSection = newsAIKeywordsInput.closest(".form-group");
+  if (aiSection) aiSection.style.display = "none";
 }
-
-async function callDraftCallable(payload, useFallback = false) {
-  const target = useFallback ? functionsFallback : functions;
-  const callable = httpsCallable(target, "generateNewsDraft");
-  return callable(payload);
-}
-
-function formatCallableError(err) {
-  if (!err) return "Não foi possível gerar o rascunho. Tente novamente.";
-  const code = err.code || "";
-  if (code === "functions/unauthenticated") {
-    return "Sessão expirada. Faça login novamente para gerar rascunhos.";
-  }
-  if (code === "functions/resource-exhausted") {
-    return "Limite diário atingido. Tente novamente amanhã.";
-  }
-  if (code === "functions/not-found") {
-    return "A função não está disponível. Verifique o deploy do backend.";
-  }
-  if (code === "functions/unavailable") {
-    return "Serviço temporariamente indisponível. Tente novamente.";
-  }
-  return err.message || "Não foi possível gerar o rascunho. Tente novamente.";
-}
-
-async function callGenerateNewsDraft(seedOverride) {
-  if (!newsForm) return;
-  if (!auth.currentUser) {
-    setAIStatus("Faça login para gerar rascunhos com IA.", true);
-    return;
-  }
-
-  const keywords = parseKeywords(newsAIKeywordsInput?.value || "");
-  const type = newsAITypeSelect?.value || "NOTICIA";
-  const includeLinks = newsAIIncludeLinksCheckbox?.checked ?? true;
-  const brief = (newsAIBriefInput?.value || "").trim();
-  const seed = seedOverride ?? Math.floor(Math.random() * 1_000_000);
-
-  if (!keywords.length) {
-    setAIStatus("Informe ao menos uma palavra-chave para gerar o rascunho.", true);
-    return;
-  }
-
-  setAIStatus("Gerando rascunho...");
-
-  try {
-    const requestPayload = { keywords, type, includeLinks, brief, seed };
-
-    let response;
-    try {
-      response = await callDraftCallable(requestPayload, false);
-    } catch (err) {
-      const shouldFallback =
-        err?.code === "functions/not-found" ||
-        err?.code === "functions/unavailable" ||
-        /not found|Failed to fetch/i.test(err?.message || "");
-      if (shouldFallback) {
-        response = await callDraftCallable(requestPayload, true);
-      } else {
-        throw err;
-      }
-    }
-
-    const payload = response?.data || {};
-    const titulo = sanitizePlainText(payload.titulo || "");
-    const resumo = sanitizePlainText(payload.resumo || "");
-    const tags = Array.isArray(payload.tags) ? payload.tags.map(sanitizePlainText) : [];
-    const conteudoPortal = sanitizePlainText(payload.conteudoPortal || "");
-
-    if (newsTituloInput) newsTituloInput.value = titulo;
-    if (newsResumoInput) newsResumoInput.value = resumo;
-    if (newsTagsInput) newsTagsInput.value = tags.filter(Boolean).join(", ");
-    if (newsConteudoTextarea) newsConteudoTextarea.value = conteudoPortal;
-    if (newsStatusSelect) newsStatusSelect.value = "rascunho";
-
-    setAIStatus("Rascunho gerado com sucesso.");
-  } catch (err) {
-    console.error("Erro ao gerar rascunho com IA:", err);
-    setAIStatus(formatCallableError(err), true);
-  }
-}
-
-if (newsAIGenerateBtn) {
-  newsAIGenerateBtn.addEventListener("click", () => {
-    callGenerateNewsDraft(Math.floor(Math.random() * 1_000_000));
-  });
-}
-
-if (newsAIRegenerateBtn) {
-  newsAIRegenerateBtn.addEventListener("click", () => {
-    callGenerateNewsDraft(Math.floor(Math.random() * 1_000_000));
-  });
-}
-
-if (newsAIClearBtn) {
-  newsAIClearBtn.addEventListener("click", () => {
-    if (newsAIKeywordsInput) newsAIKeywordsInput.value = "";
-    if (newsAIBriefInput) newsAIBriefInput.value = "";
-    if (newsAITypeSelect) newsAITypeSelect.value = "COMUNICADO";
-    if (newsAIIncludeLinksCheckbox) newsAIIncludeLinksCheckbox.checked = true;
-    setAIStatus("");
-  });
-}
+if (newsAIGenerateBtn) newsAIGenerateBtn.style.display = "none";
+if (newsAIRegenerateBtn) newsAIRegenerateBtn.style.display = "none";
+if (newsAIClearBtn) newsAIClearBtn.style.display = "none";
 
 // ====== USUÁRIO LOGADO / PERFIL ======
 async function loadCurrentUserData(user) {
