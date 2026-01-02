@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">   <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">   <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png"><meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Language" content="pt-BR" />
+  <title>Perfil da Quadrilha | LINQ-DFE</title>
+  <meta name="description" content="Perfil completo de cada quadrilha junina filiada à LINQ-DFE no DF e Entorno, com história, elenco, temporada e resultados." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://SEU-DOMINIO/quadrilha" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Perfil da Quadrilha | LINQ-DFE" />
+  <meta property="og:description" content="Perfil completo de cada quadrilha junina filiada à LINQ-DFE no DF e Entorno, com história, elenco, temporada e resultados." />
+  <meta property="og:url" content="https://SEU-DOMINIO/quadrilha" />
+  <meta property="og:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png" />
+  <meta property="og:site_name" content="LINQ-DFE" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Perfil da Quadrilha | LINQ-DFE" />
+  <meta name="twitter:description" content="Perfil completo de cada quadrilha junina filiada à LINQ-DFE no DF e Entorno, com história, elenco, temporada e resultados." />
+  <meta name="twitter:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "LINQ-DFE",
+      "url": "https://SEU-DOMINIO",
+      "logo": "https://SEU-DOMINIO/assets/logos/linq-dfe.png",
+      "sameAs": ["https://instagram.com/linqdfe"]
+    }
+  </script>
+  <meta name="description" content="Perfil da Quadrilha - LINQ-DFE" />
+  <title>Quadrilha | LINQ-DFE</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Quadrilha | LINQ-DFE" />
+  <meta property="og:description" content="Perfil da Quadrilha - LINQ-DFE" />
+  <meta property="og:image" content="assets/logos/linq-dfe.png" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Quadrilha | LINQ-DFE" />
+  <meta name="twitter:description" content="Perfil da Quadrilha - LINQ-DFE" />
+  <meta name="twitter:image" content="assets/logos/linq-dfe.png" />
+  <link rel="preload" href="data/quadrilhas.json" as="fetch" crossorigin />
+  <link rel="preload" href="data/historico_circuito.json" as="fetch" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav>
+  <div class="container">
+    <div class="logo">
+      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+      <span class="logo-text">LINQ-DFE</span>
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="circuito.html">Circuito</a></li>
+      <li><a href="filiadas.html">Filiadas</a></li>
+      <li><a href="mapa.html">Mapa</a></li>
+      <li><a href="noticias.html">Not&iacute;cias</a></li>
+      <li><a href="acervo.html">Acervo</a></li>
+      <li><a href="diretoria.html">Diretoria</a></li>
+      <li><a href="documentos.html">Documentos</a></li>
+      <li><a href="portal.html">Portal da Liga</a></li>
+    </ul>
+  </div>
+</nav>
+  <main>
+    <section class="section">
+      <div class="container">
+        <!-- Capa -->
+        <img
+          id="quadrilhaCover"
+          class="quadrilha-cover"
+          src="assets/banners/placeholder.jpg"
+          alt="Capa da quadrilha"
+          decoding="async"
+          onerror="this.src='assets/banners/placeholder.jpg'"
+        />
+        <!-- Header -->
+        <div class="quadrilha-header">
+          <h1 id="quadrilhaNome">Nome da Quadrilha</h1>
+          <p id="quadrilhaResumo" class="mb-sm"></p>
+          <div class="meta">
+            <div class="meta-item">
+              <strong>Cidade:</strong> <span id="quadrilhaCidade">?"</span>
+            </div>
+            <div class="meta-item">
+              <strong>Grupo:</strong> <span id="quadrilhaGrupo">?"</span>
+            </div>
+            <div class="meta-item">
+              <strong>Instagram:</strong>
+              <a id="quadrilhaInstagram" class="instagram" href="#" target="_blank" rel="noopener noreferrer"></a>
+            </div>
+            <div class="meta-item">
+              <strong>Pontuação:</strong> <span id="quadrilhaPontos">?"</span>
+            </div>
+          </div>
+        </div>
+        <!-- TEMPORADA 2025 -->
+        <h2>SOBRE A QUADRILHA</h2>
+        <div class="quadrilha-about">
+          <div class="quadrilha-about-main" id="quadrilhaSobre"></div>
+          <aside class="quadrilha-about-info">
+            <h3>Informações da quadrilha</h3>
+            <ul id="quadrilhaInfoList"></ul>
+          </aside>
+        </div>
+        <!-- HIST"RICO -->
+        <section class="section" style="padding-top: 0;">
+          <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">Histórico no Circuito</h2>
+          <div id="historicoWrapper" class="table-wrapper"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <footer>
+  <div class="container">
+    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+  </div>
+</footer>
+  <!-- IMPORTANTE: manter como module -->
+  <script type="module" src="js/quadrilha.js"></script>
+</body>
+</html>
+
+
+

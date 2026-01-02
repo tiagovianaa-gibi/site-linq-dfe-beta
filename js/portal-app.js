@@ -36,7 +36,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCm9ANrGwedzgdvCaSf05-qZsTPJMgrWOA",
   authDomain: "portal-da-liga.firebaseapp.com",
   projectId: "portal-da-liga",
-  storageBucket: "portal-da-liga.firebasestorage.app",
+  storageBucket: "portal-da-liga.appspot.com",
   messagingSenderId: "129376570268",
   appId: "1:129376570268:web:b13e414ee188a189869659",
   measurementId: "G-2LS730BX44",
@@ -221,7 +221,7 @@ function escapeHtml(text) {
 
 function sanitizePlainText(text) {
   if (!text) return "";
-  return text.replace(/<script[\\s\\S]*?>[\\s\\S]*?<\\/script>/gi, "").replace(/[<>]/g, "");
+  return text.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "").replace(/[<>]/g, "");
 }
 
 // Converte texto puro em HTML seguro
@@ -332,8 +332,6 @@ async function callGenerateNewsDraft(seedOverride) {
     setAIStatus("Faça login para gerar rascunhos com IA.", true);
     return;
   }
-async function callGenerateNewsDraft(seedOverride) {
-  if (!newsForm) return;
 
   const keywords = parseKeywords(newsAIKeywordsInput?.value || "");
   const type = newsAITypeSelect?.value || "NOTICIA";
@@ -349,15 +347,8 @@ async function callGenerateNewsDraft(seedOverride) {
   setAIStatus("Gerando rascunho...");
 
   try {
-    const requestPayload = {
-    const callable = httpsCallable(functions, "generateNewsDraft");
-    const response = await callable({
-      keywords,
-      type,
-      includeLinks,
-      brief,
-      seed,
-    };
+    const requestPayload = { keywords, type, includeLinks, brief, seed };
+
     let response;
     try {
       response = await callDraftCallable(requestPayload, false);
@@ -372,15 +363,6 @@ async function callGenerateNewsDraft(seedOverride) {
         throw err;
       }
     }
-
-    const responsePayload = response?.data || {};
-    const titulo = sanitizePlainText(responsePayload.titulo || "");
-    const resumo = sanitizePlainText(responsePayload.resumo || "");
-    const tags = Array.isArray(responsePayload.tags)
-      ? responsePayload.tags.map(sanitizePlainText)
-      : [];
-    const conteudoPortal = sanitizePlainText(responsePayload.conteudoPortal || "");
-    });
 
     const payload = response?.data || {};
     const titulo = sanitizePlainText(payload.titulo || "");
@@ -398,7 +380,6 @@ async function callGenerateNewsDraft(seedOverride) {
   } catch (err) {
     console.error("Erro ao gerar rascunho com IA:", err);
     setAIStatus(formatCallableError(err), true);
-    setAIStatus("Não foi possível gerar o rascunho. Tente novamente.", true);
   }
 }
 

@@ -22,7 +22,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCm9ANrGwedzgdvCaSf05-qZsTPJMgrWOA",
   authDomain: "portal-da-liga.firebaseapp.com",
   projectId: "portal-da-liga",
-  storageBucket: "portal-da-liga.firebasestorage.app",
+  storageBucket: "portal-da-liga.appspot.com",
   messagingSenderId: "129376570268",
   appId: "1:129376570268:web:b13e414ee188a189869659",
   measurementId: "G-2LS730BX44",
