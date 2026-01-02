@@ -2,7 +2,13 @@
 // Pgina de detalhe de Notícia da LINQ-DFE (site pblico)
 // Busca Notícias no Firestore (coleo "noticias") e exibe com layout melhorado
 
-import { formatDate, sanitizeHTML, setActiveNav, normalizeImageUrl } from "./shared.js";
+import {
+  formatDate,
+  sanitizeHTML,
+  setActiveNav,
+  normalizeImageUrl,
+  loadJSON,
+} from "./shared.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore,
@@ -349,6 +355,14 @@ function mapJsonNoticia(item) {
   };
 }
 
+async function loadNoticiasLocal() {
+  const local = (await loadJSON("data/noticias.json")) || [];
+  return local.map(mapJsonNoticia).filter((n) => {
+    const status = (n.status || "").toString().toLowerCase();
+    return !status || status === "publicada";
+  });
+}
+
 async function fetchNoticias() {
   try {
     const db = ensureFirestore();
@@ -398,6 +412,9 @@ async function loadNoticia() {
 
     if (!noticiasCache.length) {
       noticiasCache = await fetchNoticias();
+      if (!noticiasCache.length) {
+        noticiasCache = await loadNoticiasLocal();
+      }
       writeCache(noticiasCache);
     }
 
@@ -427,6 +444,18 @@ async function loadNoticia() {
       encontrada = noticiasCache.find(
         (item) => item.slug && item.slug === slugParam
       );
+    }
+
+    if (!encontrada) {
+      const localNoticias = await loadNoticiasLocal();
+      const localMatch = idParam
+        ? localNoticias.find((item) => String(item.id) === String(idParam))
+        : localNoticias.find((item) => item.slug && item.slug === slugParam);
+      if (localMatch) {
+        encontrada = localMatch;
+        noticiasCache = [localMatch, ...noticiasCache];
+        writeCache(noticiasCache);
+      }
     }
 
     if (!encontrada) {
@@ -464,5 +493,3 @@ function init() {
 }
 
 window.addEventListener("DOMContentLoaded", init);
-
-
