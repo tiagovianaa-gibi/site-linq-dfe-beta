@@ -1704,7 +1704,7 @@ footer a:hover {
 }
 
 /* IMPORTANTE: neutraliza o estilo global de nav dentro do sidebar */
-.portal-sidebar nav {
+.portal-sidebar-nav {
   position: static;
   background: transparent;
   box-shadow: none;
@@ -1883,7 +1883,7 @@ footer a:hover {
 }
 /* ===== Portal - menu lateral ativo ===== */
 /* Corrige nav dentro da sidebar para não usar o nav fixo do site público */
-.portal-sidebar nav {
+.portal-sidebar-nav {
   position: static;
   top: auto;
   left: auto;
