@@ -1894,4 +1894,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showSection(key);
     });
   });
+
+  window.portalAppNavigationReady = true;
 });

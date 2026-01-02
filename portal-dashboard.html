@@ -654,9 +654,65 @@
     </main>
   </div>
 
+  <script>
+    window.portalAppNavigationReady = false;
+  </script>
   <script type="module" src="js/portal-app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const initFallbackNavigation = () => {
+        if (window.portalAppNavigationReady) return;
+        const navLinks = document.querySelectorAll('.portal-nav-link');
+        const heroLinks = document.querySelectorAll('.js-section-link');
+        const sections = document.querySelectorAll('.portal-section');
+        const logoutButton = document.getElementById('logoutButton');
+
+        const showSection = (sectionKey) => {
+          sections.forEach((section) => {
+            const id = section.id || '';
+            const key = id.replace('section-', '');
+            section.style.display = key === sectionKey ? 'block' : 'none';
+          });
+
+          navLinks.forEach((link) => {
+            if (link.dataset.section === sectionKey) {
+              link.classList.add('is-active');
+            } else {
+              link.classList.remove('is-active');
+            }
+          });
+        };
+
+        showSection('dashboard');
+
+        navLinks.forEach((link) => {
+          link.addEventListener('click', () => {
+            const key = link.dataset.section;
+            if (!key) return;
+            showSection(key);
+          });
+        });
+
+        heroLinks.forEach((link) => {
+          link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const key = link.dataset.section;
+            if (!key) return;
+            showSection(key);
+          });
+        });
+
+        if (logoutButton) {
+          logoutButton.addEventListener('click', () => {
+            window.location.href = 'portal.html';
+          });
+        }
+      };
+
+      setTimeout(initFallbackNavigation, 0);
+    });
+  </script>
 </body>
 </html>
-
 
 
