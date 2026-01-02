@@ -48,6 +48,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const functions = getFunctions(app, "us-central1");
 const functionsFallback = getFunctions(app);
+const functions = getFunctions(app);
 
 // Elementos básicos
 const userNameSpan = document.getElementById("portalUserName");
@@ -332,6 +333,8 @@ async function callGenerateNewsDraft(seedOverride) {
     setAIStatus("Faça login para gerar rascunhos com IA.", true);
     return;
   }
+async function callGenerateNewsDraft(seedOverride) {
+  if (!newsForm) return;
 
   const keywords = parseKeywords(newsAIKeywordsInput?.value || "");
   const type = newsAITypeSelect?.value || "NOTICIA";
@@ -348,6 +351,8 @@ async function callGenerateNewsDraft(seedOverride) {
 
   try {
     const requestPayload = {
+    const callable = httpsCallable(functions, "generateNewsDraft");
+    const response = await callable({
       keywords,
       type,
       includeLinks,
@@ -376,6 +381,13 @@ async function callGenerateNewsDraft(seedOverride) {
       ? responsePayload.tags.map(sanitizePlainText)
       : [];
     const conteudoPortal = sanitizePlainText(responsePayload.conteudoPortal || "");
+    });
+
+    const payload = response?.data || {};
+    const titulo = sanitizePlainText(payload.titulo || "");
+    const resumo = sanitizePlainText(payload.resumo || "");
+    const tags = Array.isArray(payload.tags) ? payload.tags.map(sanitizePlainText) : [];
+    const conteudoPortal = sanitizePlainText(payload.conteudoPortal || "");
 
     if (newsTituloInput) newsTituloInput.value = titulo;
     if (newsResumoInput) newsResumoInput.value = resumo;
@@ -387,6 +399,7 @@ async function callGenerateNewsDraft(seedOverride) {
   } catch (err) {
     console.error("Erro ao gerar rascunho com IA:", err);
     setAIStatus(formatCallableError(err), true);
+    setAIStatus("Não foi possível gerar o rascunho. Tente novamente.", true);
   }
 }
 
