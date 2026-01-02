@@ -1559,7 +1559,7 @@ footer a:hover {
 
 .quadrilha-about {
   display: grid;
-  grid-template-columns: 2fr 1.2fr;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
   gap: var(--spacing-lg);
   margin-top: var(--spacing-md);
   align-items: stretch; /* ou simplesmente remove essa linha */
@@ -2274,6 +2274,35 @@ body.page-noticia .noticia-hero {
   opacity: 0.7;
 }
 
+.noticia-lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+.noticia-relacionados,
+.noticia-faq {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.noticia-relacionados ul {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.noticia-relacionados li + li {
+  margin-top: 6px;
+}
+
+.noticia-faq .faq-item + .faq-item {
+  margin-top: var(--spacing-sm);
+}
+
 /* Página de Documentos */
 .page-docs {
   max-width: 1200px;
@@ -2501,5 +2530,3 @@ body.page-noticia .noticia-hero {
   color: #fff;
   font-size: 0.9rem;
 }
-
-
