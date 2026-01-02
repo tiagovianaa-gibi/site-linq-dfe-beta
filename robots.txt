@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://linqdfe.com.br/sitemap.xml
