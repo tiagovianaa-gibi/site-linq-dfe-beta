@@ -206,10 +206,9 @@ function renderQuadrilhaInfo(quad, historico) {
 async function init() {
   const { id, slug } = getKeyFromUrl();
 
-  // carrega com cache-buster pra não sofrer com GitHub Pages
   const [quadrilhas, historicoCircuitoRaw] = await Promise.all([
-    loadJSON(`data/quadrilhas.json?cb=${Date.now()}`),
-    loadJSON(`data/historico_circuito.json?cb=${Date.now()}`),
+    loadJSON('data/quadrilhas.json'),
+    loadJSON('data/historico_circuito.json'),
   ]);
 
   const lista = quadrilhas || [];
@@ -244,5 +243,4 @@ async function init() {
 }
 
 init();
-
 
