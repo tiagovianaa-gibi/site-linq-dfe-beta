@@ -29,6 +29,30 @@ Portal oficial da Liga de Quadrilhas Juninas do DF e Entorno.
 2. Arraste a pasta do projeto para a área de deploy
 3. Pronto! O site estará online
 
+## ☁️ Deploy das Cloud Functions (gerador de notícia)
+
+Para usar o gerador de rascunho com IA no painel, é preciso publicar a Function `generateNewsDraft`.
+
+1. Instale o Firebase CLI:
+   ```bash
+   npm install -g firebase-tools
+   ```
+2. Faça login e selecione o projeto:
+   ```bash
+   firebase login
+   firebase use --add
+   ```
+3. Exporte a variável no ambiente do deploy (ou configure no painel do provedor):
+   ```bash
+   export OPENAI_API_KEY="SUA_CHAVE_AQUI"
+   ```
+4. Faça o deploy das funções:
+   ```bash
+   firebase deploy --only functions
+   ```
+
+> Observação: o gerador exige usuário autenticado e limita a 10 chamadas/dia por usuário.
+
 ## 📁 Onde Editar Conteúdo
 
 ### 🎬 Trocar Vídeo do Hero
@@ -293,5 +317,3 @@ Para dúvidas sobre edição de conteúdo, consulte os comentários no código m
 ---
 
 **Desenvolvido com ❤️ para a LINQ-DFE**
-
-
