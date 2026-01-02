@@ -3,7 +3,13 @@
    - Busca do Firestore (colecao "noticias")
    ============================================ */
 
-import { formatDate, setActiveNav, debounce, normalizeImageUrl } from './shared.js';
+import {
+  formatDate,
+  setActiveNav,
+  debounce,
+  normalizeImageUrl,
+  loadJSON,
+} from './shared.js';
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import {
   getFirestore,
@@ -79,10 +85,15 @@ async function loadNoticiasData() {
     }
 
     noticias = firstPage;
+    if (!noticias.length) {
+      noticias = await loadNoticiasLocal();
+    }
     writeCache(noticias);
     renderNoticias();
   } catch (err) {
     console.error('Nao foi possivel carregar noticias do Firestore.', err);
+    noticias = await loadNoticiasLocal();
+    renderNoticias();
   }
 }
 
@@ -119,6 +130,28 @@ function writeCache(items) {
   } catch (e) {
     // ignore storage errors
   }
+}
+
+function mapJsonNoticia(item) {
+  return {
+    id: item.id,
+    titulo: item.titulo || item.title || '',
+    resumo: item.resumo || item.excerpt || '',
+    imagem: item.imagemCapaUrl || item.imagem || item.image || item.foto || '',
+    tags: Array.isArray(item.tags) ? item.tags : [],
+    data: item.data || item.date || '',
+    conteudo: item.conteudo || '',
+    destaqueHome: !!item.destaqueHome,
+    slug: item.slug || '',
+    status: item.status || '',
+  };
+}
+
+async function loadNoticiasLocal() {
+  const local = (await loadJSON('data/noticias.json')) || [];
+  return local
+    .map(mapJsonNoticia)
+    .filter((n) => (n.status || '').toLowerCase() === 'publicada');
 }
 
 async function fetchNoticiasPage(reset = false) {
@@ -352,5 +385,4 @@ async function init() {
 }
 
 init();
-
 
