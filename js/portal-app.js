@@ -252,7 +252,7 @@ function portalTextToHtml(raw) {
 
   const linkifyInternal = (text) => {
     return text.replace(
-      /(^|\\s)(\\/[^\\s]+?\\.html)/g,
+      /(^|\s)(\/[^\s]+?\.html)/g,
       (match, prefix, path) =>
         `${prefix}<a href="${path}">${path}</a>`
     );
