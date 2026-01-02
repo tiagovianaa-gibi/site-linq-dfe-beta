@@ -63,19 +63,19 @@
   <div class="portal-layout">
     <!-- MENU LATERAL -->
     <aside class="portal-sidebar">
-      <nav>
+      <div class="portal-sidebar-nav" role="navigation" aria-label="Menu do portal">
         <ul>
-          <li><button class="portal-nav-link" data-section="dashboard">Início</button></li>
-          <li><button class="portal-nav-link" data-section="quadrilha">Quadrilhas</button></li>
-          <li><button class="portal-nav-link" data-section="pessoas">Pessoas / Elenco</button></li>
-          <li><button class="portal-nav-link" data-section="documentos">Documentos</button></li>
-          <li><button class="portal-nav-link" data-section="financeiro">Financeiro</button></li>
-          <li><button class="portal-nav-link" data-section="credenciamento">Credenciamento</button></li>
-          <li><button class="portal-nav-link" data-section="competicoes">Competições & Notas</button></li>
-          <li><button class="portal-nav-link" data-section="regulamentos">Regulamentos</button></li>
-          <li><button class="portal-nav-link" data-section="noticias">Notícias</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="dashboard">Início</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="quadrilha">Quadrilhas</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="pessoas">Pessoas / Elenco</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="documentos">Documentos</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="financeiro">Financeiro</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="credenciamento">Credenciamento</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="competicoes">Competições & Notas</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="regulamentos">Regulamentos</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="noticias">Notícias</button></li>
         </ul>
-      </nav>
+      </div>
     </aside>
 
     <!-- CONTEÚDO PRINCIPAL -->
@@ -654,10 +654,65 @@
     </main>
   </div>
 
+  <script>
+    window.portalAppNavigationReady = false;
+  </script>
   <script type="module" src="js/portal-app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const initFallbackNavigation = () => {
+        if (window.portalAppNavigationReady) return;
+        const navLinks = document.querySelectorAll('.portal-nav-link');
+        const heroLinks = document.querySelectorAll('.js-section-link');
+        const sections = document.querySelectorAll('.portal-section');
+        const logoutButton = document.getElementById('logoutButton');
+
+        const showSection = (sectionKey) => {
+          sections.forEach((section) => {
+            const id = section.id || '';
+            const key = id.replace('section-', '');
+            section.style.display = key === sectionKey ? 'block' : 'none';
+          });
+
+          navLinks.forEach((link) => {
+            if (link.dataset.section === sectionKey) {
+              link.classList.add('is-active');
+            } else {
+              link.classList.remove('is-active');
+            }
+          });
+        };
+
+        showSection('dashboard');
+
+        navLinks.forEach((link) => {
+          link.addEventListener('click', () => {
+            const key = link.dataset.section;
+            if (!key) return;
+            showSection(key);
+          });
+        });
+
+        heroLinks.forEach((link) => {
+          link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const key = link.dataset.section;
+            if (!key) return;
+            showSection(key);
+          });
+        });
+
+        if (logoutButton) {
+          logoutButton.addEventListener('click', () => {
+            window.location.href = 'portal.html';
+          });
+        }
+      };
+
+      setTimeout(initFallbackNavigation, 0);
+    });
+  </script>
 </body>
 </html>
-
-
 
 

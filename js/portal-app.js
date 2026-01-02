@@ -48,7 +48,6 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const functions = getFunctions(app, "us-central1");
 const functionsFallback = getFunctions(app);
-const functions = getFunctions(app);
 
 // Elementos básicos
 const userNameSpan = document.getElementById("portalUserName");
@@ -1895,4 +1894,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showSection(key);
     });
   });
+
+  window.portalAppNavigationReady = true;
 });
