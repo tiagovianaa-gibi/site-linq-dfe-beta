@@ -36,6 +36,39 @@ let noticiasCache = [];
 const CACHE_KEY = "noticiasCacheV1";
 const CACHE_TTL = 10 * 60 * 1000; // 10 minutos
 
+const faqItems = [
+  {
+    question: "O que é a LINQ-DFE?",
+    answer:
+      "A LINQ-DFE é a Liga Independente de Quadrilhas Juninas do DF e Entorno, responsável por organizar e fortalecer o circuito de quadrilhas.",
+  },
+  {
+    question: "Onde encontro o calendário e resultados do circuito?",
+    answer:
+      "O calendário, resultados e regulamentos estão reunidos na página do Circuito e nas temporadas anteriores.",
+  },
+  {
+    question: "Como acompanhar as notícias da Liga?",
+    answer:
+      "Acompanhe as publicações na página de Notícias e no portal oficial da LINQ-DFE.",
+  },
+];
+
+function buildLeadText(resumo = "") {
+  const base =
+    resumo ||
+    "Atualizações do Circuito de Quadrilhas Juninas da LINQ-DFE para o DF e Entorno.";
+  const needsCircuito = !base.toLowerCase().includes("circuito");
+  const needsDF = !base.toLowerCase().includes("df");
+  const suffix = [
+    needsCircuito ? "Circuito de Quadrilhas" : "",
+    needsDF ? "DF e Entorno" : "",
+  ]
+    .filter(Boolean)
+    .join(" • ");
+  return suffix ? `${base} ${suffix}.` : base;
+}
+
 function ensureFirestore() {
   if (firestoreDb) return firestoreDb;
   firebaseApp = firebaseApp || initializeApp(firebaseConfig);
@@ -208,6 +241,30 @@ function updateSEO(noticia) {
   };
 
   ldScript.textContent = JSON.stringify(ldJson);
+
+  const faqId = "ld-json-faq";
+  let faqScript = document.getElementById(faqId);
+  if (!faqScript) {
+    faqScript = document.createElement("script");
+    faqScript.type = "application/ld+json";
+    faqScript.id = faqId;
+    head.appendChild(faqScript);
+  }
+
+  const faqJson = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
+  faqScript.textContent = JSON.stringify(faqJson);
 }
 
 function renderNoticia() {
@@ -236,6 +293,7 @@ function renderNoticia() {
 
   if (contentEl) {
     const safeResumo = resumo ? sanitizeHTML(resumo) : "";
+    const leadText = sanitizeHTML(buildLeadText(safeResumo));
     const htmlTags =
       Array.isArray(tags) && tags.length
         ? `<div class="noticia-tags">
@@ -253,6 +311,33 @@ function renderNoticia() {
       : "";
 
     const corpoHtml = conteudo || "";
+    const leiaTambemHtml = `
+      <aside class="noticia-relacionados">
+        <h2>Leia também</h2>
+        <ul>
+          <li><a href="circuito.html">Circuito de Quadrilhas Juninas</a></li>
+          <li><a href="temporada-2025.html">Ranking e resultados 2025</a></li>
+          <li><a href="filiadas.html">Quadrilhas filiadas</a></li>
+          <li><a href="noticias.html">Mais notícias</a></li>
+          <li><a href="documentos.html">Documentos oficiais</a></li>
+        </ul>
+      </aside>
+    `;
+    const faqHtml = `
+      <section class="noticia-faq">
+        <h2>Perguntas frequentes</h2>
+        ${faqItems
+          .map(
+            (item) => `
+          <div class="faq-item">
+            <h3>${sanitizeHTML(item.question)}</h3>
+            <p>${sanitizeHTML(item.answer)}</p>
+          </div>
+        `
+          )
+          .join("")}
+      </section>
+    `;
 
     contentEl.innerHTML = `
       <article class="noticia-page">
@@ -269,7 +354,10 @@ function renderNoticia() {
         </header>
 
         <div class="noticia-body noticia-conteudo">
+          <p class="noticia-lead">${leadText}</p>
           ${corpoHtml}
+          ${leiaTambemHtml}
+          ${faqHtml}
         </div>
       </article>
     `;
