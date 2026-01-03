@@ -169,7 +169,7 @@
     "slug": "chinelo-de-couro",
     "cidade": "São Sebastião/DF",
     "uf": "DF",
-    "grupo": "Acesso",
+    "grupo": "Especial",
     "grupo_2025": "acesso",
     "posicao_2025": 2,
     "foto": "chinelo-de-couro.jpg",
@@ -191,7 +191,8 @@
       {
         "ano": 2025,
         "pontos": 535.6,
-        "pos": 2
+        "pos": 2,
+        "grupo": "Acesso"
       }
     ],
     "perfil": {
@@ -210,7 +211,7 @@
     "slug": "coisas-da-roca",
     "cidade": "Paranoá/DF",
     "uf": "DF",
-    "grupo": "Especial",
+    "grupo": "Acesso",
     "grupo_2025": "especial",
     "posicao_2025": 14,
     "foto": "coisas-da-roca.jpg",
@@ -232,7 +233,8 @@
       {
         "ano": 2025,
         "pontos": 621.9,
-        "pos": 14
+        "pos": 14,
+        "grupo": "Especial"
       }
     ],
     "perfil": {
@@ -292,7 +294,7 @@
     "slug": "espalha-brasa",
     "cidade": "Paranoá/DF",
     "uf": "DF",
-    "grupo": "Especial",
+    "grupo": "Acesso",
     "grupo_2025": "especial",
     "posicao_2025": 13,
     "foto": "espalha-brasa.jpg",
@@ -314,7 +316,8 @@
       {
         "ano": 2025,
         "pontos": 622.3,
-        "pos": 13
+        "pos": 13,
+        "grupo": "Especial"
       }
     ],
     "perfil": {
@@ -538,7 +541,7 @@
     "slug": "matulao",
     "cidade": "Taguatinga/DF",
     "uf": "DF",
-    "grupo": "Acesso",
+    "grupo": "Especial",
     "grupo_2025": "acesso",
     "posicao_2025": 1,
     "foto": "matulao.jpg",
@@ -560,7 +563,8 @@
       {
         "ano": 2025,
         "pontos": 537.6,
-        "pos": 1
+        "pos": 1,
+        "grupo": "Acesso"
       }
     ],
     "perfil": {
@@ -825,7 +829,7 @@
     "slug": "tico-tico-no-fuba",
     "cidade": "Águas Lindas de Goiás/GO",
     "uf": "GO",
-    "grupo": "Especial",
+    "grupo": "Acesso",
     "grupo_2025": "especial",
     "posicao_2025": 15,
     "foto": "tico-tico-no-fuba.jpg",
@@ -847,7 +851,8 @@
       {
         "ano": 2025,
         "pontos": 620.5,
-        "pos": 15
+        "pos": 15,
+        "grupo": "Especial"
       }
     ],
     "perfil": {
@@ -989,7 +994,7 @@
     "slug": "xique-xique",
     "cidade": "Planaltina/GO",
     "uf": "GO",
-    "grupo": "Acesso",
+    "grupo": "Especial",
     "grupo_2025": "acesso",
     "posicao_2025": 3,
     "foto": "xique-xique.jpg",
@@ -1011,7 +1016,8 @@
       {
         "ano": 2025,
         "pontos": 535.4,
-        "pos": 3
+        "pos": 3,
+        "grupo": "Acesso"
       }
     ],
     "perfil": {

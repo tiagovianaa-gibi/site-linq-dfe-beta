@@ -38,6 +38,13 @@ window.silenciarSom = function() {
 function renderQuadrilhaCard(quad, destacado = false) {
   const photo = getQuadrilhaPhoto(quad);
   const posicao = quad.posicao_2025 || quad.posicao;
+  const grupoLabel = (() => {
+    if (quad.grupo_2025) {
+      return quad.grupo_2025.toLowerCase() === 'acesso' ? 'Acesso' : 'Especial';
+    }
+    return quad.grupo || '';
+  })();
+  const isAcessoGrupo = grupoLabel.toLowerCase() === 'acesso';
   const card = document.createElement('div');
   card.className = destacado ? 'card quadrilha-card' : 'card quadrilha-card';
   card.onclick = () => window.location.href = `quadrilha.html?id=${quad.id}`;
@@ -61,8 +68,8 @@ function renderQuadrilhaCard(quad, destacado = false) {
       <h3 class="card-title" style="margin:0;">${quad.nome}</h3>
       <div class="card-meta" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
         <span>${quad.cidade || ''}</span>
-        ${posicao ? `<span class="badge ${quad.grupo === 'Acesso' ? 'badge-secondary' : ''}">${posicao}º</span>` : ''}
-        <span class="badge ${quad.grupo === 'Especial' ? '' : 'badge-secondary'}">${quad.grupo || ''}</span>
+        ${posicao ? `<span class="badge ${isAcessoGrupo ? 'badge-secondary' : ''}">${posicao}º</span>` : ''}
+        <span class="badge ${isAcessoGrupo ? 'badge-secondary' : ''}">${grupoLabel}</span>
       </div>
     </div>
   `;
@@ -77,7 +84,7 @@ function renderQuadrilhaCard(quad, destacado = false) {
       <h3 class="card-title">${quad.nome}</h3>
       <div class="card-meta">
         <span>${quad.cidade || ''}</span>
-        <span class="badge ${quad.grupo === 'Especial' ? '' : 'badge-secondary'}">${quad.grupo || ''}</span>
+        <span class="badge ${isAcessoGrupo ? 'badge-secondary' : ''}">${grupoLabel}</span>
         ${posicao ? `<span>${posicao}Âº</span>` : ''}
       </div>
     `;
@@ -96,7 +103,7 @@ function renderHighlights() {
 
   if (especialGrid) {
     const especial = quadrilhas
-      .filter((q) => q.grupo === 'Especial')
+      .filter((q) => (q.grupo_2025 ? q.grupo_2025.toLowerCase() === 'especial' : q.grupo === 'Especial'))
       .sort((a, b) => (b.pontos2025 || 0) - (a.pontos2025 || 0))
       .slice(0, 6);
 
@@ -108,7 +115,7 @@ function renderHighlights() {
 
   if (acessoGrid) {
     const acesso = quadrilhas
-      .filter((q) => q.grupo === 'Acesso')
+      .filter((q) => (q.grupo_2025 ? q.grupo_2025.toLowerCase() === 'acesso' : q.grupo === 'Acesso'))
       .sort((a, b) => (b.pontos2025 || 0) - (a.pontos2025 || 0))
       .slice(0, 6);
 
