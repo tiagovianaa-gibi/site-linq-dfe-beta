@@ -12,6 +12,34 @@ let quadrilhas = [];
 let currentFilter = 'all';
 let currentSearch = '';
 
+function cleanText(str) {
+  if (!str) return '';
+  const map = {
+    'Ç§': 'ç',
+    'ÇõÇœ': 'ção',
+    'Çõ': 'ção',
+    'Çœ': 'o',
+    'Ç¸': 'é',
+    'Çª': 'á',
+    'Ç£': 'ã',
+    'Ç�': 'í',
+    'ÇŸ': 'ã',
+    'Çƒ': 'ó',
+    'Ç½': 'ê',
+    'Ç�': 'ú',
+    'Ç‰': 'É',
+    'Ç?': 'Á',
+    'Çº': 'Ú',
+    'Çœo': 'ão',
+    'ÇŸo': 'ão'
+  };
+  let out = str;
+  Object.entries(map).forEach(([k, v]) => {
+    out = out.split(k).join(v);
+  });
+  return out.normalize('NFC');
+}
+
 /**
  * Inicializa mapa
  */
@@ -83,7 +111,7 @@ function addMarkers() {
  */
 function addCityMarker(cidadeData) {
   const count = cidadeData.quadrilhas.length;
-  const cidade = cidadeData.cidade;
+  const cidade = cleanText(cidadeData.cidade);
   
   // Cria ícone com cidade e número
   const icon = L.divIcon({
@@ -130,7 +158,7 @@ function addCityMarker(cidadeData) {
  * Cria conteúdo do popup da cidade
  */
 function createCityPopup(cidadeData) {
-  const cidade = cidadeData.cidade;
+  const cidade = cleanText(cidadeData.cidade);
   const quads = cidadeData.quadrilhas;
   
   // Ordena por pontos (maior primeiro)
@@ -149,6 +177,7 @@ function createCityPopup(cidadeData) {
   
   sorted.forEach((quad, index) => {
     const grupoColor = quad.grupo === 'Especial' ? '#d32f2f' : '#f57c00';
+    const nome = cleanText(quad.nome);
     html += `
       <div style="
         border: 1px solid #e0e0e0;
@@ -160,7 +189,7 @@ function createCityPopup(cidadeData) {
          onmouseout="this.style.background='#f9f9f9'; this.style.borderColor='#e0e0e0';">
         <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 6px;">
           <h4 style="margin: 0; font-size: 1em; color: #1a1a1a;">
-            ${quad.nome}
+            ${nome}
           </h4>
           <span style="
             background: ${grupoColor};
@@ -187,7 +216,7 @@ function createCityPopup(cidadeData) {
            "
            onmouseover="this.style.background='#b71c1c';"
            onmouseout="this.style.background='var(--accent-primary)';">
-          Ver Perfil ?'
+          Ver perfil
         </a>
       </div>
     `;
@@ -245,5 +274,4 @@ async function init() {
 }
 
 init();
-
 
