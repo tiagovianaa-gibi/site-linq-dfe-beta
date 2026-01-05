@@ -122,6 +122,11 @@ nav a {
   transition: all 0.2s;
 }
 
+*:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
 nav a:hover {
   background: var(--bg-primary);
   color: var(--accent-primary);
@@ -2343,6 +2348,12 @@ body.page-noticia .noticia-hero {
   justify-content: space-between;
 }
 
+.doc-card-header{
+  display:flex;
+  gap: var(--spacing-xs);
+  align-items:center;
+}
+
 .doc-card-title {
   font-size: 1.05rem;
   font-weight: 600;
@@ -2684,6 +2695,81 @@ body.page-noticia .noticia-hero {
   gap: 10px;
 }
 
+/* Campeãs do Circuito */
+.campeas-section .campeas-header{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--spacing-md);
+}
+
+.campeas-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+  align-items: stretch;
+}
+
+.campea-card{
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+  min-height: 260px;
+  isolation: isolate;
+}
+
+.campea-media{
+  position: absolute;
+  inset: 0;
+  background-color: #0b0b0b;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.02);
+  filter: saturate(1.05);
+}
+
+.campea-card::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.72) 75%);
+}
+
+.campea-content{
+  position: relative;
+  z-index: 1;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  color: #fff;
+  max-width: 360px;
+}
+
+.campea-card .chip{
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.35);
+}
+
+.campea-text{
+  color: rgba(255,255,255,0.9);
+}
+
+.campea-card .btn-light{
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border-color: rgba(255,255,255,0.35);
+}
+
+.campea-card .btn-light:hover{
+  background: rgba(255,255,255,0.25);
+  color: #fff;
+}
+
 @media (min-width: 900px){
   .circuit-groups{
     grid-template-columns: 1fr 1fr;
@@ -2710,4 +2796,99 @@ body.page-noticia .noticia-hero {
     display: inline-block;
     margin: 8px 0 0 0;
   }
+}
+
+/* ===== Componentes base ===== */
+.btn-ghost {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.section-header h2 {
+  margin: 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: rgba(211, 47, 47, 0.9);
+  color: #fff;
+  font-weight: 600;
+}
+
+.badge-secondary {
+  background: rgba(245, 124, 0, 0.92);
+  color: #fff;
+  font-weight: 600;
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-lg);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--bg-card);
+}
+
+.empty-state h2 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.skeleton {
+  background: linear-gradient(90deg, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.05) 75%);
+  background-size: 200% 100%;
+  animation: skeleton 1.4s ease infinite;
+  border-radius: 8px;
+}
+
+@keyframes skeleton {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrap th,
+.table-wrap td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.table-wrap th {
+  font-weight: 700;
+  background: var(--bg-primary);
 }

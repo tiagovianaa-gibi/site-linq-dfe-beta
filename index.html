@@ -10,42 +10,32 @@
   <title>Portal Oficial da LINQ-DFE | LINQ-DFE</title>
   <meta name="description" content="Portal oficial da LINQ-DFE com circuito de quadrilhas, notícias, calendário, ranking e resultados do São João no DF e Entorno.">
   <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://SEU-DOMINIO/">
+  <link rel="canonical" href="https://portal-da-liga.web.app/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Portal Oficial da LINQ-DFE | LINQ-DFE">
   <meta property="og:description" content="Portal oficial da LINQ-DFE com circuito de quadrilhas, notícias, calendário, ranking e resultados do São João no DF e Entorno.">
-  <meta property="og:url" content="https://SEU-DOMINIO/">
-  <meta property="og:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png">
+  <meta property="og:url" content="https://portal-da-liga.web.app/">
+  <meta property="og:image" content="https://portal-da-liga.web.app/assets/logos/linq-dfe.png">
   <meta property="og:site_name" content="LINQ-DFE">
   <meta property="og:locale" content="pt_BR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Portal Oficial da LINQ-DFE | LINQ-DFE">
   <meta name="twitter:description" content="Portal oficial da LINQ-DFE com circuito de quadrilhas, notícias, calendário, ranking e resultados do São João no DF e Entorno.">
-  <meta name="twitter:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png">
+  <meta name="twitter:image" content="https://portal-da-liga.web.app/assets/logos/linq-dfe.png">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "LINQ-DFE",
-      "url": "https://SEU-DOMINIO",
-      "logo": "https://SEU-DOMINIO/assets/logos/linq-dfe.png",
+      "url": "https://portal-da-liga.web.app",
+      "logo": "https://portal-da-liga.web.app/assets/logos/linq-dfe.png",
       "sameAs": ["https://instagram.com/linqdfe"]
     }
   </script>
-  <meta name="description" content="HUB Junino oficial da LINQ-DFE - Liga de Quadrilhas Juninas do DF e Entorno">
-  <title>LINQ-DFE | Portal Oficial</title>
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="LINQ-DFE | Portal Oficial">
-  <meta property="og:description" content="HUB Junino oficial da LINQ-DFE - Liga de Quadrilhas Juninas do DF e Entorno">
-  <meta property="og:image" content="assets/logos/linq-dfe.png">
-  <meta property="og:locale" content="pt_BR">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LINQ-DFE | Portal Oficial">
-  <meta name="twitter:description" content="HUB Junino oficial da LINQ-DFE - Liga de Quadrilhas Juninas do DF e Entorno">
-  <meta name="twitter:image" content="assets/logos/linq-dfe.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
   <!-- Navegação -->
   <nav>
   <div class="container">
@@ -70,8 +60,8 @@
   <main>
     <!-- Hero Video -->
     <section class="hero-video">
-      <video id="heroVideo" autoplay muted loop playsinline>
-        <source src="assets/hero/hero.mp4" type="video/mp4">
+      <video id="heroVideo" muted loop playsinline preload="none" poster="assets/banners/placeholder.jpg">
+        <source data-src="assets/hero/hero.mp4" type="video/mp4">
         Seu navegador não suporta vídeo.
       </video>
     </section>
@@ -81,6 +71,8 @@
       <button id="btnAtivarSom" onclick="ativarSom()">Ativar som do vídeo</button>
       <button id="btnSilenciar" onclick="silenciarSom()" disabled style="display: none;">Silenciar som</button>
     </section>
+
+    
 
     <!-- Bloco Circuito 2026 -->
     <section class="section">
@@ -113,6 +105,38 @@
     </section>
 
     <!-- Destaques 2025 -->
+
+<!-- Campeãs 2025 -->
+    <section class="section campeas-section">
+      <div class="container">
+        <div class="campeas-header">
+          <h2 class="section-title">Campeãs do Circuito</h2>
+          </div>
+
+        <div class="campeas-grid">
+          <article class="campea-card">
+            <div class="campea-media" style="background-image: url('assets/fotos-quadrilhas/atual-campea-especial.jpg');" aria-hidden="true"></div>
+            <div class="campea-content">
+              <p class="chip chip-light">Grupo Especial</p>
+              <h3>Arroxa o Nó</h3>
+              <p class="campea-text">Campeã do Grupo Especial em 2025, representa o DF no Concurso Nacional da CONFEBRAQ.</p>
+              <a class="btn btn-light" href="temporada-2025.html">Ver resultados 2025</a>
+            </div>
+          </article>
+
+          <article class="campea-card">
+            <div class="campea-media" style="background-image: url('assets/fotos-quadrilhas/atual-campea-acesso.jpg'); background-position: 40% 40%;" aria-hidden="true"></div>
+            <div class="campea-content">
+              <p class="chip chip-light">Grupo de Acesso</p>
+              <h3>Matulão</h3>
+              <p class="campea-text">Campeã 2025 do Grupo de Acesso; sobe ao Grupo Especial na temporada 2026.</p>
+              <a class="btn btn-light" href="temporada-2025.html">Ver resultados 2025</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="section">
       <div class="container">
         <h2 class="section-title">Destaques 2025</h2>
@@ -185,9 +209,6 @@
   <script type="module" src="js/home-noticias.js"></script>
 </body>
 </html>
-
-
-
 
 
 

@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /portal
+Disallow: /portal-dashboard
 
-Sitemap: https://linqdfe.com.br/sitemap.xml
+Sitemap: https://portal-da-liga.web.app/sitemap.xml

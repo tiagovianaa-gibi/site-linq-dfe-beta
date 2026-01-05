@@ -40,7 +40,7 @@ let hasMore = false;
 
 const CACHE_KEY = 'noticiasCacheV1';
 const CACHE_TTL = 10 * 60 * 1000; // 10 minutos
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 200; // traz tudo de uma vez
 
 function ensureFirestore() {
   if (firestoreDb) return firestoreDb;
@@ -71,29 +71,38 @@ function mapFirestoreNoticia(docSnap) {
 }
 
 async function loadNoticiasData() {
-  const cached = readCache();
-  if (cached && !currentSearch) {
-    noticias = cached;
+  // primeiro carrega do JSON local para garantir conteudo estatico
+  const localNoticias = (await loadNoticiasLocal()) || [];
+  if (localNoticias.length) {
+    noticias = localNoticias;
     renderNoticias();
   }
 
   try {
     let firstPage = await fetchNoticiasPage(true);
-    // se vier vazio (ex.: sem indice ou campo dataPublicacao), usa fallback completo
-    if (!firstPage.length) {
-      firstPage = await fetchNoticiasFullFallback();
+
+    // Busca complementar sem ordenação para trazer docs que não têm dataPublicacao
+    const fullFallback = await fetchNoticiasFullFallback();
+    if (fullFallback.length) {
+      const mapUniq = new Map();
+      firstPage.forEach((n) => mapUniq.set(n.id || n.slug, n));
+      fullFallback.forEach((n) => mapUniq.set(n.id || n.slug, n));
+      firstPage = Array.from(mapUniq.values());
     }
 
-    noticias = firstPage;
-    if (!noticias.length) {
-      noticias = await loadNoticiasLocal();
+    if (firstPage.length) {
+      noticias = firstPage;
+    } else if (localNoticias.length) {
+      noticias = localNoticias;
     }
-    writeCache(noticias);
+
     renderNoticias();
   } catch (err) {
     console.error('Nao foi possivel carregar noticias do Firestore.', err);
-    noticias = await loadNoticiasLocal();
-    renderNoticias();
+    if (!noticias.length && localNoticias.length) {
+      noticias = localNoticias;
+      renderNoticias();
+    }
   }
 }
 
@@ -151,38 +160,28 @@ async function loadNoticiasLocal() {
   const local = (await loadJSON('data/noticias.json')) || [];
   return local
     .map(mapJsonNoticia)
-    .filter((n) => (n.status || '').toLowerCase() === 'publicada');
+    .filter((n) => {
+      const status = (n.status || '').toLowerCase();
+      return !status || status === 'publicada';
+    });
 }
 
 async function fetchNoticiasPage(reset = false) {
   try {
     const db = ensureFirestore();
-    let q = query(
-      collection(db, 'noticias'),
-      orderBy('dataPublicacao', 'desc'),
-      limit(PAGE_SIZE)
-    );
+    // Busca simples: traz todas as notícias sem depender de campo dataPublicacao
+    const snap = await getDocs(collection(db, 'noticias'));
 
-    if (!reset && lastVisible) {
-      q = query(
-        collection(db, 'noticias'),
-        orderBy('dataPublicacao', 'desc'),
-        startAfter(lastVisible),
-        limit(PAGE_SIZE)
-      );
-    }
-
-    const snap = await getDocs(q);
     const docs = snap.docs || [];
-    lastVisible = docs.length ? docs[docs.length - 1] : null;
-    hasMore = docs.length === PAGE_SIZE;
+    lastVisible = null;
+    hasMore = false;
 
     const items = [];
     docs.forEach((docSnap) => items.push(mapFirestoreNoticia(docSnap)));
 
     return items.filter((n) => {
       const status = (n.status || '').toString().toLowerCase();
-      return status === 'publicada';
+      return !status || status === 'publicada';
     });
   } catch (err) {
     console.error('Nao foi possivel carregar noticias do Firestore.', err);
@@ -200,7 +199,7 @@ async function fetchNoticiasFullFallback() {
     hasMore = false;
     return items.filter((n) => {
       const status = (n.status || '').toString().toLowerCase();
-      return status === 'publicada';
+      return !status || status === 'publicada';
     });
   } catch (err) {
     console.error('Nao foi possivel carregar noticias (fallback).', err);
@@ -215,6 +214,11 @@ function renderNoticias() {
   const emptyState = document.getElementById('noticiasEmptyState');
   const loadMoreBtn = document.getElementById('noticiasLoadMore');
   if (!container) return;
+
+  // Se ainda nao temos dados, mantem o HTML estatico (fallback)
+  if (!noticias.length) {
+    return;
+  }
 
   let filtered = [...noticias].sort((a, b) => {
     const da = a.data ? new Date(a.data).getTime() : 0;

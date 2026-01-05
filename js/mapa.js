@@ -1,7 +1,7 @@
-﻿/* ============================================
+/* ============================================
    MAPA.JS - Lógica do mapa com Leaflet
    ============================================
-   VOCS S" MUDA AQUI: nada, funciona automaticamente
+   VOCÊS SÓ MUDAM AQUI: nada, funciona automaticamente
 */
 
 import { loadJSON, setActiveNav, debounce } from './shared.js';
@@ -13,44 +13,25 @@ let currentFilter = 'all';
 let currentSearch = '';
 
 function cleanText(str) {
-  if (!str) return '';
-  const map = {
-    'Ç§': 'ç',
-    'ÇõÇœ': 'ção',
-    'Çõ': 'ção',
-    'Çœ': 'o',
-    'Ç¸': 'é',
-    'Çª': 'á',
-    'Ç£': 'ã',
-    'Ç�': 'í',
-    'ÇŸ': 'ã',
-    'Çƒ': 'ó',
-    'Ç½': 'ê',
-    'Ç�': 'ú',
-    'Ç‰': 'É',
-    'Ç?': 'Á',
-    'Çº': 'Ú',
-    'Çœo': 'ão',
-    'ÇŸo': 'ão'
-  };
-  let out = str;
-  Object.entries(map).forEach(([k, v]) => {
-    out = out.split(k).join(v);
-  });
-  return out.normalize('NFC');
+  return (str || '').normalize('NFC').trim();
+}
+
+function normalizeSearch(str) {
+  return (str || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
 }
 
 /**
- * Inicializa mapa
+ * Inicializa o mapa base
  */
 function initMap() {
-  // Centro do DF
   map = L.map('map').setView([-15.79, -47.87], 10);
-  
-  // Tile layer (OpenStreetMap)
+
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors',
-    maxZoom: 19
+    attribution: ' OpenStreetMap contributors',
+    maxZoom: 19,
   }).addTo(map);
 }
 
@@ -58,48 +39,42 @@ function initMap() {
  * Adiciona marcadores agrupados por cidade
  */
 function addMarkers() {
-  // Remove marcadores existentes
   markers.forEach(marker => map.removeLayer(marker));
   markers = [];
-  
+
   let filtered = [...quadrilhas];
-  
-  // Filtro por grupo
+
   if (currentFilter !== 'all') {
     filtered = filtered.filter(q => q.grupo === currentFilter);
   }
-  
-  // Busca
+
   if (currentSearch) {
-    const searchLower = currentSearch.toLowerCase();
-    filtered = filtered.filter(q => 
-      q.nome.toLowerCase().includes(searchLower) ||
-      q.cidade.toLowerCase().includes(searchLower)
+    const searchLower = normalizeSearch(currentSearch);
+    filtered = filtered.filter(q =>
+      normalizeSearch(q.nome).includes(searchLower) ||
+      normalizeSearch(q.cidade).includes(searchLower)
     );
   }
-  
-  // Agrupa por cidade
+
   const cidadesMap = new Map();
   filtered.forEach(quad => {
-    if (!quad.coords || !quad.coords.lat || !quad.coords.lng) return;
-    
+    if (!quad.coords || quad.coords.lat == null || quad.coords.lng == null) return;
+
     const cidadeKey = quad.cidade;
     if (!cidadesMap.has(cidadeKey)) {
       cidadesMap.set(cidadeKey, {
         cidade: quad.cidade,
         quadrilhas: [],
-        coords: { lat: quad.coords.lat, lng: quad.coords.lng }
+        coords: { lat: quad.coords.lat, lng: quad.coords.lng },
       });
     }
     cidadesMap.get(cidadeKey).quadrilhas.push(quad);
   });
-  
-  // Adiciona marcador para cada cidade
-  cidadesMap.forEach((cidadeData, cidadeKey) => {
+
+  cidadesMap.forEach(cidadeData => {
     addCityMarker(cidadeData);
   });
-  
-  // Ajusta zoom se houver marcadores
+
   if (markers.length > 0) {
     const group = new L.featureGroup(markers);
     map.fitBounds(group.getBounds().pad(0.1));
@@ -112,8 +87,7 @@ function addMarkers() {
 function addCityMarker(cidadeData) {
   const count = cidadeData.quadrilhas.length;
   const cidade = cleanText(cidadeData.cidade);
-  
-  // Cria ícone com cidade e número
+
   const icon = L.divIcon({
     className: 'custom-marker-city',
     html: `
@@ -135,12 +109,11 @@ function addCityMarker(cidadeData) {
       </div>
     `,
     iconSize: [null, null],
-    iconAnchor: [0, 0]
+    iconAnchor: [0, 0],
   });
-  
-  // Cria popup com lista de quadrilhas
+
   const popupContent = createCityPopup(cidadeData);
-  
+
   const marker = L.marker(
     [cidadeData.coords.lat, cidadeData.coords.lng],
     { icon }
@@ -148,9 +121,9 @@ function addCityMarker(cidadeData) {
     .addTo(map)
     .bindPopup(popupContent, {
       maxWidth: 350,
-      className: 'city-popup'
+      className: 'city-popup',
     });
-  
+
   markers.push(marker);
 }
 
@@ -160,10 +133,9 @@ function addCityMarker(cidadeData) {
 function createCityPopup(cidadeData) {
   const cidade = cleanText(cidadeData.cidade);
   const quads = cidadeData.quadrilhas;
-  
-  // Ordena por pontos (maior primeiro)
+
   const sorted = [...quads].sort((a, b) => (b.pontos2025 || 0) - (a.pontos2025 || 0));
-  
+
   let html = `
     <div style="min-width: 280px; max-height: 400px; overflow-y: auto;">
       <h3 style="margin: 0 0 12px 0; color: var(--accent-primary); font-size: 1.2em; border-bottom: 2px solid var(--accent-primary); padding-bottom: 8px;">
@@ -174,10 +146,12 @@ function createCityPopup(cidadeData) {
       </p>
       <div style="display: flex; flex-direction: column; gap: 8px;">
   `;
-  
-  sorted.forEach((quad, index) => {
+
+  sorted.forEach(quad => {
     const grupoColor = quad.grupo === 'Especial' ? '#d32f2f' : '#f57c00';
     const nome = cleanText(quad.nome);
+    const slug = quad.slug || '';
+    const link = slug ? `quadrilha/${slug}.html` : `quadrilha.html?id=${quad.id}`;
     html += `
       <div style="
         border: 1px solid #e0e0e0;
@@ -203,7 +177,7 @@ function createCityPopup(cidadeData) {
         <div style="font-size: 0.85em; color: #666; margin-bottom: 8px;">
           ${quad.pontos2025 ? `<strong>Pontos 2025:</strong> ${quad.pontos2025}` : ''}
         </div>
-        <a href="quadrilha.html?id=${quad.id}" 
+        <a href="${link}" 
            style="
              display: inline-block;
              padding: 6px 12px;
@@ -221,27 +195,28 @@ function createCityPopup(cidadeData) {
       </div>
     `;
   });
-  
+
   html += `
       </div>
     </div>
   `;
-  
+
   return html;
 }
 
 /**
  * Filtra mapa
  */
-window.filterMapa = function(grupo) {
+window.filterMapa = function (grupo) {
   currentFilter = grupo;
-  
-  // Atualiza botões
+
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  event.target.classList.add('active');
-  
+  if (window.event && window.event.target) {
+    window.event.target.classList.add('active');
+  }
+
   addMarkers();
 };
 
@@ -249,29 +224,23 @@ window.filterMapa = function(grupo) {
  * Inicialização
  */
 async function init() {
-  // Inicializa mapa
   initMap();
-  
-  // Carrega dados
+
   quadrilhas = await loadJSON('data/quadrilhas.json') || [];
-  
-  // Adiciona marcadores
+
   addMarkers();
-  
-  // Busca
+
   const searchInput = document.getElementById('searchMapa');
   if (searchInput) {
     const debouncedSearch = debounce(() => {
       currentSearch = searchInput.value;
       addMarkers();
     }, 300);
-    
+
     searchInput.addEventListener('input', debouncedSearch);
   }
-  
-  // Ativa navegação
+
   setActiveNav();
 }
 
 init();
-

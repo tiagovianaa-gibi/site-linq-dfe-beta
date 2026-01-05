@@ -31,10 +31,16 @@
 /noticias /noticias.html 200
 /noticia /noticia.html 200
 /noticias/* /noticia.html?slug=:splat 200
+/noticias/:slug /noticia/:slug.html 301
+/noticias/:slug/* /noticia/:slug.html 301
 /acervo /acervo.html 200
 /diretoria /diretoria.html 200
 /documentos /documentos.html 200
 /transparencia /transparencia.html 200
 /quadrilha /quadrilha.html 200
+/quadrilha/:slug /quadrilha/:slug.html 301
+/quadrilha/:slug/* /quadrilha/:slug.html 301
+/quadrilhas/:slug /quadrilha/:slug.html 301
+/circuito/temporadas/:year /temporada-:year.html 301
 /portal /portal.html 200
 /portal-dashboard /portal-dashboard.html 200

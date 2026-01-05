@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
@@ -10,18 +10,18 @@
   <title>Notícias da LINQ-DFE | LINQ-DFE</title>
   <meta name="description" content="Notícias da LINQ-DFE com agenda, comunicados e bastidores do circuito de quadrilhas juninas do DF e Entorno, atualizações oficiais e projetos.">
   <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://SEU-DOMINIO/noticias">
+  <link rel="canonical" href="https://portal-da-liga.web.app/noticias">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Notícias da LINQ-DFE | LINQ-DFE">
   <meta property="og:description" content="Notícias da LINQ-DFE com agenda, comunicados e bastidores do circuito de quadrilhas juninas do DF e Entorno, atualizações oficiais e projetos.">
-  <meta property="og:url" content="https://SEU-DOMINIO/noticias">
-  <meta property="og:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png">
+  <meta property="og:url" content="https://portal-da-liga.web.app/noticias">
+  <meta property="og:image" content="https://portal-da-liga.web.app/assets/logos/linq-dfe.png">
   <meta property="og:site_name" content="LINQ-DFE">
   <meta property="og:locale" content="pt_BR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Notícias da LINQ-DFE | LINQ-DFE">
   <meta name="twitter:description" content="Notícias da LINQ-DFE com agenda, comunicados e bastidores do circuito de quadrilhas juninas do DF e Entorno, atualizações oficiais e projetos.">
-  <meta name="twitter:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png">
+  <meta name="twitter:image" content="https://portal-da-liga.web.app/assets/logos/linq-dfe.png">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -38,10 +38,10 @@
         "name": "LINQ-DFE",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://SEU-DOMINIO/assets/logos/linq-dfe.png"
+          "url": "https://portal-da-liga.web.app/assets/logos/linq-dfe.png"
         }
       },
-      "image": ["https://SEU-DOMINIO/assets/logos/linq-dfe.png"]
+      "image": ["https://portal-da-liga.web.app/assets/logos/linq-dfe.png"]
     }
   </script>
   <script type="application/ld+json">
@@ -49,8 +49,8 @@
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "LINQ-DFE",
-      "url": "https://SEU-DOMINIO",
-      "logo": "https://SEU-DOMINIO/assets/logos/linq-dfe.png",
+      "url": "https://portal-da-liga.web.app",
+      "logo": "https://portal-da-liga.web.app/assets/logos/linq-dfe.png",
       "sameAs": ["https://instagram.com/linqdfe"]
     }
   </script>
@@ -58,6 +58,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
   <nav>
   <div class="container">
     <div class="logo">
@@ -96,26 +97,32 @@
             type="search"
             id="searchNoticias"
             class="search-box"
-            placeholder="Buscar por ttulo, palavra-chave ou quadrilha..."
+            placeholder="Buscar por título, palavra-chave ou quadrilha..."
             autocomplete="off"
           >
         </section>
 
         <section aria-label="Manchetes">
           <h2 class="section-title" style="margin-bottom: var(--spacing-md);">Manchetes</h2>
-          <div id="manchetesGrid" class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--spacing-md);"></div>
+          <div id="manchetesGrid" class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--spacing-md);">
+            <!-- Fallback estatico para SEO/sem JS -->
+            <article class='card'><div class='card-body'><h3 class='card-title'><a href='noticia/diretoria-2026-2028-linq-dfe.html'>Nova diretoria da LINQ-DFE para 2026–2028 fortalece o circuito de quadrilhas juninas</a></h3><p class='card-text'>A Liga Independente de Quadrilhas Juninas do DF e Entorno (LINQ-DFE) reelegeu a chapa “A Liga Não Para”. Veja os nomes, vínculos com quadrilhas filiadas e os próximos passos do circuito.</p></div></article>
+          </div>
         </section>
 
         <section aria-label="Lista de Notícias">
           <h2 class="section-title" style="margin: var(--spacing-lg) 0 var(--spacing-md);">Todas as Notícias</h2>
-          <div id="noticiasList" class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--spacing-md);"></div>
+          <div id="noticiasList" class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--spacing-md);">
+            <!-- Fallback estatico para SEO/sem JS -->
+            <article class='card'><div class='card-body'><h3 class='card-title'><a href='noticia/diretoria-2026-2028-linq-dfe.html'>Nova diretoria da LINQ-DFE para 2026–2028 fortalece o circuito de quadrilhas juninas</a></h3><p class='card-text'>A Liga Independente de Quadrilhas Juninas do DF e Entorno (LINQ-DFE) reelegeu a chapa “A Liga Não Para”. Veja os nomes, vínculos com quadrilhas filiadas e os próximos passos do circuito.</p></div></article>
+          </div>
           <div style="text-align:center; margin-top: var(--spacing-md);">
             <button id="noticiasLoadMore" class="btn btn-light" style="display:none;">Carregar mais</button>
           </div>
 
           <div id="noticiasEmptyState" class="empty-state hidden">
             <h2>Nenhuma Notícia encontrada</h2>
-            <p>Assim que a comunicao da Liga publicar novos contedos, eles aparecero aqui.</p>
+            <p>Assim que a comunicação da Liga publicar novos conteúdos, eles aparecerão aqui.</p>
           </div>
         </section>
       </div>
@@ -131,8 +138,6 @@
   <script type="module" src="js/noticias.js"></script>
 </body>
 </html>
-
-
 
 
 

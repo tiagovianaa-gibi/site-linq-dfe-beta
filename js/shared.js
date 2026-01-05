@@ -68,6 +68,40 @@ export function setActiveNav() {
   });
 }
 
+// ===== Captura de erros globais (pode ser enviada a um webhook/Sentry) =====
+const ERROR_LOG_ENDPOINT = window?.ENV_ERROR_WEBHOOK || null;
+
+function reportError(payload) {
+  if (!ERROR_LOG_ENDPOINT || typeof fetch !== 'function') return;
+  try {
+    fetch(ERROR_LOG_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    });
+  } catch (_) {
+    // ignore
+  }
+}
+
+window.addEventListener('error', (event) => {
+  reportError({
+    type: 'error',
+    message: event.message,
+    filename: event.filename,
+    lineno: event.lineno,
+    colno: event.colno,
+  });
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  reportError({
+    type: 'unhandledrejection',
+    reason: event.reason ? event.reason.toString() : 'unknown',
+  });
+});
+
 /**
  * Retorna URL da foto da quadrilha
  * Prioridade: foto no JSON ?' slug automático ?' placeholder
@@ -119,7 +153,12 @@ async function initQuadrilhaDropdown() {
 
   const sorted = [...data].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
   menu.innerHTML = sorted
-    .map(q => `<a href="quadrilha.html?id=${q.id}">${q.nome}</a>`)
+    .map(q => {
+      const href = q.slug
+        ? `quadrilha/${q.slug}.html`
+        : `quadrilha.html?id=${q.id}`;
+      return `<a href="${href}">${q.nome}</a>`;
+    })
     .join('');
   menu.dataset.loaded = 'true';
 }
@@ -297,7 +336,5 @@ export function normalizeImageUrl(value, fallback = '') {
   // Codifica espa?õos e caracteres especiais sem quebrar slashes
   return encodeURI(clean);
 }
-
-
 
 

@@ -1,4 +1,4 @@
-﻿import { loadJSON, normalizeImageUrl } from "./shared.js";
+import { loadJSON, normalizeImageUrl } from "./shared.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore,
@@ -51,7 +51,7 @@ async function fetchNoticiasFirestore() {
     });
     return items.filter((n) => (n.status || "").toLowerCase() === "publicada");
   } catch (err) {
-    console.warn("Falha ao carregar not¡cias do Firestore, tentando JSON local.", err);
+    console.warn("Falha ao carregar notícias do Firestore, tentando JSON local.", err);
     return null;
   }
 }
@@ -89,7 +89,7 @@ async function loadHomeNews() {
   const latest = noticias.slice(0, 3);
 
   if (!latest.length) {
-    grid.innerHTML = `<p class="muted">Nenhuma not¡cia cadastrada ainda.</p>`;
+    grid.innerHTML = `<p class="muted">Nenhuma notícia cadastrada ainda.</p>`;
     return;
   }
 

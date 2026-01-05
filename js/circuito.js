@@ -231,6 +231,10 @@ function renderRankingTables(ano) {
             const foto = match?.foto || "";
             const cidade = match?.cidade || item.cidade || "";
             const id = match?.id;
+            const slug = match?.slug;
+            const href = slug
+              ? `quadrilha/${slug}.html`
+              : (id ? `quadrilha.html?id=${id}` : null);
 
             const pos = item.pos ?? idx + 1;
             const total = Number(item.total ?? item.pontos ?? 0);
@@ -248,9 +252,9 @@ function renderRankingTables(ano) {
               <small class="muted" style="display:block;">${cidade || ""}</small>
             `;
 
-            const quadCell = id
+            const quadCell = href
               ? `
-                <a href="quadrilha.html?id=${id}" class="table-quad">
+                <a href="${href}" class="table-quad">
                   ${imgHtml}
                   <span>${nomeHtml}</span>
                 </a>
@@ -315,12 +319,15 @@ function renderRankingTables(ano) {
           const logoSrc = q.foto
             ? `assets/fotos-quadrilhas/${q.foto}`
             : "assets/logos/placeholder.png";
+          const href = q.slug
+            ? `quadrilha/${q.slug}.html`
+            : `quadrilha.html?id=${q.id}`;
 
           return `
             <tr>
               <td>${idx + 1}</td>
               <td>
-                <a href="quadrilha.html?id=${q.id}" class="table-quad">
+                <a href="${href}" class="table-quad">
                   <img src="${logoSrc}" alt="${q.nome}" onerror="this.src='assets/logos/placeholder.png'">
                   <span>
                     ${q.nome}
@@ -399,5 +406,3 @@ function formatDate(iso) {
     return "em breve";
   }
 }
-
-
