@@ -336,5 +336,3 @@ export function normalizeImageUrl(value, fallback = '') {
   // Codifica espa?õos e caracteres especiais sem quebrar slashes
   return encodeURI(clean);
 }
-
-

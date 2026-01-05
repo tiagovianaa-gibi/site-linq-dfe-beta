@@ -18,12 +18,16 @@ window.ativarSom = function() {
     video.play().catch(() => {});
     const btnOn = document.getElementById('btnAtivarSom');
     const btnOff = document.getElementById('btnSilenciar');
+    const statusEl = document.getElementById('audioStatus');
     if (btnOn && btnOff) {
       btnOn.disabled = true;
       btnOn.style.display = 'none';
+      btnOn.setAttribute('aria-pressed', 'true');
       btnOff.disabled = false;
       btnOff.style.display = 'inline-block';
+      btnOff.setAttribute('aria-pressed', 'false');
     }
+    if (statusEl) statusEl.textContent = 'Som ativado';
   }
 };
 
@@ -33,12 +37,16 @@ window.silenciarSom = function() {
     video.muted = true;
     const btnOff = document.getElementById('btnSilenciar');
     const btnOn = document.getElementById('btnAtivarSom');
+    const statusEl = document.getElementById('audioStatus');
     if (btnOn && btnOff) {
       btnOff.disabled = true;
       btnOff.style.display = 'none';
+      btnOff.setAttribute('aria-pressed', 'true');
       btnOn.disabled = false;
       btnOn.style.display = 'inline-block';
+      btnOn.setAttribute('aria-pressed', 'false');
     }
+    if (statusEl) statusEl.textContent = 'Som silenciado';
   }
 };
 
