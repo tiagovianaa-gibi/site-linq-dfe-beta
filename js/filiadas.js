@@ -77,7 +77,11 @@ function renderFiliadas() {
     const card = document.createElement("div");
     card.className = "card quadrilha-card";
     card.onclick = () => {
-      window.location.href = `quadrilha.html?id=${quad.id}`;
+      const slug = quad.slug || "";
+      const target = slug
+        ? `quadrilha/${slug}.html`
+        : `quadrilha.html?id=${quad.id}`;
+      window.location.href = target;
     };
 
     const img = document.createElement("img");
@@ -170,5 +174,4 @@ async function init() {
 }
 
 init();
-
 

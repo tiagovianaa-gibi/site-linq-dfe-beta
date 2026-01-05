@@ -10,50 +10,50 @@
   <title>Portal da Liga | LINQ-DFE</title>
   <meta name="description" content="Área restrita da LINQ-DFE para quadrilhas filiadas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
   <meta name="robots" content="noindex,nofollow">
-  <link rel="canonical" href="https://SEU-DOMINIO/portal">
+  <link rel="canonical" href="https://portal-da-liga.web.app/portal">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Portal da Liga | LINQ-DFE">
   <meta property="og:description" content="Área restrita da LINQ-DFE para quadrilhas filiadas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
-  <meta property="og:url" content="https://SEU-DOMINIO/portal">
-  <meta property="og:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png">
+  <meta property="og:url" content="https://portal-da-liga.web.app/portal">
+  <meta property="og:image" content="https://portal-da-liga.web.app/assets/logos/linq-dfe.png">
   <meta property="og:site_name" content="LINQ-DFE">
   <meta property="og:locale" content="pt_BR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Portal da Liga | LINQ-DFE">
   <meta name="twitter:description" content="Área restrita da LINQ-DFE para quadrilhas filiadas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
-  <meta name="twitter:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png">
+  <meta name="twitter:image" content="https://portal-da-liga.web.app/assets/logos/linq-dfe.png">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "LINQ-DFE",
-      "url": "https://SEU-DOMINIO",
-      "logo": "https://SEU-DOMINIO/assets/logos/linq-dfe.png",
+      "url": "https://portal-da-liga.web.app",
+      "logo": "https://portal-da-liga.web.app/assets/logos/linq-dfe.png",
       "sameAs": ["https://instagram.com/linqdfe"]
     }
   </script>
   <title>Portal da Liga | LINQ-DFE</title>
   <meta name="description" content="Área restrita da LINQ-DFE para quadrilhas filiadas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
   <meta name="robots" content="noindex,nofollow">
-  <link rel="canonical" href="https://SEU-DOMINIO/portal">
+  <link rel="canonical" href="https://portal-da-liga.web.app/portal">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Portal da Liga | LINQ-DFE">
   <meta property="og:description" content="Área restrita da LINQ-DFE para quadrilhas filiadas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
-  <meta property="og:url" content="https://SEU-DOMINIO/portal">
-  <meta property="og:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png">
+  <meta property="og:url" content="https://portal-da-liga.web.app/portal">
+  <meta property="og:image" content="https://portal-da-liga.web.app/assets/logos/linq-dfe.png">
   <meta property="og:site_name" content="LINQ-DFE">
   <meta property="og:locale" content="pt_BR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Portal da Liga | LINQ-DFE">
   <meta name="twitter:description" content="Área restrita da LINQ-DFE para quadrilhas filiadas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
-  <meta name="twitter:image" content="https://SEU-DOMINIO/assets/logos/linq-dfe.png">
+  <meta name="twitter:image" content="https://portal-da-liga.web.app/assets/logos/linq-dfe.png">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "LINQ-DFE",
-      "url": "https://SEU-DOMINIO",
-      "logo": "https://SEU-DOMINIO/assets/logos/linq-dfe.png",
+      "url": "https://portal-da-liga.web.app",
+      "logo": "https://portal-da-liga.web.app/assets/logos/linq-dfe.png",
       "sameAs": ["https://instagram.com/linqdfe"]
     }
   </script>
@@ -72,6 +72,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="portal-body">
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
   <nav>
   <div class="container">
     <div class="logo">
@@ -102,17 +103,28 @@
             <p style="text-align:center; margin-bottom: var(--spacing-lg);">
               Acesso exclusivo para quadrilhas filiadas, diretoria da Liga, equipe de credenciamento e jurados.
             </p>
-            <form id="portalLoginForm" class="form-vertical">
-              <label for="email">E-mail</label>
-              <input type="email" id="email" name="email" required>
-              <label for="senha">Senha</label>
-              <input type="password" id="senha" name="senha" required>
-              <button type="submit" class="btn" style="width:100%; margin-top: var(--spacing-md);">
-                Entrar
-              </button>
-              <p style="text-align:center; margin-top: var(--spacing-md); font-size: 0.9rem;">
-                Esqueceu a senha? Procure a secretaria da Liga.
-              </p>
+            <form id="portalLoginForm" class="form-vertical" novalidate>
+              <div class="form-group">
+                <label for="email">E-mail institucional</label>
+                <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="emailHelp">
+                <small id="emailHelp" class="muted">Use o e-mail cadastrado para sua quadrilha.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" autocomplete="current-password" required>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn" style="width:100%; margin-top: var(--spacing-md);">
+                  Entrar
+                </button>
+                <button type="button" class="btn btn-light" id="forgotBtn" style="width:100%; margin-top: var(--spacing-sm);">
+                  Esqueci minha senha
+                </button>
+              </div>
+
+              <div id="loginStatus" role="alert" aria-live="polite" class="muted" style="margin-top: var(--spacing-md); min-height: 1.4rem;"></div>
             </form>
           </div>
         </div>

@@ -1,5 +1,5 @@
-﻿/* ============================================
-   INDEX.JS - LÃ³gica da Home
+/* ============================================
+   INDEX.JS - Lógica da Home
    ============================================ */
 
 import { loadJSON, getQuadrilhaPhoto, applyFocal, slugify } from './shared.js';
@@ -8,16 +8,22 @@ let quadrilhas = [];
 let parceiros = [];
 
 /**
- * Controles de Ã¡udio do vÃ­deo hero
+ * Controles de áudio do vídeo hero
  */
 window.ativarSom = function() {
   const video = document.getElementById('heroVideo');
   if (video) {
+    ensureHeroVideoLoaded();
     video.muted = false;
-    document.getElementById('btnAtivarSom').disabled = true;
-    document.getElementById('btnAtivarSom').style.display = 'none';
-    document.getElementById('btnSilenciar').disabled = false;
-    document.getElementById('btnSilenciar').style.display = 'inline-block';
+    video.play().catch(() => {});
+    const btnOn = document.getElementById('btnAtivarSom');
+    const btnOff = document.getElementById('btnSilenciar');
+    if (btnOn && btnOff) {
+      btnOn.disabled = true;
+      btnOn.style.display = 'none';
+      btnOff.disabled = false;
+      btnOff.style.display = 'inline-block';
+    }
   }
 };
 
@@ -25,12 +31,38 @@ window.silenciarSom = function() {
   const video = document.getElementById('heroVideo');
   if (video) {
     video.muted = true;
-    document.getElementById('btnSilenciar').disabled = true;
-    document.getElementById('btnSilenciar').style.display = 'none';
-    document.getElementById('btnAtivarSom').disabled = false;
-    document.getElementById('btnAtivarSom').style.display = 'inline-block';
+    const btnOff = document.getElementById('btnSilenciar');
+    const btnOn = document.getElementById('btnAtivarSom');
+    if (btnOn && btnOff) {
+      btnOff.disabled = true;
+      btnOff.style.display = 'none';
+      btnOn.disabled = false;
+      btnOn.style.display = 'inline-block';
+    }
   }
 };
+
+let heroLoaded = false;
+function ensureHeroVideoLoaded() {
+  if (heroLoaded) return;
+  const video = document.getElementById('heroVideo');
+  if (!video) return;
+  const source = video.querySelector('source[data-src]');
+  if (source && !source.src) {
+    source.src = source.getAttribute('data-src');
+  }
+  heroLoaded = true;
+}
+
+function lazyLoadHero() {
+  ensureHeroVideoLoaded();
+  const video = document.getElementById('heroVideo');
+  if (!video) return;
+  video.load();
+  video.play().catch(() => {
+    // autoplay pode ser bloqueado; manter poster
+  });
+}
 
 /**
  * Renderiza card de quadrilha
@@ -47,7 +79,11 @@ function renderQuadrilhaCard(quad, destacado = false) {
   const isAcessoGrupo = grupoLabel.toLowerCase() === 'acesso';
   const card = document.createElement('div');
   card.className = destacado ? 'card quadrilha-card' : 'card quadrilha-card';
-  card.onclick = () => window.location.href = `quadrilha.html?id=${quad.id}`;
+  card.onclick = () => {
+    const slug = quad.slug || '';
+    const target = slug ? `quadrilha/${slug}.html` : `quadrilha.html?id=${quad.id}`;
+    window.location.href = target;
+  };
 
   const img = document.createElement('img');
   img.src = photo;
@@ -68,7 +104,7 @@ function renderQuadrilhaCard(quad, destacado = false) {
       <h3 class="card-title" style="margin:0;">${quad.nome}</h3>
       <div class="card-meta" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
         <span>${quad.cidade || ''}</span>
-        ${posicao ? `<span class="badge ${isAcessoGrupo ? 'badge-secondary' : ''}">${posicao}º</span>` : ''}
+        ${posicao ? `<span class="badge ${isAcessoGrupo ? 'badge-secondary' : ''}">${posicao}</span>` : ''}
         <span class="badge ${isAcessoGrupo ? 'badge-secondary' : ''}">${grupoLabel}</span>
       </div>
     </div>
@@ -85,7 +121,7 @@ function renderQuadrilhaCard(quad, destacado = false) {
       <div class="card-meta">
         <span>${quad.cidade || ''}</span>
         <span class="badge ${isAcessoGrupo ? 'badge-secondary' : ''}">${grupoLabel}</span>
-        ${posicao ? `<span>${posicao}Âº</span>` : ''}
+        ${posicao ? `<span>${posicao}º</span>` : ''}
       </div>
     `;
     card.appendChild(body);
@@ -151,7 +187,7 @@ function renderParceiros() {
 }
 
 /**
- * InicializaÃ§Ã£o
+ * Inicialização
  */
 async function init() {
   quadrilhas = (await loadJSON('data/quadrilhas.json')) || [];
@@ -160,10 +196,19 @@ async function init() {
   renderHighlights();
   renderParceiros();
 
+  // Lazy load do vdeo aps ocioso ou primeira interao
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(lazyLoadHero, { timeout: 2000 });
+  } else {
+    setTimeout(lazyLoadHero, 1500);
+  }
+  ['scroll', 'pointerdown', 'keydown'].forEach((evt) => {
+    window.addEventListener(evt, lazyLoadHero, { once: true, passive: true });
+  });
+
   import('./shared.js').then((module) => {
     module.setActiveNav();
   });
 }
 
 init();
-
