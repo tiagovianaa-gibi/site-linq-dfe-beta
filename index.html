@@ -57,7 +57,10 @@
   </div>
 </nav>
 
-  <main>
+  <main id="conteudo-principal">
+    <div class="container home-title">
+     
+    </div>
     <!-- Hero Video -->
     <section class="hero-video">
       <video id="heroVideo" muted loop playsinline preload="none" poster="assets/banners/placeholder.jpg">
@@ -68,9 +71,9 @@
 
     <!-- Controles de áudio -->
     <section class="audio-controls">
-      <button id="btnAtivarSom" onclick="ativarSom()">Ativar som do vídeo</button>
-      <button id="btnSilenciar" onclick="silenciarSom()" disabled style="display: none;">Silenciar som</button>
-    </section>
+      <button id="btnAtivarSom" onclick="ativarSom()" aria-pressed="false">Ativar som do vídeo</button>
+      <button id="btnSilenciar" onclick="silenciarSom()" aria-pressed="false" disabled style="display: none;">Silenciar som</button>
+          </section>
 
     
 
@@ -79,7 +82,7 @@
       <div class="container">
         <div class="card" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; padding: var(--spacing-xl); text-align: center;">
           <p class="chip" style="background: rgba(255,255,255,0.12); color: #fff; display: inline-flex;">Circuito 2026</p>
-          <h2 style="font-size: 2.2rem; margin-bottom: var(--spacing-sm);">Inscrições abertas</h2>
+          <h1 style="font-size: 2.2rem; margin-bottom: var(--spacing-sm);">Inscrições abertas</h1>
           <p style="font-size: 1.1rem; margin-bottom: var(--spacing-lg); opacity:.95;">Garanta a participação da sua quadrilha, veja regulamentos e acompanhe as datas oficiais.</p>
           <div style="display: flex; gap: var(--spacing-md); justify-content: center; flex-wrap: wrap;">
             <a href="circuito.html" class="btn" style="background: white; color: var(--accent-primary);">Ver circuito</a>
@@ -93,7 +96,7 @@
     <!-- ===================== Notícias ===================== -->
     <section id="home-news" class="home-section">
       <div class="home-section-header">
-        <h2 class="home-section-title">Notícias</h2>
+        <h1 class="home-section-title">Notícias</h1>
         <a href="noticias.html" class="btn btn-ghost">
           Ver todas
         </a>
@@ -110,12 +113,14 @@
     <section class="section campeas-section">
       <div class="container">
         <div class="campeas-header">
-          <h2 class="section-title">Campeãs do Circuito</h2>
+          <h1 class="section-title">Campeãs do Circuito</h1>
           </div>
 
         <div class="campeas-grid">
           <article class="campea-card">
-            <div class="campea-media" style="background-image: url('assets/fotos-quadrilhas/atual-campea-especial.jpg');" aria-hidden="true"></div>
+            <div class="campea-media">
+              <img src="assets/fotos-quadrilhas/atual-campea-especial.jpg" alt="Arroxa o Nó - campeã do Grupo Especial em 2025">
+            </div>
             <div class="campea-content">
               <p class="chip chip-light">Grupo Especial</p>
               <h3>Arroxa o Nó</h3>
@@ -125,7 +130,9 @@
           </article>
 
           <article class="campea-card">
-            <div class="campea-media" style="background-image: url('assets/fotos-quadrilhas/atual-campea-acesso.jpg'); background-position: 40% 40%;" aria-hidden="true"></div>
+            <div class="campea-media">
+              <img src="assets/fotos-quadrilhas/atual-campea-acesso.jpg" alt="Matulão - campeã do Grupo de Acesso em 2025" style="object-position: 50% 38%;">
+            </div>
             <div class="campea-content">
               <p class="chip chip-light">Grupo de Acesso</p>
               <h3>Matulão</h3>
@@ -139,10 +146,10 @@
 
     <section class="section">
       <div class="container">
-        <h2 class="section-title">Destaques 2025</h2>
+        <h1 class="section-title">Destaques 2025</h1>
         <h3 class="section-subtitle" style="text-align: left; font-size: 1.5rem; margin-top: var(--spacing-lg);">Grupo Especial</h3>
         <div class="grid grid-large" id="destaquesEspecial"></div>
-        <h3 class="section-subtitle" style="text-align: left; font-size: 1.5rem; margin-top: var(--spacing-lg);">Grupo Acesso</h3>
+        <h3 class="section-subtitle" style="text-align: left; font-size: 1.5rem; margin-top: var(--spacing-lg);">Grupo de Acesso</h3>
         <div class="grid grid-large" id="destaquesAcesso"></div>
       </div>
     </section>
@@ -150,7 +157,7 @@
     <!-- Acesso Rápido -->
     <section class="section">
   <div class="container">
-    <h2 class="section-title">Acesso Rápido</h2>
+    <h1 class="section-title">Acesso Rápido</h1>
     <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--spacing-md);">
 
       <div class="card">
@@ -193,7 +200,7 @@
     <!-- Parceiros -->
     <section class="section">
       <div class="container">
-        <h2 class="section-title">Parceiros</h2>
+        <h1 class="section-title">Parceiros</h1>
         <div class="grid" id="parceirosGrid"></div>
       </div>
     </section>
