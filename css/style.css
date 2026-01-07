@@ -39,6 +39,9 @@
   
   /* Bordas */
   --border-radius: 8px;
+
+  /* Altura da navegação fixa */
+  --nav-height: 60px;
 }
 
 /* Reset e Base */
@@ -50,6 +53,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
 }
 
 body {
@@ -252,8 +256,8 @@ nav li.has-dropdown:focus-within .dropdown-menu {
 
 /* Container Principal */
 main {
-  margin-top: 60px; /* Espaço para nav fixa */
-  min-height: calc(100vh - 60px);
+  margin-top: var(--nav-height); /* Espaço para nav fixa */
+  min-height: calc(100vh - var(--nav-height));
 }
 
 .container {
@@ -837,6 +841,10 @@ footer a:hover {
 
 /* Responsivo */
 @media (max-width: 768px) {
+  :root {
+    --nav-height: 110px;
+  }
+
   nav ul {
     gap: var(--spacing-xs);
   }
