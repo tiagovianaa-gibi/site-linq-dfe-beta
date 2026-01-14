@@ -1,5 +1,5 @@
 ﻿/* ============================================
-   INDEX.JS - LÃ³gica da Home
+   INDEX.JS - L?gica da Home
    ============================================ */
 
 import { loadJSON, getQuadrilhaPhoto, applyFocal, slugify } from './shared.js';
@@ -8,7 +8,7 @@ let quadrilhas = [];
 let parceiros = [];
 
 /**
- * Controles de Ã¡udio do vÃ­deo hero
+ * Controles de ?udio do v?deo hero
  */
 window.ativarSom = function() {
   const video = document.getElementById('heroVideo');
@@ -78,7 +78,7 @@ function renderQuadrilhaCard(quad, destacado = false) {
       <div class="card-meta">
         <span>${quad.cidade || ''}</span>
         <span class="badge ${quad.grupo === 'Especial' ? '' : 'badge-secondary'}">${quad.grupo || ''}</span>
-        ${posicao ? `<span>${posicao}Âº</span>` : ''}
+        ${posicao ? `<span>${posicao}º</span>` : ''}
       </div>
     `;
     card.appendChild(body);
@@ -144,7 +144,7 @@ function renderParceiros() {
 }
 
 /**
- * InicializaÃ§Ã£o
+ * Inicializa?o
  */
 async function init() {
   quadrilhas = (await loadJSON('data/quadrilhas.json')) || [];

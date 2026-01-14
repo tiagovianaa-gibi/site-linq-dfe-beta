@@ -281,7 +281,7 @@ export function normalizeImageUrl(value, fallback = '') {
     }
   }
 
-  // http/https mant?¸m como est?­
+  // http/https mant?m como est?
   if (/^https?:\/\//i.test(url)) return url;
 
   // Remove barra inicial para n?"o quebrar caminho no GitHub Pages
