@@ -1,5 +1,5 @@
 ﻿/* ============================================
-   FILIADAS.JS - Lógica da página Filiadas
+   FILIADAS.JS - Lógica da página Quadrilhas
    ============================================ */
 
 import {
@@ -37,7 +37,7 @@ window.filterFiliadas = function (grupo) {
 };
 
 /**
- * Renderiza grid de filiadas
+ * Renderiza grid de quadrilhas
  */
 function renderFiliadas() {
   const grid = document.getElementById("filiadasGrid");
@@ -142,8 +142,7 @@ function populateCityFilter() {
  * Inicialização
  */
 async function init() {
-  // Carrega dados das quadrilhas
-  quadrilhas = (await loadJSON("data/quadrilhas.json")) || [];
+  // Carrega dados das quadrilhas = (await loadJSON("data/quadrilhas.json")) || [];
 
   // Monta select de cidades e renderiza grid inicial
   populateCityFilter();
@@ -169,7 +168,7 @@ async function init() {
     });
   }
 
-  // Destaca o item "Filiadas" no menu
+  // Destaca o item "Quadrilhas" no menu
   setActiveNav();
 }
 

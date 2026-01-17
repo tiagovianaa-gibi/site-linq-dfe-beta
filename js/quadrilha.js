@@ -118,7 +118,6 @@ function renderQuadrilhaInfo(quad, historico) {
   const cidadeEl = document.getElementById('quadrilhaCidade');
   const grupoEl = document.getElementById('quadrilhaGrupo');
   const instagramEl = document.getElementById('quadrilhaInstagram');
-  const pontosEl = document.getElementById('quadrilhaPontos');
 
   const sobreEl = document.getElementById('quadrilhaSobre');
   const infoListEl = document.getElementById('quadrilhaInfoList');
@@ -154,18 +153,6 @@ function renderQuadrilhaInfo(quad, historico) {
     }
   }
 
-  if (pontosEl) {
-    const ultimo = historico && historico[0];
-    if (ultimo && ultimo.ano) {
-      const pontos = (typeof ultimo.total === 'number')
-        ? ultimo.total.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
-        : (ultimo.total ?? '-');
-      const posStr = ultimo.pos ? ` (${ultimo.pos}º lugar)` : '';
-      pontosEl.textContent = `${pontos} pts ${ultimo.ano}${posStr}`;
-    } else {
-      pontosEl.textContent = '—';
-    }
-  }
 
   // Resumo (primeira frase da bio)
   if (resumoEl) {
@@ -175,7 +162,7 @@ function renderQuadrilhaInfo(quad, historico) {
     } else {
       const cidade = quad.cidade || '';
       const grupo = quad.grupo || '';
-      resumoEl.textContent = `${quad.nome} é uma quadrilha junina de ${cidade}, filiada à LINQ-DFE e integrante do Grupo ${grupo}.`;
+      resumoEl.textContent = `${quad.nome} é uma quadrilha junina de ${cidade}, da LINQ-DFE e integrante do Grupo ${grupo}.`;
     }
   }
 
@@ -229,7 +216,7 @@ async function init() {
     if (main) {
       main.innerHTML = `
         <section class="section"><div class="container">
-          <p>Quadrilha não encontrada. Volte para <a href="filiadas.html">filiadas</a>.</p>
+          <p>Quadrilha não encontrada. Volte para <a href="quadrilhas.html">quadrilhas</a>.</p>
         </div></section>`;
     }
     return;

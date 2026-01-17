@@ -66,11 +66,11 @@ function buildFallbackDraft({ keywords, type, includeLinks, brief }) {
     sections[0],
     "A Liga reforça o compromisso com o Circuito de Quadrilhas e a transparência das etapas em andamento.",
     sections[1],
-    "As orientações serão divulgadas conforme a consolidação das informações e alinhamento com as quadrilhas filiadas.",
+    "As orientações serão divulgadas conforme a consolidação das informações e alinhamento com as quadrilhas.",
     sections[2],
     "Em breve serão publicados novos comunicados com prazos e orientações.",
     includeLinks
-      ? "Saiba mais: /circuito.html | /noticias.html | /filiadas.html"
+      ? "Saiba mais: /circuito.html | /noticias.html | /quadrilhas.html"
       : "",
   ]
     .filter(Boolean)
@@ -100,7 +100,7 @@ Regras:
 - 3 a 6 subtítulos.
 - Título: 60–90 caracteres. Resumo: 120–160 caracteres.
 - Tags: 8–12, sem repetição, incluindo "quadrilha junina", "DF e Entorno", "LINQ-DFE", "Circuito de Quadrilhas".
-- Se includeLinks=true, adicione no final: "Saiba mais: /circuito.html | /noticias.html | /filiadas.html".
+- Se includeLinks=true, adicione no final: "Saiba mais: /circuito.html | /noticias.html | /quadrilhas.html".
 - Responda somente JSON com chaves: titulo, resumo, tags (array), conteudoPortal.
 Dados:
 keywords=${JSON.stringify(payload.keywords)}
@@ -208,7 +208,7 @@ exports.generateNewsDraft = onCall(async (request) => {
   const normalized = includeLinks
     ? finalContent.includes("Saiba mais:")
       ? finalContent
-      : `${finalContent}\n\nSaiba mais: /circuito.html | /noticias.html | /filiadas.html`
+      : `${finalContent}\n\nSaiba mais: /circuito.html | /noticias.html | /quadrilhas.html`
     : finalContent.replace(/\\n\\nSaiba mais:[\\s\\S]*$/i, "").trim();
 
   return {

@@ -317,7 +317,7 @@ function renderNoticia() {
         <ul>
           <li><a href="circuito.html">Circuito de Quadrilhas Juninas</a></li>
           <li><a href="temporada-2025.html">Ranking e resultados 2025</a></li>
-          <li><a href="filiadas.html">Quadrilhas filiadas</a></li>
+          <li><a href="quadrilhas.html">Quadrilhas</a></li>
           <li><a href="noticias.html">Mais notícias</a></li>
           <li><a href="documentos.html">Documentos oficiais</a></li>
         </ul>

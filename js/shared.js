@@ -136,16 +136,16 @@ export function applyFaceCrop(img) {
   img.style.objectPosition = '50% 30%'; // sobe o foco para preservar rosto
 }
 
-/** Dropdown de Filiadas no menu principal */
-async function initQuadrilhaDropdown() {
-  const li = document.querySelector('nav li.has-dropdown');
+/** Dropdown de Quadrilhas no menu principal */
+async function initQuadrilhaDropdown(dataUrl) {
   const menu = document.querySelector('.nav-quadrilha-menu');
+  const li = menu ? menu.closest('li') : null;
   if (!li || !menu) return;
 
   // Evita reprocessar
   if (menu.dataset.loaded === 'true') return;
 
-  const data = await loadJSON('data/quadrilhas.json');
+  const data = await loadJSON(dataUrl || 'data/quadrilhas.json');
   if (!Array.isArray(data) || !data.length) {
     menu.innerHTML = '<span class="dropdown-empty">Não foi possível carregar.</span>';
     return;
@@ -164,7 +164,7 @@ async function initQuadrilhaDropdown() {
 }
 
 function setupFiliadasDropdown() {
-  const filLink = document.querySelector('nav a[href$="filiadas.html"]');
+  const filLink = document.querySelector('nav a[href$="quadrilhas.html"]');
   if (!filLink) return;
   const li = filLink.closest('li') || filLink.parentElement;
   if (!li) return;
@@ -179,7 +179,8 @@ function setupFiliadasDropdown() {
     li.appendChild(menu);
   }
 
-  initQuadrilhaDropdown();
+  const dataUrl = new URL('data/quadrilhas.json', filLink.href).href;
+  initQuadrilhaDropdown(dataUrl);
 
   // Toggle por clique em mobile
   const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
@@ -205,6 +206,51 @@ function setupFiliadasDropdown() {
   });
 }
 
+function setupCircuitoDropdown() {
+  const circuitoLink = document.querySelector('nav a[href$="circuito.html"]');
+  if (!circuitoLink) return;
+  const li = circuitoLink.closest('li') || circuitoLink.parentElement;
+  if (!li) return;
+
+  li.classList.add('has-dropdown');
+
+  if (!li.querySelector('.nav-circuito-menu')) {
+    const menu = document.createElement('div');
+    menu.className = 'dropdown-menu nav-circuito-menu';
+    li.appendChild(menu);
+  }
+
+  const baseCircuito = new URL('circuito.html', circuitoLink.href).href;
+  const links = [
+    { href: baseCircuito, label: 'Circuito de Quadrilhas' },
+    { href: new URL('grupo-especial.html', circuitoLink.href).href, label: 'Grupo Especial' },
+    { href: new URL('grupo-acesso.html', circuitoLink.href).href, label: 'Grupo de Acesso' },
+    { href: new URL('edicoes-anteriores.html', circuitoLink.href).href, label: 'Edições anteriores' },
+    { href: new URL('campeoes-circuito.html', circuitoLink.href).href, label: 'Campeãs do Circuito' },
+  ];
+
+  const menu = li.querySelector('.nav-circuito-menu');
+  menu.innerHTML = links.map(item => `<a href="${item.href}">${item.label}</a>`).join('');
+
+  const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+  circuitoLink.addEventListener('click', (e) => {
+    if (!isMobile()) return;
+    if (!li.classList.contains('open')) {
+      e.preventDefault();
+      li.classList.add('open');
+      return;
+    }
+    li.classList.remove('open');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!isMobile()) return;
+    if (!li.contains(e.target)) {
+      li.classList.remove('open');
+    }
+  });
+}
+
 // Executa assim que o DOM estiver pronto
 const runWhenReady = (fn) => {
   if (document.readyState === 'loading') {
@@ -214,7 +260,30 @@ const runWhenReady = (fn) => {
   }
 };
 
+function initRankingFilters() {
+  const scopes = document.querySelectorAll('[data-ranking-scope]');
+  scopes.forEach((scope) => {
+    const select = scope.querySelector('[data-ranking-filter] select');
+    const panels = Array.from(scope.querySelectorAll('[data-ranking-panel]'));
+    if (!select || panels.length === 0) return;
+
+    const updatePanels = () => {
+      const value = select.value;
+      panels.forEach((panel) => {
+        const key = panel.getAttribute('data-ranking-panel');
+        const shouldShow = value === 'all' || value === key;
+        panel.style.display = shouldShow ? '' : 'none';
+      });
+    };
+
+    select.addEventListener('change', updatePanels);
+    updatePanels();
+  });
+}
+
 runWhenReady(setupFiliadasDropdown);
+runWhenReady(setupCircuitoDropdown);
+runWhenReady(initRankingFilters);
 
 /**
  * Formata data para exibição

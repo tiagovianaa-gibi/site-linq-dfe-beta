@@ -79,12 +79,14 @@ const docFiltroTipo = document.getElementById("docFiltroTipo");
 const docAdminArea = document.getElementById("docAdminArea");
 const docForm = document.getElementById("docForm");
 const docFormMessage = document.getElementById("docFormMessage");
+const docIdInput = document.getElementById("docId");
 const docQuadrilhaSelect = document.getElementById("docQuadrilhaId");
 const docTipoSelect = document.getElementById("docTipo");
 const docDataEmissaoInput = document.getElementById("docDataEmissao");
 const docDataValidadeInput = document.getElementById("docDataValidade");
 const docStatusSelect = document.getElementById("docStatus");
 const docObsTextarea = document.getElementById("docObs");
+const docFormCancelBtn = document.getElementById("docFormCancelBtn");
 
 // Dashboard widgets
 const statDocsOk = document.getElementById("statDocsOk");
@@ -487,10 +489,10 @@ async function fetchDocumentos() {
       });
     });
 
-    documentosCache = docs.length ? docs : SAMPLE_DOCS.slice();
+    documentosCache = docs;
   } catch (err) {
-    console.warn("Falha ao carregar documentos do Firestore, usando fallback local.", err);
-    documentosCache = SAMPLE_DOCS.slice();
+    console.warn("Falha ao carregar documentos do Firestore.", err);
+    documentosCache = [];
   }
 
   return documentosCache;
@@ -747,13 +749,19 @@ async function loadFinanceiroForCurrentUser() {
 
 
 // ====== DOCUMENTOS: RENDER E CARREGAMENTO ======
-function renderDocumentoRow(d, mapaQuadrilhas) {
+function renderDocumentoRow(d, mapaQuadrilhas, canEdit) {
   const nomeQuadrilha =
     (d.quadrilhaId && mapaQuadrilhas[d.quadrilhaId]) || d.quadrilhaId || "?";
   const tipoLabel = mapTipoDocumento(d.tipo);
   const statusLabel = mapStatusDocumento(d.status);
   const dataValidade = d.dataValidade || "?";
   const obs = d.observacoes || "";
+  const actions = canEdit
+    ? `
+      <button class="btn btn-sm btn-light js-doc-edit" data-id="${d.id}">Editar</button>
+      <button class="btn btn-sm btn-outline js-doc-delete" data-id="${d.id}">Excluir</button>
+    `
+    : "-";
 
   return `
     <tr>
@@ -762,15 +770,48 @@ function renderDocumentoRow(d, mapaQuadrilhas) {
       <td>${statusLabel}</td>
       <td>${dataValidade}</td>
       <td>${obs}</td>
+      <td>${actions}</td>
     </tr>
   `;
+}
+
+function resetDocForm() {
+  if (!docForm) return;
+  docForm.reset();
+  if (docIdInput) docIdInput.value = "";
+  if (docFormMessage) docFormMessage.textContent = "";
+  if (docFormCancelBtn) docFormCancelBtn.style.display = "none";
+  if (docQuadrilhaSelect) docQuadrilhaSelect.disabled = false;
+  if (docTipoSelect) docTipoSelect.disabled = false;
+}
+
+function startEditingDocumento(docItem) {
+  if (!docForm || !docItem) return;
+  if (docIdInput) docIdInput.value = docItem.id || "";
+  if (docQuadrilhaSelect) docQuadrilhaSelect.value = docItem.quadrilhaId || "";
+  if (docTipoSelect) docTipoSelect.value = docItem.tipo || "";
+  if (docDataEmissaoInput) docDataEmissaoInput.value = docItem.dataEmissao || "";
+  if (docDataValidadeInput) docDataValidadeInput.value = docItem.dataValidade || "";
+  if (docStatusSelect) docStatusSelect.value = docItem.status || "PENDENTE";
+  if (docObsTextarea) docObsTextarea.value = docItem.observacoes || "";
+
+  if (docQuadrilhaSelect) docQuadrilhaSelect.disabled = true;
+  if (docTipoSelect) docTipoSelect.disabled = true;
+  if (docFormCancelBtn) docFormCancelBtn.style.display = "inline-block";
+  if (docFormMessage) docFormMessage.textContent = "Editando documento.";
+}
+
+if (docFormCancelBtn) {
+  docFormCancelBtn.addEventListener("click", () => {
+    resetDocForm();
+  });
 }
 
 async function loadDocumentosForCurrentUser() {
   if (!docTableBody) return;
 
   docTableBody.innerHTML =
-    '<tr><td colspan="5">Carregando documentos...</td></tr>';
+    '<tr><td colspan="6">Carregando documentos...</td></tr>';
 
   try {
     const papel = currentUserData?.papel || "SEM_PAPEL";
@@ -787,6 +828,8 @@ async function loadDocumentosForCurrentUser() {
     });
 
     let visiveis = [];
+
+    const canEdit = papel === "LIGA_ADMIN";
 
     if (papel === "QUADRILHA_ADMIN" && quadrilhaIdUser) {
       // Quadrilha vê só os próprios docs
@@ -822,22 +865,63 @@ async function loadDocumentosForCurrentUser() {
 
     if (!visiveis.length) {
       docTableBody.innerHTML =
-        '<tr><td colspan="5">Nenhum documento encontrado.</td></tr>';
-      updateDashboardWidgets();
+        '<tr><td colspan="6">Nenhum documento encontrado.</td></tr>';
       updateDashboardWidgets();
       return;
     }
 
     docTableBody.innerHTML = visiveis
-      .map((d) => renderDocumentoRow(d, mapaQuadrilhas))
+      .map((d) => renderDocumentoRow(d, mapaQuadrilhas, canEdit))
       .join("");
-    updateDashboardWidgets();
     updateDashboardWidgets();
   } catch (error) {
     console.error("Erro ao carregar documentos:", error);
     docTableBody.innerHTML =
-      '<tr><td colspan="5">Erro ao carregar documentos.</td></tr>';
+      '<tr><td colspan="6">Erro ao carregar documentos.</td></tr>';
   }
+}
+
+if (docTableBody) {
+  docTableBody.addEventListener("click", async (event) => {
+    const editBtn = event.target.closest(".js-doc-edit");
+    const deleteBtn = event.target.closest(".js-doc-delete");
+
+    if (!editBtn && !deleteBtn) return;
+
+    const papel = currentUserData?.papel || "SEM_PAPEL";
+    if (papel !== "LIGA_ADMIN") return;
+
+    const id = (editBtn || deleteBtn)?.dataset?.id;
+    if (!id) return;
+
+    const docItem = (documentosCache || []).find((d) => d.id === id);
+    if (!docItem) return;
+
+    if (editBtn) {
+      startEditingDocumento(docItem);
+      return;
+    }
+
+    if (deleteBtn) {
+      const confirma = window.confirm(
+        "Tem certeza que deseja excluir este documento?"
+      );
+      if (!confirma) return;
+
+      try {
+        await deleteDoc(doc(db, "documentos_quadrilha", id));
+        documentosCache = null;
+        resetDocForm();
+        await loadDocumentosForCurrentUser();
+        await loadQuadrilhasForCurrentUser();
+      } catch (err) {
+        console.error("Erro ao excluir documento:", err);
+        if (docFormMessage) {
+          docFormMessage.textContent = "Erro ao excluir documento.";
+        }
+      }
+    }
+  });
 }
 
 // ====== QUADRILHAS: CARREGAMENTO DA SE?fO ======
@@ -1158,6 +1242,7 @@ if (docForm) {
     const dataValidade = docDataValidadeInput.value || null;
     const status = docStatusSelect.value || "PENDENTE";
     const observacoes = (docObsTextarea?.value || "").trim() || null;
+    const existingId = docIdInput?.value || "";
 
     if (!quadrilhaId || !tipo) {
       setText(
@@ -1170,11 +1255,14 @@ if (docForm) {
     setText(docFormMessage, "Salvando documento...");
 
     try {
-      // usamos um ID baseado em quadrilha + tipo
-      const docId = `${quadrilhaId}_${tipo}`;
+      const newDocId = `${quadrilhaId}_${tipo}`;
+
+      if (existingId && existingId !== newDocId) {
+        await deleteDoc(doc(db, "documentos_quadrilha", existingId));
+      }
 
       await setDoc(
-        doc(db, "documentos_quadrilha", docId),
+        doc(db, "documentos_quadrilha", newDocId),
         {
           quadrilhaId,
           tipo,
@@ -1187,7 +1275,7 @@ if (docForm) {
       );
 
       setText(docFormMessage, "Documento salvo com sucesso.");
-      docForm.reset();
+      resetDocForm();
       documentosCache = null;
       await loadDocumentosForCurrentUser();
       await loadQuadrilhasForCurrentUser(); // atualiza status dos cards

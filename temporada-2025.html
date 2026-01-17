@@ -51,9 +51,9 @@
         <span class="logo-text">LINQ-DFE</span>
       </div>
       <ul>
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html">Inicial</a></li>
         <li><a href="circuito.html" class="active">Circuito</a></li>
-        <li><a href="filiadas.html">Filiadas</a></li>
+        <li><a href="quadrilhas.html">Quadrilhas</a></li>
         <li><a href="mapa.html">Mapa</a></li>
         <li><a href="noticias.html">Notícias</a></li>
         <li><a href="acervo.html">Acervo</a></li>
@@ -77,8 +77,19 @@
       </div>
     </section>
 
-    <section class="section container stack" style="gap: var(--spacing-md);">
-      <section class="stack">
+    <section class="section container stack" style="gap: var(--spacing-md);" data-ranking-scope>
+      <div class="controls-row ranking-filters" data-ranking-filter>
+        <div class="control">
+          <label for="ranking-filter-2025">Ranking</label>
+          <select id="ranking-filter-2025">
+            <option value="all">Todos os rankings</option>
+            <option value="especial">Grupo Especial</option>
+            <option value="acesso">Grupo de Acesso</option>
+          </select>
+        </div>
+      </div>
+
+      <section class="stack" data-ranking-panel="especial">
         <div class="card table-card">
           <div class="card-header">
             <span class="chip">Grupo Especial</span>
@@ -295,7 +306,7 @@
         </div>
       </section>
 
-      <section class="stack">
+      <section class="stack" data-ranking-panel="acesso">
         <div class="card table-card">
           <div class="card-header">
             <span class="chip">Grupo de Acesso</span>
@@ -448,17 +459,7 @@
       </section>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="card">
-          <h3 class="section-title" style="margin-bottom: var(--spacing-sm);">Metodologia e empates</h3>
-          <p class="muted">
-            Notas somadas por etapa conforme regulamento. Ausências ou penalidades aparecem com 0.0 ou status na linha.
-            Empates seguem os critérios oficiais da temporada (desempate por maiores notas sucessivas); quando permanecem, a posição leva observação.
-          </p>
-        </div>
-      </div>
-    </section>
+    
   </main>
 
   <footer>
@@ -466,5 +467,6 @@
       <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
     </div>
   </footer>
+  <script type="module" src="js/shared.js"></script>
 </body>
 </html>

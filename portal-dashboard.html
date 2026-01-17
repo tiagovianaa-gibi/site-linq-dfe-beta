@@ -32,17 +32,17 @@
       "sameAs": ["https://instagram.com/linqdfe"]
     }
   </script>
-  <meta name="description" content="Dashboard do Portal da Liga - área interna para quadrilhas filiadas e diretoria da LINQ-DFE.">
+  <meta name="description" content="Dashboard do Portal da Liga - área interna para quadrilhas e diretoria da LINQ-DFE.">
   <meta name="robots" content="noindex,nofollow">
   <title>Portal da Liga - Dashboard | LINQ-DFE</title>
   <meta property="og:type" content="website">
   <meta property="og:title" content="Portal da Liga - Dashboard | LINQ-DFE">
-  <meta property="og:description" content="Dashboard do Portal da Liga - área interna para quadrilhas filiadas e diretoria da LINQ-DFE.">
+  <meta property="og:description" content="Dashboard do Portal da Liga - área interna para quadrilhas e diretoria da LINQ-DFE.">
   <meta property="og:image" content="assets/logos/linq-dfe.png">
   <meta property="og:locale" content="pt_BR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Portal da Liga - Dashboard | LINQ-DFE">
-  <meta name="twitter:description" content="Dashboard do Portal da Liga - área interna para quadrilhas filiadas e diretoria da LINQ-DFE.">
+  <meta name="twitter:description" content="Dashboard do Portal da Liga - área interna para quadrilhas e diretoria da LINQ-DFE.">
   <meta name="twitter:image" content="assets/logos/linq-dfe.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -427,10 +427,11 @@
                     <th>Status</th>
                     <th>Válido até</th>
                     <th>Observações</th>
+                    <th>Ações</th>
                   </tr>
                 </thead>
                 <tbody id="docTableBody">
-                  <tr><td colspan="5">Carregando documentos...</td></tr>
+                  <tr><td colspan="6">Carregando documentos...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -443,6 +444,7 @@
             <div class="card-body">
               <h4 class="card-title">Cadastrar / atualizar documento</h4>
               <form id="docForm" class="portal-form">
+                <input type="hidden" id="docId" />
                 <div class="form-group">
                   <label for="docQuadrilhaId">Quadrilha</label>
                   <select id="docQuadrilhaId" required>
@@ -485,7 +487,10 @@
                   <textarea id="docObs" rows="2"></textarea>
                 </div>
 
-                <button type="submit" class="btn">Salvar documento</button>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                  <button type="submit" class="btn">Salvar documento</button>
+                  <button type="button" id="docFormCancelBtn" class="btn btn-light" style="display:none;">Cancelar edição</button>
+                </div>
                 <p id="docFormMessage" class="form-message"></p>
               </form>
             </div>
@@ -712,6 +717,6 @@
       setTimeout(initFallbackNavigation, 0);
     });
   </script>
+  <script type="module" src="js/shared.js"></script>
 </body>
 </html>
-

@@ -10,6 +10,15 @@
     <loc>https://portal-da-liga.web.app/circuito.html</loc>
   </url>
   <url>
+    <loc>https://portal-da-liga.web.app/grupo-especial.html</loc>
+  </url>
+  <url>
+    <loc>https://portal-da-liga.web.app/grupo-acesso.html</loc>
+  </url>
+  <url>
+    <loc>https://portal-da-liga.web.app/campeoes-circuito.html</loc>
+  </url>
+  <url>
     <loc>https://portal-da-liga.web.app/diretoria.html</loc>
   </url>
   <url>
@@ -19,7 +28,7 @@
     <loc>https://portal-da-liga.web.app/edicoes-anteriores.html</loc>
   </url>
   <url>
-    <loc>https://portal-da-liga.web.app/filiadas.html</loc>
+    <loc>https://portal-da-liga.web.app/quadrilhas.html</loc>
   </url>
   <url>
     <loc>https://portal-da-liga.web.app/index.html</loc>

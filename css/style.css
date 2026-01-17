@@ -16,6 +16,8 @@
   --text-secondary: #666666;
   --accent-primary: #d32f2f;
   --accent-secondary: #f57c00;
+  --special-color: #0b1f5a;
+  --acesso-color: #a73b12;
   --border-color: #e0e0e0;
   
   /* Variáveis adicionais para compatibilidade */
@@ -53,7 +55,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: var(--nav-height);
+  scroll-padding-top: calc(var(--nav-height) + env(safe-area-inset-top));
 }
 
 body {
@@ -97,7 +99,7 @@ nav {
   background: var(--bg-card);
   box-shadow: var(--shadow-sm);
   z-index: 9999;
-  padding: 0.45rem 1rem;
+  padding: calc(0.45rem + env(safe-area-inset-top)) 1rem 0.45rem;
 }
 
 nav .container {
@@ -191,6 +193,15 @@ nav li.has-dropdown > a::after {
   z-index: 10000;
 }
 
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
 nav li.has-dropdown:hover .dropdown-menu,
 nav li.has-dropdown:focus-within .dropdown-menu {
   display: block;
@@ -220,7 +231,7 @@ nav li.has-dropdown:focus-within .dropdown-menu {
 /* ===== Mobile nav ===== */
 @media (max-width: 768px) {
   nav {
-    padding: 0.65rem 0.5rem;
+    padding: calc(0.65rem + env(safe-area-inset-top)) 0.5rem 0.65rem;
   }
   nav .container {
     gap: var(--spacing-xs);
@@ -256,7 +267,7 @@ nav li.has-dropdown:focus-within .dropdown-menu {
 
 /* Container Principal */
 main {
-  margin-top: var(--nav-height); /* Espaço para nav fixa */
+  margin-top: calc(var(--nav-height) + env(safe-area-inset-top)); /* Espaço para nav fixa */
   min-height: calc(100vh - var(--nav-height));
 }
 
@@ -337,6 +348,10 @@ main {
   padding: var(--spacing-xl) 0;
 }
 
+.leia-tambem-section {
+  margin-top: calc(var(--spacing-md) * -1);
+}
+
 .section-title {
   font-size: 2rem;
   font-weight: 700;
@@ -345,11 +360,19 @@ main {
   text-align: center;
 }
 
+.section-title.section-title-left {
+  text-align: left;
+}
+
 .section-subtitle {
   font-size: 1.2rem;
   color: var(--text-secondary);
   text-align: center;
   margin-bottom: var(--spacing-lg);
+}
+
+.section-subtitle.section-subtitle-left {
+  text-align: left;
 }
 
 /* Cards */
@@ -384,10 +407,238 @@ main {
   color: var(--text-primary);
 }
 
+.card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-title a:hover {
+  text-decoration: underline;
+}
+
+/* Hero de competicao */
+.competition-hero {
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.08), rgba(245, 124, 0, 0.08));
+  border-bottom: 1px solid var(--border-color);
+}
+
+.competition-hero .hero-kicker {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: var(--accent-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.competition-hero .hero-title {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  margin-bottom: var(--spacing-sm);
+}
+
+.competition-hero .hero-lead {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 760px;
+}
+
+.competition-hero .hero-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-top: var(--spacing-md);
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.hero-pill.special {
+  border-color: rgba(11, 31, 90, 0.2);
+  color: var(--special-color);
+}
+
+.hero-pill.acesso {
+  border-color: rgba(167, 59, 18, 0.2);
+  color: var(--acesso-color);
+}
+
+/* Painel de destaques */
+.highlight-grid {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+}
+
+.stat-card .stat-title {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+.stat-card .stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Timeline */
+.timeline {
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}
+
+.timeline-year {
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+/* Mapa ilustrativo de conquistas */
+.champions-map {
+  background: radial-gradient(circle at top left, rgba(11, 31, 90, 0.08), transparent 60%),
+    radial-gradient(circle at bottom right, rgba(211, 47, 47, 0.08), transparent 55%),
+    var(--bg-card);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.champions-map .map-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+}
+
+.champions-map .map-grid {
+  display: grid;
+  gap: var(--spacing-sm);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.champions-map .map-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.champions-map .map-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  margin-top: 6px;
+}
+
 .card-text {
   color: var(--text-secondary);
   font-size: 0.95rem;
   margin-bottom: var(--spacing-sm);
+}
+
+/* Ranking compacto */
+.ranking-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.ranking-block.ranking-block-compact {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.ranking-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.ranking-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
+.ranking-list {
+  list-style: decimal;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+
+.ranking-item {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.92rem;
+  align-items: center;
+}
+
+.ranking-item:last-child {
+  border-bottom: none;
+}
+
+.ranking-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.ranking-link {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.ranking-link:hover {
+  text-decoration: underline;
+}
+
+.ranking-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  background: transparent;
+  mix-blend-mode: multiply;
+}
+
+.ranking-score {
+  color: var(--text-secondary);
+  font-weight: 600;
 }
 
 .card-meta {
@@ -421,6 +672,7 @@ main {
 
 .quadrilha-card .card-image {
   height: 300px;
+  object-position: 50% 20%;
 }
 
 .quadrilha-card .card-overlay {
@@ -763,6 +1015,25 @@ table .quadrilha-name {
   background: var(--bg-primary);
 }
 
+/* Lista de links (Leia tambem) */
+.link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.link-list a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link-list a:hover {
+  text-decoration: underline;
+}
+
 /* Footer */
 footer {
   background: var(--text-primary);
@@ -877,6 +1148,19 @@ footer a:hover {
 
   #map {
     height: 400px;
+  }
+
+  .home-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+
+  .home-section-header .btn {
+    position: static;
+    transform: none;
+    align-self: flex-start;
   }
 }
 
@@ -2824,6 +3108,17 @@ body.page-noticia .noticia-hero {
 .campea-card .btn-light:hover{
   background: rgba(255,255,255,0.25);
   color: #fff;
+}
+
+@media (max-width: 600px){
+  .campea-card{
+    min-height: 320px;
+  }
+
+  .campea-content{
+    max-width: none;
+    padding: var(--spacing-md);
+  }
 }
 
 @media (min-width: 900px){
