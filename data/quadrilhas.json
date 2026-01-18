@@ -13,7 +13,7 @@
     "instagram": "@amorjuninooficial",
     "focal": {
       "x": 0.5,
-      "y": 0.75
+      "y": 0.65
     },
     "coords": {
       "lat": -15.75,
@@ -31,14 +31,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Amor Junino é de Águas Lindas de Goiás/GO e tem 14 anos de história. Surgiu como um ponto de encontro para quem ama o São João e, com o tempo, virou uma verdadeira família junina, que acolhe crianças, jovens e adultos da cidade. Nos ensaios, nas viagens e nas apresentações, a Amor Junino é lugar de amizade, disciplina, superação e, principalmente, muito sentimento pelo movimento.",
+      "bio": "A Quadrilha Amor Junino é de Águas Lindas de Goiás/GO e completa 15 anos de história em 2026. Surgiu como um ponto de encontro para quem ama o São João e, com o tempo, virou uma verdadeira família junina, que acolhe crianças, jovens e adultos da cidade. Nos ensaios, nas viagens e nas apresentações, a Amor Junino é lugar de amizade, disciplina, superação e, principalmente, muito sentimento pelo movimento.",
       "tema_2025": "As Namoradeiras",
       "temporada_2025_descricao": "Com cerca de 50 dançarinos em cena, a quadrilha é conhecida pelo vermelho marcante do figurino, pelas flores de fuxico e pelos detalhes que lembram o artesanato popular e as casas do interior. Em quadra, a Amor Junino une organização e emoção: trabalha cenários, marcas e coreografias com cuidado, mas sem perder o sorriso no rosto e o clima de brincadeira. Representando Águas Lindas no circuito do DF e Entorno, o grupo leva o nome da cidade com orgulho e mantém vivo o compromisso de honrar o próprio nome: fazer tudo com amor.",
-      "idade_grupo": "14 anos",
+      "idade_grupo": "15 anos",
       "elenco_aproximado": "50 dançarinos",
       "marcador": "Cesinha",
       "casal_noivos_2025": "Susane Araújo e Juan Teles"
-    }
+    },
+    "logo": "amor-junino-logo.png"
   },
   {
     "id": 2,
@@ -54,7 +55,7 @@
     "instagram": "@qjarraiadosmatutos",
     "focal": {
       "x": 0.5,
-      "y": 0.2
+      "y": 0.0
     },
     "coords": {
       "lat": -15.45,
@@ -72,14 +73,15 @@
       }
     ],
     "perfil": {
-      "bio": "O Arraiá dos Matutos é de Planaltina/GO e tem 29 anos de história. Nascido do encontro de amigos apaixonados pelo São João, o grupo cresceu como uma grande família de matutos brincantes, juntando pais, filhos e vizinhos em torno da fogueira, do forró e das histórias do sertão. Ao longo de quase três décadas, a quadrilha se tornou um dos orgulhos de Planaltina, conhecida pelo sorriso fácil, pelo acolhimento e pelo jeito bem-humorado de contar causos em forma de dança.",
+      "bio": "A Quadrilha Arraiá dos Matutos é de Planaltina/GO e completa 30 anos de história em 2026. Nascido do encontro de amigos apaixonados pelo São João, o grupo cresceu como uma grande família de matutos brincantes, juntando pais, filhos e vizinhos em torno da fogueira, do forró e das histórias do sertão. Ao longo de quase três décadas, a quadrilha se tornou um dos orgulhos de Planaltina, conhecida pelo sorriso fácil, pelo acolhimento e pelo jeito bem-humorado de contar causos em forma de dança.",
       "tema_2025": "O Santo e a Chuva",
       "temporada_2025_descricao": "Com 24 casais em cena, totalizando 48 dançarinos, o Arraiá dos Matutos leva para a quadra o clima de roça em tempo de festa: cores fortes, chapéu de palha, brilho de colheita e uma energia que não deixa ninguém parado. A quadrilha se destaca pela força do seu elenco, pelo cuidado com figurinos e cenografia e pela relação de proximidade com a comunidade, representando Planaltina no circuito de quadrilhas do DF e Entorno e mantendo vivo o orgulho de ser “matuto” de coração.",
-      "idade_grupo": "29 anos",
+      "idade_grupo": "30 anos",
       "elenco_aproximado": "48 dançarinos (24 casais)",
       "marcador": "Kauã Meireles",
       "casal_noivos_2025": "Alanny Oliveira e Jhonantan Oliver"
-    }
+    },
+    "logo": "arraia-dos-matutos-logo.jpeg"
   },
   {
     "id": 3,
@@ -113,14 +115,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Arroxa o Nó é do Paranoá/DF e tem 26 anos de história. Fundada em 1999 pela pernambucana Dona Lourdes, costureira que transformou a saudade da terra natal em festa, o grupo nasceu como grêmio recreativo para ampliar os espaços de lazer, convivência e expressão cultural na comunidade. Com o tempo, o Arroxa o Nó virou referência de resistência e acolhimento no Paranoá, reunindo gerações em torno da tradição junina e da cultura nordestina.",
+      "bio": "A Quadrilha Arroxa o Nó é de Paranoá/DF e completa 27 anos de história em 2026. Fundada em 1999 pela pernambucana Dona Lourdes, costureira que transformou a saudade da terra natal em festa, o grupo nasceu como grêmio recreativo para ampliar os espaços de lazer, convivência e expressão cultural na comunidade. Com o tempo, o Arroxa o Nó virou referência de resistência e acolhimento no Paranoá, reunindo gerações em torno da tradição junina e da cultura nordestina.",
       "tema_2025": "Ao Seu Encontro, Ô Linda Encanta",
       "temporada_2025_descricao": "Com 42 casais em cena, além de 3 personagens e marcador, o Arroxa o Nó coloca na quadra um verdadeiro mar de cores inspirado na bandeira de Pernambuco: figurinos em azul e branco, babados em vermelho, amarelo e verde, estrelas, arabescos e chapéus que remetem ao frevo e às ladeiras de Olinda. A quadrilha se destaca pela força do elenco, pela energia contagiante e por uma trajetória marcada por importantes conquistas regionais e nacionais.",
-      "idade_grupo": "26 anos",
+      "idade_grupo": "27 anos",
       "elenco_aproximado": "84 dançarinos (42 casais), 3 personagens e marcador",
       "marcador": "Waguinho",
       "casal_noivos_2025": "Ingrid e Walter"
-    }
+    },
+    "logo": "arroxa-o-no-logo.png"
   },
   {
     "id": 4,
@@ -154,14 +157,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Caipirada é de Planaltina/GO e tem 21 anos de história. Desde a fundação, o grupo tem como objetivo transmitir conhecimento sobre a cultura popular para diferentes públicos, levando alegria, tradição e educação cultural para crianças, jovens, adultos e idosos. A Caipirada é reconhecida por sua dedicação em preservar a identidade nordestina e a singularidade do coletivo, proporcionando aprendizado e diversão em cada apresentação.",
+      "bio": "A Quadrilha Caipirada é de Planaltina/GO e completa 22 anos de história em 2026. Desde a fundação, o grupo tem como objetivo transmitir conhecimento sobre a cultura popular para diferentes públicos, levando alegria, tradição e educação cultural para crianças, jovens, adultos e idosos. A Caipirada é reconhecida por sua dedicação em preservar a identidade nordestina e a singularidade do coletivo, proporcionando aprendizado e diversão em cada apresentação.",
       "tema_2025": "Ele Está de Olho na Butique Dela",
       "temporada_2025_descricao": "Com figurinos coloridos e detalhados, que mesclam tradição e modernidade, o grupo encanta pelo cuidado com coreografias, cenário e expressão artística. Representando Planaltina no circuito do DF e Entorno, a Caipirada mantém viva a tradição junina e reforça o vínculo da comunidade com a cultura popular.",
-      "idade_grupo": "21 anos",
+      "idade_grupo": "22 anos",
       "elenco_aproximado": "48 dançarinos",
       "marcador": "Chacal",
       "casal_noivos_2025": "Paulo Vitor e Ludy"
-    }
+    },
+    "logo": "caipirada-logo.png"
   },
   {
     "id": 5,
@@ -196,14 +200,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Chinelo de Couro é de São Sebastião/DF e tem 22 anos de história. Desde sua fundação, se consolidou como um espaço de acolhimento e pertencimento para crianças, adolescentes e jovens da comunidade, integrando cultura, esporte e fé. Mais que dança, é lugar de aprendizado, amizade e transformação social, onde cada brincante encontra oportunidade de crescer e se expressar.",
+      "bio": "A Quadrilha Chinelo de Couro é de São Sebastião/DF e completa 23 anos de história em 2026. Desde sua fundação, se consolidou como um espaço de acolhimento e pertencimento para crianças, adolescentes e jovens da comunidade, integrando cultura, esporte e fé. Mais que dança, é lugar de aprendizado, amizade e transformação social, onde cada brincante encontra oportunidade de crescer e se expressar.",
       "tema_2025": "Respeite meu NÃO, valorize meu SIM",
       "temporada_2025_descricao": "Com 25 casais em cena e um marcador, a Chinelo de Couro se destaca pelo cuidado com figurinos, coreografias e cenografia. Os trajes lilás e verde Tiffany simbolizam luta e esperança, enquanto o brilho e os detalhes florais celebram a alegria junina. O grupo representa São Sebastião no circuito do DF e Entorno, levando emoção, consciência e brasilidade em cada apresentação.",
-      "idade_grupo": "22 anos",
+      "idade_grupo": "23 anos",
       "elenco_aproximado": "51 dançarinos (25 casais + marcador)",
       "marcador": "Gildivan",
       "casal_noivos_2025": "Xandão e Julya"
-    }
+    },
+    "logo": "chinelo-de-couro-logo.png"
   },
   {
     "id": 6,
@@ -238,14 +243,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Coisas da Roça é de São Sebastião/Paranoá e tem 32 anos de história. Ao longo do tempo, se tornou referência em festivais e apresentações pelo Brasil, reunindo crianças, jovens e adultos em torno da cultura popular nordestina e do São João. O grupo é conhecido pelo humor, pela energia em quadra e pela criatividade, transformando cada espetáculo em uma experiência teatral e cultural única.",
+      "bio": "A Quadrilha Coisas da Roça é de Paranoá/DF e completa 33 anos de história em 2026. Ao longo do tempo, se tornou referência em festivais e apresentações pelo Brasil, reunindo crianças, jovens e adultos em torno da cultura popular nordestina e do São João. O grupo é conhecido pelo humor, pela energia em quadra e pela criatividade, transformando cada espetáculo em uma experiência teatral e cultural única.",
       "tema_2025": "O Auto da Compadecida – Um Romance Mêi Coisado",
       "temporada_2025_descricao": "Com elenco amplo, figurinos que combinam tons terrosos, cores vibrantes e elementos cênicos inspirados em personagens do sertão, a Coisas da Roça mistura tradição, circo e teatro popular. Representando a comunidade no circuito do DF e Entorno, o grupo mantém viva a essência nordestina e a alegria do forró, conectando gerações e reforçando o vínculo com a cultura local.",
-      "idade_grupo": "32 anos",
+      "idade_grupo": "33 anos",
       "elenco_aproximado": "48 dançarinos",
       "marcador": "Maycolla",
       "casal_noivos_2025": "Marcela Lemos e Jonathas Sousa"
-    }
+    },
+    "logo": "coisas-da-roca-logo.png"
   },
   {
     "id": 7,
@@ -279,14 +285,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Eita Bagaceira é da Ceilândia/DF e tem 6 anos de trajetória. Criada em 2011 como Quadrilha Senhor Bom Jesus, nasceu para atender às festas juninas da paróquia local e rapidamente se transformou em referência pelo profissionalismo, energia e comprometimento de seus brincantes. Cada integrante contribui para a construção de apresentações envolventes, mantendo a tradição e a identidade da comunidade viva e pulsante.",
+      "bio": "A Quadrilha Eita Bagaceira é de Ceilândia/DF e completa 7 anos de história em 2026. Criada em 2011 como Quadrilha Senhor Bom Jesus, nasceu para atender às festas juninas da paróquia local e rapidamente se transformou em referência pelo profissionalismo, energia e comprometimento de seus brincantes. Cada integrante contribui para a construção de apresentações envolventes, mantendo a tradição e a identidade da comunidade viva e pulsante.",
       "tema_2025": "Encantados: O Casamento de Maria da Conceição e o Mito do Homem das Figuras",
       "temporada_2025_descricao": "O grupo se destaca pelo cuidado com figurinos barrocos e coloridos, coreografias marcantes e personagens cativantes que dão vida à narrativa. Representando a Ceilândia no circuito do DF e Entorno, a Eita Bagaceira alia fé, humor e emoção, garantindo momentos inesquecíveis para o público e para os próprios integrantes.",
-      "idade_grupo": "6 anos",
+      "idade_grupo": "7 anos",
       "elenco_aproximado": "34 dançarinos",
       "marcador": "Johnni Sousa",
       "casal_noivos_2025": "Kalyne e Zaka"
-    }
+    },
+    "logo": "eita-bagaceira-logo.jpg"
   },
   {
     "id": 8,
@@ -321,14 +328,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Espalha Brasa é do Paranoá/DF e tem 15 anos de história. Fundada por Umarney Barbosa da Silva, nasceu com a missão de levar beleza, alegria e poesia aos arraiás, conquistando a comunidade com apresentações que misturam tradição e criatividade. Cada brincante da Espalha Brasa é parte de uma família que compartilha dedicação, amor pela cultura popular e a vontade de encantar o público.",
+      "bio": "A Quadrilha Espalha Brasa é de Paranoá/DF e completa 16 anos de história em 2026. Fundada por Umarney Barbosa da Silva, nasceu com a missão de levar beleza, alegria e poesia aos arraiás, conquistando a comunidade com apresentações que misturam tradição e criatividade. Cada brincante da Espalha Brasa é parte de uma família que compartilha dedicação, amor pela cultura popular e a vontade de encantar o público.",
       "tema_2025": "Peleja Poética – Meu Coração Coroado",
       "temporada_2025_descricao": "Com 31 componentes entre dançarinos e marcador, o grupo se destaca pela energia contagiante em quadra, pela atenção aos figurinos e pelo cuidado com coreografias e cenografia. Representando o Paranoá no circuito do DF e Entorno, a Espalha Brasa mantém viva a tradição nordestina, transformando cada apresentação em um espetáculo repleto de emoção e brasilidade.",
-      "idade_grupo": "15 anos",
+      "idade_grupo": "16 anos",
       "elenco_aproximado": "31 dançarinos",
       "marcador": "Pablo Ruan Bastos Felix",
       "casal_noivos_2025": "Hellen Nere e Felipe Lima"
-    }
+    },
+    "logo": "espalha-brasa-logo.png"
   },
   {
     "id": 9,
@@ -344,7 +352,7 @@
     "instagram": "@juninaformigadaroca",
     "focal": {
       "x": 0.5,
-      "y": 0.2
+      "y": 0.25
     },
     "coords": {
       "lat": -15.9,
@@ -362,14 +370,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Formiga da Roça é de São Sebastião/DF e tem 29 anos de história. Inspirada no nome das formigas da roça, símbolo de força, trabalho, garra e união, a quadrilha se tornou referência nas festas juninas do Distrito Federal. Cada brincante é parte de uma grande equipe que preserva a tipicidade do movimento, levando emoção, alegria e brasilidade a cada apresentação.",
+      "bio": "A Quadrilha Formiga da Roça é de São Sebastião/DF e completa 30 anos de história em 2026. Inspirada no nome das formigas da roça, símbolo de força, trabalho, garra e união, a quadrilha se tornou referência nas festas juninas do Distrito Federal. Cada brincante é parte de uma grande equipe que preserva a tipicidade do movimento, levando emoção, alegria e brasilidade a cada apresentação.",
       "tema_2025": "Homenagem a Raimundo Jacó",
       "temporada_2025_descricao": "Com 34 casais em cena, a Formiga da Roça combina coreografias típicas, figurinos detalhados e cenários que remetem ao sertão e à vida rural. Representando São Sebastião no circuito do DF e Entorno, o grupo mantém viva a memória de heróis sertanejos, tradições e rituais como a Missa do Vaqueiro, sempre emocionando o público e fortalecendo os laços comunitários.",
-      "idade_grupo": "29 anos",
+      "idade_grupo": "30 anos",
       "elenco_aproximado": "68 dançarinos",
       "marcador": "Daniel Brito",
       "casal_noivos_2025": "Gabrielle Rosa e Hiago Gomes"
-    }
+    },
+    "logo": "formiga-da-roca-logo.png"
   },
   {
     "id": 10,
@@ -403,14 +412,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Fornalha é de Águas Lindas de Goiás/GO e tem 10 anos de história. Criada pelo casal Paulo Victor e Mariza Alves, nasceu com o objetivo de ser a primeira quadrilha evangélica da cidade, transmitindo esperança, fé e alegria através da dança. Cada integrante compartilha a missão de levar mensagens de amor, inspiração e união, tornando cada apresentação um momento de reflexão e emoção.",
+      "bio": "A Quadrilha Fornalha é de Águas Lindas de Goiás/GO e completa 11 anos de história em 2026. Criada pelo casal Paulo Victor e Mariza Alves, nasceu com o objetivo de ser a primeira quadrilha evangélica da cidade, transmitindo esperança, fé e alegria através da dança. Cada integrante compartilha a missão de levar mensagens de amor, inspiração e união, tornando cada apresentação um momento de reflexão e emoção.",
       "tema_2025": "O Auto do Pai Piedoso",
       "temporada_2025_descricao": "Com 53 integrantes, entre brincantes e equipe de apoio, a Fornalha se destaca pela fusão de tradição junina com elementos circenses e teatrais, figurinos terrosos e padrões quadriculados que remetem às trupes mambembes. O grupo representa Águas Lindas no circuito do DF e Entorno, mantendo viva a cultura popular com dedicação, cuidado e entusiasmo.",
-      "idade_grupo": "10 anos",
+      "idade_grupo": "11 anos",
       "elenco_aproximado": "53 dançarinos",
       "marcador": "Michael",
       "casal_noivos_2025": "Paulo Victor / Denise Lúcia"
-    }
+    },
+    "logo": "fornalha-logo.jpeg"
   },
   {
     "id": 11,
@@ -444,14 +454,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Furacão é de Planaltina/GO e tem 6 anos de história. Surgiu com o objetivo de animar a cidade e criar oportunidades de lazer e expressão para jovens, crescendo em apresentações em ruas, escolas e, posteriormente, em competições e festivais de Brasília. Cada brincante contribui para manter a energia e a cultura popular viva em cada apresentação.",
+      "bio": "A Quadrilha Furacão é de Planaltina/GO e completa 7 anos de história em 2026. Surgiu com o objetivo de animar a cidade e criar oportunidades de lazer e expressão para jovens, crescendo em apresentações em ruas, escolas e, posteriormente, em competições e festivais de Brasília. Cada brincante contribui para manter a energia e a cultura popular viva em cada apresentação.",
       "tema_2025": "Meu Pernambuco Querido, Balaio Cultural Amigo",
       "temporada_2025_descricao": "O grupo se destaca pela riqueza de figurinos coloridos, representando tradições pernambucanas e elementos do sertão nordestino, incluindo vaqueiros, cangaceiros e o frevo. A Furacão combina fantasia, música e dança para levar Pernambuco e sua alegria para o público do DF e Entorno, sempre mantendo a essência lúdica e cultural do movimento junino.",
-      "idade_grupo": "6 anos",
+      "idade_grupo": "7 anos",
       "elenco_aproximado": "30 dançarinos",
       "marcador": "Rhayane Santos",
       "casal_noivos_2025": "Victor Júnior e Samya Maria"
-    }
+    },
+    "logo": "furacao-logo.jpg"
   },
   {
     "id": 12,
@@ -485,14 +496,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Mala Véia é da Ceilândia Sul/DF e tem 45 anos de história. Fundada em 1980 por amigos nordestinos, tornou-se referência nacional no movimento junino, combinando tradição, resistência cultural e força narrativa. Cada brincante da Mala Véia carrega a missão de preservar as raízes sertanejas e transmitir emoção e alegria em cada apresentação.",
+      "bio": "A Quadrilha Mala Véia é de Ceilândia/DF e completa 46 anos de história em 2026. Fundada em 1980 por amigos nordestinos, tornou-se referência nacional no movimento junino, combinando tradição, resistência cultural e força narrativa. Cada brincante da Mala Véia carrega a missão de preservar as raízes sertanejas e transmitir emoção e alegria em cada apresentação.",
       "tema_2025": "O Sertanejo – No Som do Berrante na Dança do Amor",
       "temporada_2025_descricao": "Com mais de 16 casais, o grupo se destaca pelos figurinos detalhados, coreografias envolventes e cenografia que retrata a vida sertaneja. Representando a Ceilândia e o DF no circuito do DF e Entorno, a Mala Véia é um símbolo de excelência, paixão e continuidade cultural, celebrando décadas de história e conquistas.",
-      "idade_grupo": "45 anos",
+      "idade_grupo": "46 anos",
       "elenco_aproximado": "40 dançarinos",
       "marcador": "Denis",
       "casal_noivos_2025": "Laura e Ramon"
-    }
+    },
+    "logo": "mala-veia-logo.png"
   },
   {
     "id": 13,
@@ -508,7 +520,7 @@
     "instagram": "@matingueirosdosertao",
     "focal": {
       "x": 0.5,
-      "y": 0.2
+      "y": 0.4
     },
     "coords": {
       "lat": -15.87,
@@ -526,14 +538,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Matingueiros do Sertão é de Samambaia/DF e tem 5 anos de história. Fundada para valorizar a cultura popular e os folguedos juninos, o grupo utiliza literatura, contos, canções e marchinhas tradicionais como fio condutor da dança, transformando cada apresentação em uma narrativa histórica e cultural.",
+      "bio": "A Quadrilha Matingueiros do Sertão é de Samambaia/DF e completa 6 anos de história em 2026. Fundada para valorizar a cultura popular e os folguedos juninos, o grupo utiliza literatura, contos, canções e marchinhas tradicionais como fio condutor da dança, transformando cada apresentação em uma narrativa histórica e cultural.",
       "tema_2025": "O Original Não se Desoriginaliza",
       "temporada_2025_descricao": "Com figurinos que remetem às plantações de café e ao sertão, as cores predominantes são amarelo ouro, vermelho e tons terrosos, combinando tradição, simplicidade e alegria. Cada integrante contribui para reviver histórias de amor e cotidiano caipira, mantendo a originalidade e autenticidade das quadrilhas estilizadas. Representando Samambaia no circuito do DF e Entorno, os Matingueiros do Sertão equilibram história, dança e folclore com dinamismo e emoção.",
-      "idade_grupo": "5 anos",
+      "idade_grupo": "6 anos",
       "elenco_aproximado": "30 dançarinos",
       "marcador": "Álisson Santos",
       "casal_noivos_2025": "Ariel e Ana Clara"
-    }
+    },
+    "logo": "matingueiros-do-sertao-logo.png"
   },
   {
     "id": 14,
@@ -568,14 +581,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Matulão é de Taguatinga/DF e tem 1 ano de história. Nascida como extensão da Flyer Cia de Dança, a Matulão busca unir tradição junina e elementos contemporâneos, promovendo inovação nas apresentações e oferecendo aos jovens bailarinos experiências artísticas completas. Cada integrante é parte de uma trupe que valoriza criatividade, disciplina e paixão pela cultura popular.",
+      "bio": "A Quadrilha Matulão é de Taguatinga/DF e completa 2 anos de história em 2026. Nascida como extensão da Flyer Cia de Dança, a Matulão busca unir tradição junina e elementos contemporâneos, promovendo inovação nas apresentações e oferecendo aos jovens bailarinos experiências artísticas completas. Cada integrante é parte de uma trupe que valoriza criatividade, disciplina e paixão pela cultura popular.",
       "tema_2025": "Sintonizados no Baião",
       "temporada_2025_descricao": "Com 31 casais, a quadrilha se destaca pelos figurinos em tons de bege e laranja, fuxicos e fitas coloridas, que representam a travessia do sertão à cidade grande, equilibrando tradição e modernidade. Representando Taguatinga no circuito do DF e Entorno, a Matulão combina música, dança e teatralidade, encantando o público com narrativas poéticas e cênicas.",
-      "idade_grupo": "1 ano",
+      "idade_grupo": "2 anos",
       "elenco_aproximado": "70 dançarinos",
       "marcador": "Marcos Mendes",
       "casal_noivos_2025": "Érica Caldeira e Bruno Alves"
-    }
+    },
+    "logo": "matulao-logo.png"
   },
   {
     "id": 15,
@@ -609,14 +623,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Os Caboclos do Sertão é de Planaltina/GO e tem 19 anos de história. Desde sua fundação, o grupo se dedica a resgatar o folclore e a cultura nordestina através da dança de quadrilha, reunindo crianças, jovens e adultos para manter vivas as tradições e a alegria das festas de São João. Cada integrante contribui para criar um ambiente de aprendizado, convivência e celebração cultural, tornando cada apresentação única e envolvente.",
+      "bio": "A Quadrilha Os Caboclos do Sertão é de Planaltina/GO e completa 20 anos de história em 2026. Desde sua fundação, o grupo se dedica a resgatar o folclore e a cultura nordestina através da dança de quadrilha, reunindo crianças, jovens e adultos para manter vivas as tradições e a alegria das festas de São João. Cada integrante contribui para criar um ambiente de aprendizado, convivência e celebração cultural, tornando cada apresentação única e envolvente.",
       "tema_2025": "Das Brincadeiras de Minha Infância no Sertão ao Casamento de Carolina e Joãozinho",
       "temporada_2025_descricao": "Com figurinos que transitam entre tons de bege e laranja, sandálias de couro e laços coloridos, o grupo revive as brincadeiras de infância nas roças do Nordeste, trazendo rodas, linhas e passos tradicionais, combinados com forró, frevo e cavalo-marinho. Representando Planaltina no circuito do DF e Entorno, Os Caboclos do Sertão celebram a infância, o amor e a cultura popular com energia, cor e emoção.",
-      "idade_grupo": "19 anos",
+      "idade_grupo": "20 anos",
       "elenco_aproximado": "30 dançarinos",
       "marcador": "Genildo Duarte",
       "casal_noivos_2025": "Brayan e Ana Pula"
-    }
+    },
+    "logo": "os-caboclos-do-sertao-logo.png"
   },
   {
     "id": 16,
@@ -650,14 +665,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Junina Pinga em Mim é de Paranoá/DF e tem 12 anos de história. Fundada em 2015 por crianças, jovens e adultos das cidades de Paranoá e Itapoã, o grupo se consolidou como uma grande família, dedicada não apenas a apresentações artísticas, mas também à transformação social por meio da dança. A diversidade é uma marca do grupo, que integra diferentes gêneros, orientações sexuais e raças, promovendo inclusão, alegria e igualdade no acesso à cultura popular brasileira.",
+      "bio": "A Quadrilha Pinga em Mim é de Paranoá/DF e completa 13 anos de história em 2026. Fundada em 2015 por crianças, jovens e adultos das cidades de Paranoá e Itapoã, o grupo se consolidou como uma grande família, dedicada não apenas a apresentações artísticas, mas também à transformação social por meio da dança. A diversidade é uma marca do grupo, que integra diferentes gêneros, orientações sexuais e raças, promovendo inclusão, alegria e igualdade no acesso à cultura popular brasileira.",
       "tema_2025": "O Auto da Cidade de Dom Inocêncio",
       "temporada_2025_descricao": "Com mais de 20 pares de dançarinos e um marcador, a Junina Pinga em Mim se destaca pela energia, pela coesão e pelos figurinos que refletem cores e símbolos da cidade de Dom Inocêncio. Representando Paranoá no circuito do DF e Entorno, o grupo transforma cada apresentação em uma celebração de música, dança e tradição.",
-      "idade_grupo": "12 anos",
+      "idade_grupo": "13 anos",
       "elenco_aproximado": "50 dançarinos",
       "marcador": "Carliomar Alves",
       "casal_noivos_2025": "Anderson Ferreira e Ruth Janiele"
-    }
+    },
+    "logo": "pinga-em-mim-logo.png"
   },
   {
     "id": 17,
@@ -691,14 +707,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Rasga o Fole é de Valparaíso de Goiás/GO e tem 16 anos de história. Fundada em 2008 com o objetivo de preservar e promover tradições culturais e literárias do São João, a quadrilha rapidamente se destacou em concursos regionais e apresentações pelo Centro-Oeste, tornando-se referência em criatividade, dança e expressão cultural.",
+      "bio": "A Quadrilha Rasga o Fole é de Valparaíso de Goiás/GO e completa 17 anos de história em 2026. Fundada em 2008 com o objetivo de preservar e promover tradições culturais e literárias do São João, a quadrilha rapidamente se destacou em concursos regionais e apresentações pelo Centro-Oeste, tornando-se referência em criatividade, dança e expressão cultural.",
       "tema_2025": "Vivo por Amor e Quase Morro por Amar",
       "temporada_2025_descricao": "Com 28 casais, a Rasga o Fole combina coreografias modernas com elementos tradicionais do sertão, figurinos que evocam Lampião, bando cangaceiro e forças policiais da época, e cenários que recriam vilarejos rústicos do Nordeste. Representando Valparaíso no circuito do DF e Entorno, o grupo emociona e diverte, mantendo viva a memória e a força da cultura nordestina.",
-      "idade_grupo": "16 anos",
+      "idade_grupo": "17 anos",
       "elenco_aproximado": "56 dançarinos",
       "marcador": "João Calmoni",
       "casal_noivos_2025": "Kadu Benattar e Jessica Soares"
-    }
+    },
+    "logo": "rasga-o-fole-logo.png"
   },
   {
     "id": 18,
@@ -732,14 +749,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Ribuliço é de Ceilândia/DF e tem 24 anos de história. Fundada em 2002, o grupo nasceu para oferecer lazer e difusão cultural aos jovens da comunidade da Expansão do Setor “O”. Com muito esforço e dedicação, a Ribuliço conquistou respeito e destaque no cenário das quadrilhas do Distrito Federal, sendo referência em profissionalismo, tradição e inovação.",
+      "bio": "A Quadrilha Ribuliço é de Ceilândia/DF e completa 25 anos de história em 2026. Fundada em 2002, o grupo nasceu para oferecer lazer e difusão cultural aos jovens da comunidade da Expansão do Setor “O”. Com muito esforço e dedicação, a Ribuliço conquistou respeito e destaque no cenário das quadrilhas do Distrito Federal, sendo referência em profissionalismo, tradição e inovação.",
       "tema_2025": "Caminhos do meu São João",
       "temporada_2025_descricao": "Com figurinos elaborados e coreografias que misturam tradição e teatralidade, o grupo mantém viva a essência do São João, conectando o público com narrativas que misturam amor, fé e superação. Representando Ceilândia no circuito do DF e Entorno, a Ribuliço é reconhecida por sua criatividade, precisão e energia contagiante.",
-      "idade_grupo": "24 anos",
+      "idade_grupo": "25 anos",
       "elenco_aproximado": "60 dançarinos",
       "marcador": "Aurélio Sam",
       "casal_noivos_2025": "Maria Eduarda e João Victor"
-    }
+    },
+    "logo": "ribulico-logo.png"
   },
   {
     "id": 19,
@@ -773,14 +791,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Sol de Maria é de Novo Gama/GO e tem 3 anos de história. Nascida da união de dois grupos de brincantes, o grupo se profissionalizou em 2024 e vem realizando oficinas e apresentações pelo DF e Entorno, consolidando-se como referência em inovação e narrativa junina.",
+      "bio": "A Quadrilha Sol de Maria é de Novo Gama/GO e completa 4 anos de história em 2026. Nascida da união de dois grupos de brincantes, o grupo se profissionalizou em 2024 e vem realizando oficinas e apresentações pelo DF e Entorno, consolidando-se como referência em inovação e narrativa junina.",
       "tema_2025": "A Chama que Irradia o Sonhar",
       "temporada_2025_descricao": "Com 13 casais de brincantes, um casal de noivos e uma marcadora, a Sol de Maria se destaca pelo cuidado com figurinos e coreografias, que incorporam cores simbólicas e elementos visuais da narrativa, transmitindo fé, esperança e superação. Representando Novo Gama no circuito do DF e Entorno, o grupo encanta pelo vigor, criatividade e emoção.",
-      "idade_grupo": "3 anos",
+      "idade_grupo": "4 anos",
       "elenco_aproximado": "25 dançarinos",
       "marcador": "Ana Carolina Nóbrega",
       "casal_noivos_2025": "Anna Gouveia e Reny Braga"
-    }
+    },
+    "logo": "sol-de-maria-logo.png"
   },
   {
     "id": 20,
@@ -814,14 +833,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Tengo Lengo é de Ceilândia/DF e tem 19 anos de história. Fundada em 2006 por um grupo de jovens da escola do Ensino Médio 9, a quadrilha cresceu e se profissionalizou, participando de eventos e competições em Brasília e região. Cada integrante contribui para manter viva a tradição junina, trazendo disciplina, dedicação e amor pela cultura nordestina em cada apresentação.",
+      "bio": "A Quadrilha Tengo Lengo é de Ceilândia/DF e completa 20 anos de história em 2026. Fundada em 2006 por um grupo de jovens da escola do Ensino Médio 9, a quadrilha cresceu e se profissionalizou, participando de eventos e competições em Brasília e região. Cada integrante contribui para manter viva a tradição junina, trazendo disciplina, dedicação e amor pela cultura nordestina em cada apresentação.",
       "tema_2025": "Os Nazarenos e a Peleja com Lampião",
       "temporada_2025_descricao": "Com 9 casais de brincantes, casal de personagens, rei e rainha, e marcador, a Tengo Lengo se destaca pelo cuidado nos figurinos e coreografias, que alternam momentos de cangaço e sertão, com cores terrosas, tons de vinho, dourado e laranja, simbolizando a fé, o trabalho e a vida no sertão. Representando Ceilândia no circuito do DF e Entorno, o grupo combina narrativa teatral, dança e música, proporcionando experiências emocionantes e envolventes para o público.",
-      "idade_grupo": "19 anos",
+      "idade_grupo": "20 anos",
       "elenco_aproximado": "25 dançarinos",
       "marcador": "Ighor Magdalena",
       "casal_noivos_2025": "Julia e Daniel"
-    }
+    },
+    "logo": "tengo-lengo-logo.png"
   },
   {
     "id": 21,
@@ -856,14 +876,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Tico Tico no Fubá é de Águas Lindas de Goiás/GO e tem 21 anos de história. Fundada em 2004, o grupo se consolidou como referência cultural, promovendo tradição, dança e valorização das raízes populares. Cada integrante contribui para criar um espaço de aprendizado, expressão artística e celebração da cultura nordestina.",
+      "bio": "A Quadrilha Tico Tico no Fubá é de Águas Lindas de Goiás/GO e completa 22 anos de história em 2026. Fundada em 2004, o grupo se consolidou como referência cultural, promovendo tradição, dança e valorização das raízes populares. Cada integrante contribui para criar um espaço de aprendizado, expressão artística e celebração da cultura nordestina.",
       "tema_2025": "Enquanto Tiver Amor, o Meu São João Não Morrerá",
       "temporada_2025_descricao": "Com 22 casais, figurinos coloridos e coreografias envolventes, o grupo combina narrativa, música e dança para emocionar o público e reforçar a identidade regional. Representando Águas Lindas no circuito do DF e Entorno, a quadrilha é conhecida pelo acolhimento, dedicação e criatividade.",
-      "idade_grupo": "21 anos",
+      "idade_grupo": "22 anos",
       "elenco_aproximado": "44 dançarinos",
       "marcador": "Marcinho",
       "casal_noivos_2025": "Mel e João"
-    }
+    },
+    "logo": "tico-tico-no-fuba-logo.png"
   },
   {
     "id": 22,
@@ -897,14 +918,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Vai Mas Não Vai é de Luziânia/GO e tem 25 anos de história. Fundada a partir de brincadeiras de rua, o grupo rapidamente se consolidou como referência cultural e social, oferecendo oficinas, teatro, corte, costura e artesanato para a juventude, resgatando valores e tradições do São João.",
+      "bio": "A Quadrilha Vai Mas Não Vai é de Luziânia/GO e completa 26 anos de história em 2026. Fundada a partir de brincadeiras de rua, o grupo rapidamente se consolidou como referência cultural e social, oferecendo oficinas, teatro, corte, costura e artesanato para a juventude, resgatando valores e tradições do São João.",
       "tema_2025": "O Aniversário de São João: Fé, Amor e Devoção!",
       "temporada_2025_descricao": "Com figurinos em tons de azul, turquesa e detalhes em cianinha prata, o grupo combina tradição, arte e emoção em apresentações que celebram a fé, o amor e a devoção. Representando Luziânia no circuito do DF e Entorno, a quadrilha transmite alegria, aprendizado e integração comunitária.",
-      "idade_grupo": "25 anos",
+      "idade_grupo": "26 anos",
       "elenco_aproximado": "96 dançarinos",
       "marcador": "Fabiano",
       "casal_noivos_2025": "Gilmara Brito e Rony Lopes"
-    }
+    },
+    "logo": "vai-mas-nao-vai-logo.jpeg"
   },
   {
     "id": 23,
@@ -938,14 +960,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Xamegar é de Paranoá/DF e tem 21 anos de história. Fundada para valorizar a cultura popular e as tradições juninas, o grupo rapidamente se destacou em apresentações e concursos locais, consolidando-se como referência na região.",
+      "bio": "A Quadrilha Xamegar é de Paranoá/DF e completa 22 anos de história em 2026. Fundada para valorizar a cultura popular e as tradições juninas, o grupo rapidamente se destacou em apresentações e concursos locais, consolidando-se como referência na região.",
       "tema_2025": "Os Três Santos Juninos da Cultura Popular",
       "temporada_2025_descricao": "Com mais de 100 integrantes, figurinos detalhados, chapéus de palha, fuxicos, cores vibrantes e coreografias elaboradas, a quadrilha mantém viva a tradição, oferecendo ao público apresentações de grande impacto visual e emocional. Representando Paranoá no circuito do DF e Entorno, a Xamegar combina dança, música e narrativa com energia e precisão.",
-      "idade_grupo": "21 anos",
+      "idade_grupo": "22 anos",
       "elenco_aproximado": "100 dançarinos",
       "marcador": "Diego Almeida",
       "casal_noivos_2025": "Lidiane Souza e Joadson Almeida"
-    }
+    },
+    "logo": "xamegar-logo.jpg"
   },
   {
     "id": 24,
@@ -979,14 +1002,15 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Xém Nhem Nhém é de Santa Maria/DF e tem 18 anos de história. Fundada com o objetivo de valorizar a cultura popular brasileira através do teatro e da dança, o grupo se tornou referência na região por sua dedicação e paixão pelo São João. Cada integrante contribui para criar um espaço de pertencimento, aprendizado e emoção, tornando cada apresentação única e envolvente.",
+      "bio": "A Quadrilha Xém Nhem Nhém é de Santa Maria/DF e completa 19 anos de história em 2026. Fundada com o objetivo de valorizar a cultura popular brasileira através do teatro e da dança, o grupo se tornou referência na região por sua dedicação e paixão pelo São João. Cada integrante contribui para criar um espaço de pertencimento, aprendizado e emoção, tornando cada apresentação única e envolvente.",
       "tema_2025": "De Onde Vem a Água do Sertão?",
       "temporada_2025_descricao": "Com figurinos detalhados que combinam tricoline florido, oxford terra cota, renda, voal e cetim, além de arranjos florais e pedrarias, a Xém Nhem Nhém encanta pelo cuidado com coreografias e cenografia. Representando Santa Maria no circuito do DF e Entorno, o grupo mistura tradição e criatividade, transmitindo valores de respeito, cooperação e amor pela cultura popular.",
-      "idade_grupo": "18 anos",
+      "idade_grupo": "19 anos",
       "elenco_aproximado": "50 dançarinos",
       "marcador": "Tilika",
       "casal_noivos_2025": "Gabriel e Tamires"
-    }
+    },
+    "logo": "xem-nhem-nhem-logo.png"
   },
   {
     "id": 25,
@@ -1021,13 +1045,50 @@
       }
     ],
     "perfil": {
-      "bio": "A Quadrilha Xique Xique é de Planaltina/GO e tem 18 anos de história. Desde 2007, atua como guardiã da cultura popular nordestina, oferecendo oportunidades de lazer, aprendizado e transformação social para crianças, jovens e adultos. Com cerca de 200 participantes, o grupo se destaca por integrar diferentes públicos, promovendo inclusão e arte como ferramenta de desenvolvimento humano.",
+      "bio": "A Quadrilha Xique Xique é de Planaltina/GO e completa 19 anos de história em 2026. Desde 2007, atua como guardiã da cultura popular nordestina, oferecendo oportunidades de lazer, aprendizado e transformação social para crianças, jovens e adultos. Com cerca de 200 participantes, o grupo se destaca por integrar diferentes públicos, promovendo inclusão e arte como ferramenta de desenvolvimento humano.",
       "tema_2025": "Não Troco Meu Oxente Pelo OK de Ninguém",
       "temporada_2025_descricao": "Com figurinos inspirados na bandeira de Pernambuco, cores vibrantes e elementos de teatro e circo, a quadrilha cria apresentações poéticas e dinâmicas, unindo tradição, dança e narrativa. Representando Planaltina no circuito do DF e Entorno, o Xique Xique valoriza a força da cultura popular e reforça a identidade nordestina em cada espetáculo.",
-      "idade_grupo": "18 anos",
+      "idade_grupo": "19 anos",
       "elenco_aproximado": "80 dançarinos",
       "marcador": "Weslley Silva",
       "casal_noivos_2025": "Denilde Moreira e Thiago Xavier"
-    }
+    },
+    "logo": "xique-xique-logo.jpg"
+  },
+  {
+    "id": 26,
+    "nome": "Arraiá Chapéu de Palha",
+    "slug": "arraia-chapeu-de-palha",
+    "cidade": "Samambaia/DF",
+    "uf": "DF",
+    "grupo": "Acesso",
+    "grupo_2025": "acesso",
+    "posicao_2025": null,
+    "foto": "arraia-chapeu-de-palha.png",
+    "foto_capa": "arraia-chapeu-de-palha-capa.png",
+    "instagram": "",
+    "focal": {
+      "x": 0.5,
+      "y": 0.4
+    },
+    "coords": {
+      "lat": -15.88,
+      "lng": -48.08
+    },
+    "pontos2025": null,
+    "notas_2025": {
+      "total": null
+    },
+    "historico": [],
+    "perfil": {
+      "bio": "A Quadrilha Arraiá Chapéu de Palha é de Samambaia/DF e completa 36 anos de história em 2026. O Grêmio Recreativo Arraiá Chapéu de Palha surgiu da união de três amigos que, como muitos outros habitantes de Brasília, vieram do Nordeste e tinham em comum o amor pelas festividades e pela quadrilha junina. Em 1990 surgiu o primeiro grupo, Arraiá Cabaças Quebradas, e as primeiras apresentações eram realizadas em igrejas e quermesses organizadas pela comunidade, que sempre esteve presente e foi de fundamental importância na estruturação do grupo. Em 1991 virou Arraiá Esperança, quando o marcador Júnior assumiu o posto de onde nunca mais sairia. Em 1992 adotou o nome de Arraiá Chapéu de Palha e atuou em concursos e apresentações até 2001, quando, com outros líderes de grupos do DF, fundou e filiou-se à LINQ-DFE.",
+      "tema_2025": "Boi Garantido e Caprichoso - Cultura Amazonense",
+      "temporada_2025_descricao": "",
+      "idade_grupo": "36 anos",
+      "elenco_aproximado": "36 dançarinos (18 pares)",
+      "marcador": "Júnior",
+      "casal_noivos_2025": "Luciana Nascimento e Luan Barros"
+    },
+    "logo": "arraia-chapeu-de-palha-logo.png"
   }
 ]

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /portal
 Disallow: /portal-dashboard
 
-Sitemap: https://portal-da-liga.web.app/sitemap.xml
+Sitemap: https://linqdfe.com.br/sitemap.xml

@@ -1,17 +1,21 @@
-import { loadJSON, slugify } from "./shared.js";
+import { loadJSON, slugify, buildPhotoCandidates } from "./shared.js";
 
 const SCORE_DEFAULT = "0,0";
 
-function buildLogoCandidates(slug) {
-  const base = `assets/logos-quadrilhas/${slug}-logo`;
-  return [`${base}.png`, `${base}.jpg`, `${base}.jpeg`];
+function buildLogoCandidates(item) {
+  if (item?.logo) {
+    return buildPhotoCandidates(item.logo, "assets/logos-quadrilhas");
+  }
+  const slug = item?.slug || slugify(item?.nome || "");
+  if (!slug) return [];
+  return buildPhotoCandidates(`${slug}-logo`, "assets/logos-quadrilhas");
 }
 
 function buildList(items) {
   return items
     .map((item) => {
       const slug = item.slug || slugify(item.nome);
-      const candidates = buildLogoCandidates(slug);
+      const candidates = buildLogoCandidates(item);
       const href = slug ? `quadrilha/${slug}.html` : `quadrilha.html?id=${item.id}`;
       return `
         <li class="ranking-item">
@@ -27,7 +31,7 @@ function buildList(items) {
 }
 
 function setupLogoFallbacks(root) {
-  const images = root.querySelectorAll(".ranking-logo[data-candidates]");
+  const images = root.querySelectorAll(".ranking-logo[data-candidates], .hero-logo[data-candidates]");
   images.forEach((img) => {
     const candidates = (img.dataset.candidates || "").split("|").filter(Boolean);
     let index = 0;
@@ -42,9 +46,25 @@ function setupLogoFallbacks(root) {
   });
 }
 
+function buildLogoWall(items) {
+  return items
+    .map((item) => {
+      const slug = item.slug || slugify(item.nome);
+      const candidates = buildLogoCandidates(item);
+      const href = slug ? `quadrilha/${slug}.html` : `quadrilha.html?id=${item.id}`;
+      return `
+        <a class="hero-logo-item" href="${href}" aria-label="${item.nome}">
+          <img class="hero-logo" src="${candidates[0]}" data-candidates="${candidates.join("|")}" alt="Logo ${item.nome}">
+        </a>
+      `;
+    })
+    .join("");
+}
+
 async function initRankings() {
   const blocks = document.querySelectorAll(".ranking-block[data-group]");
-  if (!blocks.length) return;
+  const heroWalls = document.querySelectorAll(".hero-logo-wall[data-group]");
+  if (!blocks.length && !heroWalls.length) return;
 
   const data = (await loadJSON("data/quadrilhas.json")) || [];
 
@@ -63,6 +83,17 @@ async function initRankings() {
       listEl.innerHTML = html;
       setupLogoFallbacks(listEl);
     });
+  });
+
+  heroWalls.forEach((wall) => {
+    const group = wall.dataset.group || "";
+    const items = data
+      .filter((q) => q.grupo === group)
+      .slice()
+      .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+
+    wall.innerHTML = buildLogoWall(items);
+    setupLogoFallbacks(wall);
   });
 }
 

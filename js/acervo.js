@@ -55,8 +55,8 @@ function renderMediaCard(item, quadrilhasMap){
   meta.className = "media-meta muted";
   meta.textContent = [
     item.data ? formatDateBR(item.data) : "",
-    q ? `${q.nome} ? ${q.cidade}` : "Liga / Geral"
-  ].filter(Boolean).join(" ?" ");
+    q ? `${q.nome} - ${q.cidade}` : "Liga / Geral"
+  ].filter(Boolean).join(" - ");
 
   const desc = document.createElement("p");
   desc.className = "media-desc";
@@ -109,7 +109,7 @@ function renderEtapaSection(etapa, items, quadrilhasMap, isHighlight){
     etapa.data ? formatDateBR(etapa.data) : "",
     etapa.local || "",
     etapa.cidade || ""
-  ].filter(Boolean).join(" ? ");
+  ].filter(Boolean).join(" - ");
 
   head.appendChild(title);
   head.appendChild(meta);
@@ -337,5 +337,4 @@ function groupByEtapa(items){
   render();
 
 })();
-
 

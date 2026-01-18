@@ -256,7 +256,6 @@ site-linq-dfe/
 │   ├── shared.js             ← Funções compartilhadas
 │   ├── index.js              ← Lógica da home
 │   ├── circuito.js
-│   ├── filiadas.js
 │   ├── quadrilha.js
 │   ├── mapa.js
 │   ├── noticias.js

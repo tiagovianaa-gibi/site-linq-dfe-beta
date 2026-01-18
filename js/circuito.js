@@ -1,4 +1,9 @@
-﻿import { loadJSON, setActiveNav } from "./shared.js";
+﻿import {
+  loadJSON,
+  buildPhotoCandidates,
+  setupImageFallbacks,
+  setActiveNav
+} from "./shared.js";
 
 const SEASONS = [2026, 2025, 2024, 2023, 2022];
 const CURRENT_SEASON = 2026;
@@ -142,6 +147,7 @@ function renderPreSeasonBox() {
       </div>
     </div>
   `;
+  setupImageFallbacks(sec);
   return sec;
 }
 
@@ -171,6 +177,7 @@ function renderPastTabs(isCurrent) {
     });
   });
 
+  setupImageFallbacks(sec);
   return sec;
 }
 
@@ -242,9 +249,10 @@ function renderRankingTables(ano) {
               ? ` <small class="muted">(${item.status})</small>`
               : "";
 
-            const imgHtml = foto
-              ? `<img src="assets/fotos-quadrilhas/${foto}" alt="${item.quadrilha}"
-                   onerror="this.remove()">`
+            const candidates = foto ? buildPhotoCandidates(foto) : [];
+            const imgHtml = candidates.length
+              ? `<img src="${candidates[0]}" alt="${item.quadrilha}"
+                   data-candidates="${candidates.join("|")}" data-fallback="assets/banners/placeholder.jpg">`
               : "";
 
             const nomeHtml = `
@@ -316,9 +324,11 @@ function renderRankingTables(ano) {
 
       const rows = list
         .map((q, idx) => {
-          const logoSrc = q.foto
-            ? `assets/fotos-quadrilhas/${q.foto}`
-            : "assets/logos/placeholder.png";
+          const candidates = q.foto ? buildPhotoCandidates(q.foto) : [];
+          const logoSrc = candidates[0] || "assets/logos/placeholder.png";
+          const dataCandidates = candidates.length
+            ? `data-candidates="${candidates.join("|")}" data-fallback="assets/logos/placeholder.png"`
+            : "";
           const href = q.slug
             ? `quadrilha/${q.slug}.html`
             : `quadrilha.html?id=${q.id}`;
@@ -328,7 +338,7 @@ function renderRankingTables(ano) {
               <td>${idx + 1}</td>
               <td>
                 <a href="${href}" class="table-quad">
-                  <img src="${logoSrc}" alt="${q.nome}" onerror="this.src='assets/logos/placeholder.png'">
+                  <img src="${logoSrc}" alt="${q.nome}" ${dataCandidates}>
                   <span>
                     ${q.nome}
                     <small class="muted" style="display: block;">${q.cidade || ""}</small>
@@ -373,6 +383,7 @@ function renderRankingTables(ano) {
     })
     .join("");
 
+  setupImageFallbacks(sec);
   return sec;
 }
 
@@ -406,3 +417,5 @@ function formatDate(iso) {
     return "em breve";
   }
 }
+
+

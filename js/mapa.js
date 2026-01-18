@@ -144,7 +144,7 @@ function createCityPopup(cidadeData) {
       <p style="margin: 0 0 12px 0; color: #666; font-size: 0.9em;">
         ${quads.length} ${quads.length === 1 ? 'quadrilha' : 'quadrilhas'}
       </p>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 6px;">
   `;
 
   sorted.forEach(quad => {
@@ -156,12 +156,12 @@ function createCityPopup(cidadeData) {
       <div style="
         border: 1px solid #e0e0e0;
         border-radius: 6px;
-        padding: 10px;
+        padding: 8px 10px;
         background: #f9f9f9;
         transition: all 0.2s;
       " onmouseover="this.style.background='#f0f0f0'; this.style.borderColor='${grupoColor}';" 
          onmouseout="this.style.background='#f9f9f9'; this.style.borderColor='#e0e0e0';">
-        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 6px;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 4px;">
           <h4 style="margin: 0; font-size: 1em; color: #1a1a1a;">
             ${nome}
           </h4>
@@ -173,9 +173,6 @@ function createCityPopup(cidadeData) {
             font-size: 0.75em;
             font-weight: bold;
           ">${quad.grupo}</span>
-        </div>
-        <div style="font-size: 0.85em; color: #666; margin-bottom: 8px;">
-          ${quad.pontos2025 ? `<strong>Pontos 2025:</strong> ${quad.pontos2025}` : ''}
         </div>
         <a href="${link}" 
            style="

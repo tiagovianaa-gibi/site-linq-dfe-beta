@@ -180,7 +180,7 @@ nav li.has-dropdown > a::after {
 
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 6px);
+  top: 100%;
   left: 0;
   background: var(--bg-card);
   box-shadow: var(--shadow-md);
@@ -196,14 +196,15 @@ nav li.has-dropdown > a::after {
 .dropdown-menu::before {
   content: "";
   position: absolute;
-  top: -8px;
+  top: -12px;
   left: 0;
   right: 0;
-  height: 8px;
+  height: 12px;
 }
 
-nav li.has-dropdown:hover .dropdown-menu,
-nav li.has-dropdown:focus-within .dropdown-menu {
+
+
+nav li.has-dropdown.open .dropdown-menu {
   display: block;
 }
 
@@ -449,6 +450,53 @@ main {
   margin-top: var(--spacing-md);
 }
 
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.hero-logo-wall {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 12px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 18px;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow: var(--shadow-sm);
+}
+
+.hero-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-logo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(17, 24, 39, 0.08);
+}
+
+.hero-logo {
+  width: 100%;
+  max-width: 90px;
+  height: 64px;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .hero-pill {
   display: inline-flex;
   align-items: center;
@@ -541,6 +589,17 @@ main {
   display: grid;
   gap: var(--spacing-sm);
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.champions-map .map-link {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.champions-map .map-link:hover {
+  color: var(--accent-primary);
+  text-decoration: underline;
 }
 
 .champions-map .map-point {
@@ -959,7 +1018,7 @@ table .quadrilha-name {
 }
 
 .carousel-track::-webkit-scrollbar {
-  height: 8px;
+  height: 12px;
 }
 
 .carousel-track::-webkit-scrollbar-track {
@@ -1717,6 +1776,54 @@ footer a:hover {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.75rem;
+}
+
+/* Depoimento - home */
+.testimonial-card {
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(160deg, #fff, #f9f4f0);
+}
+
+.testimonial-header {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.testimonial-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  border: 2px solid rgba(17, 24, 39, 0.1);
+  display: block;
+}
+
+.testimonial-name {
+  margin: 0;
+  font-weight: 700;
+}
+
+.testimonial-text p {
+  margin: 0 0 var(--spacing-sm);
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.highlight-card {
+  border: 2px solid rgba(17, 24, 39, 0.08);
+  box-shadow: var(--shadow-md);
+}
+
+.highlight-card.special-card {
+  border-color: rgba(11, 31, 90, 0.18);
+}
+
+.highlight-card.acesso-card {
+  border-color: rgba(167, 59, 18, 0.2);
 }
 
 /* Se quiser dar um pouco mais de destaque visual aos cards de notícias */
@@ -2555,7 +2662,7 @@ footer a:hover {
 
   .noticia-body {
     padding: var(--spacing-md);
-    margin-top: -8px;
+    margin-top: -12px;
   }
 }
 /* Ajuste de afastamento do topo para página de notícia */
@@ -3243,3 +3350,9 @@ body.page-noticia .noticia-hero {
   font-weight: 700;
   background: var(--bg-primary);
 }
+
+
+
+
+
+

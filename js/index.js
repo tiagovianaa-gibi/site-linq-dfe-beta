@@ -204,7 +204,7 @@ async function init() {
   renderHighlights();
   renderParceiros();
 
-  // Lazy load do vdeo aps ocioso ou primeira interao
+  // Lazy load do vídeo após ocioso ou primeira interação
   if ('requestIdleCallback' in window) {
     requestIdleCallback(lazyLoadHero, { timeout: 2000 });
   } else {

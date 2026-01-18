@@ -185,6 +185,14 @@ const SAMPLE_QUADRILHAS = [
     uf: "DF",
     grupo_atual: "ESPECIAL",
   },
+  {
+    id: "arraia-chapeu-de-palha",
+    nome: "Arraiá Chapéu de Palha",
+    sigla: "CHAPEU",
+    cidade: "Samambaia",
+    uf: "DF",
+    grupo_atual: "ACESSO",
+  },
 ];
 
 const SAMPLE_DOCS = [

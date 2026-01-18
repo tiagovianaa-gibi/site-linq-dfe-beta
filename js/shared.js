@@ -8,7 +8,7 @@
  */
 export async function loadJSON(path) {
   try {
-    const response = await fetch(path);
+    const response = await fetch(withRoot(path));
     if (!response.ok) {
       throw new Error(`Erro ao carregar ${path}: ${response.status}`);
     }
@@ -18,6 +18,15 @@ export async function loadJSON(path) {
     return null;
   }
 }
+
+const ROOT_URL = new URL("/", window.location.origin).href;
+
+function withRoot(path) {
+  if (!path) return path;
+  if (path.startsWith("http") || path.startsWith("/")) return path;
+  return new URL(path, ROOT_URL).href;
+}
+
 
 /**
  * Converte string para slug (sem acentos, com hífens)
@@ -34,6 +43,65 @@ export function slugify(text) {
     .replace(/\s+/g, '-') // Espaços para hífens
     .replace(/-+/g, '-') // Múltiplos hífens para um só
     .trim();
+}
+
+function normalizeImagePath(value, folder) {
+  if (!value) return "";
+  if (value.includes("/")) return value;
+  if (!folder) return value;
+  return `${folder}/${value}`;
+}
+
+function hasImageExtension(value) {
+  return /\.(png|jpe?g)$/i.test(value || "");
+}
+
+export function buildPhotoCandidates(value, folder = "assets/fotos-quadrilhas") {
+  if (!value) return [];
+  const normalized = normalizeImagePath(value, folder);
+  if (hasImageExtension(normalized)) {
+    return [withRoot(normalized)];
+  }
+  return [
+    withRoot(`${normalized}.png`),
+    withRoot(`${normalized}.jpg`),
+    withRoot(`${normalized}.jpeg`),
+  ];
+}
+
+export function setupImageFallbacks(root = document) {
+  const images = root.querySelectorAll("img[data-candidates]");
+  images.forEach((img) => {
+    const candidates = (img.dataset.candidates || "")
+      .split("|")
+      .filter(Boolean);
+    if (!candidates.length) return;
+    let index = 0;
+    img.addEventListener("error", () => {
+      index += 1;
+      if (index < candidates.length) {
+        img.src = candidates[index];
+        return;
+      }
+      const fallback = img.dataset.fallback;
+      if (fallback) {
+        img.src = fallback;
+      } else {
+        img.style.display = "none";
+      }
+    });
+  });
+}
+
+export function applyImageCandidates(img, candidates, fallback) {
+  if (!img || !Array.isArray(candidates) || candidates.length === 0) {
+    if (img && fallback) img.src = withRoot(fallback);
+    return;
+  }
+  img.dataset.candidates = candidates.join("|");
+  if (fallback) img.dataset.fallback = withRoot(fallback);
+  img.src = candidates[0];
+  setupImageFallbacks(img.parentElement || img);
 }
 
 /**
@@ -62,8 +130,10 @@ export function setActiveNav() {
     if (linkPath === currentPath || 
         (currentPath.endsWith('/') && linkPath.endsWith('index.html'))) {
       link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
     } else {
       link.classList.remove('active');
+      link.removeAttribute('aria-current');
     }
   });
 }
@@ -110,21 +180,31 @@ window.addEventListener('unhandledrejection', (event) => {
 export function getQuadrilhaPhoto(quadrilha, useCapa = false) {
   // Se pedir capa e tiver foto_capa, usa ela
   if (useCapa && quadrilha.foto_capa) {
-    return `assets/fotos-quadrilhas/${quadrilha.foto_capa}`;
+    const candidates = buildPhotoCandidates(quadrilha.foto_capa);
+    return candidates[0] || withRoot("assets/banners/placeholder.jpg");
   }
   
   // Usa foto normal
   if (quadrilha.foto) {
-    return `assets/fotos-quadrilhas/${quadrilha.foto}`;
+    const candidates = buildPhotoCandidates(quadrilha.foto);
+    return candidates[0] || withRoot("assets/banners/placeholder.jpg");
   }
   
   // Fallback: tenta slug
   const slug = quadrilha.slug || slugify(quadrilha.nome);
   if (slug) {
-    return `assets/fotos-quadrilhas/${slug}.jpg`;
+    const candidates = buildPhotoCandidates(slug);
+    return candidates[0] || withRoot("assets/banners/placeholder.jpg");
   }
 
-  return 'assets/banners/placeholder.jpg';
+  return withRoot("assets/banners/placeholder.jpg");
+}
+
+export function getQuadrilhaPhotoCandidates(quadrilha, useCapa = false) {
+  if (useCapa && quadrilha.foto_capa) return buildPhotoCandidates(quadrilha.foto_capa);
+  if (quadrilha.foto) return buildPhotoCandidates(quadrilha.foto);
+  const slug = quadrilha.slug || slugify(quadrilha.nome);
+  return slug ? buildPhotoCandidates(slug) : [];
 }
 
 /**
@@ -155,8 +235,8 @@ async function initQuadrilhaDropdown(dataUrl) {
   menu.innerHTML = sorted
     .map(q => {
       const href = q.slug
-        ? `quadrilha/${q.slug}.html`
-        : `quadrilha.html?id=${q.id}`;
+         ? `/quadrilha/${q.slug}.html`
+        : `/quadrilha.html?id=${q.id}`;
       return `<a href="${href}">${q.nome}</a>`;
     })
     .join('');
@@ -182,28 +262,7 @@ function setupFiliadasDropdown() {
   const dataUrl = new URL('data/quadrilhas.json', filLink.href).href;
   initQuadrilhaDropdown(dataUrl);
 
-  // Toggle por clique em mobile
-  const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
-  filLink.addEventListener('click', (e) => {
-    if (!isMobile()) return; // desktop segue hover padrão
-
-    // Primeiro toque abre o dropdown; o segundo segue o link normalmente
-    if (!li.classList.contains('open')) {
-      e.preventDefault();
-      li.classList.add('open');
-      return;
-    }
-
-    li.classList.remove('open');
-  });
-
-  // Fecha ao tocar fora
-  document.addEventListener('click', (e) => {
-    if (!isMobile()) return;
-    if (!li.contains(e.target)) {
-      li.classList.remove('open');
-    }
-  });
+  setupDropdownClick(li, filLink);
 }
 
 function setupCircuitoDropdown() {
@@ -232,21 +291,46 @@ function setupCircuitoDropdown() {
   const menu = li.querySelector('.nav-circuito-menu');
   menu.innerHTML = links.map(item => `<a href="${item.href}">${item.label}</a>`).join('');
 
-  const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
-  circuitoLink.addEventListener('click', (e) => {
-    if (!isMobile()) return;
+  setupDropdownClick(li, circuitoLink);
+}
+
+function setupDropdownClick(li, link) {
+  if (!li || !link) return;
+
+  link.setAttribute('aria-haspopup', 'true');
+  link.setAttribute('aria-expanded', 'false');
+
+  link.addEventListener('click', (e) => {
     if (!li.classList.contains('open')) {
       e.preventDefault();
+      e.stopPropagation();
+      document.querySelectorAll('nav li.has-dropdown.open').forEach((item) => {
+        if (item !== li) {
+          item.classList.remove('open');
+          const itemLink = item.querySelector('a');
+          if (itemLink) itemLink.setAttribute('aria-expanded', 'false');
+        }
+      });
       li.classList.add('open');
+      link.setAttribute('aria-expanded', 'true');
       return;
     }
+    // Segundo toque/clique segue o link normalmente.
     li.classList.remove('open');
+    link.setAttribute('aria-expanded', 'false');
   });
 
   document.addEventListener('click', (e) => {
-    if (!isMobile()) return;
     if (!li.contains(e.target)) {
       li.classList.remove('open');
+      link.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  link.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      li.classList.remove('open');
+      link.setAttribute('aria-expanded', 'false');
     }
   });
 }
@@ -281,9 +365,52 @@ function initRankingFilters() {
   });
 }
 
+function setupVlibras() {
+  if (document.querySelector('[vw]')) return;
+
+  const container = document.createElement('div');
+  container.setAttribute('vw', '');
+  container.className = 'enabled';
+  container.innerHTML = `
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  `;
+  document.body.appendChild(container);
+
+  const script = document.createElement('script');
+  script.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
+  script.onload = () => {
+    if (window.VLibras && window.VLibras.Widget) {
+      new window.VLibras.Widget('https://vlibras.gov.br/app');
+    }
+  };
+  document.body.appendChild(script);
+}
+
+function setupAccessibilityHelpers() {
+  const nav = document.querySelector('nav');
+  if (nav && !nav.getAttribute('aria-label')) {
+    nav.setAttribute('aria-label', 'Navegação principal');
+  }
+
+  const main = document.querySelector('main');
+  if (main && !main.getAttribute('role')) {
+    main.setAttribute('role', 'main');
+  }
+
+  const footer = document.querySelector('footer');
+  if (footer && !footer.getAttribute('aria-label')) {
+    footer.setAttribute('aria-label', 'Rodapé');
+  }
+}
+
 runWhenReady(setupFiliadasDropdown);
 runWhenReady(setupCircuitoDropdown);
 runWhenReady(initRankingFilters);
+runWhenReady(setupVlibras);
+runWhenReady(setupAccessibilityHelpers);
 
 /**
  * Formata data para exibição
@@ -405,3 +532,9 @@ export function normalizeImageUrl(value, fallback = '') {
   // Codifica espa?õos e caracteres especiais sem quebrar slashes
   return encodeURI(clean);
 }
+
+
+
+
+
+

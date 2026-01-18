@@ -1,13 +1,21 @@
 ﻿/* ============================================
    QUADRILHA.JS - Página de perfil da quadrilha
    ============================================ */
-import { loadJSON, getQuadrilhaPhoto, applyFocal, setActiveNav } from './shared.js';
+import {
+  loadJSON,
+  getQuadrilhaPhotoCandidates,
+  applyImageCandidates,
+  applyFocal,
+  setActiveNav
+} from './shared.js';
 
 /** Lê ?id=123 (prioritário) ou ?slug=... como fallback */
 function getKeyFromUrl() {
   const p = new URLSearchParams(window.location.search);
   const id = p.get('id');
-  const slug = p.get('slug') || p.get('q');
+  const slugFromQuery = p.get('slug') || p.get('q');
+  const slugFromPage = window.__QUADRILHA_SLUG__;
+  const slug = slugFromQuery || slugFromPage;
   return { id: id ? Number(id) : null, slug: slug || null };
 }
 
@@ -126,9 +134,9 @@ function renderQuadrilhaInfo(quad, historico) {
 
   // Capa (usa foto_capa se existir, com focal para rosto)
   if (coverEl) {
-    coverEl.src = getQuadrilhaPhoto(quad, true);
+    const candidates = getQuadrilhaPhotoCandidates(quad, true);
+    applyImageCandidates(coverEl, candidates, "assets/banners/placeholder.jpg");
     coverEl.alt = quad.nome;
-    coverEl.onerror = function () { this.src = 'assets/banners/placeholder.jpg'; };
     coverEl.style.objectFit = 'cover';
     if (quad.focal) {
       applyFocal(coverEl, quad.focal);
@@ -216,7 +224,7 @@ async function init() {
     if (main) {
       main.innerHTML = `
         <section class="section"><div class="container">
-          <p>Quadrilha não encontrada. Volte para <a href="quadrilhas.html">quadrilhas</a>.</p>
+          <p>Quadrilha não encontrada. Volte para <a href="/quadrilhas.html">quadrilhas</a>.</p>
         </div></section>`;
     }
     return;

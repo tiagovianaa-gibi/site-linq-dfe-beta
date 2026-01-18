@@ -4,7 +4,8 @@
 
 import {
   loadJSON,
-  getQuadrilhaPhoto,
+  getQuadrilhaPhotoCandidates,
+  applyImageCandidates,
   applyFocal,
   setActiveNav,
   debounce
@@ -31,7 +32,9 @@ function renderQuadrilhas() {
   const grid = document.getElementById("filiadasGrid");
   if (!grid) return;
 
-  let filtered = [...quadrilhas];
+  let filtered = [...quadrilhas].sort((a, b) =>
+    (a.nome || "").localeCompare(b.nome || "", "pt-BR")
+  );
 
   if (currentFilter !== "all") {
     filtered = filtered.filter((q) => q.grupo === currentFilter);
@@ -67,13 +70,11 @@ function renderQuadrilhas() {
     card.href = href;
 
     const img = document.createElement("img");
-    img.src = getQuadrilhaPhoto(quad, true);
+    const candidates = getQuadrilhaPhotoCandidates(quad, true);
+    applyImageCandidates(img, candidates, "assets/banners/placeholder.jpg");
     img.alt = quad.nome;
     img.className = "card-image";
     img.loading = "lazy";
-    img.onerror = function () {
-      this.src = "assets/banners/placeholder.jpg";
-    };
 
     if (quad.focal) {
       applyFocal(img, quad.focal);
