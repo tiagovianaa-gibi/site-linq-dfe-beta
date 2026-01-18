@@ -365,30 +365,6 @@ function initRankingFilters() {
   });
 }
 
-function setupVlibras() {
-  if (document.querySelector('[vw]')) return;
-
-  const container = document.createElement('div');
-  container.setAttribute('vw', '');
-  container.className = 'enabled';
-  container.innerHTML = `
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  `;
-  document.body.appendChild(container);
-
-  const script = document.createElement('script');
-  script.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
-  script.onload = () => {
-    if (window.VLibras && window.VLibras.Widget) {
-      new window.VLibras.Widget('https://vlibras.gov.br/app');
-    }
-  };
-  document.body.appendChild(script);
-}
-
 function setupAccessibilityHelpers() {
   const nav = document.querySelector('nav');
   if (nav && !nav.getAttribute('aria-label')) {
@@ -409,7 +385,6 @@ function setupAccessibilityHelpers() {
 runWhenReady(setupFiliadasDropdown);
 runWhenReady(setupCircuitoDropdown);
 runWhenReady(initRankingFilters);
-runWhenReady(setupVlibras);
 runWhenReady(setupAccessibilityHelpers);
 
 /**
