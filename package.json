@@ -8,6 +8,8 @@
   },
   "scripts": {
     "build:js": "node scripts/build-js.mjs",
+    "build:quadrilhas": "node scripts/build-quadrilhas-ldjson.js",
+    "watch:quadrilhas": "node --watch scripts/build-quadrilhas-ldjson.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
