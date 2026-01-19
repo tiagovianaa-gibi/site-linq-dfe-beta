@@ -66,6 +66,7 @@ export function buildPhotoCandidates(value, folder = "assets/fotos-quadrilhas") 
     withRoot(`${normalized}.png`),
     withRoot(`${normalized}.jpg`),
     withRoot(`${normalized}.jpeg`),
+    { href: new URL('confebraq.html', circuitoLink.href).href, label: 'CONFEBRAQ' },
   ];
 }
 
@@ -286,6 +287,7 @@ function setupCircuitoDropdown() {
     { href: new URL('grupo-acesso.html', circuitoLink.href).href, label: 'Grupo de Acesso' },
     { href: new URL('edicoes-anteriores.html', circuitoLink.href).href, label: 'Edições anteriores' },
     { href: new URL('campeoes-circuito.html', circuitoLink.href).href, label: 'Campeãs do Circuito' },
+    { href: new URL('confebraq.html', circuitoLink.href).href, label: 'CONFEBRAQ' },
   ];
 
   const menu = li.querySelector('.nav-circuito-menu');

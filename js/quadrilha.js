@@ -6,6 +6,7 @@ import {
   getQuadrilhaPhotoCandidates,
   applyImageCandidates,
   applyFocal,
+  normalize,
   setActiveNav
 } from './shared.js';
 
@@ -74,7 +75,37 @@ function buildHistorico(quad, historicoCircuito) {
 
   return Array.from(byYear.values()).sort((a, b) => b.ano - a.ano);
 }
+const historicoNacionalPorSlug = {
+  'arroxa-o-no': [
+    { ano: 2005, evento: 'CONFEBRAQ', resultado: 'Vice nacional' },
+    { ano: 2017, evento: 'CONFEBRAQ', resultado: 'Campe&atilde; nacional' },
+    { ano: 2024, evento: 'CONFEBRAQ', resultado: 'Campe&atilde; nacional' },
+  ],
+  'formiga-da-roca': [
+    { ano: 2023, evento: 'CONFEBRAQ', resultado: 'Vice nacional' },
+  ],
+  'mala-veia': [
+    { ano: 2006, evento: 'CONFEBRAQ', resultado: 'Campe&atilde; nacional' },
+  ],
+  'si-bobia-a-gente-pimba': [
+    { ano: 2019, evento: 'CONFEBRAQ', resultado: 'Campe&atilde; nacional' },
+  ],
+};
 
+const historicoNacionalPorNome = {
+  'arroxa o no': historicoNacionalPorSlug['arroxa-o-no'],
+  'formiga da roca': historicoNacionalPorSlug['formiga-da-roca'],
+  'mala veia': historicoNacionalPorSlug['mala-veia'],
+  'si bobia a gente pimba': historicoNacionalPorSlug['si-bobia-a-gente-pimba'],
+};
+
+function getHistoricoNacional(quad) {
+  if (!quad) return null;
+  const slugKey = (quad.slug || '').toLowerCase().trim();
+  if (slugKey && historicoNacionalPorSlug[slugKey]) return historicoNacionalPorSlug[slugKey];
+  const nomeKey = normalize(quad.nome || '').replace(/\s+/g, ' ').trim();
+  return historicoNacionalPorNome[nomeKey] || null;
+}
 /** Tabela do histórico */
 function renderHistoricoTable(historico) {
   const wrapper = document.getElementById('historicoWrapper');
@@ -116,6 +147,43 @@ function renderHistoricoTable(historico) {
   `;
 }
 
+function renderHistoricoNacional(quad) {
+  const historico = getHistoricoNacional(quad);
+  if (!historico || historico.length === 0) return;
+
+  const wrapper = document.getElementById('historicoWrapper');
+  const referencia = wrapper ? wrapper.closest('section') : null;
+  if (!referencia || !referencia.parentElement) return;
+
+  const rows = historico.map(h => `
+      <tr>
+        <td>${h.ano}</td>
+        <td>${h.evento || '-'}</td>
+        <td>${h.resultado || '-'}</td>
+      </tr>
+    `).join('');
+
+  const section = document.createElement('section');
+  section.className = 'section';
+  section.style.paddingTop = '0';
+  section.innerHTML = `
+    <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">Hist&oacute;rico nos Nacionais</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Ano</th>
+            <th>Evento</th>
+            <th>Resultado</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+
+  referencia.parentElement.insertBefore(section, referencia.nextSibling);
+}
 /** Preenche cabeçalho + temporada + ficha */
 function renderQuadrilhaInfo(quad, historico) {
   document.title = `${quad.nome} | LINQ-DFE`;
@@ -234,6 +302,7 @@ async function init() {
 
   renderQuadrilhaInfo(quad, historico);
   renderHistoricoTable(historico);
+  renderHistoricoNacional(quad);
   setActiveNav();
 }
 
