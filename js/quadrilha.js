@@ -7,6 +7,7 @@ import {
   applyImageCandidates,
   applyFocal,
   normalize,
+  normalizeImageUrl,
   setActiveNav
 } from './shared.js';
 
@@ -184,6 +185,160 @@ function renderHistoricoNacional(quad) {
 
   referencia.parentElement.insertBefore(section, referencia.nextSibling);
 }
+
+function getPortfolioItems(acervo, quadId, limit = 6) {
+  const items = [];
+  const data = acervo || {};
+  Object.keys(data).forEach((year) => {
+    const list = data[year] || [];
+    list.forEach((item) => {
+      if (String(item.quad_id || '') === String(quadId || '')) {
+        items.push({ ...item, year });
+      }
+    });
+  });
+
+  return items
+    .sort((a, b) => (b.data || '').localeCompare(a.data || ''))
+    .slice(0, limit);
+}
+
+function buildPortfolioCard(item) {
+  const thumb = normalizeImageUrl(item.thumb || item.arquivo, 'assets/banners/placeholder.jpg');
+  const href = normalizeImageUrl(item.arquivo, '#');
+  const tipo = (item.tipo || 'arquivo').toUpperCase();
+  const titulo = item.titulo || 'Portfólio da quadrilha';
+  const descricao = item.descricao || '';
+  const botao = item.tipo === 'video'
+    ? 'Assistir'
+    : item.tipo === 'album'
+      ? 'Abrir galeria'
+      : item.tipo === 'pdf'
+        ? 'Ver documento'
+        : 'Ver foto';
+
+  return `
+    <article class="media-card">
+      <div class="media-thumb">
+        <img src="${thumb}" alt="${titulo}" loading="lazy" decoding="async">
+        <span class="chip chip-light">${tipo}</span>
+      </div>
+      <div class="media-body">
+        <h3>${titulo}</h3>
+        ${descricao ? `<p class="media-desc">${descricao}</p>` : ''}
+        <div class="media-actions">
+          <a class="btn btn-light btn-sm" href="${href}" target="_blank" rel="noopener">${botao}</a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderLandingSections(quad, acervoItems) {
+  const main = document.querySelector('main');
+  if (!main) return;
+
+  const container = main.querySelector('.container');
+  if (!container) return;
+
+  const instagramHandle = quad.instagram || '';
+  const handle = instagramHandle.startsWith('@') ? instagramHandle.slice(1) : instagramHandle;
+  const instaUrl = handle ? `https://instagram.com/${handle}` : '';
+  const cidade = quad.cidade || '';
+  const uf = quad.uf ? `/${quad.uf}` : '';
+  const grupo = quad.grupo || '';
+  const basePath = window.location.pathname.includes('/quadrilha/') ? '../' : '';
+
+  const ctaSection = `
+    <section class="section quadrilha-cta">
+      <div class="container">
+        <article class="card quadrilha-cta-card">
+          <div class="card-body">
+            <h2 class="card-title">Contrate a ${quad.nome}</h2>
+            <p class="card-text">
+              Shows juninos, apresentações culturais e participação em eventos no DF, Entorno e outras cidades.
+              Estrutura completa de elenco e produção para festivais, festas públicas e programações privadas.
+              ${instaUrl ? 'Chame no Instagram para orçamento e agenda — a quadrilha responde com brevidade.' : ''}
+            </p>
+            <div class="hero-actions quadrilha-cta-actions">
+              ${instaUrl ? `<a class="btn" href="${instaUrl}" target="_blank" rel="noopener">Quero contratar</a>` : ''}
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  `;
+
+  const insertPoint = container.querySelector('.quadrilha-about');
+  if (insertPoint) {
+    insertPoint.insertAdjacentHTML('afterend', `${ctaSection}`);
+  } else {
+    main.insertAdjacentHTML('beforeend', `${ctaSection}`);
+  }
+}
+
+
+function updateSeoMeta(quad, coverUrl, resumo) {
+  const nome = quad.nome || 'Quadrilha Junina';
+  const cidade = quad.cidade || '';
+  const uf = quad.uf ? `/${quad.uf}` : '';
+  const tema = quad.perfil?.tema_2025 ? `Tema 2025: ${quad.perfil.tema_2025}.` : '';
+  const description = `${nome} de ${cidade}${uf}. Contrata\u00e7\u00e3o, portf\u00f3lio, equipe, fotos e v\u00eddeos. ${tema}`.trim();
+
+  document.title = `${nome} | LINQ-DFE`;
+
+  const setMeta = (selector, attr, value) => {
+    if (!value) return;
+    let el = document.head.querySelector(selector);
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute(attr.includes('property') ? 'property' : 'name', attr);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', value);
+  };
+
+  setMeta('meta[name="description"]', 'description', description);
+  setMeta('meta[property="og:title"]', 'og:title', `${nome} | LINQ-DFE`);
+  setMeta('meta[property="og:description"]', 'og:description', description);
+  setMeta('meta[property="og:type"]', 'og:type', 'website');
+  setMeta('meta[property="og:image"]', 'og:image', coverUrl);
+  setMeta('meta[property="og:url"]', 'og:url', quad.slug ? `https://linqdfe.com.br/quadrilha/${quad.slug}` : 'https://linqdfe.com.br/quadrilhas.html');
+  setMeta('meta[name="twitter:card"]', 'twitter:card', 'summary_large_image');
+  setMeta('meta[name="twitter:title"]', 'twitter:title', `${nome} | LINQ-DFE`);
+  setMeta('meta[name="twitter:description"]', 'twitter:description', description);
+  setMeta('meta[name="twitter:image"]', 'twitter:image', coverUrl);
+
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical && quad.slug) {
+    canonical.setAttribute('href', `https://linqdfe.com.br/quadrilha/${quad.slug}`);
+  }
+
+  const ldId = 'quadrilha-ld-json';
+  let ld = document.getElementById(ldId);
+  if (!ld) {
+    ld = document.createElement('script');
+    ld.type = 'application/ld+json';
+    ld.id = ldId;
+    document.head.appendChild(ld);
+  }
+
+  const instagramHandle = quad.instagram || '';
+  const handle = instagramHandle.startsWith('@') ? instagramHandle.slice(1) : instagramHandle;
+  const instaUrl = handle ? `https://instagram.com/${handle}` : '';
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'DanceGroup',
+    name: nome,
+    areaServed: cidade ? `${cidade}${uf}` : undefined,
+    description: resumo || description,
+    url: quad.slug ? `https://linqdfe.com.br/quadrilha/${quad.slug}` : 'https://linqdfe.com.br/quadrilhas.html',
+    image: coverUrl,
+    sameAs: instaUrl ? [instaUrl] : undefined,
+  };
+
+  ld.textContent = JSON.stringify(data);
+}
 /** Preenche cabeçalho + temporada + ficha */
 function renderQuadrilhaInfo(quad, historico) {
   document.title = `${quad.nome} | LINQ-DFE`;
@@ -199,11 +354,13 @@ function renderQuadrilhaInfo(quad, historico) {
   const infoListEl = document.getElementById('quadrilhaInfoList');
 
   const perfil = quad.perfil || {};
+  let coverUrl = normalizeImageUrl('assets/banners/placeholder.jpg', 'assets/banners/placeholder.jpg');
 
   // Capa (usa foto_capa se existir, com focal para rosto)
   if (coverEl) {
     const candidates = getQuadrilhaPhotoCandidates(quad, true);
     applyImageCandidates(coverEl, candidates, "assets/banners/placeholder.jpg");
+    coverUrl = candidates[0] || coverUrl;
     coverEl.alt = quad.nome;
     coverEl.style.objectFit = 'cover';
     if (quad.focal) {
@@ -242,6 +399,8 @@ function renderQuadrilhaInfo(quad, historico) {
     }
   }
 
+  updateSeoMeta(quad, coverUrl, resumoEl ? resumoEl.textContent : '');
+
   // ===== TEMPORADA 2025 (bio + descrição) =====
   if (sobreEl) {
     const partes = [];
@@ -269,9 +428,10 @@ function renderQuadrilhaInfo(quad, historico) {
 async function init() {
   const { id, slug } = getKeyFromUrl();
 
-  const [quadrilhas, historicoCircuitoRaw] = await Promise.all([
+  const [quadrilhas, historicoCircuitoRaw, acervoRaw] = await Promise.all([
     loadJSON('data/quadrilhas.json'),
     loadJSON('data/historico_circuito.json'),
+    loadJSON('data/acervo.json'),
   ]);
 
   const lista = quadrilhas || [];
@@ -299,8 +459,11 @@ async function init() {
   }
 
   const historico = buildHistorico(quad, historicoCircuito);
+  const acervo = acervoRaw || {};
+  const portfolio = getPortfolioItems(acervo, quad.id, 6);
 
   renderQuadrilhaInfo(quad, historico);
+  renderLandingSections(quad, portfolio);
   renderHistoricoTable(historico);
   renderHistoricoNacional(quad);
   setActiveNav();

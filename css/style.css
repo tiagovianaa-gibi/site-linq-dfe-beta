@@ -1,12 +1,12 @@
-/* ============================================
+Ôªø/* ============================================
    HUB JUNINO LINQ-DFE - ESTILOS GLOBAIS
    ============================================ */
 
 /* ============================================
-   VARI¡VEIS CSS - VOC  S” MUDA AQUI
+   VARI√ÅVEIS CSS - VOC√ä S√ì MUDA AQUI
    ============================================
-   Todas as cores, espaÁamentos e estilos principais
-   podem ser alterados aqui sem mexer no cÛdigo.
+   Todas as cores, espa√ßamentos e estilos principais
+   podem ser alterados aqui sem mexer no c√≥digo.
 */
 :root {
   /* Cores principais */
@@ -20,7 +20,7 @@
   --acesso-color: #a73b12;
   --border-color: #e0e0e0;
   
-  /* Vari·veis adicionais para compatibilidade */
+  /* Vari√°veis adicionais para compatibilidade */
   --surface: var(--bg-card);
   --line: var(--border-color);
   --muted: var(--text-secondary);
@@ -32,7 +32,7 @@
   --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
   --shadow: var(--shadow-sm);
   
-  /* EspaÁamentos */
+  /* Espa√ßamentos */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 1.5rem;
@@ -42,7 +42,7 @@
   /* Bordas */
   --border-radius: 8px;
 
-  /* Altura da navegaÁ„o fixa */
+  /* Altura da navega√ß√£o fixa */
   --nav-height: 60px;
 }
 
@@ -90,7 +90,7 @@ body {
   z-index: 10000;
 }
 
-/* NavegaÁ„o Fixa */
+/* Navega√ß√£o Fixa */
 nav {
   position: fixed;
   top: 0;
@@ -172,7 +172,7 @@ nav li.has-dropdown {
 }
 
 nav li.has-dropdown > a::after {
-  content: "?";
+  content: "‚ñæ";
   margin-left: 6px;
   font-size: 0.8rem;
   color: var(--text-secondary);
@@ -263,7 +263,7 @@ nav li.has-dropdown.open .dropdown-menu {
       border-radius: 0 0 var(--border-radius) var(--border-radius);
     }
   nav li.has-dropdown:hover .dropdown-menu {
-    display: none; /* Em mobile o toggle È via clique */
+    display: none; /* Em mobile o toggle √© via clique */
   }
   nav li.has-dropdown.open .dropdown-menu {
     display: block;
@@ -272,7 +272,7 @@ nav li.has-dropdown.open .dropdown-menu {
 
 /* Container Principal */
 main {
-  margin-top: calc(var(--nav-height) + env(safe-area-inset-top)); /* EspaÁo para nav fixa */
+  margin-top: calc(var(--nav-height) + env(safe-area-inset-top)); /* Espa√ßo para nav fixa */
   min-height: calc(100vh - var(--nav-height));
 }
 
@@ -312,7 +312,7 @@ main {
   object-fit: cover;
 }
 
-/* Controles de ¡udio (fora do hero) */
+/* Controles de √Åudio (fora do hero) */
 .audio-controls {
   background: var(--bg-card);
   padding: var(--spacing-sm) var(--spacing-md);
@@ -348,7 +348,7 @@ main {
   align-self: center;
 }
 
-/* SeÁıes */
+/* Se√ß√µes */
 .section {
   padding: var(--spacing-xl) 0;
 }
@@ -724,7 +724,7 @@ main {
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--spacing-md);
   margin-top: var(--spacing-lg);
-  align-items: stretch; /* garante que todas as cÈlulas tenham mesma altura */
+  align-items: stretch; /* garante que todas as c√©lulas tenham mesma altura */
 }
 
 /* Quadrilha Card (destaque) */
@@ -757,7 +757,7 @@ main {
   color: rgba(255,255,255,0.9);
 }
 
-/* Botıes */
+/* Bot√µes */
 .btn {
   display: inline-block;
   padding: var(--spacing-sm) var(--spacing-md);
@@ -924,7 +924,7 @@ a.instagram:hover {
   text-decoration: underline;
 }
 
-/* Tabela de ClassificaÁ„o */
+/* Tabela de Classifica√ß√£o */
 .table-wrapper {
   overflow-x: auto;
   background: var(--bg-card);
@@ -1115,7 +1115,7 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* Utilit·rios */
+/* Utilit√°rios */
 .text-center {
   text-align: center;
 }
@@ -1138,7 +1138,7 @@ footer a:hover {
   color: var(--text-secondary);
 }
 
-/* Conte˙do de notÌcia */
+/* Conte√∫do de not√≠cia */
 .noticia-conteudo h3 {
   margin-top: 24px;
   margin-bottom: 16px;
@@ -1313,7 +1313,7 @@ footer a:hover {
   box-shadow: 0 0 0 3px var(--brand-weak);
 }
 
-/* SeÁıes de etapa */
+/* Se√ß√µes de etapa */
 .etapa-section {
   margin: var(--spacing-lg) 0;
 }
@@ -1333,14 +1333,14 @@ footer a:hover {
   font-size: 0.95rem;
 }
 
-/* Grid de mÌdia */
+/* Grid de m√≠dia */
 .media-grid {
   display: grid;
   gap: var(--spacing-md);
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
 }
 
-/* Card de mÌdia */
+/* Card de m√≠dia */
 .media-card {
   display: flex;
   flex-direction: column;
@@ -1440,7 +1440,7 @@ footer a:hover {
   transform: translateY(0);
 }
 
-/* Classes utilit·rias */
+/* Classes utilit√°rias */
 .muted {
   color: var(--text-secondary);
 }
@@ -1744,14 +1744,14 @@ footer a:hover {
   margin-bottom: var(--spacing-md);
 }
 
-/* SeÁıes da home (Campe„s, Destaques, NotÌcias, etc.) */
+/* Se√ß√µes da home (Campe√£s, Destaques, Not√≠cias, etc.) */
 .home-section {
   max-width: 1200px;
   margin: 0 auto 4rem auto;
   padding: 0 1.5rem;
 }
 
-/* TÌtulo centralizado, igual "Campe„s 2025" */
+/* T√≠tulo centralizado, igual "Campe√£s 2025" */
 .home-section-title {
   font-size: 2rem;
   font-weight: 700;
@@ -1759,11 +1759,11 @@ footer a:hover {
   margin: 0;
 }
 
-/* CabeÁalho com tÌtulo centralizado + bot„o "Ver todas" ‡ direita */
+/* Cabe√ßalho com t√≠tulo centralizado + bot√£o "Ver todas" √† direita */
 .home-section-header {
   display: flex;
   align-items: center;
-  justify-content: center; /* tÌtulo centralizado */
+  justify-content: center; /* t√≠tulo centralizado */
   margin-bottom: 1.75rem;
   position: relative;
 }
@@ -1775,7 +1775,7 @@ footer a:hover {
   transform: translateY(-50%);
 }
 
-/* Grid de notÌcias, centralizado e com o mesmo "respiro" dos outros blocos */
+/* Grid de not√≠cias, centralizado e com o mesmo "respiro" dos outros blocos */
 .home-news-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1830,7 +1830,7 @@ footer a:hover {
   border-color: rgba(167, 59, 18, 0.2);
 }
 
-/* Se quiser dar um pouco mais de destaque visual aos cards de notÌcias */
+/* Se quiser dar um pouco mais de destaque visual aos cards de not√≠cias */
 .home-news-grid .news-card {
   border-radius: 20px;
   box-shadow: var(--shadow-sm);
@@ -1907,7 +1907,7 @@ footer a:hover {
 .home-news .news-card img {
   border-radius: 10px 10px 0 0;
 }
-/* ===== Campe„s Home ===== */
+/* ===== Campe√£s Home ===== */
 .champions{
   padding: 48px 0;
 }
@@ -1955,7 +1955,7 @@ footer a:hover {
 
   background: linear-gradient(
     180deg,
-    rgba(0,0,0,0) 45%,        /* comeÁa mais embaixo */
+    rgba(0,0,0,0) 45%,        /* come√ßa mais embaixo */
     rgba(0,0,0,.55) 75%,
     rgba(0,0,0,.85) 100%
   );
@@ -1991,7 +1991,7 @@ footer a:hover {
   }
 }
 
-/* sÛ a imagem e o texto n„o capturam clique */
+/* s√≥ a imagem e o texto n√£o capturam clique */
 .champion-card img,
 .champion-card .champion-overlay{
   pointer-events: none;
@@ -2006,7 +2006,7 @@ footer a:hover {
 .filters-row select{
   flex: 1;
 }
-/* ===== Sobre a quadrilha ñ layout em 2 colunas ===== */
+/* ===== Sobre a quadrilha ‚Äì layout em 2 colunas ===== */
 
 .quadrilha-about {
   display: grid;
@@ -2029,7 +2029,7 @@ footer a:hover {
   margin-top: var(--spacing-sm);
 }
 
-/* ficha tÈcnica */
+/* ficha t√©cnica */
 .quadrilha-about-info h3 {
   margin-bottom: var(--spacing-sm);
   font-size: 1.05rem;
@@ -2251,7 +2251,7 @@ footer a:hover {
   color: var(--text-primary);
 }
 
-/* espaÁamento vertical entre blocos do portal */
+/* espa√ßamento vertical entre blocos do portal */
 .portal-section + .portal-section {
   margin-top: 2.5rem;
 }
@@ -2333,7 +2333,7 @@ footer a:hover {
   resize: vertical;
 }
 /* ===== Portal - menu lateral ativo ===== */
-/* Corrige nav dentro da sidebar para n„o usar o nav fixo do site p˙blico */
+/* Corrige nav dentro da sidebar para n√£o usar o nav fixo do site p√∫blico */
 .portal-sidebar-nav {
   position: static;
   top: auto;
@@ -2344,7 +2344,7 @@ footer a:hover {
   padding: 0;
 }
 
-/* ===== Portal - lista de notÌcias ===== */
+/* ===== Portal - lista de not√≠cias ===== */
 .news-list {
   display: flex;
   flex-direction: column;
@@ -2467,7 +2467,7 @@ footer a:hover {
   padding: 4px 8px;
   font-size: 0.8rem;
 }
-/* NotÌcia - p·gina de detalhe */
+/* Not√≠cia - p√°gina de detalhe */
 .noticia-page {
   max-width: 1100px;
   margin: 0 auto;
@@ -2557,7 +2557,7 @@ footer a:hover {
     margin-top: calc(var(--spacing-md) * -0.3);
   }
 }
-/* Override de layout da notÌcia */
+/* Override de layout da not√≠cia */
 .noticia-page {
   max-width: 1100px;
   margin: 0 auto;
@@ -2669,7 +2669,7 @@ footer a:hover {
     margin-top: -12px;
   }
 }
-/* Ajuste de afastamento do topo para p·gina de notÌcia */
+/* Ajuste de afastamento do topo para p√°gina de not√≠cia */
 body.page-noticia main {
   margin-top: 120px;
 }
@@ -2694,7 +2694,7 @@ body.page-noticia .noticia-hero {
 body.page-noticia .noticia-page {
   padding-top: 0;
 }
-/* CorreÁ„o final: hero abaixo do menu fixo na p·gina de notÌcia */
+/* Corre√ß√£o final: hero abaixo do menu fixo na p√°gina de not√≠cia */
 body.page-noticia main {
   margin-top: 90px !important;
   padding-top: 0 !important;
@@ -2704,7 +2704,7 @@ body.page-noticia .noticia-hero {
   margin-top: var(--spacing-md) !important;
 }
 
-/* Tags das notÌcias na listagem */
+/* Tags das not√≠cias na listagem */
 .news-card-tags {
   display: flex;
   flex-wrap: wrap;
@@ -2754,7 +2754,7 @@ body.page-noticia .noticia-hero {
   margin-top: var(--spacing-sm);
 }
 
-/* P·gina de Documentos */
+/* P√°gina de Documentos */
 .page-docs {
   max-width: 1200px;
   margin: 0 auto;
@@ -2816,7 +2816,7 @@ body.page-noticia .noticia-hero {
   align-self: flex-start;
 }
 
-/* Esconde visualmente mantendo acessÌvel para leitores de tela */
+/* Esconde visualmente mantendo acess√≠vel para leitores de tela */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -3010,7 +3010,7 @@ body.page-noticia .noticia-hero {
 }
 
 /* =========================
-   Circuito - p·gina curta (cards com selos)
+   Circuito - p√°gina curta (cards com selos)
    ========================= */
 .circuit-page{
   --brand: #d92b2b;
@@ -3141,7 +3141,7 @@ body.page-noticia .noticia-hero {
   gap: 10px;
 }
 
-/* Campe„s do Circuito */
+/* Campe√£s do Circuito */
 .campeas-section .campeas-header{
   display: flex;
   flex-direction: column;
@@ -3356,6 +3356,22 @@ body.page-noticia .noticia-hero {
 }
 
 
+
+
+
+
+
+
+
+
+/* ===== Quadrilha Landing ===== */
+.quadrilha-cta-card {
+  border-left: 4px solid var(--accent-primary);
+}
+
+.quadrilha-cta-actions {
+  margin-top: var(--spacing-sm);
+}
 
 
 
