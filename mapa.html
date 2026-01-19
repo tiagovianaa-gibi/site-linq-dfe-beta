@@ -1,97 +1,134 @@
-﻿<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
-  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Language" content="pt-BR">
-  <title>Mapa das Quadrilhas | LINQ-DFE</title>
-  <meta name="description" content="Mapa das quadrilhas juninas da LINQ-DFE no DF e Entorno para encontrar grupos por cidade, região e grupo competitivo.">
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://linqdfe.com.br/mapa">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Mapa das Quadrilhas | LINQ-DFE">
-  <meta property="og:description" content="Mapa das quadrilhas juninas da LINQ-DFE no DF e Entorno para encontrar grupos por cidade, região e grupo competitivo.">
-  <meta property="og:url" content="https://linqdfe.com.br/mapa">
-  <meta property="og:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
-  <meta property="og:site_name" content="LINQ-DFE">
-  <meta property="og:locale" content="pt_BR">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Mapa das Quadrilhas | LINQ-DFE">
-  <meta name="twitter:description" content="Mapa das quadrilhas juninas da LINQ-DFE no DF e Entorno para encontrar grupos por cidade, região e grupo competitivo.">
-  <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "LINQ-DFE",
-      "url": "https://linqdfe.com.br",
-      "logo": "https://linqdfe.com.br/assets/logos/linq-dfe.png",
-      "sameAs": ["https://instagram.com/linqdfe"]
-    }
-  </script>
-  <link rel="stylesheet" href="css/style.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-</head>
-<body>
-  <nav>
-  <div class="container">
-    <div class="logo">
-      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
-      <span class="logo-text">LINQ-DFE</span>
-    </div>
-    <ul>
-      <li><a href="index.html">Inicial</a></li>
-      <li><a href="circuito.html">Circuito</a></li>
-      <li><a href="quadrilhas.html">Quadrilhas</a></li>
-      <li><a href="mapa.html">Mapa</a></li>
-      <li><a href="noticias.html">Not&iacute;cias</a></li>
-      <li><a href="acervo.html">Acervo</a></li>
-      <li><a href="diretoria.html">Diretoria</a></li>
-      <li><a href="documentos.html">Documentos</a></li>
-      <li><a href="portal.html">Portal da Liga</a></li>
-    </ul>
-  </div>
-</nav>
-
-  <main>
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">Mapa das Quadrilhas</h1>
-        <p class="section-subtitle">Localize todas as quadrilhas no mapa</p>
-
-        <div class="search-filters" style="margin-bottom: var(--spacing-md);">
-          <input type="text" id="searchMapa" class="search-box" placeholder="Buscar quadrilha...">
-          <div class="filters">
-            <button class="filter-btn active" onclick="filterMapa('all')">Todas</button>
-            <button class="filter-btn" onclick="filterMapa('Especial')">Especial</button>
-            <button class="filter-btn" onclick="filterMapa('Acesso')">Acesso</button>
-          </div>
-        </div>
-
-        <div id="map"></div>
-      <div class="mapa-static-list" aria-label="Lista de cidades e quadrilhas">
-        
-  </main>
-
-  <footer>
-  <div class="container">
-    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
-  </div>
-</footer>
-
-  <script type="module" src="js/mapa.min.js"></script>
-  <script type="module" src="js/shared.min.js"></script>
-</body>
-</html>
-
-
-
-
-
-
-
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Language" content="pt-BR">
+  <title>Mapa das Quadrilhas | LINQ-DFE</title>
+  <meta name="description" content="Mapa das quadrilhas juninas da LINQ-DFE no DF e Entorno para encontrar grupos por cidade, região e grupo competitivo.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://linqdfe.com.br/mapa">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mapa das Quadrilhas | LINQ-DFE">
+  <meta property="og:description" content="Mapa das quadrilhas juninas da LINQ-DFE no DF e Entorno para encontrar grupos por cidade, região e grupo competitivo.">
+  <meta property="og:url" content="https://linqdfe.com.br/mapa">
+  <meta property="og:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
+  <meta property="og:site_name" content="LINQ-DFE">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mapa das Quadrilhas | LINQ-DFE">
+  <meta name="twitter:description" content="Mapa das quadrilhas juninas da LINQ-DFE no DF e Entorno para encontrar grupos por cidade, região e grupo competitivo.">
+  <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "LINQ-DFE",
+      "url": "https://linqdfe.com.br",
+      "logo": "https://linqdfe.com.br/assets/logos/linq-dfe.png",
+      "sameAs": ["https://instagram.com/linqdfe"]
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+  <nav>
+  <div class="container">
+    <div class="logo">
+      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+      <span class="logo-text">LINQ-DFE</span>
+    </div>
+    <ul>
+      <li><a href="index.html">Inicial</a></li>
+      <li><a href="circuito.html">Circuito</a></li>
+      <li><a href="quadrilhas.html">Quadrilhas</a></li>
+      <li><a href="mapa.html">Mapa</a></li>
+      <li><a href="noticias.html">Not&iacute;cias</a></li>
+      <li><a href="acervo.html">Acervo</a></li>
+      <li><a href="diretoria.html">Diretoria</a></li>
+      <li><a href="documentos.html">Documentos</a></li>
+      <li><a href="portal.html">Portal da Liga</a></li>
+    </ul>
+  </div>
+</nav>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Mapa das Quadrilhas</h1>
+        <p class="section-subtitle">Localize todas as quadrilhas no mapa</p>
+
+        <div class="search-filters" style="margin-bottom: var(--spacing-md);">
+          <input type="text" id="searchMapa" class="search-box" placeholder="Buscar quadrilha...">
+          <div class="filters">
+            <button class="filter-btn active" onclick="filterMapa('all')">Todas</button>
+            <button class="filter-btn" onclick="filterMapa('Especial')">Especial</button>
+            <button class="filter-btn" onclick="filterMapa('Acesso')">Acesso</button>
+          </div>
+        </div>
+
+        <div id="map"></div>
+      <div class="mapa-static-list" aria-label="Lista de cidades e quadrilhas">
+        
+  </main>
+<script type="module" src="js/mapa.min.js"></script>
+  <script type="module" src="js/shared.min.js"></script>
+<footer class="site-footer" aria-label="Rodap&eacute;">
+  <div class="container footer-grid">
+    <div class="footer-col footer-brand">
+      <div class="logo">
+        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE">
+        <span class="logo-text">LINQ-DFE</span>
+      </div>
+      <p>Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/linqdfe" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3 class="footer-title">Institucional</h3>
+      <ul class="footer-links">
+        <li><a href="index.html">Inicial</a></li>
+        <li><a href="diretoria.html">Diretoria</a></li>
+        <li><a href="documentos.html">Documentos</a></li>
+        <li><a href="portal.html">Portal da Liga</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3 class="footer-title">Circuito</h3>
+      <ul class="footer-links">
+        <li><a href="circuito.html">Circuito de Quadrilhas</a></li>
+        <li><a href="grupo-especial.html">Grupo Especial</a></li>
+        <li><a href="grupo-acesso.html">Grupo de Acesso</a></li>
+        <li><a href="temporada-2025.html">Ranking e resultados 2025</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3 class="footer-title">Conte&uacute;do</h3>
+      <ul class="footer-links">
+        <li><a href="quadrilhas.html">Quadrilhas</a></li>
+        <li><a href="noticias.html">Not&iacute;cias</a></li>
+        <li><a href="acervo.html">Acervo</a></li>
+        <li><a href="sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+  </div>
+</footer>
+</body>
+</html>
+
+
+
+
+
+
+
+

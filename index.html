@@ -1,260 +1,297 @@
-﻿<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
-  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Language" content="pt-BR">
-  <title>Portal Oficial da LINQ-DFE | LINQ-DFE</title>
-  <meta name="description" content="Portal oficial da LINQ-DFE com circuito de quadrilhas, notícias, calendário, ranking e resultados do São João no DF e Entorno.">
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://linqdfe.com.br/">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Portal Oficial da LINQ-DFE | LINQ-DFE">
-  <meta property="og:description" content="Portal oficial da LINQ-DFE com circuito de quadrilhas, notícias, calendário, ranking e resultados do São João no DF e Entorno.">
-  <meta property="og:url" content="https://linqdfe.com.br/">
-  <meta property="og:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
-  <meta property="og:site_name" content="LINQ-DFE">
-  <meta property="og:locale" content="pt_BR">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Portal Oficial da LINQ-DFE | LINQ-DFE">
-  <meta name="twitter:description" content="Portal oficial da LINQ-DFE com circuito de quadrilhas, notícias, calendário, ranking e resultados do São João no DF e Entorno.">
-  <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "LINQ-DFE",
-      "url": "https://linqdfe.com.br",
-      "logo": "https://linqdfe.com.br/assets/logos/linq-dfe.png",
-      "sameAs": ["https://instagram.com/linqdfe"]
-    }
-  </script>
-  <link rel="stylesheet" href="css/style.min.css">
-</head>
-<body>
-  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
-  <!-- Navegação -->
-  <nav>
-  <div class="container">
-    <div class="logo">
-      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
-      <span class="logo-text">LINQ-DFE</span>
-    </div>
-    <ul>
-      <li><a href="index.html">Inicial</a></li>
-      <li><a href="circuito.html">Circuito</a></li>
-      <li><a href="quadrilhas.html">Quadrilhas</a></li>
-      <li><a href="mapa.html">Mapa</a></li>
-      <li><a href="noticias.html">Not&iacute;cias</a></li>
-      <li><a href="acervo.html">Acervo</a></li>
-      <li><a href="diretoria.html">Diretoria</a></li>
-      <li><a href="documentos.html">Documentos</a></li>
-      <li><a href="portal.html">Portal da Liga</a></li>
-    </ul>
-  </div>
-</nav>
-
-  <main id="conteudo-principal">
-    <div class="container home-title">
-     
-    </div>
-    <!-- Hero Video -->
-    <section class="hero-video">
-      <video id="heroVideo" muted loop playsinline preload="none" poster="assets/banners/placeholder.jpg">
-        <source data-src="assets/hero/hero.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
-    </section>
-
-    <!-- Controles de áudio -->
-    <section class="audio-controls">
-      <button id="btnAtivarSom" onclick="ativarSom()" aria-pressed="false">Ativar som do vídeo</button>
-      <button id="btnSilenciar" onclick="silenciarSom()" aria-pressed="false" disabled style="display: none;">Silenciar som</button>
-          </section>
-
-    
-
-<!-- Bloco Circuito -->
-    <section class="section">
-      <div class="container">
-        <div class="grid grid-2">
-          <article class="card highlight-card special-card">
-            <div class="card-body">
-              <p class="hero-pill special">Grupo Especial</p>
-              <h3 class="card-title" style="font-size: 1.5rem;">Grupo Especial</h3>
-              <p class="card-text">
-                A elite do circuito. Ranking, destaques e resultados da principal divisão.
-              </p>
-              <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
-                <a class="btn" href="grupo-especial.html">Ver Grupo Especial</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card highlight-card acesso-card">
-            <div class="card-body">
-              <p class="hero-pill acesso">Grupo de Acesso</p>
-              <h3 class="card-title" style="font-size: 1.5rem;">Grupo de Acesso</h3>
-              <p class="card-text">
-                Porta de entrada do circuito e caminho para subir ao Especial.
-              </p>
-              <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
-                <a class="btn" href="grupo-acesso.html">Ver Grupo de Acesso</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== Notícias ===================== -->
-    <section id="home-news" class="home-section">
-      <div class="home-section-header">
-        <h1 class="home-section-title">Notícias</h1>
-        <a href="noticias.html" class="btn btn-ghost">
-          Ver todas
-        </a>
-      </div>
-
-      <div id="home-news-list" class="home-cards home-news-grid">
-        <!-- Os cards de Notícias são inseridos via JavaScript -->
-      </div>
-    </section>
-
-    <!-- Destaques 2025 -->
-
-<!-- Campeãs 2025 -->
-    <section class="section campeas-section">
-      <div class="container">
-        <div class="campeas-header">
-          <h1 class="section-title">Campeãs do Circuito</h1>
-          </div>
-
-        <div class="campeas-grid">
-          <article class="campea-card">
-            <div class="campea-media">
-              <img src="assets/fotos-quadrilhas/atual-campea-especial.jpg" alt="Arroxa o Nó - campeã do Grupo Especial em 2025">
-            </div>
-            <div class="campea-content">
-              <p class="chip chip-light">Grupo Especial</p>
-              <h3>Arroxa o Nó</h3>
-              <p class="campea-text">Campeã do Grupo Especial em 2025, representa o DF no Concurso Nacional da CONFEBRAQ.</p>
-              <a class="btn btn-light" href="temporada-2025.html">Ver resultados 2025</a>
-            </div>
-          </article>
-
-          <article class="campea-card">
-            <div class="campea-media">
-              <img src="assets/fotos-quadrilhas/atual-campea-acesso.jpg" alt="Matulão - campeã do Grupo de Acesso em 2025" style="object-position: 50% 38%;">
-            </div>
-            <div class="campea-content">
-              <p class="chip chip-light">Grupo de Acesso</p>
-              <h3>Matulão</h3>
-              <p class="campea-text">Campeã 2025 do Grupo de Acesso; sobe ao Grupo Especial na temporada 2026.</p>
-              <a class="btn btn-light" href="temporada-2025.html">Ver resultados 2025</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">Destaques 2025</h1>
-        <h3 class="section-subtitle" style="text-align: left; font-size: 1.5rem; margin-top: var(--spacing-lg);">Grupo Especial</h3>
-        <div class="grid grid-large" id="destaquesEspecial"></div>
-        <h3 class="section-subtitle" style="text-align: left; font-size: 1.5rem; margin-top: var(--spacing-lg);">Grupo de Acesso</h3>
-        <div class="grid grid-large" id="destaquesAcesso"></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <h2 class="section-title">Depoimentos</h2>
-        <div class="card testimonial-card">
-          <div class="card-body">
-            <div class="testimonial-header">
-              <img src="assets/pessoas/samuel-calado.jpeg" alt="Samuel Calado" class="testimonial-avatar" loading="lazy">
-              <div>
-                <p class="testimonial-name">Samuel Calado</p>
-                <p class="muted" style="margin: 0;">Jornalista e pesquisador da cultura popular</p>
-              </div>
-            </div>
-            <div class="testimonial-text">
-              <p>A Liga de Quadrilhas Juninas do Distrito Federal e Entorno tem um importante trabalho pautado na seriedade e no compromisso com a cultura popular e com as quadrilhas juninas.</p>
-              <p>Tive a honra de “cair de paraquedas” no São João de 2022 para realizar uma cobertura pelo Correio Braziliense e me encantei com tamanha organização e gestão, acompanhando nos anos posteriores. É um espaço onde o diálogo e a política (no ato de fazer) se fundem com a importância do brinquedo popular.</p>
-              <p>O principal destaque da instituição é encarar o São João também como gerador de renda para os brincantes e profissionais que dependem do ciclo junino. É reforçar também que a cultura é um dos principais agentes na redução de danos e na transformação social.</p>
-              <p>Outro destaque é a preocupação com a formalização dos fazedores de cultura. Acompanhei várias formações técnicas com brincantes, diretores, coreógrafos e jurados. E, por mais que seja uma instituição onde existe uma competição, esta competição é pautada no direito equalitário de acesso às oportunidades de aprendizagem e crescimento.</p>
-              <p>Sou um admirador máximo da Liga de Quadrilhas Juninas do DF e entorno e tenho certeza de que o movimento junino de Brasília está em boas mãos e bem representado. Desejo muita luz nos novos projetos.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Acesso Rápido -->
-    <section class="section">
-  <div class="container">
-    <h1 class="section-title">Acesso Rápido</h1>
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--spacing-md);">
-
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title">Portal da Liga</h3>
-          <p class="card-text">
-            Área exclusiva para quadrilhas e diretoria.
-          </p>
-          <a href="portal.html" class="btn">Acessar Portal</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title">Mapa</h3>
-          <p class="card-text">Localize todas as quadrilhas no mapa.</p>
-          <a href="mapa.html" class="btn">Ver Mapa</a>
-        </div>
-      </div>
-
-        <div class="card">
-        <div class="card-body">
-          <h3 class="card-title">Acervo</h3>
-          <p class="card-text">Fotos e vídeos de todas as temporadas.</p>
-          <a href="acervo.html" class="btn">Abrir acervo</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-    <!-- Parceiros -->
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">Parceiros</h1>
-        <div class="grid" id="parceirosGrid"></div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-  <div class="container">
-    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
-  </div>
-</footer>
-
-    <script type="module" src="js/index.min.js"></script>
-  <script type="module" src="js/home-noticias.min.js"></script>
-  <script type="module" src="js/shared.min.js"></script>
-</body>
-</html>
-
-
-
-
-
-
-
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Language" content="pt-BR">
+  <title>Portal Oficial da LINQ-DFE | LINQ-DFE</title>
+  <meta name="description" content="Portal oficial da LINQ-DFE com circuito de quadrilhas, notícias, calendário, ranking e resultados do São João no DF e Entorno.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://linqdfe.com.br/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Portal Oficial da LINQ-DFE | LINQ-DFE">
+  <meta property="og:description" content="Portal oficial da LINQ-DFE com circuito de quadrilhas, notícias, calendário, ranking e resultados do São João no DF e Entorno.">
+  <meta property="og:url" content="https://linqdfe.com.br/">
+  <meta property="og:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
+  <meta property="og:site_name" content="LINQ-DFE">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Portal Oficial da LINQ-DFE | LINQ-DFE">
+  <meta name="twitter:description" content="Portal oficial da LINQ-DFE com circuito de quadrilhas, notícias, calendário, ranking e resultados do São João no DF e Entorno.">
+  <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "LINQ-DFE",
+      "url": "https://linqdfe.com.br",
+      "logo": "https://linqdfe.com.br/assets/logos/linq-dfe.png",
+      "sameAs": ["https://instagram.com/linqdfe"]
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+  <!-- Navegação -->
+  <nav>
+  <div class="container">
+    <div class="logo">
+      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+      <span class="logo-text">LINQ-DFE</span>
+    </div>
+    <ul>
+      <li><a href="index.html">Inicial</a></li>
+      <li><a href="circuito.html">Circuito</a></li>
+      <li><a href="quadrilhas.html">Quadrilhas</a></li>
+      <li><a href="mapa.html">Mapa</a></li>
+      <li><a href="noticias.html">Not&iacute;cias</a></li>
+      <li><a href="acervo.html">Acervo</a></li>
+      <li><a href="diretoria.html">Diretoria</a></li>
+      <li><a href="documentos.html">Documentos</a></li>
+      <li><a href="portal.html">Portal da Liga</a></li>
+    </ul>
+  </div>
+</nav>
+
+  <main id="conteudo-principal">
+    <div class="container home-title">
+     
+    </div>
+    <!-- Hero Video -->
+    <section class="hero-video">
+      <video id="heroVideo" muted loop playsinline preload="none" poster="assets/banners/placeholder.jpg">
+        <source data-src="assets/hero/hero.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo.
+      </video>
+    </section>
+
+    <!-- Controles de áudio -->
+    <section class="audio-controls">
+      <button id="btnAtivarSom" onclick="ativarSom()" aria-pressed="false">Ativar som do vídeo</button>
+      <button id="btnSilenciar" onclick="silenciarSom()" aria-pressed="false" disabled style="display: none;">Silenciar som</button>
+          </section>
+
+    
+
+<!-- Bloco Circuito -->
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-2">
+          <article class="card highlight-card special-card">
+            <div class="card-body">
+              <p class="hero-pill special">Grupo Especial</p>
+              <h3 class="card-title" style="font-size: 1.5rem;">Grupo Especial</h3>
+              <p class="card-text">
+                A elite do circuito. Ranking, destaques e resultados da principal divisão.
+              </p>
+              <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
+                <a class="btn" href="grupo-especial.html">Ver Grupo Especial</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card highlight-card acesso-card">
+            <div class="card-body">
+              <p class="hero-pill acesso">Grupo de Acesso</p>
+              <h3 class="card-title" style="font-size: 1.5rem;">Grupo de Acesso</h3>
+              <p class="card-text">
+                Porta de entrada do circuito e caminho para subir ao Especial.
+              </p>
+              <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
+                <a class="btn" href="grupo-acesso.html">Ver Grupo de Acesso</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Notícias ===================== -->
+    <section id="home-news" class="home-section">
+      <div class="home-section-header">
+        <h1 class="home-section-title">Notícias</h1>
+        <a href="noticias.html" class="btn btn-ghost">
+          Ver todas
+        </a>
+      </div>
+
+      <div id="home-news-list" class="home-cards home-news-grid">
+        <!-- Os cards de Notícias são inseridos via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Destaques 2025 -->
+
+<!-- Campeãs 2025 -->
+    <section class="section campeas-section">
+      <div class="container">
+        <div class="campeas-header">
+          <h1 class="section-title">Campeãs do Circuito</h1>
+          </div>
+
+        <div class="campeas-grid">
+          <article class="campea-card">
+            <div class="campea-media">
+              <img src="assets/fotos-quadrilhas/atual-campea-especial.jpg" alt="Arroxa o Nó - campeã do Grupo Especial em 2025">
+            </div>
+            <div class="campea-content">
+              <p class="chip chip-light">Grupo Especial</p>
+              <h3>Arroxa o Nó</h3>
+              <p class="campea-text">Campeã do Grupo Especial em 2025, representa o DF no Concurso Nacional da CONFEBRAQ.</p>
+              <a class="btn btn-light" href="temporada-2025.html">Ver resultados 2025</a>
+            </div>
+          </article>
+
+          <article class="campea-card">
+            <div class="campea-media">
+              <img src="assets/fotos-quadrilhas/atual-campea-acesso.jpg" alt="Matulão - campeã do Grupo de Acesso em 2025" style="object-position: 50% 38%;">
+            </div>
+            <div class="campea-content">
+              <p class="chip chip-light">Grupo de Acesso</p>
+              <h3>Matulão</h3>
+              <p class="campea-text">Campeã 2025 do Grupo de Acesso; sobe ao Grupo Especial na temporada 2026.</p>
+              <a class="btn btn-light" href="temporada-2025.html">Ver resultados 2025</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Destaques 2025</h1>
+        <h3 class="section-subtitle" style="text-align: left; font-size: 1.5rem; margin-top: var(--spacing-lg);">Grupo Especial</h3>
+        <div class="grid grid-large" id="destaquesEspecial"></div>
+        <h3 class="section-subtitle" style="text-align: left; font-size: 1.5rem; margin-top: var(--spacing-lg);">Grupo de Acesso</h3>
+        <div class="grid grid-large" id="destaquesAcesso"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Depoimentos</h2>
+        <div class="card testimonial-card">
+          <div class="card-body">
+            <div class="testimonial-header">
+              <img src="assets/pessoas/samuel-calado.jpeg" alt="Samuel Calado" class="testimonial-avatar" loading="lazy">
+              <div>
+                <p class="testimonial-name">Samuel Calado</p>
+                <p class="muted" style="margin: 0;">Jornalista e pesquisador da cultura popular</p>
+              </div>
+            </div>
+            <div class="testimonial-text">
+              <p>A Liga de Quadrilhas Juninas do Distrito Federal e Entorno tem um importante trabalho pautado na seriedade e no compromisso com a cultura popular e com as quadrilhas juninas.</p>
+              <p>Tive a honra de “cair de paraquedas” no São João de 2022 para realizar uma cobertura pelo Correio Braziliense e me encantei com tamanha organização e gestão, acompanhando nos anos posteriores. É um espaço onde o diálogo e a política (no ato de fazer) se fundem com a importância do brinquedo popular.</p>
+              <p>O principal destaque da instituição é encarar o São João também como gerador de renda para os brincantes e profissionais que dependem do ciclo junino. É reforçar também que a cultura é um dos principais agentes na redução de danos e na transformação social.</p>
+              <p>Outro destaque é a preocupação com a formalização dos fazedores de cultura. Acompanhei várias formações técnicas com brincantes, diretores, coreógrafos e jurados. E, por mais que seja uma instituição onde existe uma competição, esta competição é pautada no direito equalitário de acesso às oportunidades de aprendizagem e crescimento.</p>
+              <p>Sou um admirador máximo da Liga de Quadrilhas Juninas do DF e entorno e tenho certeza de que o movimento junino de Brasília está em boas mãos e bem representado. Desejo muita luz nos novos projetos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Acesso Rápido -->
+    <section class="section">
+  <div class="container">
+    <h1 class="section-title">Acesso Rápido</h1>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--spacing-md);">
+
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Portal da Liga</h3>
+          <p class="card-text">
+            Área exclusiva para quadrilhas e diretoria.
+          </p>
+          <a href="portal.html" class="btn">Acessar Portal</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Mapa</h3>
+          <p class="card-text">Localize todas as quadrilhas no mapa.</p>
+          <a href="mapa.html" class="btn">Ver Mapa</a>
+        </div>
+      </div>
+
+        <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Acervo</h3>
+          <p class="card-text">Fotos e vídeos de todas as temporadas.</p>
+          <a href="acervo.html" class="btn">Abrir acervo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Parceiros -->
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Parceiros</h1>
+        <div class="grid" id="parceirosGrid"></div>
+      </div>
+    </section>
+  </main>
+<script type="module" src="js/index.min.js"></script>
+  <script type="module" src="js/home-noticias.min.js"></script>
+  <script type="module" src="js/shared.min.js"></script>
+<footer class="site-footer" aria-label="Rodap&eacute;">
+  <div class="container footer-grid">
+    <div class="footer-col footer-brand">
+      <div class="logo">
+        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE">
+        <span class="logo-text">LINQ-DFE</span>
+      </div>
+      <p>Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/linqdfe" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3 class="footer-title">Institucional</h3>
+      <ul class="footer-links">
+        <li><a href="index.html">Inicial</a></li>
+        <li><a href="diretoria.html">Diretoria</a></li>
+        <li><a href="documentos.html">Documentos</a></li>
+        <li><a href="portal.html">Portal da Liga</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3 class="footer-title">Circuito</h3>
+      <ul class="footer-links">
+        <li><a href="circuito.html">Circuito de Quadrilhas</a></li>
+        <li><a href="grupo-especial.html">Grupo Especial</a></li>
+        <li><a href="grupo-acesso.html">Grupo de Acesso</a></li>
+        <li><a href="temporada-2025.html">Ranking e resultados 2025</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3 class="footer-title">Conte&uacute;do</h3>
+      <ul class="footer-links">
+        <li><a href="quadrilhas.html">Quadrilhas</a></li>
+        <li><a href="noticias.html">Not&iacute;cias</a></li>
+        <li><a href="acervo.html">Acervo</a></li>
+        <li><a href="sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+  </div>
+</footer>
+</body>
+</html>
+
+
+
+
+
+
+
+

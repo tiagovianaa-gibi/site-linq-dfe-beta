@@ -1,142 +1,434 @@
 <!DOCTYPE html>
+
+
 <html lang="pt-BR">
+
+
 <head>
+
+
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/logos/linq-dfe.png">
+
+
   <link rel="icon" type="image/png" sizes="16x16" href="../assets/logos/linq-dfe.png">
+
+
   <link rel="apple-touch-icon" href="../assets/logos/linq-dfe.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Language" content="pt-BR">
+
+
+  <meta charset="UTF-8" />
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+  <meta http-equiv="Content-Language" content="pt-BR" />
+
+
   <title>Arraiá Chapéu de Palha | LINQ-DFE</title>
-  <meta name="description" content="Perfil completo de cada quadrilha junina da LINQ-DFE no DF e Entorno, com hist�ria, elenco, temporada e resultados.">
-  <meta name="robots" content="index,follow">
+
+
+  <meta name="description" content="A Quadrilha Arraiá Chapéu de Palha é de Samambaia/DF e completa 36 anos de história em 2026.">
+
+
+  <meta name="robots" content="noindex,follow" />
+
+
   <link rel="canonical" href="https://linqdfe.com.br/quadrilha/arraia-chapeu-de-palha">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Arrai� Chap�u de Palha | LINQ-DFE">
-  <meta property="og:description" content="Perfil completo de cada quadrilha junina da LINQ-DFE no DF e Entorno, com hist�ria, elenco, temporada e resultados.">
+
+
+  <meta property="og:type" content="website" />
+
+
+  <meta property="og:title" content="Arraiá Chapéu de Palha | LINQ-DFE">
+
+
+  <meta property="og:description" content="A Quadrilha Arraiá Chapéu de Palha é de Samambaia/DF e completa 36 anos de história em 2026.">
+
+
   <meta property="og:url" content="https://linqdfe.com.br/quadrilha/arraia-chapeu-de-palha">
-  <meta property="og:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
-  <meta property="og:site_name" content="LINQ-DFE">
-  <meta property="og:locale" content="pt_BR">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Arrai� Chap�u de Palha | LINQ-DFE">
-  <meta name="twitter:description" content="Perfil completo de cada quadrilha junina da LINQ-DFE no DF e Entorno, com hist�ria, elenco, temporada e resultados.">
-  <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
+
+
+  <meta property="og:image" content="https://linqdfe.com.br/assets/fotos-quadrilhas/arraia-chapeu-de-palha-capa.png">
+
+
+  <meta property="og:site_name" content="LINQ-DFE" />
+
+
+  <meta property="og:locale" content="pt_BR" />
+
+
+  <meta name="twitter:card" content="summary_large_image" />
+
+
+  <meta name="twitter:title" content="Arraiá Chapéu de Palha | LINQ-DFE">
+
+
+  <meta name="twitter:description" content="A Quadrilha Arraiá Chapéu de Palha é de Samambaia/DF e completa 36 anos de história em 2026.">
+
+
+  <meta name="twitter:image" content="https://linqdfe.com.br/assets/fotos-quadrilhas/arraia-chapeu-de-palha-capa.png">
+
+
   <script type="application/ld+json">
+
+
     {
+
+
       "@context": "https://schema.org",
+
+
       "@type": "Organization",
+
+
       "name": "LINQ-DFE",
+
+
       "url": "https://linqdfe.com.br",
+
+
       "logo": "https://linqdfe.com.br/assets/logos/linq-dfe.png",
+
+
       "sameAs": ["https://instagram.com/linqdfe"]
+
+
     }
+
+
   </script>
-  <link rel="preload" href="../data/quadrilhas.json" as="fetch" crossorigin>
-  <link rel="preload" href="../data/historico_circuito.json" as="fetch" crossorigin>
-  <link rel="stylesheet" href="../css/style.min.css">
+
+
+  <link rel="preload" href="../data/quadrilhas.json" as="fetch" crossorigin />
+
+
+  <link rel="preload" href="../data/historico_circuito.json" as="fetch" crossorigin />
+
+
+  <link rel="stylesheet" href="../css/style.min.css" />
+
+
 </head>
+
+
 <body>
+
+
   <nav>
+
+
   <div class="container">
+
+
     <div class="logo">
+
+
       <img src="../assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+
+
       <span class="logo-text">LINQ-DFE</span>
+
+
     </div>
+
+
     <ul>
+
+
       <li><a href="../index.html">Inicial</a></li>
+
+
       <li><a href="../circuito.html">Circuito</a></li>
+
+
       <li><a href="../quadrilhas.html">Quadrilhas</a></li>
+
+
       <li><a href="../mapa.html">Mapa</a></li>
+
+
       <li><a href="../noticias.html">Not&iacute;cias</a></li>
+
+
       <li><a href="../acervo.html">Acervo</a></li>
+
+
       <li><a href="../diretoria.html">Diretoria</a></li>
+
+
       <li><a href="../documentos.html">Documentos</a></li>
+
+
       <li><a href="../portal.html">Portal da Liga</a></li>
+
+
     </ul>
+
+
   </div>
+
+
 </nav>
+
+
   <main>
+
+
     <section class="section">
+
+
       <div class="container">
+
+
         <!-- Capa -->
+
+
         <img
+
+
           id="quadrilhaCover"
+
+
           class="quadrilha-cover"
+
+
           src="../assets/fotos-quadrilhas/arraia-chapeu-de-palha-capa.png"
+
+
           alt="Capa da quadrilha Arraiá Chapéu de Palha"
+
+
           decoding="async"
+
+
           onerror="this.src='assets/banners/placeholder.jpg'"
+
+
         />
+
+
         <!-- Header -->
+
+
         <div class="quadrilha-header">
+
+
           <h1 id="quadrilhaNome">Arraiá Chapéu de Palha</h1>
+
+
           <p id="quadrilhaResumo" class="mb-sm">A Quadrilha Arraiá Chapéu de Palha é de Samambaia/DF e completa 36 anos de história em 2026.</p>
+
+
           <div class="meta">
+
+
             <div class="meta-item">
+
+
               <strong>Cidade:</strong> <span id="quadrilhaCidade">Samambaia/DF</span>
+
+
             </div>
+
+
             <div class="meta-item">
+
+
               <strong>Grupo:</strong> <span id="quadrilhaGrupo">Acesso</span>
+
+
             </div>
+
+
             <div class="meta-item">
+
+
               <strong>Instagram:</strong>
+
+
               <a id="quadrilhaInstagram" class="instagram" href="https://instagram.com/arraiachapeudepalhadf" target="_blank" rel="noopener noreferrer">@arraiachapeudepalhadf</a>
+
+
             </div>
+
+
             <div class="meta-item">
+
+
             </div>
+
+
           </div>
+
+
         </div>
+
+
         <!-- TEMPORADA 2025 -->
+
+
         <h2>SOBRE A QUADRILHA</h2>
+
+
         <div class="quadrilha-about">
-          <div class="quadrilha-about-main" id="quadrilhaSobre"><p>A Quadrilha Arraiá Chapéu de Palha é de Samambaia/DF e completa 36 anos de história em 2026. O Grêmio Recreativo Arraiá Chapéu de Palha surgiu da união de três amigos que, como muitos outros habitantes de Brasília, vieram do Nordeste e tinham em comum o amor pelas festividades e pela quadrilha junina. Em 1990 surgiu o primeiro grupo, Arraiá Cabaças Quebradas, e as primeiras apresentações eram realizadas em igrejas e quermesses organizadas pela comunidade, que sempre esteve presente e foi de fundamental importância na estruturação do grupo. Em 1991 virou Arraiá Esperança, quando o marcador Júnior assumiu o posto de onde nunca mais sairia. Em 1992 adotou o nome de Arraiá Chapéu de Palha e atuou em concursos e apresentações até 2001, quando, com outros líderes de grupos do DF, fundou e filiou-se à LINQ-DFE.</p><p><strong>Tema 2025:</strong> &quot;Boi Garantido e Caprichoso - Cultura Amazonense&quot;.</p></p><p><strong>Tema 2025:</strong> &quot;Boi Garantido e Caprichoso - Cultura Amazonense&quot;.</p></div>
+
+
+          <div class="quadrilha-about-main" id="quadrilhaSobre"><p>A Quadrilha Arraiá Chapéu de Palha é de Samambaia/DF e completa 36 anos de história em 2026. O Grêmio Recreativo Arraiá Chapéu de Palha surgiu da união de três amigos que, como muitos outros habitantes de Brasília, vieram do Nordeste e tinham em comum o amor pelas festividades e pela quadrilha junina. Em 1990 surgiu o primeiro grupo, Arraiá Cabaças Quebradas, e as primeiras apresentações eram realizadas em igrejas e quermesses organizadas pela comunidade, que sempre esteve presente e foi de fundamental importância na estruturação do grupo. Em 1991 virou Arraiá Esperança, quando o marcador Júnior assumiu o posto de onde nunca mais sairia. Em 1992 adotou o nome de Arraiá Chapéu de Palha e atuou em concursos e apresentações até 2001, quando, com outros líderes de grupos do DF, fundou e filiou-se à LINQ-DFE.</p><p><strong>Tema 2025:</strong> "Boi Garantido e Caprichoso - Cultura Amazonense".</p></div>
+
+
           <aside class="quadrilha-about-info">
-            <h3>Informa��es da quadrilha</h3>
-            <ul id="quadrilhaInfoList"><li><strong>Cidade / UF:</strong> Samambaia/DF</li>
-<li><strong>Idade do grupo:</strong> 36 anos</li>
-<li><strong>Elenco aproximado:</strong> 36 dançarinos (18 pares)</li>
-<li><strong>Marcador:</strong> Júnior</li>
-<li><strong>Casal de noivos 2025:</strong> Luciana Nascimento e Luan Barros</li>
-<li><strong>Temporada 2025:</strong> &quot;Boi Garantido e Caprichoso - Cultura Amazonense&quot;</li></strong> Samambaia/DF</li>
-<li><strong>Idade do grupo:</strong> 36 anos</li>
-<li><strong>Elenco aproximado:</strong> 36 dan&#195;&#167;arinos (18 pares)</li>
-<li><strong>Marcador:</strong> J&#195;&#186;nior</li>
-<li><strong>Casal de noivos 2025:</strong> Luciana Nascimento e Luan Barros</li>
-<li><strong>Temporada 2025:</strong> &quot;Boi Garantido e Caprichoso - Cultura Amazonense&quot;</li></ul>
+
+
+            <h3>Informações da quadrilha</h3>
+
+
+            <ul id="quadrilhaInfoList"><li><strong>Cidade / UF:</strong> Samambaia/DF</li><li><strong>Idade do grupo:</strong> 36 anos</li><li><strong>Elenco aproximado:</strong> 36 dançarinos (18 pares)</li><li><strong>Marcador:</strong> Júnior</li><li><strong>Casal de noivos 2025:</strong> Luciana Nascimento e Luan Barros</li><li><strong>Temporada 2025:</strong> &quot;Boi Garantido e Caprichoso - Cultura Amazonense&quot;</li></ul>
+
+
           </aside>
+
+
         </div>
-        <!-- HIST�RICO -->
+
+
+        <!-- HIST"RICO -->
+
+
         <section class="section" style="padding-top: 0;">
-          <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">Hist�rico no Circuito</h2>
-          <div id="historicoWrapper" class="table-wrapper"><p class="muted" style="padding:16px;">Essa quadrilha ainda n�o tem hist�rico cadastrado no circuito.</p></p></div>
+
+
+          <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">Histórico no Circuito</h2>
+
+
+          <div id="historicoWrapper" class="table-wrapper"><p class="muted" style="padding:16px;">Essa quadrilha ainda não tem histórico cadastrado no circuito.</p></div>
+
+
         </section>
+
+
       </div>
+
+
     </section>
+
+
   </main>
-  <section class="section leia-tambem-section">
-    <div class="container">
-      <h2 class="section-title" style="text-align:left; margin-bottom: 1rem;">Leia tamb&eacute;m</h2>
-      <ul class="link-list">
-        <li><a href="../circuito.html">Circuito de Quadrilhas Juninas</a></li>
-        <li><a href="../temporada-2025.html">Ranking e resultados 2025</a></li>
-        <li><a href="../quadrilhas.html">Quadrilhas</a></li>
-        <li><a href="../noticias.html">Mais not&iacute;cias</a></li>
-        <li><a href="../documentos.html">Documentos oficiais</a></li>
-      </ul>
-    </div>
-  </section>
-  <footer>
-  <div class="container">
-    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
-  </div>
-</footer>
+
+
+
+
   <!-- IMPORTANTE: manter como module -->
+
+
   <script>window.__QUADRILHA_SLUG__ = "arraia-chapeu-de-palha";</script>
-  <script type="module" src="../../js/quadrilha.js"></script>
-  <script type="module" src="../../js/shared.min.js"></script>
+
+  <script type="module" src="../js/quadrilha.js"></script>
+
+
+  <script type="module" src="../js/shared.min.js"></script>
+
+
+<footer class="site-footer" aria-label="Rodap&eacute;">
+
+  <div class="container footer-grid">
+
+    <div class="footer-col footer-brand">
+
+      <div class="logo">
+
+        <img src="../assets/logos/linq-dfe.png" alt="LINQ-DFE">
+
+        <span class="logo-text">LINQ-DFE</span>
+
+      </div>
+
+      <p>Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+
+      <div class="footer-social">
+
+        <a href="https://instagram.com/linqdfe" target="_blank" rel="noopener">Instagram</a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-col">
+
+      <h3 class="footer-title">Institucional</h3>
+
+      <ul class="footer-links">
+
+        <li><a href="../index.html">Inicial</a></li>
+
+        <li><a href="../diretoria.html">Diretoria</a></li>
+
+        <li><a href="../documentos.html">Documentos</a></li>
+
+        <li><a href="../portal.html">Portal da Liga</a></li>
+
+      </ul>
+
+    </div>
+
+    <div class="footer-col">
+
+      <h3 class="footer-title">Circuito</h3>
+
+      <ul class="footer-links">
+
+        <li><a href="../circuito.html">Circuito de Quadrilhas</a></li>
+
+        <li><a href="../grupo-especial.html">Grupo Especial</a></li>
+
+        <li><a href="../grupo-acesso.html">Grupo de Acesso</a></li>
+
+        <li><a href="../temporada-2025.html">Ranking e resultados 2025</a></li>
+
+      </ul>
+
+    </div>
+
+    <div class="footer-col">
+
+      <h3 class="footer-title">Conte&uacute;do</h3>
+
+      <ul class="footer-links">
+
+        <li><a href="../quadrilhas.html">Quadrilhas</a></li>
+
+        <li><a href="../noticias.html">Not&iacute;cias</a></li>
+
+        <li><a href="../acervo.html">Acervo</a></li>
+
+        <li><a href="../sitemap.xml">Sitemap</a></li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+
+    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+
+  </div>
+
+</footer>
+
 </body>
+
+
 </html>
+
+
+
+
+
+
+
+
 
 
 

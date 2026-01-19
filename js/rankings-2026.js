@@ -80,6 +80,10 @@ async function initRankings() {
 
     const html = buildList(items);
     listEls.forEach((listEl) => {
+      if (listEl.children.length) {
+        setupLogoFallbacks(listEl);
+        return;
+      }
       listEl.innerHTML = html;
       setupLogoFallbacks(listEl);
     });
@@ -91,7 +95,10 @@ async function initRankings() {
       .filter((q) => q.grupo === group)
       .slice()
       .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
-
+    if (wall.children.length) {
+      setupLogoFallbacks(wall);
+      return;
+    }
     wall.innerHTML = buildLogoWall(items);
     setupLogoFallbacks(wall);
   });

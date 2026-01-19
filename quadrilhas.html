@@ -1,99 +1,667 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
+
+
 <html lang="pt-BR">
+
+
 <head>
+
+
   <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+
+
   <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+
+
   <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
+
+
   <meta charset="UTF-8">
+
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
   <meta http-equiv="Content-Language" content="pt-BR">
+
+
   <title>Quadrilhas | LINQ-DFE</title>
+
+
   <meta name="description" content="Lista de quadrilhas juninas da LINQ-DFE no DF e Entorno, com informações, contatos e acesso às páginas individuais.">
+
+
   <meta name="robots" content="index,follow">
+
+
   <link rel="canonical" href="https://linqdfe.com.br/quadrilhas">
+
+
   <meta property="og:type" content="website">
+
+
   <meta property="og:title" content="Quadrilhas | LINQ-DFE">
+
+
   <meta property="og:description" content="Lista de quadrilhas juninas da LINQ-DFE no DF e Entorno, com informações, contatos e acesso às páginas individuais.">
+
+
   <meta property="og:url" content="https://linqdfe.com.br/quadrilhas">
+
+
   <meta property="og:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
+
+
   <meta property="og:site_name" content="LINQ-DFE">
+
+
   <meta property="og:locale" content="pt_BR">
+
+
   <meta name="twitter:card" content="summary_large_image">
+
+
   <meta name="twitter:title" content="Quadrilhas | LINQ-DFE">
+
+
   <meta name="twitter:description" content="Lista de quadrilhas juninas da LINQ-DFE no DF e Entorno, com informações, contatos e acesso às páginas individuais.">
+
+
   <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
+
+
   <script type="application/ld+json">
+
+
     {
+
+
       "@context": "https://schema.org",
+
+
       "@type": "Organization",
+
+
       "name": "LINQ-DFE",
+
+
       "url": "https://linqdfe.com.br",
+
+
       "logo": "https://linqdfe.com.br/assets/logos/linq-dfe.png",
+
+
       "sameAs": ["https://instagram.com/linqdfe"]
+
+
     }
+
+
   </script>
+
+
   <link rel="stylesheet" href="css/style.min.css">
+
+
 </head>
+
+
 <body>
+
+
   <nav>
+
+
   <div class="container">
+
+
     <div class="logo">
+
+
       <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+
+
       <span class="logo-text">LINQ-DFE</span>
+
+
     </div>
+
+
     <ul>
+
+
       <li><a href="index.html">Inicial</a></li>
+
+
       <li><a href="circuito.html">Circuito</a></li>
+
+
       <li><a href="quadrilhas.html">Quadrilhas</a></li>
+
+
       <li><a href="mapa.html">Mapa</a></li>
+
+
       <li><a href="noticias.html">Not&iacute;cias</a></li>
+
+
       <li><a href="acervo.html">Acervo</a></li>
+
+
       <li><a href="diretoria.html">Diretoria</a></li>
+
+
       <li><a href="documentos.html">Documentos</a></li>
+
+
       <li><a href="portal.html">Portal da Liga</a></li>
+
+
     </ul>
+
+
   </div>
+
+
 </nav>
+
+
   <main>
+
+
     <section class="section">
+
+
       <div class="container">
+
+
         <h1 class="section-title">Quadrilhas</h1>
+
+
         <p class="section-subtitle">Conheça todas as quadrilhas que fazem parte da LINQ-DFE</p>
+
+
         <!-- FILTROS / BUSCA -->
+
+
         <div class="search-filters">
+
+
           <!-- linha com busca + cidade -->
+
+
           <div class="filters-row">
+
+
             <input
+
+
               type="text"
+
+
               id="searchFiliadas"
+
+
               class="search-box"
+
+
               placeholder="Buscar por nome..."
+
+
             >
+
+
             <select id="cityFilter" class="search-box">
               <option value="">Todas as cidades</option>
-              <!-- opções reais o JS vai preencher -->
+              <option value="Ceilândia/DF">Ceilândia/DF</option>
+              <option value="Luziânia/GO">Luziânia/GO</option>
+              <option value="Novo Gama/GO">Novo Gama/GO</option>
+              <option value="Paranoá/DF">Paranoá/DF</option>
+              <option value="Planaltina/GO">Planaltina/GO</option>
+              <option value="Samambaia/DF">Samambaia/DF</option>
+              <option value="Santa Maria/DF">Santa Maria/DF</option>
+              <option value="São Sebastião/DF">São Sebastião/DF</option>
+              <option value="Taguatinga/DF">Taguatinga/DF</option>
+              <option value="Valparaíso de Goiás/GO">Valparaíso de Goiás/GO</option>
+              <option value="Águas Lindas de Goiás/GO">Águas Lindas de Goiás/GO</option>
             </select>
+
+
           </div>
+
+
           <!-- botões de grupo -->
+
+
           <div class="filters">
+
+
             <button class="filter-btn active" onclick="filterFiliadas('all')">Todas</button>
+
+
             <button class="filter-btn" onclick="filterFiliadas('Especial')">Especial</button>
+
+
             <button class="filter-btn" onclick="filterFiliadas('Acesso')">Acesso</button>
+
+
           </div>
+
+
         </div>
-        <div class="grid grid-large" id="filiadasGrid"></div>
+
+
+        <div class="grid grid-large" id="filiadasGrid">
+
+<a class="card quadrilha-card" href="quadrilha/amor-junino.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/amor-junino-capa.jpg" alt="Amor Junino" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Amor Junino</h3>
+              <div class="card-meta">
+                <span>Águas Lindas de Goiás/GO</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/arraia-chapeu-de-palha.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/arraia-chapeu-de-palha-capa.png" alt="Arraiá Chapéu de Palha" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Arraiá Chapéu de Palha</h3>
+              <div class="card-meta">
+                <span>Samambaia/DF</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/arraia-dos-matutos.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/arraia-dos-matutos-capa.jpg" alt="Arraiá dos Matutos" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Arraiá dos Matutos</h3>
+              <div class="card-meta">
+                <span>Planaltina/GO</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/arroxa-o-no.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/arroxa-o-no-capa.jpg" alt="Arroxa o Nó" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Arroxa o Nó</h3>
+              <div class="card-meta">
+                <span>Paranoá/DF</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/caipirada.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/caipirada-capa.jpg" alt="Caipirada" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Caipirada</h3>
+              <div class="card-meta">
+                <span>Planaltina/GO</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/chinelo-de-couro.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/chinelo-de-couro-capa.jpg" alt="Chinelo de Couro" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Chinelo de Couro</h3>
+              <div class="card-meta">
+                <span>São Sebastião/DF</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/coisas-da-roca.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/coisas-da-roca-capa.jpg" alt="Coisas da Roça" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Coisas da Roça</h3>
+              <div class="card-meta">
+                <span>Paranoá/DF</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/eita-bagaceira.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/eita-bagaceira-capa.jpg" alt="Eita Bagaceira" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Eita Bagaceira</h3>
+              <div class="card-meta">
+                <span>Ceilândia/DF</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/espalha-brasa.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/espalha-brasa-capa.jpg" alt="Espalha Brasa" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Espalha Brasa</h3>
+              <div class="card-meta">
+                <span>Paranoá/DF</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/formiga-da-roca.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/formiga-da-roca-capa.jpg" alt="Formiga da Roça" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Formiga da Roça</h3>
+              <div class="card-meta">
+                <span>São Sebastião/DF</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/fornalha.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/fornalha-capa.jpg" alt="Fornalha" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Fornalha</h3>
+              <div class="card-meta">
+                <span>Águas Lindas de Goiás/GO</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/furacao.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/furacao-capa.jpg" alt="Furacão" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Furacão</h3>
+              <div class="card-meta">
+                <span>Planaltina/GO</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/mala-veia.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/mala-veia-capa.jpg" alt="Mala Véia" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Mala Véia</h3>
+              <div class="card-meta">
+                <span>Ceilândia/DF</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/matingueiros-do-sertao.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/matingueiros-do-sertao-capa.jpg" alt="Matingueiros do Sertão" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Matingueiros do Sertão</h3>
+              <div class="card-meta">
+                <span>Samambaia/DF</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/matulao.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/matulao-capa.jpg" alt="Matulão" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Matulão</h3>
+              <div class="card-meta">
+                <span>Taguatinga/DF</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/os-caboclos-do-sertao.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/os-caboclos-do-sertao-capa.jpg" alt="Os Caboclos do Sertão" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Os Caboclos do Sertão</h3>
+              <div class="card-meta">
+                <span>Planaltina/GO</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/pinga-em-mim.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/pinga-em-mim-capa.jpg" alt="Pinga em Mim" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Pinga em Mim</h3>
+              <div class="card-meta">
+                <span>Paranoá/DF</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/rasga-o-fole.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/rasga-o-fole-capa.jpg" alt="Rasga o Fole" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Rasga o Fole</h3>
+              <div class="card-meta">
+                <span>Valparaíso de Goiás/GO</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/ribulico.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/ribulico-capa.jpg" alt="Ribuliço" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Ribuliço</h3>
+              <div class="card-meta">
+                <span>Ceilândia/DF</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/sol-de-maria.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/sol-de-maria-capa.jpg" alt="Sol de Maria" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Sol de Maria</h3>
+              <div class="card-meta">
+                <span>Novo Gama/GO</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/tengo-lengo.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/tengo-lengo-capa.jpg" alt="Tengo Lengo" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Tengo Lengo</h3>
+              <div class="card-meta">
+                <span>Ceilândia/DF</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/tico-tico-no-fuba.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/tico-tico-no-fuba-capa.jpg" alt="Tico Tico no Fubá" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Tico Tico no Fubá</h3>
+              <div class="card-meta">
+                <span>Águas Lindas de Goiás/GO</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/vai-mas-nao-vai.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/vai-mas-nao-vai-capa.jpg" alt="Vai Mas Não Vai" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Vai Mas Não Vai</h3>
+              <div class="card-meta">
+                <span>Luziânia/GO</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/xamegar.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/xamegar-capa.jpg" alt="Xamegar" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Xamegar</h3>
+              <div class="card-meta">
+                <span>Paranoá/DF</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/xique-xique.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/xique-xique-capa.jpg" alt="Xique Xique" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Xique Xique</h3>
+              <div class="card-meta">
+                <span>Planaltina/GO</span>
+                <span class="badge">Especial</span>
+              </div>
+            </div>
+          </a>
+
+<a class="card quadrilha-card" href="quadrilha/xem-nhem-nhem.html">
+            <img class="card-image" src="assets/fotos-quadrilhas/xem-nhem-nhem-capa.jpg" alt="Xém Nhem Nhém" loading="lazy">
+            <div class="card-overlay">
+              <h3 class="card-title">Xém Nhem Nhém</h3>
+              <div class="card-meta">
+                <span>Santa Maria/DF</span>
+                <span class="badge badge-secondary">Acesso</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+
+
       </div>
+
+
     </section>
+
+
   </main>
-  <footer>
-  <div class="container">
-    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
-  </div>
-</footer>
-  <script type="module" src="js/quadrilhas.min.js"></script>
+
+<script type="module" src="js/quadrilhas.min.js"></script>
+
+
   <script type="module" src="js/shared.min.js"></script>
+
+
+<footer class="site-footer" aria-label="Rodap&eacute;">
+
+  <div class="container footer-grid">
+
+    <div class="footer-col footer-brand">
+
+      <div class="logo">
+
+        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE">
+
+        <span class="logo-text">LINQ-DFE</span>
+
+      </div>
+
+      <p>Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+
+      <div class="footer-social">
+
+        <a href="https://instagram.com/linqdfe" target="_blank" rel="noopener">Instagram</a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-col">
+
+      <h3 class="footer-title">Institucional</h3>
+
+      <ul class="footer-links">
+
+        <li><a href="index.html">Inicial</a></li>
+
+        <li><a href="diretoria.html">Diretoria</a></li>
+
+        <li><a href="documentos.html">Documentos</a></li>
+
+        <li><a href="portal.html">Portal da Liga</a></li>
+
+      </ul>
+
+    </div>
+
+    <div class="footer-col">
+
+      <h3 class="footer-title">Circuito</h3>
+
+      <ul class="footer-links">
+
+        <li><a href="circuito.html">Circuito de Quadrilhas</a></li>
+
+        <li><a href="grupo-especial.html">Grupo Especial</a></li>
+
+        <li><a href="grupo-acesso.html">Grupo de Acesso</a></li>
+
+        <li><a href="temporada-2025.html">Ranking e resultados 2025</a></li>
+
+      </ul>
+
+    </div>
+
+    <div class="footer-col">
+
+      <h3 class="footer-title">Conte&uacute;do</h3>
+
+      <ul class="footer-links">
+
+        <li><a href="quadrilhas.html">Quadrilhas</a></li>
+
+        <li><a href="noticias.html">Not&iacute;cias</a></li>
+
+        <li><a href="acervo.html">Acervo</a></li>
+
+        <li><a href="sitemap.xml">Sitemap</a></li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+
+    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+
+  </div>
+
+</footer>
+
 </body>
+
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

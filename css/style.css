@@ -172,7 +172,7 @@ nav li.has-dropdown {
 }
 
 nav li.has-dropdown > a::after {
-  content: "▾";
+  content: "\25BE";
   margin-left: 6px;
   font-size: 0.8rem;
   color: var(--text-secondary);
@@ -1098,7 +1098,7 @@ table .quadrilha-name {
 }
 
 /* Footer */
-footer {
+footer:not(.site-footer) {
   background: var(--text-primary);
   color: white;
   padding: var(--spacing-lg);
@@ -3377,3 +3377,100 @@ body.page-noticia .noticia-hero {
 
 
 
+
+/* ===== Footer ===== */
+.site-footer {
+  background: var(--text-primary);
+  color: #fff;
+  padding: var(--spacing-xl) 0 var(--spacing-lg);
+  text-align: left;
+  margin-top: var(--spacing-xl);
+}
+
+.site-footer .logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+}
+
+.site-footer .logo img {
+  height: 32px;
+  width: auto;
+}
+
+.site-footer .logo-text {
+  color: #fff;
+  font-weight: 700;
+}
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    align-items: start;
+  }
+
+  .footer-col {
+    text-align: left;
+    min-width: 0;
+  }
+
+  .footer-brand p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    margin-top: var(--spacing-xs);
+    max-width: 320px;
+  }
+
+  .footer-title {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+  .footer-links a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline;
+    color: #fff;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: var(--spacing-sm);
+  }
+
+  .footer-social a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-sm);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.75);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+  }
+
+.footer-bottom p {
+  margin: 0;
+}
