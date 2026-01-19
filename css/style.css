@@ -230,10 +230,10 @@ nav li.has-dropdown.open .dropdown-menu {
 }
 
 /* ===== Mobile nav ===== */
-@media (max-width: 768px) {
-  nav {
-    padding: calc(0.65rem + env(safe-area-inset-top)) 0.5rem 0.65rem;
-  }
+  @media (max-width: 768px) {
+    nav {
+      padding: calc(0.65rem + env(safe-area-inset-top)) 0.5rem 0.65rem;
+    }
   nav .container {
     gap: var(--spacing-xs);
   }
@@ -248,16 +248,19 @@ nav li.has-dropdown.open .dropdown-menu {
   nav ul::-webkit-scrollbar {
     display: none;
   }
-  nav a {
-    font-size: 0.92rem;
-    padding: 0.35rem 0.55rem;
-  }
-  .dropdown-menu {
-    left: 0;
-    right: auto;
-    min-width: 180px;
-    max-height: 260px;
-  }
+    nav a {
+      font-size: 0.92rem;
+      padding: 0.35rem 0.55rem;
+    }
+    .dropdown-menu {
+      position: fixed;
+      top: calc(var(--nav-height) + env(safe-area-inset-top));
+      left: 0;
+      right: 0;
+      min-width: 0;
+      max-height: calc(100vh - var(--nav-height) - env(safe-area-inset-top));
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+    }
   nav li.has-dropdown:hover .dropdown-menu {
     display: none; /* Em mobile o toggle é via clique */
   }
