@@ -234,13 +234,66 @@ function sanitizePlainText(text) {
   return text.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "").replace(/[<>]/g, "");
 }
 
+const MOJIBAKE_REPLACEMENTS = [
+  ["\u00c3\u00a1", "\u00e1"],
+  ["\u00c3\u00a0", "\u00e0"],
+  ["\u00c3\u00a2", "\u00e2"],
+  ["\u00c3\u00a3", "\u00e3"],
+  ["\u00c3\u00a4", "\u00e4"],
+  ["\u00c3\u00a7", "\u00e7"],
+  ["\u00c3\u00a9", "\u00e9"],
+  ["\u00c3\u00a8", "\u00e8"],
+  ["\u00c3\u00aa", "\u00ea"],
+  ["\u00c3\u00ad", "\u00ed"],
+  ["\u00c3\u00af", "\u00ef"],
+  ["\u00c3\u00b3", "\u00f3"],
+  ["\u00c3\u00b4", "\u00f4"],
+  ["\u00c3\u00b5", "\u00f5"],
+  ["\u00c3\u00ba", "\u00fa"],
+  ["\u00c3\u00bc", "\u00fc"],
+  ["\u00c3\u0081", "\u00c1"],
+  ["\u00c3\u0080", "\u00c0"],
+  ["\u00c3\u0082", "\u00c2"],
+  ["\u00c3\u0083", "\u00c3"],
+  ["\u00c3\u0087", "\u00c7"],
+  ["\u00c3\u0089", "\u00c9"],
+  ["\u00c3\u008a", "\u00ca"],
+  ["\u00c3\u008d", "\u00cd"],
+  ["\u00c3\u0093", "\u00d3"],
+  ["\u00c3\u0094", "\u00d4"],
+  ["\u00c3\u0095", "\u00d5"],
+  ["\u00c3\u009a", "\u00da"],
+  ["\u00c3\u009c", "\u00dc"],
+  ["\u00c2\u00a0", " "],
+  ["\u00e2\u0080\u0093", "\u2013"],
+  ["\u00e2\u0080\u0094", "\u2014"],
+  ["\u00e2\u0080\u0098", "\u2018"],
+  ["\u00e2\u0080\u0099", "\u2019"],
+  ["\u00e2\u0080\u009c", "\u201c"],
+  ["\u00e2\u0080\u009d", "\u201d"],
+  ["\u00e2\u0080\u00a6", "\u2026"],
+  ["\u00c2\u00ba", "\u00ba"],
+  ["\u00c2\u00aa", "\u00aa"],
+];
+
+function fixMojibake(text) {
+  if (!text) return "";
+  if (!/[\u00c2\u00c3\u00e2]/.test(text)) return text;
+  let out = text;
+  for (const [bad, good] of MOJIBAKE_REPLACEMENTS) {
+    out = out.split(bad).join(good);
+  }
+  return out;
+}
+
 // Converte texto puro em HTML seguro
 // - Linha em branco => novo parágrafo
 // - Linhas que começam com "## " viram <h2>
 function portalTextToHtml(raw) {
   if (!raw) return "";
 
-  const lines = raw.split("\n");
+  const normalized = fixMojibake(raw);
+  const lines = normalized.split("\n");
   const blocks = [];
   let current = [];
 
@@ -1424,8 +1477,8 @@ async function fetchNoticias() {
 }
 
 function renderNewsItem(n) {
-  const titulo = n.titulo || "(sem título)";
-  const resumo = n.resumo || "";
+  const titulo = fixMojibake(n.titulo || "(sem t\u00edtulo)");
+  const resumo = fixMojibake(n.resumo || "");
   const status = n.status || "rascunho";
   const destaque = !!n.destaqueHome;
   const dataRef = n.dataAtualizacao || n.dataCriacao;
@@ -1478,13 +1531,13 @@ function startEditingNews(newsId) {
   if (!n) return;
 
   if (newsIdInput) newsIdInput.value = n.id;
-  if (newsTituloInput) newsTituloInput.value = n.titulo || "";
-  if (newsResumoInput) newsResumoInput.value = n.resumo || "";
+  if (newsTituloInput) newsTituloInput.value = fixMojibake(n.titulo || "");
+  if (newsResumoInput) newsResumoInput.value = fixMojibake(n.resumo || "");
   if (newsImagemInput) newsImagemInput.value = n.imagemCapaUrl || "";
   if (newsTagsInput) newsTagsInput.value = Array.isArray(n.tags) ? n.tags.join(", ") : "";
   if (newsStatusSelect)
     newsStatusSelect.value = (n.status || "publicada").toString().toLowerCase();
-  if (newsConteudoTextarea) newsConteudoTextarea.value = n.conteudoBruto || n.conteudo || "";
+  if (newsConteudoTextarea) newsConteudoTextarea.value = fixMojibake(n.conteudoBruto || n.conteudo || "");
   if (newsDestaqueHomeCheckbox) newsDestaqueHomeCheckbox.checked = !!n.destaqueHome;
 
   if (newsFormTitle) newsFormTitle.textContent = "Editar notícia";
@@ -1550,12 +1603,12 @@ if (newsForm) {
     }
 
     const id = newsIdInput?.value || "";
-    const titulo = (newsTituloInput?.value || "").trim();
-    const resumo = (newsResumoInput?.value || "").trim();
+    const titulo = fixMojibake((newsTituloInput?.value || "").trim());
+    const resumo = fixMojibake((newsResumoInput?.value || "").trim());
     const imagemCapaUrl = (newsImagemInput?.value || "").trim();
     const tagsRaw = (newsTagsInput?.value || "").trim();
     const status = (newsStatusSelect?.value || "publicada").toLowerCase();
-    const conteudoRaw = (newsConteudoTextarea?.value || "").trim();
+    const conteudoRaw = fixMojibake((newsConteudoTextarea?.value || "").trim());
     const destaqueHome = newsDestaqueHomeCheckbox?.checked || false;
 
     if (!titulo || !conteudoRaw) {
@@ -1569,7 +1622,10 @@ if (newsForm) {
     const conteudoHtml = portalTextToHtml(conteudoRaw);
 
     const tags = tagsRaw
-      ? tagsRaw.split(",").map((t) => t.trim()).filter(Boolean)
+      ? tagsRaw
+          .split(",")
+          .map((t) => fixMojibake(t.trim()))
+          .filter(Boolean)
       : [];
 
     const autorNome = currentUserData?.nome || null;
@@ -1731,7 +1787,7 @@ async function handleNewsImageUpload(file) {
 
   try {
     setNewsUploadStatus("Enviando imagem...");
-    const titulo = (newsTituloInput?.value || "").trim();
+    const titulo = fixMojibake((newsTituloInput?.value || "").trim());
     const slugTexto =
       (titulo && typeof slugify === "function" ? slugify(titulo) : "noticia") ||
       "noticia";

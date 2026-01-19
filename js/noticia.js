@@ -69,6 +69,24 @@ function buildLeadText(resumo = "") {
   return suffix ? `${base} ${suffix}.` : base;
 }
 
+function getNoticiaUrl(noticia) {
+  if (noticia?.slug) {
+    const base = window.location.pathname.includes("/noticia/")
+      ? "../noticia/"
+      : "noticia/";
+    return `${base}${noticia.slug}.html`;
+  }
+  if (noticia?.id) {
+    return `noticia.html?id=${encodeURIComponent(noticia.id)}`;
+  }
+  return "noticias.html";
+}
+
+function getSlugFromPath() {
+  const match = (window.location.pathname || "").match(/\/noticia\/([^/]+)\.html$/);
+  return match ? match[1] : "";
+}
+
 function ensureFirestore() {
   if (firestoreDb) return firestoreDb;
   firebaseApp = firebaseApp || initializeApp(firebaseConfig);
@@ -370,7 +388,7 @@ function renderNoticia() {
       maisNoticiasSection.style.display = "";
       const itensHtml = outrasNoticias
         .map((n) => {
-          const url = `noticia.html?id=${encodeURIComponent(n.id)}`;
+          const url = getNoticiaUrl(n);
           const dataItem = n.data ? formatDate(n.data) : "";
           return `
             <article class="news-card">
@@ -485,9 +503,16 @@ async function fetchNoticiaById(id) {
 async function loadNoticia() {
   const params = new URLSearchParams(window.location.search);
   const idParam = params.get("id");
-  const slugParam = params.get("slug");
+  const slugParam = params.get("slug") || getSlugFromPath();
 
   const contentEl = document.getElementById("noticiaContent");
+  if (
+    contentEl?.dataset?.static === "true" &&
+    !idParam &&
+    !params.get("slug")
+  ) {
+    return;
+  }
   if (contentEl) {
     contentEl.innerHTML = "<p>Carregando Notícia...</p>";
   }

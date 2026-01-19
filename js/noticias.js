@@ -113,6 +113,16 @@ function getImagem(noticia) {
   );
 }
 
+function getNoticiaUrl(noticia) {
+  if (noticia?.slug) {
+    return `noticia/${noticia.slug}.html`;
+  }
+  if (noticia?.id) {
+    return `noticia.html?id=${encodeURIComponent(noticia.id)}`;
+  }
+  return 'noticias.html';
+}
+
 function readCache() {
   try {
     const raw = sessionStorage.getItem(CACHE_KEY);
@@ -247,12 +257,12 @@ function renderNoticias() {
     manchetesGrid.innerHTML = '';
     const manchetes = filtered.slice(0, 3);
     manchetes.forEach((noticia) => {
-      const card = document.createElement('article');
-      card.className = 'card';
-      card.style.overflow = 'hidden';
-      card.style.cursor = 'pointer';
-      card.onclick = () =>
-        (window.location.href = `noticia.html?id=${encodeURIComponent(noticia.id)}`);
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.style.overflow = 'hidden';
+    card.style.cursor = 'pointer';
+    const cardUrl = getNoticiaUrl(noticia);
+    card.onclick = () => (window.location.href = cardUrl);
 
       const img = getImagem(noticia);
       const dataLabel = formatDate(noticia.data);
@@ -287,8 +297,8 @@ function renderNoticias() {
     const card = document.createElement('article');
     card.className = 'card';
     card.style.cursor = 'pointer';
-    card.onclick = () =>
-      (window.location.href = `noticia.html?id=${encodeURIComponent(noticia.id)}`);
+    const cardUrl = getNoticiaUrl(noticia);
+    card.onclick = () => (window.location.href = cardUrl);
 
     const safeTitulo = noticia.titulo || '';
     const safeResumo = noticia.resumo || '';
@@ -311,9 +321,7 @@ function renderNoticias() {
           <div class="news-card-tags"></div>
           <h3 class="card-title" style="margin-bottom: var(--spacing-xs);">${safeTitulo}</h3>
           <p class="card-text" style="margin-bottom: var(--spacing-sm);">${safeResumo}</p>
-          <a href="noticia.html?id=${encodeURIComponent(
-            noticia.id
-          )}" class="btn btn-light" style="margin-top: auto; align-self:flex-start;">Ler mais</a>
+          <a href="${cardUrl}" class="btn btn-light" style="margin-top: auto; align-self:flex-start;">Ler mais</a>
         </div>
       </div>
     `;

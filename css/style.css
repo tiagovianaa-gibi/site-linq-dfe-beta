@@ -2710,6 +2710,13 @@ body.page-noticia .noticia-hero {
   margin-top: var(--spacing-md) !important;
 }
 
+body.page-noticia .noticia-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
 /* Tags das notícias na listagem */
 .news-card-tags {
   display: flex;
@@ -2729,6 +2736,56 @@ body.page-noticia .noticia-hero {
 
 .news-tag-more {
   opacity: 0.7;
+}
+
+/* Noticias: ajustes de layout para manter os cards alinhados */
+#manchetesGrid,
+#noticiasList {
+  margin-top: 0;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#manchetesGrid .card,
+#noticiasList .card {
+  height: 100%;
+}
+
+#noticiasList .card > a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#noticiasList .card .card-body {
+  flex: 1;
+}
+
+#noticiasList .card .card-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+}
+
+/* Noticias: fixa 3 colunas no desktop */
+#noticiasList {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 1024px) {
+  #noticiasList {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  #noticiasList {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 .noticia-lead {
@@ -3160,6 +3217,27 @@ body.page-noticia .noticia-hero {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--spacing-md);
   align-items: stretch;
+}
+
+/* Suporte ao class name com acento usado no HTML */
+.campe\00e3s-section .campe\00e3s-header{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--spacing-md);
+}
+
+.campe\00e3s-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+  align-items: stretch;
+}
+
+.campeas-section .btn-outline,
+.campe\00e3s-section .btn-outline{
+  margin-top: var(--spacing-md);
+  display: inline-flex;
 }
 
 .campea-card{

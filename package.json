@@ -8,7 +8,14 @@
   },
   "scripts": {
     "build:js": "node scripts/build-js.mjs",
+    "build:noticias": "node scripts/build-noticias.js",
     "build:quadrilhas": "node scripts/build-quadrilhas-ldjson.js",
+    "build:sitemap": "node scripts/generate-sitemap.js",
+    "fix:quadrilhas-encoding": "node scripts/fix-quadrilhas-encoding.js",
+    "fix:noticias-encoding": "node scripts/fix-noticias-encoding.js",
+    "seo:canonicals": "node scripts/update-root-canonicals.js",
+    "seo:quadrilhas": "node scripts/update-quadrilha-meta.js",
+    "watch:noticias": "node --watch scripts/build-noticias.js",
     "watch:quadrilhas": "node --watch scripts/build-quadrilhas-ldjson.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

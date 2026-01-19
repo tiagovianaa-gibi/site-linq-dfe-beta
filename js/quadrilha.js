@@ -284,8 +284,7 @@ function updateSeoMeta(quad, coverUrl, resumo) {
   const uf = quad.uf ? `/${quad.uf}` : '';
   const tema = quad.perfil?.tema_2025 ? `Tema 2025: ${quad.perfil.tema_2025}.` : '';
   const description = `${nome} de ${cidade}${uf}. Contrata\u00e7\u00e3o, portf\u00f3lio, equipe, fotos e v\u00eddeos. ${tema}`.trim();
-
-  document.title = `${nome} | LINQ-DFE`;
+  const pageTitle = `${nome} | Quadrilha Junina | LINQ-DFE`;
 
   const setMeta = (selector, attr, value) => {
     if (!value) return;
@@ -299,19 +298,20 @@ function updateSeoMeta(quad, coverUrl, resumo) {
   };
 
   setMeta('meta[name="description"]', 'description', description);
-  setMeta('meta[property="og:title"]', 'og:title', `${nome} | LINQ-DFE`);
+  document.title = pageTitle;
+  setMeta('meta[property="og:title"]', 'og:title', pageTitle);
   setMeta('meta[property="og:description"]', 'og:description', description);
   setMeta('meta[property="og:type"]', 'og:type', 'website');
   setMeta('meta[property="og:image"]', 'og:image', coverUrl);
-  setMeta('meta[property="og:url"]', 'og:url', quad.slug ? `https://linqdfe.com.br/quadrilha/${quad.slug}` : 'https://linqdfe.com.br/quadrilhas.html');
+  setMeta('meta[property="og:url"]', 'og:url', quad.slug ? `https://linqdfe.com.br/quadrilha/${quad.slug}.html` : 'https://linqdfe.com.br/quadrilhas.html');
   setMeta('meta[name="twitter:card"]', 'twitter:card', 'summary_large_image');
-  setMeta('meta[name="twitter:title"]', 'twitter:title', `${nome} | LINQ-DFE`);
+  setMeta('meta[name="twitter:title"]', 'twitter:title', pageTitle);
   setMeta('meta[name="twitter:description"]', 'twitter:description', description);
   setMeta('meta[name="twitter:image"]', 'twitter:image', coverUrl);
 
   const canonical = document.querySelector('link[rel="canonical"]');
   if (canonical && quad.slug) {
-    canonical.setAttribute('href', `https://linqdfe.com.br/quadrilha/${quad.slug}`);
+    canonical.setAttribute('href', `https://linqdfe.com.br/quadrilha/${quad.slug}.html`);
   }
 
   const ldId = 'quadrilha-ld-json';
@@ -332,7 +332,7 @@ function updateSeoMeta(quad, coverUrl, resumo) {
     name: nome,
     areaServed: cidade ? `${cidade}${uf}` : undefined,
     description: resumo || description,
-    url: quad.slug ? `https://linqdfe.com.br/quadrilha/${quad.slug}` : 'https://linqdfe.com.br/quadrilhas.html',
+    url: quad.slug ? `https://linqdfe.com.br/quadrilha/${quad.slug}.html` : 'https://linqdfe.com.br/quadrilhas.html',
     image: coverUrl,
     sameAs: instaUrl ? [instaUrl] : undefined,
   };
@@ -455,6 +455,11 @@ async function init() {
           <p>Quadrilha não encontrada. Volte para <a href="/quadrilhas.html">quadrilhas</a>.</p>
         </div></section>`;
     }
+    return;
+  }
+
+  if (quad.slug && window.location.pathname.endsWith('/quadrilha.html')) {
+    window.location.replace(`/quadrilha/${quad.slug}.html`);
     return;
   }
 
