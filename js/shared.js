@@ -302,6 +302,39 @@ function setupDropdownClick(li, link) {
   link.setAttribute('aria-haspopup', 'true');
   link.setAttribute('aria-expanded', 'false');
 
+  const positionDropdown = () => {
+    const menu = li.querySelector('.dropdown-menu');
+    if (!menu) return;
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if (!isMobile) {
+      menu.style.position = '';
+      menu.style.top = '';
+      menu.style.left = '';
+      menu.style.right = '';
+      menu.style.minWidth = '';
+      menu.style.maxWidth = '';
+      return;
+    }
+
+    const rect = link.getBoundingClientRect();
+    const padding = 8;
+    const minWidth = Math.max(180, Math.ceil(rect.width));
+    let left = Math.round(rect.left);
+    const maxLeft = window.innerWidth - padding;
+
+    if (left + minWidth > maxLeft) {
+      left = Math.max(padding, maxLeft - minWidth);
+    }
+
+    menu.style.position = 'fixed';
+    menu.style.top = `${Math.round(rect.bottom)}px`;
+    menu.style.left = `${left}px`;
+    menu.style.right = 'auto';
+    menu.style.minWidth = `${minWidth}px`;
+    menu.style.maxWidth = `${Math.round(window.innerWidth - left - padding)}px`;
+  };
+
   link.addEventListener('click', (e) => {
     if (!li.classList.contains('open')) {
       e.preventDefault();
@@ -315,6 +348,7 @@ function setupDropdownClick(li, link) {
       });
       li.classList.add('open');
       link.setAttribute('aria-expanded', 'true');
+      positionDropdown();
       return;
     }
     // Segundo toque/clique segue o link normalmente.
@@ -335,6 +369,18 @@ function setupDropdownClick(li, link) {
       link.setAttribute('aria-expanded', 'false');
     }
   });
+
+  window.addEventListener('resize', () => {
+    if (li.classList.contains('open')) positionDropdown();
+  });
+
+  const nav = link.closest('nav');
+  const navList = nav ? nav.querySelector('ul') : null;
+  if (navList) {
+    navList.addEventListener('scroll', () => {
+      if (li.classList.contains('open')) positionDropdown();
+    }, { passive: true });
+  }
 }
 
 // Executa assim que o DOM estiver pronto
