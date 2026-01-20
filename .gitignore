@@ -4,3 +4,11 @@ build/
 .DS_Store
 Thumbs.db
 .env
+
+# Google Cloud / Firebase service account keys
+**/serviceAccount*.json
+**/*service-account*.json
+**/*firebase-adminsdk*.json
+**/*gcloud*.json
+**/*google-credentials*.json
+**/portal-da-liga-firebase-adminsdk-*.json
