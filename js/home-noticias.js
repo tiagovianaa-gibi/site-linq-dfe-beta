@@ -43,7 +43,34 @@ async function fetchNoticiasFirestore() {
         id: doc.id,
         titulo: data.titulo || "",
         resumo: data.resumo || "",
-        imagem: data.imagemCapaUrl || data.imagem || "",
+        imagem: data.imagemHeroUrl || data.imagemCapaUrl || data.imagem || "",
+        imagemHeroFit: data.imagemHeroFit || data.imagemCapaFit || "cover",
+        imagemHeroFocoX: Number.isFinite(data.imagemHeroFocoX)
+          ? data.imagemHeroFocoX
+          : Number.isFinite(data.imagemCapaFocoX)
+          ? data.imagemCapaFocoX
+          : 50,
+        imagemHeroFocoY: Number.isFinite(data.imagemHeroFocoY)
+          ? data.imagemHeroFocoY
+          : Number.isFinite(data.imagemCapaFocoY)
+          ? data.imagemCapaFocoY
+          : 35,
+        imagemCard: data.imagemCardUrl || data.imagemHeroUrl || data.imagemCapaUrl || data.imagem || "",
+        imagemCardFit: data.imagemCardFit || data.imagemHeroFit || data.imagemCapaFit || "cover",
+        imagemCardFocoX: Number.isFinite(data.imagemCardFocoX)
+          ? data.imagemCardFocoX
+          : Number.isFinite(data.imagemHeroFocoX)
+          ? data.imagemHeroFocoX
+          : Number.isFinite(data.imagemCapaFocoX)
+          ? data.imagemCapaFocoX
+          : 50,
+        imagemCardFocoY: Number.isFinite(data.imagemCardFocoY)
+          ? data.imagemCardFocoY
+          : Number.isFinite(data.imagemHeroFocoY)
+          ? data.imagemHeroFocoY
+          : Number.isFinite(data.imagemCapaFocoY)
+          ? data.imagemCapaFocoY
+          : 35,
         data: dataJs ? dataJs.toISOString() : "",
         status: data.status || "",
         slug: data.slug || "",
@@ -61,7 +88,34 @@ function mapJsonToNews(jsonList = []) {
     id: n.id,
     titulo: n.titulo || n.title || "",
     resumo: n.resumo || n.excerpt || "",
-    imagem: n.imagemCapaUrl || n.imagem || n.image || n.foto || "",
+    imagem: n.imagemHeroUrl || n.imagemCapaUrl || n.imagem || n.image || n.foto || "",
+    imagemHeroFit: n.imagemHeroFit || n.imagemCapaFit || "cover",
+    imagemHeroFocoX: Number.isFinite(n.imagemHeroFocoX)
+      ? n.imagemHeroFocoX
+      : Number.isFinite(n.imagemCapaFocoX)
+      ? n.imagemCapaFocoX
+      : 50,
+    imagemHeroFocoY: Number.isFinite(n.imagemHeroFocoY)
+      ? n.imagemHeroFocoY
+      : Number.isFinite(n.imagemCapaFocoY)
+      ? n.imagemCapaFocoY
+      : 35,
+    imagemCard: n.imagemCardUrl || n.imagemHeroUrl || n.imagemCapaUrl || n.imagem || n.image || n.foto || "",
+    imagemCardFit: n.imagemCardFit || n.imagemHeroFit || n.imagemCapaFit || "cover",
+    imagemCardFocoX: Number.isFinite(n.imagemCardFocoX)
+      ? n.imagemCardFocoX
+      : Number.isFinite(n.imagemHeroFocoX)
+      ? n.imagemHeroFocoX
+      : Number.isFinite(n.imagemCapaFocoX)
+      ? n.imagemCapaFocoX
+      : 50,
+    imagemCardFocoY: Number.isFinite(n.imagemCardFocoY)
+      ? n.imagemCardFocoY
+      : Number.isFinite(n.imagemHeroFocoY)
+      ? n.imagemHeroFocoY
+      : Number.isFinite(n.imagemCapaFocoY)
+      ? n.imagemCapaFocoY
+      : 35,
     data: n.data || n.date || "",
     slug: n.slug || "",
   }));
@@ -95,9 +149,10 @@ async function loadHomeNews() {
 
   grid.innerHTML = latest
     .map((n) => {
-      const imgSrc = normalizeImagePath(n.imagem || "");
+      const imgSrc = normalizeImagePath(n.imagemCard || n.imagem || "");
+      const imgStyle = buildImageStyle(n.imagemCardFit, n.imagemCardFocoX, n.imagemCardFocoY);
       const imgHtml = imgSrc
-        ? `<img src="${imgSrc}" alt="${escapeHtml(n.titulo)}" onerror="this.closest('.news-card').classList.add('no-image'); this.remove();">`
+        ? `<img src="${imgSrc}" alt="${escapeHtml(n.titulo)}" style="${imgStyle}" onerror="this.closest('.news-card').classList.add('no-image'); this.remove();">`
         : "";
 
       const dataTxt = n.data ? formatDateBR(n.data) : "";
@@ -144,3 +199,9 @@ function normalizeImagePath(path = "") {
   return normalizeImageUrl(path, "assets/banners/placeholder.jpg");
 }
 
+function buildImageStyle(fit, focoX, focoY) {
+  const finalFit = fit || "cover";
+  const x = Number.isFinite(focoX) ? focoX : 50;
+  const y = Number.isFinite(focoY) ? focoY : 35;
+  return `object-fit:${finalFit};object-position:${x}% ${y}%;`;
+}

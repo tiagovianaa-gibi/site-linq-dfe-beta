@@ -118,6 +118,75 @@ function decodeFirestoreValue(value) {
   return null;
 }
 
+function toIsoDate(value) {
+  if (!value) return "";
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? "" : value.toISOString().slice(0, 10);
+  }
+  if (typeof value === "object" && typeof value.toDate === "function") {
+    const date = value.toDate();
+    return Number.isNaN(date.getTime()) ? "" : date.toISOString().slice(0, 10);
+  }
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? "" : parsed.toISOString().slice(0, 10);
+}
+
+function mapFirestoreItem(data, id) {
+  const dataRef = data.dataPublicacao || data.dataAtualizacao || data.dataCriacao || "";
+  const dataIso = toIsoDate(dataRef);
+  const heroFocoX = Number.isFinite(data.imagemHeroFocoX)
+    ? data.imagemHeroFocoX
+    : Number.isFinite(data.imagemCapaFocoX)
+    ? data.imagemCapaFocoX
+    : 50;
+  const heroFocoY = Number.isFinite(data.imagemHeroFocoY)
+    ? data.imagemHeroFocoY
+    : Number.isFinite(data.imagemCapaFocoY)
+    ? data.imagemCapaFocoY
+    : 35;
+  const cardFocoX = Number.isFinite(data.imagemCardFocoX)
+    ? data.imagemCardFocoX
+    : Number.isFinite(data.imagemHeroFocoX)
+    ? data.imagemHeroFocoX
+    : Number.isFinite(data.imagemCapaFocoX)
+    ? data.imagemCapaFocoX
+    : 50;
+  const cardFocoY = Number.isFinite(data.imagemCardFocoY)
+    ? data.imagemCardFocoY
+    : Number.isFinite(data.imagemHeroFocoY)
+    ? data.imagemHeroFocoY
+    : Number.isFinite(data.imagemCapaFocoY)
+    ? data.imagemCapaFocoY
+    : 35;
+
+  return {
+    id,
+    slug: data.slug || slugify(data.titulo || ""),
+    titulo: data.titulo || "",
+    subtitulo: data.subtitulo || "",
+    resumo: data.resumo || "",
+    lead: data.lead || data.paragrafoInicial || "",
+    conteudo: data.conteudo || data.conteudoBruto || "",
+    imagemHeroUrl: data.imagemHeroUrl || data.imagemCapaUrl || data.imagem || "",
+    imagemHeroFit: data.imagemHeroFit || data.imagemCapaFit || "cover",
+    imagemHeroFocoX: heroFocoX,
+    imagemHeroFocoY: heroFocoY,
+    imagemCardUrl:
+      data.imagemCardUrl ||
+      data.imagemHeroUrl ||
+      data.imagemCapaUrl ||
+      data.imagem ||
+      "",
+    imagemCardFit: data.imagemCardFit || data.imagemHeroFit || data.imagemCapaFit || "cover",
+    imagemCardFocoX: cardFocoX,
+    imagemCardFocoY: cardFocoY,
+    tags: Array.isArray(data.tags) ? data.tags : [],
+    categoria: data.categoria || "",
+    data: dataIso,
+    status: data.status || "",
+  };
+}
+
 async function fetchNoticiasFromFirestore() {
   const config = extractFirebaseConfig();
   if (!config) return null;
@@ -128,6 +197,7 @@ async function fetchNoticiasFromFirestore() {
 
   const response = await fetch(url);
   if (!response.ok) {
+    console.warn(`Falha ao carregar noticias via REST: ${response.status}`);
     return null;
   }
   const payload = await response.json();
@@ -139,21 +209,38 @@ async function fetchNoticiasFromFirestore() {
       data[key] = decodeFirestoreValue(fields[key]);
     });
     const id = doc.name ? doc.name.split("/").pop() : data.id || "";
-    const dataRef = data.dataPublicacao || data.dataAtualizacao || data.dataCriacao || "";
-    const dataIso = dataRef ? new Date(dataRef).toISOString().slice(0, 10) : "";
-    return {
-      id,
-      slug: data.slug || slugify(data.titulo || ""),
-      titulo: data.titulo || "",
-      resumo: data.resumo || "",
-      conteudo: data.conteudo || data.conteudoBruto || "",
-      imagem: data.imagemCapaUrl || data.imagem || "",
-      tags: Array.isArray(data.tags) ? data.tags : [],
-      categoria: data.categoria || "",
-      data: dataIso,
-      status: data.status || "",
-    };
+    return mapFirestoreItem(data, id);
   });
+}
+
+async function fetchNoticiasFromAdmin() {
+  let admin = null;
+  try {
+    admin = require("firebase-admin");
+  } catch (err) {
+    try {
+      admin = require(path.join(ROOT, "functions", "node_modules", "firebase-admin"));
+    } catch (innerErr) {
+      return null;
+    }
+  }
+
+  try {
+    if (!admin.apps.length) {
+      const config = extractFirebaseConfig();
+      const projectId =
+        process.env.FIREBASE_PROJECT_ID ||
+        process.env.GOOGLE_CLOUD_PROJECT ||
+        config?.projectId ||
+        undefined;
+      admin.initializeApp(projectId ? { projectId } : {});
+    }
+    const snap = await admin.firestore().collection("noticias").get();
+    return snap.docs.map((docSnap) => mapFirestoreItem(docSnap.data() || {}, docSnap.id));
+  } catch (err) {
+    console.warn("Falha ao carregar noticias via firebase-admin.", err?.message || err);
+    return null;
+  }
 }
 
 function loadNoticiasLocal() {
@@ -168,6 +255,10 @@ function loadNoticiasLocal() {
 }
 
 async function loadNoticias() {
+  const adminData = await fetchNoticiasFromAdmin();
+  if (adminData && adminData.length) {
+    return adminData;
+  }
   const remote = await fetchNoticiasFromFirestore();
   if (remote && remote.length) {
     return remote;
@@ -187,9 +278,37 @@ function normalizeNoticias(items) {
         id: n.id || slug,
         slug,
         titulo: n.titulo || "",
-        resumo: n.resumo || "",
+        resumo: n.subtitulo || n.resumo || "",
+        lead: n.lead || n.paragrafoInicial || "",
         conteudo: n.conteudo || "",
-        imagem: n.imagem || "assets/banners/placeholder.jpg",
+        imagem: n.imagemHeroUrl || n.imagem || "assets/banners/placeholder.jpg",
+        imagemHeroFit: n.imagemHeroFit || n.imagemCapaFit || "cover",
+        imagemHeroFocoX: Number.isFinite(n.imagemHeroFocoX)
+          ? n.imagemHeroFocoX
+          : Number.isFinite(n.imagemCapaFocoX)
+          ? n.imagemCapaFocoX
+          : 50,
+        imagemHeroFocoY: Number.isFinite(n.imagemHeroFocoY)
+          ? n.imagemHeroFocoY
+          : Number.isFinite(n.imagemCapaFocoY)
+          ? n.imagemCapaFocoY
+          : 35,
+        imagemCard: n.imagemCardUrl || n.imagemHeroUrl || n.imagemCapaUrl || n.imagem || "",
+        imagemCardFit: n.imagemCardFit || n.imagemHeroFit || n.imagemCapaFit || "cover",
+        imagemCardFocoX: Number.isFinite(n.imagemCardFocoX)
+          ? n.imagemCardFocoX
+          : Number.isFinite(n.imagemHeroFocoX)
+          ? n.imagemHeroFocoX
+          : Number.isFinite(n.imagemCapaFocoX)
+          ? n.imagemCapaFocoX
+          : 50,
+        imagemCardFocoY: Number.isFinite(n.imagemCardFocoY)
+          ? n.imagemCardFocoY
+          : Number.isFinite(n.imagemHeroFocoY)
+          ? n.imagemHeroFocoY
+          : Number.isFinite(n.imagemCapaFocoY)
+          ? n.imagemCapaFocoY
+          : 35,
         tags: Array.isArray(n.tags) ? n.tags : [],
         categoria: n.categoria || "",
         data: n.data || "",
@@ -202,16 +321,24 @@ function toListLink(item) {
   return item.slug ? `noticia/${item.slug}.html` : `noticia.html?id=${encodeURIComponent(item.id)}`;
 }
 
+function buildImageStyle(fit, focoX, focoY) {
+  const finalFit = fit || "cover";
+  const x = Number.isFinite(focoX) ? focoX : 50;
+  const y = Number.isFinite(focoY) ? focoY : 35;
+  return `object-fit:${finalFit}; object-position:${x}% ${y}%;`;
+}
+
 function buildManchetes(noticias) {
   return noticias.slice(0, 3).map((n) => {
     const href = toListLink(n);
-    const img = n.imagem || "assets/banners/placeholder.jpg";
+    const img = n.imagemCard || n.imagem || "assets/banners/placeholder.jpg";
+    const imgStyle = buildImageStyle(n.imagemCardFit, n.imagemCardFocoX, n.imagemCardFocoY);
     const dataLabel = n.data || "";
     return `
             <article class="card" style="overflow: hidden;">
               <a href="${href}" style="display:block; color: inherit; text-decoration:none;">
                 <div style="position: relative; height: 220px; overflow: hidden;">
-                  <img src="${img}" alt="${n.titulo}" style="width:100%; height:100%; object-fit: cover;" loading="lazy" onerror="this.src='assets/banners/placeholder.jpg'">
+                  <img src="${img}" alt="${n.titulo}" style="width:100%; height:100%; ${imgStyle}" loading="lazy" onerror="this.src='assets/banners/placeholder.jpg'">
                   <div style="position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 100%);"></div>
                   <div style="position:absolute; left:0; right:0; bottom:0; padding: var(--spacing-md); color: #fff;">
                     <p style="font-size:0.9rem; opacity:0.9; margin:0 0 6px 0;">${dataLabel}</p>
@@ -227,7 +354,8 @@ function buildManchetes(noticias) {
 function buildLista(noticias) {
   return noticias.map((n) => {
     const href = toListLink(n);
-    const img = n.imagem || "assets/banners/placeholder.jpg";
+    const img = n.imagemCard || n.imagem || "assets/banners/placeholder.jpg";
+    const imgStyle = buildImageStyle(n.imagemCardFit, n.imagemCardFocoX, n.imagemCardFocoY);
     const dataLabel = n.data || "";
     const resumo = n.resumo || "";
     const tags = Array.isArray(n.tags) ? n.tags : [];
@@ -241,9 +369,9 @@ function buildLista(noticias) {
     return `
             <article class="card" style="cursor: pointer;">
               <a href="${href}" style="display:block; color: inherit; text-decoration:none;">
-                <div style="display: flex; gap: var(--spacing-md); flex-direction: column;">
+                  <div style="display: flex; gap: var(--spacing-md); flex-direction: column;">
                   <div style="width: 100%; height: 180px; border-radius: var(--border-radius); overflow: hidden;">
-                    <img src="${img}" alt="${n.titulo}" style="width:100%; height:100%; object-fit: cover;" loading="lazy" onerror="this.src='assets/banners/placeholder.jpg'">
+                    <img src="${img}" alt="${n.titulo}" style="width:100%; height:100%; ${imgStyle}" loading="lazy" onerror="this.src='assets/banners/placeholder.jpg'">
                   </div>
                   <div class="card-body" style="flex: 1;">
                     <div class="card-meta" style="margin-bottom: var(--spacing-sm); font-size: 0.9rem;">
@@ -349,6 +477,10 @@ function buildNoticiaPage(item) {
   const description = item.resumo || "";
   const canonical = `https://linqdfe.com.br/noticia/${item.slug}.html`;
   const image = item.imagem || OG_IMAGE;
+  const heroFit = item.imagemHeroFit || "cover";
+  const heroPosX = Number.isFinite(item.imagemHeroFocoX) ? item.imagemHeroFocoX : 50;
+  const heroPosY = Number.isFinite(item.imagemHeroFocoY) ? item.imagemHeroFocoY : 35;
+  const lead = item.lead || "";
   const content = item.conteudo || "";
 
   const ldJson = JSON.stringify(
@@ -409,9 +541,9 @@ function buildNoticiaPage(item) {
 
   const articleHtml = `
       <article class="noticia-page">
-        <header class="noticia-hero" style="--capa: url('${image}');">
+        <header class="noticia-hero" style="--capa: url('${image}'); background-position: ${heroPosX}% ${heroPosY}%; background-size: ${heroFit};">
           <div class="noticia-hero__img">
-            <img src="${image}" alt="${item.titulo}" loading="lazy" onerror="this.src='assets/banners/placeholder.jpg'" />
+            <img src="${image}" alt="${item.titulo}" loading="lazy" style="object-fit:${heroFit}; object-position:${heroPosX}% ${heroPosY}%;" onerror="this.src='assets/banners/placeholder.jpg'" />
           </div>
           <div class="noticia-hero__overlay">
             ${item.data ? `<p class="noticia-meta">${item.data}</p>` : ""}
@@ -421,6 +553,7 @@ function buildNoticiaPage(item) {
         </header>
 
         <div class="noticia-body noticia-conteudo">
+          ${lead ? `<p class="noticia-lead">${lead}</p>` : ""}
           ${content}
         </div>
       </article>

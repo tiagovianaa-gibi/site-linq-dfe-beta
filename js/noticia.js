@@ -71,10 +71,7 @@ function buildLeadText(resumo = "") {
 
 function getNoticiaUrl(noticia) {
   if (noticia?.slug) {
-    const base = window.location.pathname.includes("/noticia/")
-      ? "../noticia/"
-      : "noticia/";
-    return `${base}${noticia.slug}.html`;
+    return `noticia.html?slug=${encodeURIComponent(noticia.slug)}`;
   }
   if (noticia?.id) {
     return `noticia.html?id=${encodeURIComponent(noticia.id)}`;
@@ -299,19 +296,35 @@ function renderNoticia() {
     return;
   }
 
-  const { titulo, data, categoria, conteudo, imagem, resumo, tags } = noticiaAtual;
+  const {
+    titulo,
+    data,
+    categoria,
+    conteudo,
+    imagem,
+    resumo,
+    lead,
+    tags,
+    imagemHeroFit,
+    imagemHeroFocoX,
+    imagemHeroFocoY,
+  } = noticiaAtual;
 
   const dataFormatada = data ? formatDate(data) : "";
   const categoriaLabel = categoria || "";
   const metaText = [dataFormatada, categoriaLabel].filter(Boolean).join(" . ");
 
   const cover = normalizeImageUrl(imagem, "assets/banners/placeholder.jpg");
+  const heroFit = imagemHeroFit || "cover";
+  const heroPosX = Number.isFinite(imagemHeroFocoX) ? imagemHeroFocoX : 50;
+  const heroPosY = Number.isFinite(imagemHeroFocoY) ? imagemHeroFocoY : 35;
   const coverSafe = sanitizeHTML(cover);
   const tituloSafe = sanitizeHTML(titulo);
 
   if (contentEl) {
     const safeResumo = resumo ? sanitizeHTML(resumo) : "";
-    const leadText = sanitizeHTML(buildLeadText(safeResumo));
+    const safeLead = lead ? sanitizeHTML(lead) : "";
+    const leadText = safeLead || safeResumo;
     const htmlTags =
       Array.isArray(tags) && tags.length
         ? `<div class="noticia-tags">
@@ -359,9 +372,11 @@ function renderNoticia() {
 
     contentEl.innerHTML = `
       <article class="noticia-page">
-        <header class="noticia-hero" style="--capa: url('${coverSafe}');">
+        <header class="noticia-hero" style="--capa: url('${coverSafe}'); background-position: ${heroPosX}% ${heroPosY}%; background-size: ${heroFit};">
           <div class="noticia-hero__img">
-            <img src="${coverSafe}" alt="${tituloSafe}" loading="lazy" onerror="this.src='assets/banners/placeholder.jpg'" />
+            <img src="${coverSafe}" alt="${tituloSafe}" loading="lazy"
+                 style="object-fit:${heroFit}; object-position:${heroPosX}% ${heroPosY}%;"
+                 onerror="this.src='assets/banners/placeholder.jpg'" />
           </div>
           <div class="noticia-hero__overlay">
             ${metaText ? `<p class="noticia-meta">${metaText}</p>` : ""}
@@ -372,7 +387,7 @@ function renderNoticia() {
         </header>
 
         <div class="noticia-body noticia-conteudo">
-          <p class="noticia-lead">${leadText}</p>
+          ${leadText ? `<p class="noticia-lead">${leadText}</p>` : ""}
           ${corpoHtml}
           ${leiaTambemHtml}
           ${faqHtml}
@@ -431,8 +446,20 @@ function mapFirestoreNoticia(docSnap) {
     id: docSnap.id,
     titulo: data.titulo || "",
     resumo: data.resumo || "",
+    lead: data.lead || data.paragrafoInicial || "",
     conteudo: data.conteudo || "",
-    imagem: data.imagemCapaUrl || data.imagem || "",
+    imagem: data.imagemHeroUrl || data.imagemCapaUrl || data.imagem || "",
+    imagemHeroFit: data.imagemHeroFit || data.imagemCapaFit || "cover",
+    imagemHeroFocoX: Number.isFinite(data.imagemHeroFocoX)
+      ? data.imagemHeroFocoX
+      : Number.isFinite(data.imagemCapaFocoX)
+      ? data.imagemCapaFocoX
+      : 50,
+    imagemHeroFocoY: Number.isFinite(data.imagemHeroFocoY)
+      ? data.imagemHeroFocoY
+      : Number.isFinite(data.imagemCapaFocoY)
+      ? data.imagemCapaFocoY
+      : 35,
     tags: Array.isArray(data.tags) ? data.tags : [],
     categoria: data.categoria || data.category || "",
     data: dataIso,
@@ -450,8 +477,20 @@ function mapJsonNoticia(item) {
     id: item.id,
     titulo: item.titulo || "",
     resumo: item.resumo || "",
+    lead: item.lead || item.paragrafoInicial || "",
     conteudo: item.conteudo || "",
-    imagem: item.imagem || "",
+    imagem: item.imagemHeroUrl || item.imagemCapaUrl || item.imagem || "",
+    imagemHeroFit: item.imagemHeroFit || item.imagemCapaFit || "cover",
+    imagemHeroFocoX: Number.isFinite(item.imagemHeroFocoX)
+      ? item.imagemHeroFocoX
+      : Number.isFinite(item.imagemCapaFocoX)
+      ? item.imagemCapaFocoX
+      : 50,
+    imagemHeroFocoY: Number.isFinite(item.imagemHeroFocoY)
+      ? item.imagemHeroFocoY
+      : Number.isFinite(item.imagemCapaFocoY)
+      ? item.imagemCapaFocoY
+      : 35,
     tags: Array.isArray(item.tags) ? item.tags : [],
     categoria: item.categoria || "",
     data: dataIso,
@@ -500,6 +539,17 @@ async function fetchNoticiaById(id) {
   }
 }
 
+async function fetchNoticiaBySlug(slug) {
+  if (!slug) return null;
+  try {
+    const items = await fetchNoticias();
+    return items.find((item) => item.slug && item.slug === slug) || null;
+  } catch (err) {
+    console.error("Erro ao buscar Noticia por slug:", err);
+    return null;
+  }
+}
+
 async function loadNoticia() {
   const params = new URLSearchParams(window.location.search);
   const idParam = params.get("id");
@@ -544,12 +594,14 @@ async function loadNoticia() {
       encontrada = noticiasCache.find(
         (item) => String(item.id) === String(idParam)
       );
-      if (!encontrada) {
-        encontrada = await fetchNoticiaById(idParam);
-        if (encontrada) {
-          noticiasCache = [encontrada, ...noticiasCache];
-          writeCache(noticiasCache);
-        }
+      const freshById = await fetchNoticiaById(idParam);
+      if (freshById) {
+        encontrada = freshById;
+        noticiasCache = [
+          freshById,
+          ...noticiasCache.filter((item) => item.id !== freshById.id),
+        ];
+        writeCache(noticiasCache);
       }
     }
 
@@ -557,6 +609,18 @@ async function loadNoticia() {
       encontrada = noticiasCache.find(
         (item) => item.slug && item.slug === slugParam
       );
+    }
+
+    if (slugParam) {
+      const freshBySlug = await fetchNoticiaBySlug(slugParam);
+      if (freshBySlug) {
+        encontrada = freshBySlug;
+        noticiasCache = [
+          freshBySlug,
+          ...noticiasCache.filter((item) => item.id !== freshBySlug.id),
+        ];
+        writeCache(noticiasCache);
+      }
     }
 
     if (!encontrada) {

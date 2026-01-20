@@ -60,7 +60,34 @@ function mapFirestoreNoticia(docSnap) {
     id: docSnap.id,
     titulo: data.titulo || '',
     resumo: data.resumo || '',
-    imagem: data.imagemCapaUrl || data.imagem || '',
+    imagem: data.imagemHeroUrl || data.imagemCapaUrl || data.imagem || '',
+    imagemHeroFit: data.imagemHeroFit || data.imagemCapaFit || 'cover',
+    imagemHeroFocoX: Number.isFinite(data.imagemHeroFocoX)
+      ? data.imagemHeroFocoX
+      : Number.isFinite(data.imagemCapaFocoX)
+      ? data.imagemCapaFocoX
+      : 50,
+    imagemHeroFocoY: Number.isFinite(data.imagemHeroFocoY)
+      ? data.imagemHeroFocoY
+      : Number.isFinite(data.imagemCapaFocoY)
+      ? data.imagemCapaFocoY
+      : 35,
+    imagemCard: data.imagemCardUrl || data.imagemHeroUrl || data.imagemCapaUrl || data.imagem || '',
+    imagemCardFit: data.imagemCardFit || data.imagemHeroFit || data.imagemCapaFit || 'cover',
+    imagemCardFocoX: Number.isFinite(data.imagemCardFocoX)
+      ? data.imagemCardFocoX
+      : Number.isFinite(data.imagemHeroFocoX)
+      ? data.imagemHeroFocoX
+      : Number.isFinite(data.imagemCapaFocoX)
+      ? data.imagemCapaFocoX
+      : 50,
+    imagemCardFocoY: Number.isFinite(data.imagemCardFocoY)
+      ? data.imagemCardFocoY
+      : Number.isFinite(data.imagemHeroFocoY)
+      ? data.imagemHeroFocoY
+      : Number.isFinite(data.imagemCapaFocoY)
+      ? data.imagemCapaFocoY
+      : 35,
     tags: Array.isArray(data.tags) ? data.tags : [],
     data: dataJs ? dataJs.toISOString() : '',
     conteudo: data.conteudo || '',
@@ -108,14 +135,14 @@ async function loadNoticiasData() {
 
 function getImagem(noticia) {
   return (
-    normalizeImageUrl(noticia.imagem, 'assets/banners/placeholder.jpg') ||
+    normalizeImageUrl(noticia.imagemCard || noticia.imagem, 'assets/banners/placeholder.jpg') ||
     'assets/banners/placeholder.jpg'
   );
 }
 
 function getNoticiaUrl(noticia) {
   if (noticia?.slug) {
-    return `noticia/${noticia.slug}.html`;
+    return `noticia.html?slug=${encodeURIComponent(noticia.slug)}`;
   }
   if (noticia?.id) {
     return `noticia.html?id=${encodeURIComponent(noticia.id)}`;
@@ -156,7 +183,34 @@ function mapJsonNoticia(item) {
     id: item.id,
     titulo: item.titulo || item.title || '',
     resumo: item.resumo || item.excerpt || '',
-    imagem: item.imagemCapaUrl || item.imagem || item.image || item.foto || '',
+    imagem: item.imagemHeroUrl || item.imagemCapaUrl || item.imagem || item.image || item.foto || '',
+    imagemHeroFit: item.imagemHeroFit || item.imagemCapaFit || 'cover',
+    imagemHeroFocoX: Number.isFinite(item.imagemHeroFocoX)
+      ? item.imagemHeroFocoX
+      : Number.isFinite(item.imagemCapaFocoX)
+      ? item.imagemCapaFocoX
+      : 50,
+    imagemHeroFocoY: Number.isFinite(item.imagemHeroFocoY)
+      ? item.imagemHeroFocoY
+      : Number.isFinite(item.imagemCapaFocoY)
+      ? item.imagemCapaFocoY
+      : 35,
+    imagemCard: item.imagemCardUrl || item.imagemHeroUrl || item.imagemCapaUrl || item.imagem || item.image || item.foto || '',
+    imagemCardFit: item.imagemCardFit || item.imagemHeroFit || item.imagemCapaFit || 'cover',
+    imagemCardFocoX: Number.isFinite(item.imagemCardFocoX)
+      ? item.imagemCardFocoX
+      : Number.isFinite(item.imagemHeroFocoX)
+      ? item.imagemHeroFocoX
+      : Number.isFinite(item.imagemCapaFocoX)
+      ? item.imagemCapaFocoX
+      : 50,
+    imagemCardFocoY: Number.isFinite(item.imagemCardFocoY)
+      ? item.imagemCardFocoY
+      : Number.isFinite(item.imagemHeroFocoY)
+      ? item.imagemHeroFocoY
+      : Number.isFinite(item.imagemCapaFocoY)
+      ? item.imagemCapaFocoY
+      : 35,
     tags: Array.isArray(item.tags) ? item.tags : [],
     data: item.data || item.date || '',
     conteudo: item.conteudo || '',
@@ -265,12 +319,13 @@ function renderNoticias() {
     card.onclick = () => (window.location.href = cardUrl);
 
       const img = getImagem(noticia);
+      const imgStyle = buildImageStyle(noticia.imagemCardFit, noticia.imagemCardFocoX, noticia.imagemCardFocoY);
       const dataLabel = formatDate(noticia.data);
 
       card.innerHTML = `
         <div style="position: relative; height: 220px; overflow: hidden;">
           <img src="${img}" alt="${noticia.titulo || ''}"
-               style="width:100%; height:100%; object-fit: cover;" loading="lazy"
+               style="width:100%; height:100%; ${imgStyle}" loading="lazy"
                onerror="this.src='assets/banners/placeholder.jpg'">
           <div style="position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 100%);"></div>
           <div style="position:absolute; left:0; right:0; bottom:0; padding: var(--spacing-md); color: #fff;">
@@ -304,13 +359,14 @@ function renderNoticias() {
     const safeResumo = noticia.resumo || '';
     const dataLabel = formatDate(noticia.data);
     const img = getImagem(noticia);
+    const imgStyle = buildImageStyle(noticia.imagemCardFit, noticia.imagemCardFocoX, noticia.imagemCardFocoY);
     const tags = Array.isArray(noticia.tags) ? noticia.tags : [];
 
     card.innerHTML = `
       <div style="display: flex; gap: var(--spacing-md); flex-direction: column;">
         <div style="width: 100%; height: 180px; border-radius: var(--border-radius); overflow: hidden;">
           <img src="${img}" alt="${safeTitulo}"
-               style="width:100%; height:100%; object-fit: cover;"
+               style="width:100%; height:100%; ${imgStyle}"
                loading="lazy"
                onerror="this.src='assets/banners/placeholder.jpg'">
         </div>
@@ -356,6 +412,13 @@ function renderNoticias() {
     loadMoreBtn.style.display = hasMore ? 'inline-flex' : 'none';
     loadMoreBtn.disabled = !hasMore;
   }
+}
+
+function buildImageStyle(fit, focoX, focoY) {
+  const finalFit = fit || 'cover';
+  const x = Number.isFinite(focoX) ? focoX : 50;
+  const y = Number.isFinite(focoY) ? focoY : 35;
+  return `object-fit:${finalFit}; object-position:${x}% ${y}%;`;
 }
 
 async function init() {

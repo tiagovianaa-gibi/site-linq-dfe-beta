@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
@@ -32,7 +32,8 @@
       "sameAs": ["https://instagram.com/linqdfe"]
     }
   </script>
-  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="stylesheet" href="css/news-admin.css">
 </head>
 <body class="portal-body">
   <header class="portal-header">
@@ -66,7 +67,7 @@
       </div>
     </aside>
 
-    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="portal-content">
       <!-- DASHBOARD -->
       <section id="section-dashboard" class="portal-section">
@@ -132,127 +133,328 @@
         </div>
       </section>
 
-      <!-- NOTÍCIAS -->
-      <section id="section-noticias" class="portal-section" style="display:none;">
-        <h1 class="section-title">Notícias</h1>
-        <p id="newsSubtitle">
-          Aqui você gerencia as notícias que aparecem no site da Liga.
-        </p>
-
-        <div class="grid">
-          <!-- Lista de notícias -->
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Notícias cadastradas</h3>
-              <div id="newsList" class="news-list">
-                <p>Carregando notícias...</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Formulário de criação/edição (só para quem pode editar) -->
-          <div class="card" id="newsAdminCard" style="display:none;">
-            <div class="card-body">
-              <h3 class="card-title" id="newsFormTitle">Nova notícia</h3>
-
-              <form id="newsForm" class="portal-form">
-                <input type="hidden" id="newsId" />
-
-                <div class="form-group" style="border: 1px solid var(--border-color); padding: var(--spacing-md); border-radius: var(--border-radius); background: var(--bg-primary);">
-                  <h4 style="margin: 0 0 var(--spacing-sm) 0;">Gerar com IA</h4>
-                  <label for="newsAIKeywords">Palavras-chave</label>
-                  <input
-                    id="newsAIKeywords"
-                    type="text"
-                    placeholder="eleição, circuito 2026, credenciamento..."
-                  />
-
-                  <div style="display: grid; gap: var(--spacing-sm); margin-top: var(--spacing-sm);">
-                    <label for="newsAIType">Tipo</label>
-                    <select id="newsAIType">
-                      <option value="COMUNICADO">COMUNICADO</option>
-                      <option value="NOTICIA">NOTICIA</option>
-                      <option value="GUIA">GUIA</option>
-                      <option value="EVENTO">EVENTO</option>
-                    </select>
-
-                    <label style="display: flex; align-items: center; gap: 0.5rem;">
-                      <input type="checkbox" id="newsAIIncludeLinks" checked />
-                      Incluir links internos
-                    </label>
-
-                    <label for="newsAIBrief">Brief / fatos confirmados (cole aqui)</label>
-                    <textarea id="newsAIBrief" rows="3"></textarea>
-                  </div>
-
-                  <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--spacing-sm);">
-                    <button type="button" class="btn btn-outline" id="newsAIGenerateBtn">Gerar rascunho</button>
-                    <button type="button" class="btn btn-outline" id="newsAIRegenerateBtn">Gerar outra versão</button>
-                    <button type="button" class="btn btn-light" id="newsAIClearBtn">Limpar</button>
-                  </div>
-
-                  <p id="newsAIStatus" class="form-message" style="margin-top: var(--spacing-sm);"></p>
-                </div>
-
-                <div class="form-group">
-                  <label for="newsTitulo">Título</label>
-                  <input id="newsTitulo" type="text" required />
-                </div>
-
-                <div class="form-group">
-                  <label for="newsResumo">Resumo / subtítulo</label>
-                  <textarea id="newsResumo" rows="2"></textarea>
-                </div>
-
-                <div class="form-group">
-                  <label for="newsImagem">URL da imagem de capa</label>
-                  <input id="newsImagem" type="text" placeholder="https://..." />
-                  <div class="form-group" style="margin-top:0.5rem;">
-                    <input id="newsImagemFile" type="file" accept="image/*" style="display:none;">
-                    <button type="button" class="btn btn-light" id="newsUploadBtn">Enviar imagem</button>
-                    <span id="newsUploadStatus" style="margin-left:0.5rem; font-size:0.9rem;"></span>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="newsTags">Tags (separadas por vírgula)</label>
-                  <input id="newsTags" type="text" placeholder="giro cultural, circuito 2025" />
-                </div>
-
-                <div class="form-group">
-                  <label for="newsStatus">Status</label>
-                  <select id="newsStatus">
-                    <option value="publicada">Publicada</option>
-                    <option value="rascunho">Rascunho</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="newsConteudo">Conteúdo (texto normal - linha em branco separa parágrafos e "##" cria subtítulo)</label>
-                  <textarea id="newsConteudo" rows="6" required></textarea>
-                </div>
-
-                <div class="form-group">
-                  <label>
-                    <input type="checkbox" id="newsDestaqueHome" />
-                    Destacar na home do site
-                  </label>
-                </div>
-
-                <button type="submit" class="btn">Salvar notícia</button>
-                <button type="button" id="newsFormCancel" class="btn btn-light" style="margin-left:0.5rem; display:none;">
-                  Cancelar edição
-                </button>
-
-                <p id="newsFormMessage" class="form-message"></p>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <!-- QUADRILHAS -->
+            <!-- NOTÍCIAS -->
+      <section id="section-noticias" class="portal-section news-admin" style="display:none;">
+        <div class="news-admin-header">
+          <div>
+            <h1 class="section-title section-title-left">Notícias</h1>
+            <p class="muted">Gerencie publicações do site da Liga com fluxo editorial completo.</p>
+          </div>
+          <div class="news-admin-actions">
+            <button class="btn" type="button" id="newsAddNewBtn">Adicionar nova</button>
+            <button class="btn btn-light" type="button" id="newsReloadBtn">Recarregar</button>
+          </div>
+        </div>
+
+        <div class="news-banner" id="newsDraftBanner" role="status" aria-live="polite" hidden>
+          <span>Rascunho recuperado. Verifique o conteúdo antes de publicar.</span>
+          <button class="btn btn-light btn-sm" type="button" id="newsDraftDismiss">Descartar</button>
+        </div>
+
+        <div class="news-admin-tabs" role="tablist" aria-label="Alternar entre lista e editor">
+          <button class="news-tab is-active" type="button" role="tab" aria-selected="true" data-target="list">Lista</button>
+          <button class="news-tab" type="button" role="tab" aria-selected="false" data-target="editor">Editor</button>
+        </div>
+
+        <div class="news-admin-layout">
+          <!-- Coluna A: Lista -->
+          <div class="news-admin-col news-admin-list" id="newsListPane">
+            <div class="card news-card">
+              <div class="news-card-toolbar">
+                <div class="news-toolbar-row">
+                  <div class="news-search">
+                    <label class="visually-hidden" for="newsSearchInput">Pesquisar notícias</label>
+                    <span class="news-search-icon" aria-hidden="true">🔎</span>
+                    <input id="newsSearchInput" type="search" placeholder="Pesquisar notícias" autocomplete="off" />
+                  </div>
+                  <div class="news-filters">
+                    <label class="visually-hidden" for="newsStatusFilter">Status</label>
+                    <select id="newsStatusFilter">
+                      <option value="all">Status: Todos</option>
+                      <option value="publicada">Publicada</option>
+                      <option value="rascunho">Rascunho</option>
+                      <option value="arquivada">Arquivada</option>
+                    </select>
+                    <label class="visually-hidden" for="newsFeaturedFilter">Destaque</label>
+                    <select id="newsFeaturedFilter">
+                      <option value="all">Destaque: Todos</option>
+                      <option value="featured">Em destaque</option>
+                    </select>
+                    <label class="visually-hidden" for="newsSortSelect">Ordenação</label>
+                    <select id="newsSortSelect">
+                      <option value="updated_desc">Atualização: mais recente</option>
+                      <option value="updated_asc">Atualização: mais antiga</option>
+                      <option value="title_asc">Título: A–Z</option>
+                      <option value="title_desc">Título: Z–A</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="news-toolbar-row news-toolbar-bulk">
+                  <label class="visually-hidden" for="newsBulkAction">Ações em massa</label>
+                  <select id="newsBulkAction">
+                    <option value="">Ações em massa</option>
+                    <option value="publicar">Publicar</option>
+                    <option value="rascunho">Marcar como rascunho</option>
+                    <option value="arquivar">Arquivar</option>
+                    <option value="excluir">Excluir</option>
+                  </select>
+                  <button class="btn btn-light" type="button" id="newsBulkApplyBtn">Aplicar</button>
+                </div>
+              </div>
+
+              <div class="news-table-wrapper">
+                <table class="news-table" aria-label="Lista de notícias">
+                  <thead>
+                    <tr>
+                      <th scope="col">
+                        <input type="checkbox" id="newsSelectAll" aria-label="Selecionar todas as notícias" />
+                      </th>
+                      <th scope="col">Título</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Tags</th>
+                      <th scope="col">Atualizada em</th>
+                      <th scope="col">Home</th>
+                      <th scope="col">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="newsTableBody"></tbody>
+                </table>
+              </div>
+
+              <div class="news-list-footer">
+                <div class="news-pagination-info">
+                  <span id="newsPaginationInfo">0 itens</span>
+                </div>
+                <div class="news-pagination">
+                  <button class="btn btn-light" type="button" id="newsPrevPageBtn">Anterior</button>
+                  <span class="news-page-label" id="newsPageLabel">1 / 1</span>
+                  <button class="btn btn-light" type="button" id="newsNextPageBtn">Próxima</button>
+                </div>
+              </div>
+
+              <div class="news-empty-state" id="newsEmptyState" hidden>
+                <p>Nenhuma notícia encontrada.</p>
+                <button class="btn" type="button" id="newsEmptyAddBtn">Adicionar nova</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna B: Editor -->
+          <div class="news-admin-col news-admin-editor" id="newsEditorPane">
+            <div class="card news-editor-card">
+              <div class="news-editor-top">
+                <div class="news-editor-status">
+                  <span class="status-pill status-rascunho" id="newsDraftBadge">Rascunho</span>
+                  <span class="news-autosave" id="newsAutosaveStatus">Autosave desativado</span>
+                </div>
+                <div class="news-editor-actions">
+                  <button class="btn btn-light" type="button" id="newsEditorNewBtn">Nova notícia</button>
+                  <button class="btn btn-light" type="button" id="newsSaveDraftBtn">Salvar rascunho</button>
+                  <button class="btn btn-light" type="button" id="newsPreviewBtn">Pré-visualizar</button>
+                  <button class="btn" type="button" id="newsPublishBtn">Publicar</button>
+                </div>
+              </div>
+
+              <div class="news-editor-body">
+                <form id="newsEditorForm" class="news-editor-form" novalidate>
+  <label class="news-input-label" for="newsTitleInput">Título</label>
+  <input id="newsTitleInput" class="news-title-input" type="text" placeholder="Título da notícia" required />
+
+  <label class="news-input-label" for="newsExcerptInput">Subtítulo (banner)</label>
+  <textarea id="newsExcerptInput" rows="3" class="news-form-textarea" placeholder="Resumo que aparece no banner"></textarea>
+
+  <div class="news-seo-block">
+    <label class="news-input-label" for="newsSlugInput">Slug sugerido</label>
+    <input id="newsSlugInput" class="news-form-input" type="text" placeholder="ex: temporada-2026-abre-inscricoes" autocomplete="off" />
+    <label class="news-input-label" for="newsMetaTitle">Título SEO</label>
+    <input id="newsMetaTitle" class="news-form-input" type="text" maxlength="70" />
+    <label class="news-input-label" for="newsMetaDescription">Descrição</label>
+    <textarea id="newsMetaDescription" class="news-form-textarea" rows="3" maxlength="160"></textarea>
+    <div class="news-meta-count"><span id="newsMetaDescriptionCount">0</span>/160</div>
+    <label class="news-input-label" for="newsMetaKeywordsInput">Palavras-chave</label>
+    <input id="newsMetaKeywordsInput" class="news-form-input" type="text" placeholder="Adicionar palavra-chave" autocomplete="off" />
+    <div id="newsMetaKeywordsList" class="news-tags-list"></div>
+    <ul class="news-seo-checklist">
+      <li id="seoTitleCheck">Título ok</li>
+      <li id="seoDescCheck">Descrição ok</li>
+      <li id="seoSlugCheck">Slug ok</li>
+      <li id="seoImageCheck">Imagem ok</li>
+      <li id="seoTagsCheck">Tags ok</li>
+    </ul>
+  </div>
+
+  <div class="news-hidden-fields">
+    <label class="news-input-label" for="newsExcerptInput">Resumo / subtítulo</label>
+    <textarea id="newsExcerptInput" rows="3" class="news-hidden-input"></textarea>
+  </div>
+
+  <div class="news-editor-tabs">
+    <button type="button" class="news-editor-tab is-active" data-tab="edit">Editor</button>
+    <button type="button" class="news-editor-tab" data-tab="preview">Visualização</button>
+  </div>
+
+  <label class="news-input-label" for="newsLeadInput">Primeiro parágrafo</label>
+  <textarea id="newsLeadInput" rows="3" class="news-form-textarea" placeholder="Texto que aparece logo abaixo do banner"></textarea>
+
+  <div class="news-editor-toolbar" role="toolbar" aria-label="Ferramentas de edição">
+    <button type="button" class="btn btn-light btn-sm" data-command="bold"><strong>B</strong></button>
+    <button type="button" class="btn btn-light btn-sm" data-command="italic"><em>I</em></button>
+    <button type="button" class="btn btn-light btn-sm" data-command="link">Link</button>
+    <button type="button" class="btn btn-light btn-sm" data-command="h2">H2</button>
+    <button type="button" class="btn btn-light btn-sm" data-command="h3">H3</button>
+    <button type="button" class="btn btn-light btn-sm" data-command="ul">Lista</button>
+    <button type="button" class="btn btn-light btn-sm" data-command="quote">Citação</button>
+  </div>
+
+  <div class="news-editor-pane is-active" data-pane="edit">
+    <div id="newsContentEditor" class="news-content-editor" contenteditable="true" aria-label="Editor de conteúdo"></div>
+  </div>
+  <div class="news-editor-pane" data-pane="preview">
+    <div id="newsContentPreview" class="news-content-preview"></div>
+  </div>
+</form>
+
+                <aside class="news-editor-sidebar">
+  <div class="news-side-card">
+    <h3>Imagem da notícia</h3>
+    <label for="newsCoverUrlInput">URL da imagem</label>
+    <input id="newsCoverUrlInput" type="url" placeholder="assets/noticias/arquivo.jpg" />
+    <div class="news-cover-actions">
+      <input id="newsCoverFileInput" type="file" accept="image/*" hidden />
+      <button class="btn btn-light btn-sm" type="button" id="newsCoverLoadBtn">Carregar imagem</button>
+      <button class="btn btn-light btn-sm" type="button" id="newsCoverRemoveBtn">Remover</button>
+    </div>
+    <div class="news-cover-controls">
+      <label for="newsCoverFit">Ajuste da imagem</label>
+      <select id="newsCoverFit">
+        <option value="cover">Preencher (cover)</option>
+        <option value="contain">Encaixar (contain)</option>
+      </select>
+      <div class="news-cover-slider">
+        <label for="newsCoverPosX">Posicao horizontal <span id="newsCoverPosXValue">50%</span></label>
+        <input id="newsCoverPosX" type="range" min="0" max="100" value="50" />
+      </div>
+      <div class="news-cover-slider">
+        <label for="newsCoverPosY">Posicao vertical <span id="newsCoverPosYValue">35%</span></label>
+        <input id="newsCoverPosY" type="range" min="0" max="100" value="35" />
+      </div>
+    </div>
+    <div class="news-cover-preview">
+      <img id="newsCoverPreview" alt="Pré-visualização da imagem da notícia" />
+    </div>
+  </div>
+
+  <div class="news-side-card">
+    <h3>Imagem do card</h3>
+    <label for="newsCardImageUrlInput">URL da imagem</label>
+    <input id="newsCardImageUrlInput" type="url" placeholder="assets/noticias/arquivo.jpg" />
+    <div class="news-cover-actions">
+      <input id="newsCardImageFileInput" type="file" accept="image/*" hidden />
+      <button class="btn btn-light btn-sm" type="button" id="newsCardImageLoadBtn">Carregar imagem</button>
+      <button class="btn btn-light btn-sm" type="button" id="newsCardImageRemoveBtn">Remover</button>
+    </div>
+    <div class="news-cover-controls">
+      <label for="newsCardImageFit">Ajuste da imagem</label>
+      <select id="newsCardImageFit">
+        <option value="cover">Preencher (cover)</option>
+        <option value="contain">Encaixar (contain)</option>
+      </select>
+      <div class="news-cover-slider">
+        <label for="newsCardImagePosX">Posicao horizontal <span id="newsCardImagePosXValue">50%</span></label>
+        <input id="newsCardImagePosX" type="range" min="0" max="100" value="50" />
+      </div>
+      <div class="news-cover-slider">
+        <label for="newsCardImagePosY">Posicao vertical <span id="newsCardImagePosYValue">35%</span></label>
+        <input id="newsCardImagePosY" type="range" min="0" max="100" value="35" />
+      </div>
+    </div>
+    <div class="news-cover-preview">
+      <img id="newsCardImagePreview" alt="Pré-visualização da imagem do card" />
+    </div>
+  </div>
+
+  <div class="news-side-card">
+    <h3>Tags</h3>
+    <label for="newsTagsInput">Tags</label>
+    <input id="newsTagsInput" type="text" placeholder="Digite e pressione Enter" autocomplete="off" />
+    <div id="newsTagsSuggest" class="news-tags-suggest" role="listbox"></div>
+    <div id="newsTagsList" class="news-tags-list"></div>
+  </div>
+
+  <div class="news-side-card news-hidden-panel">
+    <h3>Status e visibilidade</h3>
+    <label for="newsStatusSelect">Status</label>
+    <select id="newsStatusSelect">
+      <option value="publicada">Publicada</option>
+      <option value="rascunho">Rascunho</option>
+      <option value="arquivada">Arquivada</option>
+    </select>
+    <label for="newsVisibilitySelect">Visibilidade</label>
+    <select id="newsVisibilitySelect">
+      <option value="publica">Pública</option>
+      <option value="oculta">Oculta</option>
+    </select>
+    <label for="newsPublishDate">Data de publicação</label>
+    <input type="datetime-local" id="newsPublishDate" />
+  </div>
+
+  <div class="news-side-card news-hidden-panel">
+    <h3>Taxonomia</h3>
+    <div class="news-categories">
+      <p class="news-categories-title">Categorias</p>
+      <label><input type="checkbox" value="Circuito" data-category /> Circuito</label>
+      <label><input type="checkbox" value="Institucional" data-category /> Institucional</label>
+      <label><input type="checkbox" value="Filiadas" data-category /> Filiadas</label>
+      <label><input type="checkbox" value="Calendário" data-category /> Calendário</label>
+      <label><input type="checkbox" value="Editais" data-category /> Editais</label>
+    </div>
+  </div>
+
+  <div class="news-side-card news-hidden-panel">
+    <h3>Destaque</h3>
+    <label class="news-toggle">
+      <input type="checkbox" id="newsFeaturedToggle" />
+      <span>Destacar na home</span>
+    </label>
+    <div class="news-featured-order" id="newsFeaturedOrderWrap" hidden>
+      <label for="newsFeaturedOrder">Ordem de destaque</label>
+      <input id="newsFeaturedOrder" type="number" min="1" max="10" />
+    </div>
+  </div>
+
+  
+</aside>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="news-toast-region" id="newsToastRegion" aria-live="polite" aria-atomic="true"></div>
+
+        <div class="news-modal" id="newsDeleteModal" role="dialog" aria-modal="true" aria-labelledby="newsDeleteTitle" hidden>
+          <div class="news-modal-content">
+            <h2 id="newsDeleteTitle">Excluir notícia</h2>
+            <p id="newsDeleteSummary"></p>
+            <div class="news-modal-actions">
+              <button class="btn btn-light" type="button" data-modal-close>Cancelar</button>
+              <button class="btn" type="button" id="newsDeleteConfirm">Excluir</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="news-modal" id="newsPreviewModal" role="dialog" aria-modal="true" aria-labelledby="newsPreviewTitle" hidden>
+          <div class="news-modal-content news-modal-preview">
+            <h2 id="newsPreviewTitle">Pré-visualização</h2>
+            <div id="newsPreviewContent"></div>
+            <div class="news-modal-actions">
+              <button class="btn btn-light" type="button" data-modal-close>Fechar</button>
+              <a class="btn" id="newsPreviewOpenLink" href="#" target="_blank" rel="noopener">Abrir em nova aba</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<!-- QUADRILHAS -->
       <section id="section-quadrilha" class="portal-section" style="display:none;">
   <h2 class="section-title">Quadrilhas</h2>
   <p id="quadrilhaSubtitle">
@@ -523,7 +725,7 @@
           </div>
         </div>
 
-        <!-- LISTA DE LANÇAMENTOS -->
+        <!-- LISTA DE LANÇAMENTOS -->
         <div class="card" style="margin-top: 1rem;">
           <div class="card-body">
             <h4 class="card-title">Lançamentos</h4>
@@ -549,7 +751,7 @@
           </div>
         </div>
 
-        <!-- ÁREA DA LIGA: NOVO LANÇAMENTO -->
+        <!-- ÁREA DA LIGA: NOVO LANÇAMENTO -->
         <div id="finAdminArea" style="margin-top: 1.5rem; display:none;">
           <div class="card">
             <div class="card-body">
@@ -650,7 +852,8 @@
   <script>
     window.portalAppNavigationReady = false;
   </script>
-  <script type="module" src="js/portal-app.min.js?v=20250119"></script>
+  <script type="module" src="js/portal-app.min.js?v=20250119"></script>
+  <script type="module" src="js/news-admin.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const initFallbackNavigation = () => {
@@ -752,3 +955,10 @@
 </footer>
 </body>
 </html>
+
+
+
+
+
+
+
