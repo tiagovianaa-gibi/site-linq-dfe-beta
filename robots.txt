@@ -2,8 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /portal
 Disallow: /portal-dashboard
-Disallow: /quadrilha.html
-Disallow: /*?slug=
-Disallow: /*?
 
 Sitemap: https://linqdfe.com.br/sitemap.xml

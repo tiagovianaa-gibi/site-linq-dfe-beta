@@ -113,6 +113,7 @@ import {
     tagsSuggest: document.getElementById("newsTagsSuggest"),
     categories: root.querySelectorAll("[data-category]"),
     featuredToggle: document.getElementById("newsFeaturedToggle"),
+    featuredToggleButton: document.getElementById("newsToggleFeaturedBtn"),
     featuredOrderWrap: document.getElementById("newsFeaturedOrderWrap"),
     featuredOrder: document.getElementById("newsFeaturedOrder"),
     metaTitle: document.getElementById("newsMetaTitle"),
@@ -621,6 +622,16 @@ import {
     updateSlugDisplay(slug);
   }
 
+  function updateFeaturedButton() {
+    if (!els.featuredToggleButton || !els.featuredToggle) return;
+    const active = !!els.featuredToggle.checked;
+    els.featuredToggleButton.textContent = active
+      ? "Remover destaque da home"
+      : "Enviar para destaque na home";
+    els.featuredToggleButton.setAttribute("aria-pressed", active ? "true" : "false");
+    els.featuredToggleButton.classList.toggle("btn-outline", !active);
+  }
+
   function setEditorData(post) {
     state.currentId = post?.id || null;
     state.currentSlugManual = !!post?.slug;
@@ -673,6 +684,7 @@ import {
     if (els.featuredToggle) els.featuredToggle.checked = !!post?.featuredHome;
     if (els.featuredOrder) els.featuredOrder.value = post?.featuredOrder || "";
     if (els.featuredOrderWrap) els.featuredOrderWrap.hidden = !post?.featuredHome;
+    updateFeaturedButton();
     if (els.metaTitle) els.metaTitle.value = post?.seo?.metaTitle || "";
     if (els.metaDescription) els.metaDescription.value = post?.seo?.metaDescription || "";
     if (els.metaDescriptionCount && els.metaDescription) {
@@ -1192,6 +1204,14 @@ import {
       els.previewBtn.addEventListener("click", () => openPreview(state.currentId, true));
     }
 
+    if (els.featuredToggleButton) {
+      els.featuredToggleButton.addEventListener("click", () => {
+        if (!els.featuredToggle) return;
+        els.featuredToggle.checked = !els.featuredToggle.checked;
+        els.featuredToggle.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+    }
+
     if (els.slugEditBtn) {
       els.slugEditBtn.addEventListener("click", () => {
         if (els.slugEditor) els.slugEditor.hidden = false;
@@ -1291,6 +1311,7 @@ import {
       els.featuredToggle.addEventListener("change", () => {
         if (els.featuredOrderWrap) els.featuredOrderWrap.hidden = !els.featuredToggle.checked;
         markDirty();
+        updateFeaturedButton();
       });
     }
 

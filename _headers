@@ -1,0 +1,17 @@
+/*.html
+  Content-Type: text/html; charset=utf-8
+
+/noticia/*.html
+  Content-Type: text/html; charset=utf-8
+
+/quadrilha/*.html
+  Content-Type: text/html; charset=utf-8
+
+/data/*.json
+  Content-Type: application/json; charset=utf-8
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8

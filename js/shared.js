@@ -1,5 +1,5 @@
-/* ============================================
-   SHARED.JS - FunÁıes Compartilhadas
+Ôªø/* ============================================
+   SHARED.JS - Fun√ß√µes Compartilhadas
    ============================================ */
 
 /**
@@ -29,8 +29,8 @@ function withRoot(path) {
 
 
 /**
- * Converte string para slug (sem acentos, com hÌfens)
- * Ex: "Arroxa o NÛ" ?' "arroxa-o-no"
+ * Converte string para slug (sem acentos, com h√≠fens)
+ * Ex: "Arroxa o N√≥" ?' "arroxa-o-no"
  */
 export function slugify(text) {
   if (!text) return '';
@@ -40,8 +40,8 @@ export function slugify(text) {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '') // Remove acentos
     .replace(/[^\w\s-]/g, '') // Remove caracteres especiais
-    .replace(/\s+/g, '-') // EspaÁos para hÌfens
-    .replace(/-+/g, '-') // M˙ltiplos hÌfens para um sÛ
+    .replace(/\s+/g, '-') // Espa√ßos para h√≠fens
+    .replace(/-+/g, '-') // M√∫ltiplos h√≠fens para um s√≥
     .trim();
 }
 
@@ -120,7 +120,7 @@ export function applyFocal(img, focal) {
 }
 
 /**
- * Define item ativo na navegaÁ„o
+ * Define item ativo na navega√ß√£o
  */
 export function setActiveNav() {
   const currentPath = window.location.pathname;
@@ -175,7 +175,7 @@ window.addEventListener('unhandledrejection', (event) => {
 
 /**
  * Retorna URL da foto da quadrilha
- * Prioridade: foto no JSON ?' slug autom·tico ?' placeholder
+ * Prioridade: foto no JSON ?' slug autom√°tico ?' placeholder
  * VOCS S" MUDA AQUI: caminho das fotos em assets/fotos-quadrilhas/
  */
 export function getQuadrilhaPhoto(quadrilha, useCapa = false) {
@@ -209,7 +209,7 @@ export function getQuadrilhaPhotoCandidates(quadrilha, useCapa = false) {
 }
 
 /**
- * Aplica foco em rosto para cards de destaque (campe„s/destaques)
+ * Aplica foco em rosto para cards de destaque (campe√£s/destaques)
  */
 export function applyFaceCrop(img) {
   if (!img) return;
@@ -228,7 +228,7 @@ async function initQuadrilhaDropdown(dataUrl) {
 
   const data = await loadJSON(dataUrl || 'data/quadrilhas.json');
   if (!Array.isArray(data) || !data.length) {
-    menu.innerHTML = '<span class="dropdown-empty">N„o foi possÌvel carregar.</span>';
+    menu.innerHTML = '<span class="dropdown-empty">N&#227;o foi poss&#237;vel carregar.</span>';
     return;
   }
 
@@ -285,8 +285,8 @@ function setupCircuitoDropdown() {
     { href: baseCircuito, label: 'Circuito de Quadrilhas' },
     { href: new URL('grupo-especial.html', circuitoLink.href).href, label: 'Grupo Especial' },
     { href: new URL('grupo-acesso.html', circuitoLink.href).href, label: 'Grupo de Acesso' },
-    { href: new URL('edicoes-anteriores.html', circuitoLink.href).href, label: 'EdiÁıes anteriores' },
-    { href: new URL('campeoes-circuito.html', circuitoLink.href).href, label: 'Campe„s do Circuito' },
+    { href: new URL('edicoes-anteriores.html', circuitoLink.href).href, label: 'Edi&#231;&#245;es anteriores' },
+    { href: new URL('campeoes-circuito.html', circuitoLink.href).href, label: 'Campe&#227;s do Circuito' },
     { href: new URL('confebraq.html', circuitoLink.href).href, label: 'CONFEBRAQ' },
   ];
 
@@ -301,6 +301,8 @@ function setupDropdownClick(li, link) {
 
   link.setAttribute('aria-haspopup', 'true');
   link.setAttribute('aria-expanded', 'false');
+
+  const isMobileView = () => window.matchMedia('(max-width: 768px)').matches;
 
   const positionDropdown = () => {
     const menu = li.querySelector('.dropdown-menu');
@@ -336,6 +338,7 @@ function setupDropdownClick(li, link) {
   };
 
   const openDropdown = (event) => {
+    if (!isMobileView()) return;
     event.preventDefault();
     event.stopPropagation();
     document.querySelectorAll('nav li.has-dropdown.open').forEach((item) => {
@@ -353,18 +356,19 @@ function setupDropdownClick(li, link) {
   let lastTouchTime = 0;
 
   link.addEventListener('touchstart', (e) => {
+    if (!isMobileView()) return;
     if (li.classList.contains('open')) return;
     lastTouchTime = Date.now();
     openDropdown(e);
   }, { passive: false });
 
   link.addEventListener('click', (e) => {
+    if (!isMobileView()) return;
     if (Date.now() - lastTouchTime < 600) return;
     if (!li.classList.contains('open')) {
       openDropdown(e);
       return;
     }
-    // Segundo toque/clique segue o link normalmente.
     li.classList.remove('open');
     link.setAttribute('aria-expanded', 'false');
   });
@@ -429,7 +433,7 @@ function initRankingFilters() {
 function setupAccessibilityHelpers() {
   const nav = document.querySelector('nav');
   if (nav && !nav.getAttribute('aria-label')) {
-    nav.setAttribute('aria-label', 'NavegaÁ„o principal');
+    nav.setAttribute('aria-label', 'Navega√ß√£o principal');
   }
 
   const main = document.querySelector('main');
@@ -439,7 +443,7 @@ function setupAccessibilityHelpers() {
 
   const footer = document.querySelector('footer');
   if (footer && !footer.getAttribute('aria-label')) {
-    footer.setAttribute('aria-label', 'RodapÈ');
+    footer.setAttribute('aria-label', 'Rodap√©');
   }
 }
 
@@ -449,7 +453,7 @@ runWhenReady(initRankingFilters);
 runWhenReady(setupAccessibilityHelpers);
 
 /**
- * Formata data para exibiÁ„o
+ * Formata data para exibi√ß√£o
  */
 export function formatDate(dateString) {
   if (!dateString) return '';
@@ -470,7 +474,7 @@ export function formatDateShort(dateString) {
 }
 
 /**
- * Sanitiza HTML b·sico (prevenÁ„o XSS)
+ * Sanitiza HTML b√°sico (preven√ß√£o XSS)
  */
 export function sanitizeHTML(str) {
   if (!str) return '';
@@ -520,7 +524,7 @@ export function normalize(str) {
  * - aceita string ou objeto { url }
  * - converte gs:// para URL https do Firebase Storage
  * - remove barras iniciais para funcionar no GitHub Pages
- * - codifica espa?ıos e caracteres especiais
+ * - codifica espa?√µos e caracteres especiais
  */
 export function normalizeImageUrl(value, fallback = '') {
   let url = value;
@@ -559,15 +563,17 @@ export function normalizeImageUrl(value, fallback = '') {
   const clean = url.replace(/^\/+/, '');
   if (!clean) return fallback;
 
-  // Se veio s?¸ o nome do arquivo (ex.: "foto.jpg"), presume pasta de noticias
+  // Se veio s?√º o nome do arquivo (ex.: "foto.jpg"), presume pasta de noticias
   // para evitar 404 no GitHub Pages quando o Firestore salva apenas o basename
   if (!clean.includes('/') && /\.(jpg|jpeg|png|gif|webp|avif)$/i.test(clean)) {
     return `assets/noticias/${encodeURI(clean)}`;
   }
 
-  // Codifica espa?ıos e caracteres especiais sem quebrar slashes
+  // Codifica espa?√µos e caracteres especiais sem quebrar slashes
   return encodeURI(clean);
 }
+
+
 
 
 

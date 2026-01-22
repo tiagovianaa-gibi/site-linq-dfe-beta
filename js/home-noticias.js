@@ -28,6 +28,28 @@ function ensureFirestore() {
   return firestoreDb;
 }
 
+function parseDateValue(value) {
+  if (!value) return null;
+  if (typeof value === "object" && typeof value.toDate === "function") {
+    return value.toDate();
+  }
+  if (value instanceof Date) {
+    return value;
+  }
+  if (typeof value === "string" || typeof value === "number") {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+  return null;
+}
+
+function getLatestDate(...values) {
+  return values
+    .map(parseDateValue)
+    .filter((date) => date)
+    .reduce((latest, current) => (!latest || current > latest ? current : latest), null);
+}
+
 async function fetchNoticiasFirestore() {
   try {
     const db = ensureFirestore();
@@ -35,10 +57,14 @@ async function fetchNoticiasFirestore() {
     const items = [];
     snap.forEach((doc) => {
       const data = doc.data() || {};
-      const dataRef =
-        data.dataPublicacao || data.dataAtualizacao || data.dataCriacao || null;
-      const dataJs =
-        dataRef && dataRef.toDate ? dataRef.toDate() : dataRef ? new Date(dataRef) : null;
+      const latestDate = getLatestDate(
+        data.dataPublicacao,
+        data.dataAtualizacao,
+        data.dataCriacao,
+        data.updatedAt,
+        data.data,
+        data.date
+      );
       items.push({
         id: doc.id,
         titulo: data.titulo || "",
@@ -71,7 +97,7 @@ async function fetchNoticiasFirestore() {
           : Number.isFinite(data.imagemCapaFocoY)
           ? data.imagemCapaFocoY
           : 35,
-        data: dataJs ? dataJs.toISOString() : "",
+        data: latestDate ? latestDate.toISOString() : "",
         status: data.status || "",
         slug: data.slug || "",
       });
@@ -84,41 +110,51 @@ async function fetchNoticiasFirestore() {
 }
 
 function mapJsonToNews(jsonList = []) {
-  return jsonList.map((n) => ({
-    id: n.id,
-    titulo: n.titulo || n.title || "",
-    resumo: n.resumo || n.excerpt || "",
-    imagem: n.imagemHeroUrl || n.imagemCapaUrl || n.imagem || n.image || n.foto || "",
-    imagemHeroFit: n.imagemHeroFit || n.imagemCapaFit || "cover",
-    imagemHeroFocoX: Number.isFinite(n.imagemHeroFocoX)
-      ? n.imagemHeroFocoX
-      : Number.isFinite(n.imagemCapaFocoX)
-      ? n.imagemCapaFocoX
-      : 50,
-    imagemHeroFocoY: Number.isFinite(n.imagemHeroFocoY)
-      ? n.imagemHeroFocoY
-      : Number.isFinite(n.imagemCapaFocoY)
-      ? n.imagemCapaFocoY
-      : 35,
-    imagemCard: n.imagemCardUrl || n.imagemHeroUrl || n.imagemCapaUrl || n.imagem || n.image || n.foto || "",
-    imagemCardFit: n.imagemCardFit || n.imagemHeroFit || n.imagemCapaFit || "cover",
-    imagemCardFocoX: Number.isFinite(n.imagemCardFocoX)
-      ? n.imagemCardFocoX
-      : Number.isFinite(n.imagemHeroFocoX)
-      ? n.imagemHeroFocoX
-      : Number.isFinite(n.imagemCapaFocoX)
-      ? n.imagemCapaFocoX
-      : 50,
-    imagemCardFocoY: Number.isFinite(n.imagemCardFocoY)
-      ? n.imagemCardFocoY
-      : Number.isFinite(n.imagemHeroFocoY)
-      ? n.imagemHeroFocoY
-      : Number.isFinite(n.imagemCapaFocoY)
-      ? n.imagemCapaFocoY
-      : 35,
-    data: n.data || n.date || "",
-    slug: n.slug || "",
-  }));
+  return jsonList.map((n) => {
+    const latestDate = getLatestDate(
+      n.dataPublicacao,
+      n.dataAtualizacao,
+      n.dataCriacao,
+      n.updatedAt,
+      n.data,
+      n.date
+    );
+    return {
+      id: n.id,
+      titulo: n.titulo || n.title || "",
+      resumo: n.resumo || n.excerpt || "",
+      imagem: n.imagemHeroUrl || n.imagemCapaUrl || n.imagem || n.image || n.foto || "",
+      imagemHeroFit: n.imagemHeroFit || n.imagemCapaFit || "cover",
+      imagemHeroFocoX: Number.isFinite(n.imagemHeroFocoX)
+        ? n.imagemHeroFocoX
+        : Number.isFinite(n.imagemCapaFocoX)
+        ? n.imagemCapaFocoX
+        : 50,
+      imagemHeroFocoY: Number.isFinite(n.imagemHeroFocoY)
+        ? n.imagemHeroFocoY
+        : Number.isFinite(n.imagemCapaFocoY)
+        ? n.imagemCapaFocoY
+        : 35,
+      imagemCard: n.imagemCardUrl || n.imagemHeroUrl || n.imagemCapaUrl || n.imagem || n.image || n.foto || "",
+      imagemCardFit: n.imagemCardFit || n.imagemHeroFit || n.imagemCapaFit || "cover",
+      imagemCardFocoX: Number.isFinite(n.imagemCardFocoX)
+        ? n.imagemCardFocoX
+        : Number.isFinite(n.imagemHeroFocoX)
+        ? n.imagemHeroFocoX
+        : Number.isFinite(n.imagemCapaFocoX)
+        ? n.imagemCapaFocoX
+        : 50,
+      imagemCardFocoY: Number.isFinite(n.imagemCardFocoY)
+        ? n.imagemCardFocoY
+        : Number.isFinite(n.imagemHeroFocoY)
+        ? n.imagemHeroFocoY
+        : Number.isFinite(n.imagemCapaFocoY)
+        ? n.imagemCapaFocoY
+        : 35,
+      data: latestDate ? latestDate.toISOString() : n.data || n.date || "",
+      slug: n.slug || "",
+    };
+  });
 }
 
 async function loadHomeNews() {

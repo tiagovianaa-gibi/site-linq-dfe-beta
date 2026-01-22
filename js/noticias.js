@@ -49,12 +49,31 @@ function ensureFirestore() {
   return firestoreDb;
 }
 
+function parseDateValue(value) {
+  if (!value) return null;
+  if (typeof value === 'object' && typeof value.toDate === 'function') {
+    return value.toDate();
+  }
+  if (value instanceof Date) {
+    return value;
+  }
+  if (typeof value === 'string' || typeof value === 'number') {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+  return null;
+}
+
+function getLatestDate(...values) {
+  return values
+    .map(parseDateValue)
+    .filter((date) => date)
+    .reduce((latest, current) => (!latest || current > latest ? current : latest), null);
+}
+
 function mapFirestoreNoticia(docSnap) {
   const data = docSnap.data() || {};
-  const dataRef =
-    data.dataPublicacao || data.dataAtualizacao || data.dataCriacao || null;
-  const dataJs =
-    dataRef && dataRef.toDate ? dataRef.toDate() : dataRef ? new Date(dataRef) : null;
+  const latestDate = getLatestDate(data.dataPublicacao, data.dataAtualizacao, data.dataCriacao);
 
   return {
     id: docSnap.id,
@@ -89,7 +108,7 @@ function mapFirestoreNoticia(docSnap) {
       ? data.imagemCapaFocoY
       : 35,
     tags: Array.isArray(data.tags) ? data.tags : [],
-    data: dataJs ? dataJs.toISOString() : '',
+    data: latestDate ? latestDate.toISOString() : '',
     conteudo: data.conteudo || '',
     destaqueHome: !!data.destaqueHome,
     slug: data.slug || '',
@@ -179,6 +198,14 @@ function writeCache(items) {
 }
 
 function mapJsonNoticia(item) {
+  const latestDate = getLatestDate(
+    item.dataPublicacao,
+    item.dataAtualizacao,
+    item.dataCriacao,
+    item.updatedAt,
+    item.data,
+    item.date
+  );
   return {
     id: item.id,
     titulo: item.titulo || item.title || '',
@@ -212,7 +239,7 @@ function mapJsonNoticia(item) {
       ? item.imagemCapaFocoY
       : 35,
     tags: Array.isArray(item.tags) ? item.tags : [],
-    data: item.data || item.date || '',
+    data: latestDate ? latestDate.toISOString() : item.data || item.date || '',
     conteudo: item.conteudo || '',
     destaqueHome: !!item.destaqueHome,
     slug: item.slug || '',
@@ -281,6 +308,14 @@ function renderNoticias() {
 
   // Se ainda nao temos dados, mantem o HTML estatico (fallback)
   if (!noticias.length) {
+    const hasStaticCards = container.children.length > 0;
+    if (emptyState) {
+      emptyState.classList.toggle('hidden', hasStaticCards);
+    }
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+    if (!hasStaticCards) {
+      container.innerHTML = '';
+    }
     return;
   }
 
