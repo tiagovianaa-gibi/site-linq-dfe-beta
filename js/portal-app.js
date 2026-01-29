@@ -100,13 +100,34 @@ const statFinanceiroPago = document.getElementById("statFinanceiroPago");
 // FINANCEIRO
 const finSubtitle = document.getElementById("finSubtitle");
 const finTableBody = document.getElementById("finTableBody");
+const finTable = finTableBody?.closest("table");
+if (finTable) {
+  const headerRow = finTable.querySelector("thead tr");
+  if (
+    headerRow &&
+    !Array.from(headerRow.children).some(
+      (th) => (th.textContent || "").trim() === "Ações"
+    )
+  ) {
+    const th = document.createElement("th");
+    th.textContent = "Ações";
+    headerRow.appendChild(th);
+  }
+}
 const finFiltersCard = document.getElementById("finFiltersCard");
 const finFiltroQuadrilha = document.getElementById("finFiltroQuadrilha");
 const finFiltroAno = document.getElementById("finFiltroAno");
+const finFiltroTipo = document.getElementById("finFiltroTipo");
 const finFiltroStatus = document.getElementById("finFiltroStatus");
 const finAdminArea = document.getElementById("finAdminArea");
 const finForm = document.getElementById("finForm");
 const finFormMessage = document.getElementById("finFormMessage");
+let finFormCancelBtn = document.getElementById("finFormCancelBtn");
+const finFormSubmitBtn = finForm
+  ? finForm.querySelector("button[type='submit']")
+  : null;
+const finFormSubmitBtnDefaultLabel =
+  finFormSubmitBtn?.textContent?.trim() || "Salvar lançamento";
 const finQuadrilhaSelect = document.getElementById("finQuadrilhaId");
 const finTipoSelect = document.getElementById("finTipo");
 const finAnoInput = document.getElementById("finAno");
@@ -116,6 +137,22 @@ const finStatusSelect = document.getElementById("finStatus");
 const finDataVencimentoInput = document.getElementById("finDataVencimento");
 const finDataPagamentoInput = document.getElementById("finDataPagamento");
 const finObsTextarea = document.getElementById("finObs");
+
+if (!finFormCancelBtn && finForm) {
+  const cancelBtn = document.createElement("button");
+  cancelBtn.type = "button";
+  cancelBtn.id = "finFormCancelBtn";
+  cancelBtn.className = "btn btn-link";
+  cancelBtn.style.display = "none";
+  cancelBtn.style.marginLeft = "0";
+  cancelBtn.textContent = "Cancelar edição";
+  if (finFormMessage) {
+    finFormMessage.insertAdjacentElement("afterend", cancelBtn);
+  } else {
+    finForm.appendChild(cancelBtn);
+  }
+  finFormCancelBtn = cancelBtn;
+}
 
 const userRoleLabelSpan = document.getElementById("portalUserRoleLabel");
 // NOTÍCIAS
@@ -174,6 +211,7 @@ let quadrilhasCache = null;
 let documentosCache = null;
 let financeiroCache = null;
 let noticiasCache = null;
+let editingFinanceiroId = null;
 
 // Fallback local (teste/offline)
 const SAMPLE_QUADRILHAS = [
@@ -346,9 +384,51 @@ function formatTimestampToPtBR(ts) {
   }
 }
 
+function parseDateValue(value) {
+  if (!value) return null;
+  if (typeof value === "object" && value?.toDate) {
+    return value.toDate();
+  }
+  if (typeof value === "string") {
+    const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (match) {
+      const [, year, month, day] = match;
+      return new Date(Number(year), Number(month) - 1, Number(day));
+    }
+  }
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    return null;
+  }
+  return parsed;
+}
+
+const currencyFormatter = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+});
+
 function formatCurrencyBR(value) {
   const num = Number(value) || 0;
-  return `R$ ${num.toFixed(2)}`;
+  return currencyFormatter.format(num);
+}
+
+function formatDateForDisplay(value) {
+  const dateValue = parseDateValue(value);
+  if (!dateValue) return "--";
+  const day = String(dateValue.getUTCDate()).padStart(2, "0");
+  const month = String(dateValue.getUTCMonth() + 1).padStart(2, "0");
+  const year = dateValue.getUTCFullYear();
+  return `${day}-${month}-${year}`;
+}
+
+function formatDateForInput(value) {
+  const dateValue = parseDateValue(value);
+  if (!dateValue) return "";
+  const day = String(dateValue.getUTCDate()).padStart(2, "0");
+  const month = String(dateValue.getUTCMonth() + 1).padStart(2, "0");
+  const year = dateValue.getUTCFullYear();
+  return `${year}-${month}-${day}`;
 }
 
 function parseKeywords(raw) {
@@ -689,7 +769,7 @@ async function fetchLancamentosFinanceiros() {
   return itens;
 }
 
-function renderFinanceiroRow(l, mapaQuadrilhas) {
+function renderFinanceiroRow(l, mapaQuadrilhas, canEdit = false) {
   const nomeQuadrilha =
     (l.quadrilhaId && mapaQuadrilhas[l.quadrilhaId]) ||
     l.quadrilhaId ||
@@ -699,9 +779,15 @@ function renderFinanceiroRow(l, mapaQuadrilhas) {
   const statusLabel = mapStatusLancamento(l.status);
   const ano = l.ano || "?";
   const descricao = l.descricao || "?";
-  const valor = l.valor ? `R$ ${Number(l.valor).toFixed(2)}` : "--";
-  const dataVenc = l.dataVencimento || "?";
-  const dataPag = l.dataPagamento || "?";
+  const valor =
+    l.valor !== undefined && l.valor !== null
+      ? formatCurrencyBR(l.valor)
+      : "--";
+  const dataVenc = formatDateForDisplay(l.dataVencimento);
+  const dataPag = formatDateForDisplay(l.dataPagamento);
+  const actions = canEdit
+    ? `<button class="btn btn-sm btn-light js-fin-edit" data-id="${l.id}">Editar</button>`
+    : "-";
 
   return `
     <tr>
@@ -713,6 +799,7 @@ function renderFinanceiroRow(l, mapaQuadrilhas) {
       <td>${statusLabel}</td>
       <td>${dataVenc}</td>
       <td>${dataPag}</td>
+      <td>${actions}</td>
     </tr>
   `;
 }
@@ -721,11 +808,12 @@ async function loadFinanceiroForCurrentUser() {
   if (!finTableBody) return;
 
   finTableBody.innerHTML =
-    '<tr><td colspan="8">Carregando lançamentos...</td></tr>';
+    '<tr><td colspan="9">Carregando lançamentos...</td></tr>';
 
   try {
     const papel = currentUserData?.papel || "SEM_PAPEL";
     const quadrilhaIdUser = currentUserData?.quadrilhaId || null;
+    const canEdit = papel === "LIGA_ADMIN";
 
     const [lancamentos, quadrilhas] = await Promise.all([
       fetchLancamentosFinanceiros(),
@@ -736,6 +824,28 @@ async function loadFinanceiroForCurrentUser() {
     quadrilhas.forEach((q) => {
       mapaQuadrilhas[q.id] = q.nome || q.id;
     });
+
+    const previousTipoFilter = finFiltroTipo?.value || "";
+    const tiposSet = new Set();
+    lancamentos.forEach((l) => {
+      if (l.tipo) tiposSet.add(l.tipo);
+    });
+    if (finFiltroTipo) {
+      const tiposOrdenados = Array.from(tiposSet).sort((a, b) => {
+        const labelA = mapTipoLancamento(a) || a || "";
+        const labelB = mapTipoLancamento(b) || b || "";
+        return labelA.localeCompare(labelB);
+      });
+      finFiltroTipo.innerHTML = '<option value="">Todos</option>';
+      tiposOrdenados.forEach((tipo) => {
+        const opt = document.createElement("option");
+        opt.value = tipo;
+        opt.textContent = mapTipoLancamento(tipo);
+        finFiltroTipo.appendChild(opt);
+      });
+      finFiltroTipo.value = previousTipoFilter;
+    }
+    const filtroTipo = finFiltroTipo?.value || "";
 
     let visiveis = [];
 
@@ -765,7 +875,8 @@ async function loadFinanceiroForCurrentUser() {
           !filtroAno ||
           (l.ano && String(l.ano) === String(filtroAno));
         const okStatus = !filtroStatus || l.status === filtroStatus;
-        return okQuadrilha && okAno && okStatus;
+        const okTipo = !filtroTipo || l.tipo === filtroTipo;
+        return okQuadrilha && okAno && okStatus && okTipo;
       });
 
       // preencher opções de ano no filtro
@@ -791,21 +902,92 @@ async function loadFinanceiroForCurrentUser() {
       visiveis = [];
     }
 
+    if (visiveis.length) {
+      const getNomeQuadrilha = (item) =>
+        (item.quadrilhaId && mapaQuadrilhas[item.quadrilhaId]) ||
+        item.quadrilhaId ||
+        "";
+      visiveis.sort((a, b) => {
+        const nomeA = getNomeQuadrilha(a).toLowerCase();
+        const nomeB = getNomeQuadrilha(b).toLowerCase();
+        if (nomeA < nomeB) return -1;
+        if (nomeA > nomeB) return 1;
+        return 0;
+      });
+    }
+
     if (!visiveis.length) {
       finTableBody.innerHTML =
-        '<tr><td colspan="8">Nenhum lançamento encontrado.</td></tr>';
+        '<tr><td colspan="9">Nenhum lançamento encontrado.</td></tr>';
       return;
     }
 
     finTableBody.innerHTML = visiveis
-      .map((l) => renderFinanceiroRow(l, mapaQuadrilhas))
+      .map((l) => renderFinanceiroRow(l, mapaQuadrilhas, canEdit))
       .join("");
     updateDashboardWidgets();
   } catch (error) {
     console.error("Erro ao carregar financeiro:", error);
     finTableBody.innerHTML =
-      '<tr><td colspan="8">Erro ao carregar financeiro.</td></tr>';
+      '<tr><td colspan="9">Erro ao carregar financeiro.</td></tr>';
   }
+}
+
+function resetFinanceiroFormState(clearMessage = true) {
+  if (!finForm) return;
+  finForm.reset();
+  editingFinanceiroId = null;
+  if (finFormCancelBtn) finFormCancelBtn.style.display = "none";
+  if (finFormSubmitBtn)
+    finFormSubmitBtn.textContent = finFormSubmitBtnDefaultLabel;
+  if (clearMessage && finFormMessage) setText(finFormMessage, "");
+}
+
+function startEditingLancamento(lancamento) {
+  if (!finForm || !lancamento) return;
+  editingFinanceiroId = lancamento.id || null;
+  if (finQuadrilhaSelect)
+    finQuadrilhaSelect.value = lancamento.quadrilhaId || "";
+  if (finTipoSelect) finTipoSelect.value = lancamento.tipo || "";
+  if (finAnoInput) finAnoInput.value = lancamento.ano || "";
+  if (finDescricaoInput) finDescricaoInput.value = lancamento.descricao || "";
+  if (finValorInput)
+    finValorInput.value =
+      lancamento.valor !== undefined && lancamento.valor !== null
+        ? String(lancamento.valor)
+        : "";
+  if (finStatusSelect) finStatusSelect.value = lancamento.status || "ABERTO";
+  if (finDataVencimentoInput)
+    finDataVencimentoInput.value = formatDateForInput(
+      lancamento.dataVencimento
+    );
+  if (finDataPagamentoInput)
+    finDataPagamentoInput.value = formatDateForInput(
+      lancamento.dataPagamento
+    );
+  if (finObsTextarea) finObsTextarea.value = lancamento.observacoes || "";
+  if (finFormCancelBtn) finFormCancelBtn.style.display = "inline-block";
+  if (finFormMessage) setText(finFormMessage, "Editando lançamento.");
+  if (finFormSubmitBtn) finFormSubmitBtn.textContent = "Salvar alterações";
+}
+
+if (finFormCancelBtn) {
+  finFormCancelBtn.addEventListener("click", () => {
+    resetFinanceiroFormState();
+  });
+}
+
+if (finTableBody) {
+  finTableBody.addEventListener("click", (event) => {
+    const editBtn = event.target.closest(".js-fin-edit");
+    if (!editBtn) return;
+    if (currentUserData?.papel !== "LIGA_ADMIN") return;
+    const id = editBtn.dataset?.id;
+    if (!id) return;
+    const lancamento = (financeiroCache || []).find((item) => item.id === id);
+    if (!lancamento) return;
+    startEditingLancamento(lancamento);
+  });
 }
 
 
@@ -1381,10 +1563,14 @@ if (finForm) {
       return;
     }
 
-    setText(finFormMessage, "Salvando lançamento...");
+    const isEditing = Boolean(editingFinanceiroId);
+    setText(
+      finFormMessage,
+      isEditing ? "Atualizando lançamento..." : "Salvando lançamento..."
+    );
 
     try {
-      await addDoc(collection(db, "financeiro_quadrilha"), {
+      const payload = {
         quadrilhaId,
         tipo,
         ano,
@@ -1394,10 +1580,24 @@ if (finForm) {
         dataVencimento,
         dataPagamento,
         observacoes,
-      });
+      };
+      if (isEditing && editingFinanceiroId) {
+        await setDoc(
+          doc(db, "financeiro_quadrilha", editingFinanceiroId),
+          payload,
+          { merge: true }
+        );
+      } else {
+        await addDoc(collection(db, "financeiro_quadrilha"), payload);
+      }
 
-      setText(finFormMessage, "Lançamento salvo com sucesso.");
-      finForm.reset();
+      setText(
+        finFormMessage,
+        isEditing
+          ? "Lançamento atualizado com sucesso."
+          : "Lançamento salvo com sucesso."
+      );
+      resetFinanceiroFormState(false);
       financeiroCache = null;
       await loadFinanceiroForCurrentUser();
     } catch (err) {
@@ -1444,6 +1644,11 @@ if (finFiltroAno) {
 }
 if (finFiltroStatus) {
   finFiltroStatus.addEventListener("change", () => {
+    loadFinanceiroForCurrentUser();
+  });
+}
+if (finFiltroTipo) {
+  finFiltroTipo.addEventListener("change", () => {
     loadFinanceiroForCurrentUser();
   });
 }
