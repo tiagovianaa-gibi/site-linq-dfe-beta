@@ -282,7 +282,11 @@ function updateSeoMeta(quad, coverUrl, resumo) {
   const nome = quad.nome || 'Quadrilha Junina';
   const cidade = quad.cidade || '';
   const uf = quad.uf ? `/${quad.uf}` : '';
-  const tema = quad.perfil?.tema_2025 ? `Tema 2025: ${quad.perfil.tema_2025}.` : '';
+  const perfil = quad.perfil || {};
+  const temaInfo = perfil.tema_2025
+    ? { ano: 2025, tema: perfil.tema_2025 }
+    : (perfil.tema_2024 ? { ano: 2024, tema: perfil.tema_2024 } : null);
+  const tema = temaInfo ? `Tema ${temaInfo.ano}: ${temaInfo.tema}.` : '';
   const description = `${nome} de ${cidade}${uf}. Contrata\u00e7\u00e3o, portf\u00f3lio, equipe, fotos e v\u00eddeos. ${tema}`.trim();
   const pageTitle = `${nome} | Quadrilha Junina | LINQ-DFE`;
 
@@ -354,6 +358,14 @@ function renderQuadrilhaInfo(quad, historico) {
   const infoListEl = document.getElementById('quadrilhaInfoList');
 
   const perfil = quad.perfil || {};
+  const temaAno = perfil.tema_2025 ? 2025 : (perfil.tema_2024 ? 2024 : null);
+  const temaValor = perfil.tema_2025 || perfil.tema_2024 || '';
+  const temaLabel = temaAno ? `Tema ${temaAno}` : 'Tema';
+  const temporadaLabel = temaAno ? `Temporada ${temaAno}` : 'Temporada';
+  const temporadaDescricao = perfil.temporada_2025_descricao || perfil.temporada_2024_descricao || '';
+  const casalAno = perfil.casal_noivos_2025 ? 2025 : (perfil.casal_noivos_2024 ? 2024 : null);
+  const casalValor = perfil.casal_noivos_2025 || perfil.casal_noivos_2024 || '';
+  const casalLabel = casalAno ? `Casal de noivos ${casalAno}` : 'Casal de noivos';
   let coverUrl = normalizeImageUrl('assets/banners/placeholder.jpg', 'assets/banners/placeholder.jpg');
 
   // Capa (usa foto_capa se existir, com focal para rosto)
@@ -405,8 +417,8 @@ function renderQuadrilhaInfo(quad, historico) {
   if (sobreEl) {
     const partes = [];
     if (perfil.bio) partes.push(`<p>${perfil.bio}</p>`);
-    if (perfil.tema_2025) partes.push(`<p><strong>Tema 2025:</strong> "${perfil.tema_2025}".</p>`);
-    const desc = perfil.temporada_2025_descricao || '';
+    if (temaValor) partes.push(`<p><strong>${temaLabel}:</strong> "${temaValor}".</p>`);
+    const desc = temporadaDescricao || '';
     if (desc) partes.push(`<p>${desc}</p>`);
     sobreEl.innerHTML = partes.length ? partes.join('') : '<p>Em breve.</p>';
   }
@@ -418,8 +430,8 @@ function renderQuadrilhaInfo(quad, historico) {
       <li><strong>Idade do grupo:</strong> ${perfil.idade_grupo || '—'}</li>
       <li><strong>Elenco aproximado:</strong> ${perfil.elenco_aproximado || '—'}</li>
       <li><strong>Marcador:</strong> ${perfil.marcador || '—'}</li>
-      <li><strong>Casal de noivos 2025:</strong> ${perfil.casal_noivos_2025 || '—'}</li>
-      <li><strong>Temporada 2025:</strong> ${perfil.tema_2025 ? `"${perfil.tema_2025}"` : '—'}</li>
+      <li><strong>${casalLabel}:</strong> ${casalValor || '—'}</li>
+      <li><strong>${temporadaLabel}:</strong> ${temaValor ? `"${temaValor}"` : '—'}</li>
     `;
   }
 }

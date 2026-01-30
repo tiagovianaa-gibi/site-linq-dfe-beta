@@ -94,7 +94,10 @@ const statDocsPend = document.getElementById("statDocsPend");
 const statQuadrilhasTotal = document.getElementById("statQuadrilhasTotal");
 const statQuadrilhasEspecial = document.getElementById("statQuadrilhasEspecial");
 const statQuadrilhasAcesso = document.getElementById("statQuadrilhasAcesso");
-const statFinanceiroAberto = document.getElementById("statFinanceiroAberto");
+const statFinanceiroAPagar =
+  document.getElementById("statFinanceiroAPagar") ||
+  document.getElementById("statFinanceiroAberto");
+const statFinanceiroVencido = document.getElementById("statFinanceiroVencido");
 const statFinanceiroPago = document.getElementById("statFinanceiroPago");
 
 // FINANCEIRO
@@ -137,6 +140,20 @@ const finStatusSelect = document.getElementById("finStatus");
 const finDataVencimentoInput = document.getElementById("finDataVencimento");
 const finDataPagamentoInput = document.getElementById("finDataPagamento");
 const finObsTextarea = document.getElementById("finObs");
+const finChartQuadrilha = document.getElementById("finChartQuadrilha");
+const finChartAno = document.getElementById("finChartAno");
+const finChartTipo = document.getElementById("finChartTipo");
+const finFiltroVencInicio = document.getElementById("finFiltroVencInicio");
+const finFiltroVencFim = document.getElementById("finFiltroVencFim");
+const finFiltroBusca = document.getElementById("finFiltroBusca");
+const finOrdenacao = document.getElementById("finOrdenacao");
+const finKpiTotal = document.getElementById("finKpiTotal");
+const finKpiPago = document.getElementById("finKpiPago");
+const finKpiAPagar = document.getElementById("finKpiAPagar");
+const finKpiVencido = document.getElementById("finKpiVencido");
+const finKpiInadimplencia = document.getElementById("finKpiInadimplencia");
+const finYearChips = document.getElementById("finYearChips");
+const finClearFilters = document.getElementById("finClearFilters");
 
 if (!finFormCancelBtn && finForm) {
   const cancelBtn = document.createElement("button");
@@ -715,18 +732,49 @@ function updateDashboardWidgets() {
 
   // Financeiro
   const fin = financeiroCache || [];
-  let aberto = 0;
+  let aPagar = 0;
+  let vencido = 0;
   let pago = 0;
   fin.forEach((l) => {
     const val = Number(l.valor) || 0;
-    if ((l.status || "").toUpperCase() === "PAGO") pago += val;
-    else if ((l.status || "").toUpperCase() === "ABERTO") aberto += val;
+    const statusCalc = getFinanceiroStatus(l);
+    if (statusCalc === "PAGO") pago += val;
+    else if (statusCalc === "VENCIDO") vencido += val;
+    else aPagar += val;
   });
-  if (statFinanceiroAberto) setText(statFinanceiroAberto, formatCurrencyBR(aberto));
+  if (statFinanceiroAPagar) {
+    setText(statFinanceiroAPagar, formatCurrencyBR(aPagar));
+  }
+  if (statFinanceiroVencido) {
+    setText(statFinanceiroVencido, formatCurrencyBR(vencido));
+  }
   if (statFinanceiroPago) setText(statFinanceiroPago, formatCurrencyBR(pago));
 }
 
 // ====== FINANCEIRO ======
+function getFinanceiroStatus(lancamento) {
+  const dataPagamento = parseDateValue(lancamento?.dataPagamento);
+  if (dataPagamento) return "PAGO";
+
+  const dataVencimento = parseDateValue(lancamento?.dataVencimento);
+  if (!dataVencimento) return "A_PAGAR";
+
+  const hoje = new Date();
+  const hojeSemHora = new Date(
+    hoje.getFullYear(),
+    hoje.getMonth(),
+    hoje.getDate()
+  );
+  const vencSemHora = new Date(
+    dataVencimento.getFullYear(),
+    dataVencimento.getMonth(),
+    dataVencimento.getDate()
+  );
+
+  if (vencSemHora < hojeSemHora) return "VENCIDO";
+  return "A_PAGAR";
+}
+
 function mapTipoLancamento(tipo) {
   switch (tipo) {
     case "JOIA":
@@ -742,15 +790,263 @@ function mapTipoLancamento(tipo) {
 
 function mapStatusLancamento(status) {
   switch (status) {
-    case "ABERTO":
-      return "Em aberto";
+    case "A_PAGAR":
+      return "A pagar";
     case "PAGO":
       return "Pago";
-    case "CANCELADO":
-      return "Cancelado";
+    case "VENCIDO":
+      return "Vencido";
+    case "ABERTO":
+      return "A pagar";
     default:
       return status || "?";
   }
+}
+
+function updateFinanceiroStatusSelect() {
+  if (!finStatusSelect) return;
+  const statusCalc = getFinanceiroStatus({
+    dataVencimento: finDataVencimentoInput?.value || null,
+    dataPagamento: finDataPagamentoInput?.value || null,
+  });
+  finStatusSelect.value = statusCalc;
+}
+
+function toChartKey(value, fallback = "Sem informação") {
+  if (!value && value !== 0) return fallback;
+  return String(value).trim() || fallback;
+}
+
+function buildFinanceiroChartData(lancamentos, labelGetter) {
+  const map = new Map();
+  lancamentos.forEach((l) => {
+    const label = toChartKey(labelGetter(l));
+    const status = getFinanceiroStatus(l);
+    const valor = Number(l.valor) || 0;
+    if (!map.has(label)) {
+      map.set(label, { label, pago: 0, vencido: 0, aPagar: 0, total: 0 });
+    }
+    const item = map.get(label);
+    if (status === "PAGO") item.pago += valor;
+    else if (status === "VENCIDO") item.vencido += valor;
+    else item.aPagar += valor;
+    item.total += valor;
+  });
+  return Array.from(map.values()).sort((a, b) => b.total - a.total);
+}
+
+function updateFinanceiroKpis(lancamentos) {
+  if (!finKpiTotal && !finKpiPago && !finKpiAPagar && !finKpiVencido) return;
+  let total = 0;
+  let pago = 0;
+  let vencido = 0;
+  let aPagar = 0;
+  lancamentos.forEach((l) => {
+    const val = Number(l.valor) || 0;
+    total += val;
+    const status = getFinanceiroStatus(l);
+    if (status === "PAGO") pago += val;
+    else if (status === "VENCIDO") vencido += val;
+    else aPagar += val;
+  });
+  if (finKpiTotal) setText(finKpiTotal, formatCurrencyBR(total));
+  if (finKpiPago) setText(finKpiPago, formatCurrencyBR(pago));
+  if (finKpiAPagar) setText(finKpiAPagar, formatCurrencyBR(aPagar));
+  if (finKpiVencido) setText(finKpiVencido, formatCurrencyBR(vencido));
+  if (finKpiInadimplencia) {
+    const base = aPagar + vencido;
+    const perc = base ? Math.round((vencido / base) * 100) : 0;
+    setText(finKpiInadimplencia, `${perc}%`);
+  }
+}
+
+function renderFinanceiroChart(container, title, data) {
+  if (!container) return;
+  if (!data.length) {
+    container.innerHTML =
+      '<div class="fin-chart-empty">Sem dados para exibir.</div>';
+    return;
+  }
+
+  const max = Math.max(...data.map((d) => d.total), 1);
+  const rows = data
+    .map((d) => {
+      const pagoPct = (d.pago / max) * 100;
+      const vencidoPct = (d.vencido / max) * 100;
+      const aPagarPct = (d.aPagar / max) * 100;
+      const totalLabel = formatCurrencyBR(d.total);
+      return `
+        <div class="fin-chart-row">
+          <div class="fin-chart-row-label">${d.label}</div>
+          <div class="fin-bar" role="img" aria-label="${d.label}: ${totalLabel}">
+            <span class="fin-seg fin-seg-pago" style="width:${pagoPct}%" aria-hidden="true"></span>
+            <span class="fin-seg fin-seg-vencido" style="width:${vencidoPct}%" aria-hidden="true"></span>
+            <span class="fin-seg fin-seg-apagar" style="width:${aPagarPct}%" aria-hidden="true"></span>
+          </div>
+          <div class="fin-chart-row-value">${totalLabel}</div>
+        </div>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <div class="fin-chart-title">${title}</div>
+    <div class="fin-chart-rows">${rows}</div>
+  `;
+}
+
+function renderFinanceiroCharts(lancamentos, mapaQuadrilhas) {
+  if (!finChartQuadrilha && !finChartAno && !finChartTipo) return;
+
+  const byQuadrilha = buildFinanceiroChartData(lancamentos, (l) => {
+    return (l.quadrilhaId && mapaQuadrilhas[l.quadrilhaId]) || l.quadrilhaId;
+  });
+  const byQuadrilhaTop = byQuadrilha.slice(0, 10);
+  if (byQuadrilha.length > 10) {
+    const resto = byQuadrilha.slice(10).reduce(
+      (acc, item) => {
+        acc.pago += item.pago;
+        acc.vencido += item.vencido;
+        acc.aPagar += item.aPagar;
+        acc.total += item.total;
+        return acc;
+      },
+      { label: "Outras", pago: 0, vencido: 0, aPagar: 0, total: 0 }
+    );
+    byQuadrilhaTop.push(resto);
+  }
+  const byAno = buildFinanceiroChartData(lancamentos, (l) => l.ano);
+  const byTipo = buildFinanceiroChartData(lancamentos, (l) =>
+    mapTipoLancamento(l.tipo)
+  );
+
+  renderFinanceiroChart(finChartQuadrilha, "Por quadrilha", byQuadrilhaTop);
+  renderFinanceiroChart(finChartAno, "Por ano", byAno);
+  renderFinanceiroChart(finChartTipo, "Por tipo de pagamento", byTipo);
+}
+
+function applyFinanceiroFilters(lancamentos, mapaQuadrilhas) {
+  const filtroQuadrilha = finFiltroQuadrilha?.value || "";
+  const filtroAno = finFiltroAno?.value || "";
+  const filtroStatus = finFiltroStatus?.value || "";
+  const filtroTipo = finFiltroTipo?.value || "";
+  const filtroInicio = finFiltroVencInicio?.value || "";
+  const filtroFim = finFiltroVencFim?.value || "";
+  const busca = (finFiltroBusca?.value || "").trim().toLowerCase();
+
+  const inicioDate = filtroInicio ? parseDateValue(filtroInicio) : null;
+  const fimDate = filtroFim ? parseDateValue(filtroFim) : null;
+
+  let visiveis = lancamentos.filter((l) => {
+    const okQuadrilha =
+      !filtroQuadrilha || l.quadrilhaId === filtroQuadrilha;
+    const okAno = !filtroAno || (l.ano && String(l.ano) === String(filtroAno));
+    const okStatus =
+      !filtroStatus || getFinanceiroStatus(l) === filtroStatus;
+    const okTipo = !filtroTipo || l.tipo === filtroTipo;
+
+    let okVenc = true;
+    if (inicioDate || fimDate) {
+      const venc = parseDateValue(l.dataVencimento);
+      if (!venc) okVenc = false;
+      if (inicioDate && venc && venc < inicioDate) okVenc = false;
+      if (fimDate && venc && venc > fimDate) okVenc = false;
+    }
+
+    let okBusca = true;
+    if (busca) {
+      const nomeQuadrilha =
+        (l.quadrilhaId && mapaQuadrilhas[l.quadrilhaId]) || l.quadrilhaId || "";
+      const hay = `${nomeQuadrilha} ${l.descricao || ""} ${l.tipo || ""}`.toLowerCase();
+      okBusca = hay.includes(busca);
+    }
+
+    return okQuadrilha && okAno && okStatus && okTipo && okVenc && okBusca;
+  });
+
+  const ordenar = finOrdenacao?.value || "valor_desc";
+  const getValor = (item) => Number(item.valor) || 0;
+  const getNomeQuadrilha = (item) =>
+    (item.quadrilhaId && mapaQuadrilhas[item.quadrilhaId]) ||
+    item.quadrilhaId ||
+    "";
+  const getVenc = (item) => parseDateValue(item.dataVencimento)?.getTime() || 0;
+
+  visiveis.sort((a, b) => {
+    switch (ordenar) {
+      case "valor_asc":
+        return getValor(a) - getValor(b);
+      case "venc_asc":
+        return getVenc(a) - getVenc(b);
+      case "venc_desc":
+        return getVenc(b) - getVenc(a);
+      case "quadrilha_asc":
+        return getNomeQuadrilha(a).localeCompare(getNomeQuadrilha(b));
+      case "valor_desc":
+      default:
+        return getValor(b) - getValor(a);
+    }
+  });
+
+  return visiveis;
+}
+
+function getMaxAno(lancamentos) {
+  const anos = lancamentos
+    .map((l) => (l.ano ? Number(l.ano) : null))
+    .filter((v) => Number.isFinite(v));
+  if (!anos.length) return null;
+  return Math.max(...anos).toString();
+}
+
+function getSortedAnos(lancamentos) {
+  const anosSet = new Set();
+  lancamentos.forEach((l) => {
+    if (l.ano) anosSet.add(String(l.ano));
+  });
+  return Array.from(anosSet).sort();
+}
+
+function ensureAnoSelecionado(lancamentos) {
+  if (!finFiltroAno) return;
+  const anos = getSortedAnos(lancamentos);
+  if (!anos.length) return;
+  if (!finFiltroAno.value) {
+    finFiltroAno.value = anos[anos.length - 1];
+  }
+  updateYearChipsState();
+}
+
+function populateAnoOptions(lancamentos) {
+  if (!finFiltroAno) return;
+  const anos = getSortedAnos(lancamentos);
+  finFiltroAno.innerHTML = '<option value="">Todos</option>';
+  anos.forEach((ano) => {
+    const opt = document.createElement("option");
+    opt.value = ano;
+    opt.textContent = ano;
+    finFiltroAno.appendChild(opt);
+  });
+  renderYearChips(anos);
+}
+
+function renderYearChips(anos) {
+  if (!finYearChips) return;
+  finYearChips.innerHTML = anos
+    .map(
+      (ano) =>
+        `<button class="fin-year-chip" type="button" data-year="${ano}">${ano}</button>`
+    )
+    .join("");
+  updateYearChipsState();
+}
+
+function updateYearChipsState() {
+  if (!finYearChips || !finFiltroAno) return;
+  const selected = finFiltroAno.value;
+  finYearChips.querySelectorAll(".fin-year-chip").forEach((btn) => {
+    btn.classList.toggle("is-active", btn.dataset.year === selected);
+  });
 }
 
 async function fetchLancamentosFinanceiros() {
@@ -776,7 +1072,7 @@ function renderFinanceiroRow(l, mapaQuadrilhas, canEdit = false) {
     "?";
 
   const tipoLabel = mapTipoLancamento(l.tipo);
-  const statusLabel = mapStatusLancamento(l.status);
+  const statusLabel = mapStatusLancamento(getFinanceiroStatus(l));
   const ano = l.ano || "?";
   const descricao = l.descricao || "?";
   const valor =
@@ -855,8 +1151,12 @@ async function loadFinanceiroForCurrentUser() {
       if (finSubtitle)
         finSubtitle.textContent = "Financeiro da sua quadrilha.";
 
-      visiveis = lancamentos.filter(
-        (l) => l.quadrilhaId === quadrilhaIdUser
+      populateAnoOptions(lancamentos);
+      ensureAnoSelecionado(lancamentos);
+
+      visiveis = applyFinanceiroFilters(
+        lancamentos.filter((l) => l.quadrilhaId === quadrilhaIdUser),
+        mapaQuadrilhas
       );
     } else if (papel === "LIGA_ADMIN") {
       // Liga vê todos, com filtros
@@ -864,41 +1164,16 @@ async function loadFinanceiroForCurrentUser() {
       if (finSubtitle)
         finSubtitle.textContent = "Financeiro das quadrilhas.";
 
-      const filtroQuadrilha = finFiltroQuadrilha?.value || "";
-      const filtroAno = finFiltroAno?.value || "";
-      const filtroStatus = finFiltroStatus?.value || "";
-
-      visiveis = lancamentos.filter((l) => {
-        const okQuadrilha =
-          !filtroQuadrilha || l.quadrilhaId === filtroQuadrilha;
-        const okAno =
-          !filtroAno ||
-          (l.ano && String(l.ano) === String(filtroAno));
-        const okStatus = !filtroStatus || l.status === filtroStatus;
-        const okTipo = !filtroTipo || l.tipo === filtroTipo;
-        return okQuadrilha && okAno && okStatus && okTipo;
-      });
-
-      // preencher opções de ano no filtro
-      if (finFiltroAno) {
-        const anosSet = new Set();
-        lancamentos.forEach((l) => {
-          if (l.ano) anosSet.add(String(l.ano));
-        });
-        const anosOrdenados = Array.from(anosSet).sort();
-        finFiltroAno.innerHTML = '<option value="">Todos</option>';
-        anosOrdenados.forEach((ano) => {
-          const opt = document.createElement("option");
-          opt.value = ano;
-          opt.textContent = ano;
-          finFiltroAno.appendChild(opt);
-        });
-      }
+      populateAnoOptions(lancamentos);
+      ensureAnoSelecionado(lancamentos);
+      visiveis = applyFinanceiroFilters(lancamentos, mapaQuadrilhas);
     } else {
       if (finFiltersCard) finFiltersCard.style.display = "none";
       if (finSubtitle)
         finSubtitle.textContent =
           "Financeiro (perfil sem acesso detalhado).";
+      populateAnoOptions(lancamentos);
+      ensureAnoSelecionado(lancamentos);
       visiveis = [];
     }
 
@@ -919,12 +1194,16 @@ async function loadFinanceiroForCurrentUser() {
     if (!visiveis.length) {
       finTableBody.innerHTML =
         '<tr><td colspan="9">Nenhum lançamento encontrado.</td></tr>';
+      renderFinanceiroCharts([], mapaQuadrilhas);
+      updateFinanceiroKpis([]);
       return;
     }
 
     finTableBody.innerHTML = visiveis
       .map((l) => renderFinanceiroRow(l, mapaQuadrilhas, canEdit))
       .join("");
+    renderFinanceiroCharts(visiveis, mapaQuadrilhas);
+    updateFinanceiroKpis(visiveis);
     updateDashboardWidgets();
   } catch (error) {
     console.error("Erro ao carregar financeiro:", error);
@@ -941,6 +1220,7 @@ function resetFinanceiroFormState(clearMessage = true) {
   if (finFormSubmitBtn)
     finFormSubmitBtn.textContent = finFormSubmitBtnDefaultLabel;
   if (clearMessage && finFormMessage) setText(finFormMessage, "");
+  updateFinanceiroStatusSelect();
 }
 
 function startEditingLancamento(lancamento) {
@@ -956,7 +1236,9 @@ function startEditingLancamento(lancamento) {
       lancamento.valor !== undefined && lancamento.valor !== null
         ? String(lancamento.valor)
         : "";
-  if (finStatusSelect) finStatusSelect.value = lancamento.status || "ABERTO";
+  if (finStatusSelect) {
+    finStatusSelect.value = getFinanceiroStatus(lancamento);
+  }
   if (finDataVencimentoInput)
     finDataVencimentoInput.value = formatDateForInput(
       lancamento.dataVencimento
@@ -969,12 +1251,19 @@ function startEditingLancamento(lancamento) {
   if (finFormCancelBtn) finFormCancelBtn.style.display = "inline-block";
   if (finFormMessage) setText(finFormMessage, "Editando lançamento.");
   if (finFormSubmitBtn) finFormSubmitBtn.textContent = "Salvar alterações";
+  updateFinanceiroStatusSelect();
 }
 
 if (finFormCancelBtn) {
   finFormCancelBtn.addEventListener("click", () => {
     resetFinanceiroFormState();
   });
+}
+if (finDataVencimentoInput) {
+  finDataVencimentoInput.addEventListener("change", updateFinanceiroStatusSelect);
+}
+if (finDataPagamentoInput) {
+  finDataPagamentoInput.addEventListener("change", updateFinanceiroStatusSelect);
 }
 
 if (finTableBody) {
@@ -1550,9 +1839,9 @@ if (finForm) {
     const ano = finAnoInput.value;
     const descricao = finDescricaoInput.value.trim();
     const valor = finValorInput.value;
-    const status = finStatusSelect.value;
     const dataVencimento = finDataVencimentoInput.value || null;
     const dataPagamento = finDataPagamentoInput.value || null;
+    const status = getFinanceiroStatus({ dataVencimento, dataPagamento });
     const observacoes = finObsTextarea.value.trim() || null;
 
     if (!quadrilhaId || !tipo || !ano || !descricao || !valor) {
@@ -1624,6 +1913,71 @@ if (docFiltroQuadrilha) {
 if (docFiltroStatus) {
   docFiltroStatus.addEventListener("change", () => {
     loadDocumentosForCurrentUser();
+  });
+}
+if (finFiltroQuadrilha) {
+  finFiltroQuadrilha.addEventListener("change", () => {
+    loadFinanceiroForCurrentUser();
+  });
+}
+if (finFiltroAno) {
+  finFiltroAno.addEventListener("change", () => {
+    loadFinanceiroForCurrentUser();
+  });
+}
+if (finFiltroTipo) {
+  finFiltroTipo.addEventListener("change", () => {
+    loadFinanceiroForCurrentUser();
+  });
+}
+if (finFiltroStatus) {
+  finFiltroStatus.addEventListener("change", () => {
+    loadFinanceiroForCurrentUser();
+  });
+}
+if (finYearChips) {
+  finYearChips.addEventListener("click", (event) => {
+    const btn = event.target.closest(".fin-year-chip");
+    if (!btn || !finFiltroAno) return;
+    finFiltroAno.value = btn.dataset.year || "";
+    updateYearChipsState();
+    loadFinanceiroForCurrentUser();
+  });
+}
+if (finClearFilters) {
+  finClearFilters.addEventListener("click", () => {
+    if (finFiltroBusca) finFiltroBusca.value = "";
+    if (finFiltroQuadrilha) finFiltroQuadrilha.value = "";
+    if (finFiltroTipo) finFiltroTipo.value = "";
+    if (finFiltroStatus) finFiltroStatus.value = "";
+    if (finFiltroVencInicio) finFiltroVencInicio.value = "";
+    if (finFiltroVencFim) finFiltroVencFim.value = "";
+    if (finOrdenacao) finOrdenacao.value = "valor_desc";
+    loadFinanceiroForCurrentUser();
+  });
+}
+if (finFiltroVencInicio) {
+  finFiltroVencInicio.addEventListener("change", () => {
+    loadFinanceiroForCurrentUser();
+  });
+}
+if (finFiltroVencFim) {
+  finFiltroVencFim.addEventListener("change", () => {
+    loadFinanceiroForCurrentUser();
+  });
+}
+if (finFiltroBusca) {
+  let finBuscaTimeout = null;
+  finFiltroBusca.addEventListener("input", () => {
+    if (finBuscaTimeout) window.clearTimeout(finBuscaTimeout);
+    finBuscaTimeout = window.setTimeout(() => {
+      loadFinanceiroForCurrentUser();
+    }, 200);
+  });
+}
+if (finOrdenacao) {
+  finOrdenacao.addEventListener("change", () => {
+    loadFinanceiroForCurrentUser();
   });
 }
 if (docFiltroTipo) {

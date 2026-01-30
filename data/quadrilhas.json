@@ -1090,5 +1090,41 @@
       "casal_noivos_2025": "Luciana Nascimento e Luan Barros"
     },
     "logo": "arraia-chapeu-de-palha-logo.png"
+  },
+    {
+    "id": 27,
+    "nome": "Paixão Cangaço",
+    "slug": "paixao-cangaco",
+    "cidade": "Águas Lindas de Goiás/GO",
+    "uf": "GO",
+    "grupo": "Acesso",
+    "grupo_2025": "acesso",
+    "posicao_2025": null,
+    "foto": "paixao-cangaco.JPEG",
+    "foto_capa": "paixao-cangaco-capa.JPEG",
+    "instagram": "@paixaocangaço",
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.75,
+      "lng": -48.25
+    },
+    "pontos2025": null,
+    "notas_2025": {
+      "total": null
+    },
+    "historico": [],
+    "perfil": {
+      "bio": "A Quadrilha Paixão Cangaço é de Águas Lindas de Goiás/GO e completa 18 anos de história em 2026. Fundada em 08 de agosto de 2008, a Quadrilha Junina Paixão Cangaço nasceu da iniciativa de amigos com o propósito de transformar vidas por meio da cultura. Desde sua criação, o grupo atua no resgate de jovens em situação de vulnerabilidade social, promovendo acesso à arte, ao convívio comunitário e ao sentimento de pertencimento. Ao longo de sua trajetória, consolidou-se como um importante agente cultural do município, representando a cidade em festivais regionais, distritais e nacionais. Em 2026, a Paixão Cangaço celebra 18 anos de história, marcados por resistência cultural, evolução artística e importantes conquistas, reafirmando seu compromisso com a valorização da cultura junina e nordestina.",
+      "tema_2024": "Entre encontros e Partidas",
+      "temporada_2024_descricao": "Movido pelo sonho de prosperar, o sertanejo Juscelino deixa sua terra natal em busca de uma nova vida, levando consigo memórias, esperanças e um amor deixado para trás. Na cidade, novas histórias se cruzam com a chegada da família de Filomena, vinda do Sertão para cumprir a tradição do casamento na noite de São João. Entre reencontros, festas e lembranças, o povo celebra suas origens, mantendo viva a cultura nordestina. Ao fim da celebração, partidas e retornos se fazem necessários, restando na memória a força da tradição, das histórias vividas e da identidade do Sertão.",
+      "idade_grupo": "18 anos",
+      "elenco_aproximado": "32 casais",
+      "marcador": "Netinho Sousa",
+      "casal_noivos_2024": "Geysa Pereira e Jean Morais"
+    },
+    "logo": "paixao-cangaco.png"
   }
 ]
