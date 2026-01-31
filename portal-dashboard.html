@@ -2230,6 +2230,26 @@
   <script type="module" src="js/shared.min.js"></script>
 
 
+  <div id="passwordChangeModal" class="portal-modal" hidden>
+    <div class="portal-modal-card">
+      <h3>Atualize sua senha</h3>
+      <p class="muted">Primeiro acesso: defina uma nova senha para continuar.</p>
+      <form id="passwordChangeForm" class="portal-form">
+        <div class="form-group">
+          <label for="passwordNew">Nova senha</label>
+          <input id="passwordNew" type="password" minlength="8" required />
+        </div>
+        <div class="form-group">
+          <label for="passwordConfirm">Confirmar senha</label>
+          <input id="passwordConfirm" type="password" minlength="8" required />
+        </div>
+        <button type="submit" class="btn">Salvar nova senha</button>
+        <p id="passwordChangeMessage" class="form-message"></p>
+      </form>
+    </div>
+  </div>
+
+
 <footer class="site-footer" aria-label="Rodap&eacute;">
 
   <div class="container footer-grid">

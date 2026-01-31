@@ -1,6 +1,7 @@
 const admin = require("firebase-admin");
 const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
+const crypto = require("crypto");
 
 admin.initializeApp();
 
@@ -19,6 +20,16 @@ function sanitizeText(value) {
     .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
     .replace(/[<>]/g, "")
     .trim();
+}
+
+function generateTempPassword() {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
+  const bytes = crypto.randomBytes(12);
+  let password = "";
+  for (let i = 0; i < bytes.length; i += 1) {
+    password += alphabet[bytes[i] % alphabet.length];
+  }
+  return password;
 }
 
 function normalizeTags(tags, keywords) {
@@ -217,4 +228,61 @@ exports.generateNewsDraft = onCall(async (request) => {
     tags,
     conteudoPortal: normalized,
   };
+});
+
+exports.createPortalUser = onCall({ cors: true }, async (request) => {
+  if (!request.auth) {
+    throw new HttpsError("unauthenticated", "Usuário não autenticado.");
+  }
+
+  const callerEmail = request.auth.token?.email;
+  if (!callerEmail) {
+    throw new HttpsError("permission-denied", "E-mail do usuário não encontrado.");
+  }
+
+  const callerSnap = await db.collection("users").doc(callerEmail).get();
+  const callerData = callerSnap.exists ? callerSnap.data() : null;
+  if (!callerData || callerData.papel !== "LIGA_ADMIN") {
+    throw new HttpsError("permission-denied", "Sem permissão para criar usuários.");
+  }
+
+  const body = request.data || {};
+  const email = sanitizeText(body.email || "").toLowerCase();
+  const nome = sanitizeText(body.nome || "");
+  const papel = sanitizeText(body.papel || "");
+  const quadrilhaId = sanitizeText(body.quadrilhaId || "");
+
+  if (!email || !papel) {
+    throw new HttpsError("invalid-argument", "E-mail e papel são obrigatórios.");
+  }
+
+  const tempPassword = generateTempPassword();
+
+  try {
+    await admin.auth().createUser({
+      email,
+      password: tempPassword,
+      displayName: nome || undefined,
+    });
+  } catch (err) {
+    if (err?.code === "auth/email-already-exists") {
+      throw new HttpsError("already-exists", "Usuário já existe no Auth.");
+    }
+    logger.error("Erro ao criar usuário no Auth", err);
+    throw new HttpsError("internal", "Erro ao criar usuário.");
+  }
+
+  await db.collection("users").doc(email).set(
+    {
+      email,
+      nome: nome || null,
+      papel,
+      quadrilhaId: quadrilhaId || null,
+      mustChangePassword: true,
+      passwordGeneratedAt: admin.firestore.FieldValue.serverTimestamp(),
+    },
+    { merge: true }
+  );
+
+  return { password: tempPassword };
 });

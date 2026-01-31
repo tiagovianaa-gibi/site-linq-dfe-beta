@@ -6,6 +6,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signOut,
+  updatePassword,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 import {
@@ -183,6 +184,11 @@ const assembleiasToggleBtn = document.getElementById("assembleiasToggleBtn");
 const assembleiasBody = document.getElementById("assembleiasBody");
 const votacoesToggleBtn = document.getElementById("votacoesToggleBtn");
 const votacoesBody = document.getElementById("votacoesBody");
+const passwordChangeModal = document.getElementById("passwordChangeModal");
+const passwordChangeForm = document.getElementById("passwordChangeForm");
+const passwordNewInput = document.getElementById("passwordNew");
+const passwordConfirmInput = document.getElementById("passwordConfirm");
+const passwordChangeMessage = document.getElementById("passwordChangeMessage");
 
 if (!finFormCancelBtn && finForm) {
   const cancelBtn = document.createElement("button");
@@ -573,6 +579,11 @@ async function loadCurrentUserData(user) {
   }
   if (finAdminArea) {
     finAdminArea.style.display = papel === "LIGA_ADMIN" ? "block" : "none";
+  }
+
+  if (data.mustChangePassword && passwordChangeModal) {
+    passwordChangeModal.hidden = false;
+    document.body.classList.add("portal-modal-open");
   }
 
   return data;
@@ -2458,29 +2469,76 @@ if (userForm) {
     setText(userFormMessage, "Salvando usuário...");
 
     try {
-      await setDoc(
-        doc(db, "users", email),
-        {
+      let result = null;
+      try {
+        const createPortalUser = httpsCallable(functions, "createPortalUser");
+        result = await createPortalUser({
           email,
-          nome: nome || null,
+          nome,
           papel,
           quadrilhaId: papelPrecisaQuadrilha(papel) ? quadrilhaId : null,
-        },
-        { merge: true }
-      );
-
+        });
+      } catch (callErr) {
+        const code = callErr?.code || "";
+        if (code === "functions/not-found") {
+          const createPortalUserFallback = httpsCallable(
+            functionsFallback,
+            "createPortalUser"
+          );
+          result = await createPortalUserFallback({
+            email,
+            nome,
+            papel,
+            quadrilhaId: papelPrecisaQuadrilha(papel) ? quadrilhaId : null,
+          });
+        } else {
+          throw callErr;
+        }
+      }
+      const tempPassword = result?.data?.password;
       setText(
         userFormMessage,
-        "Usuário salvo/atualizado com sucesso. O login precisa existir no Auth."
+        tempPassword
+          ? `Usuário criado. Senha temporária: ${tempPassword}`
+          : "Usuário criado com sucesso."
       );
       userForm.reset();
       atualizarVisibilidadeQuadrilhaPorPapel();
     } catch (err) {
+      if (err?.code === "functions/already-exists") {
+        try {
+          await setDoc(
+            doc(db, "users", email),
+            {
+              email,
+              nome: nome || null,
+              papel,
+              quadrilhaId: papelPrecisaQuadrilha(papel) ? quadrilhaId : null,
+            },
+            { merge: true }
+          );
+          setText(
+            userFormMessage,
+            "Usuário já existe. Dados atualizados (senha mantida)."
+          );
+          userForm.reset();
+          atualizarVisibilidadeQuadrilhaPorPapel();
+          return;
+        } catch (innerErr) {
+          console.error("Erro ao atualizar usuário existente:", innerErr);
+        }
+      }
       console.error("Erro ao salvar usuário:", err);
-      setText(
-        userFormMessage,
-        "Erro ao salvar usuário. Tente novamente."
-      );
+      const code = err?.code || "";
+      const msg =
+        code === "functions/not-found"
+          ? "Função não encontrada. É necessário publicar as functions."
+          : code === "functions/permission-denied"
+          ? "Sem permissão para criar usuários."
+          : code === "functions/unauthenticated"
+          ? "Sessão expirada. Faça login novamente."
+          : "Erro ao salvar usuário. Tente novamente.";
+      setText(userFormMessage, msg);
     }
   });
 }
@@ -3123,6 +3181,54 @@ if (logoutButton) {
     } catch (error) {
       console.error("Erro ao sair:", error);
       alert("Erro ao sair. Tente novamente.");
+    }
+  });
+}
+
+if (passwordChangeForm) {
+  passwordChangeForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!auth.currentUser) return;
+    const newPass = passwordNewInput?.value || "";
+    const confirmPass = passwordConfirmInput?.value || "";
+    if (newPass.length < 8) {
+      setText(passwordChangeMessage, "A senha precisa ter ao menos 8 caracteres.");
+      return;
+    }
+    if (newPass !== confirmPass) {
+      setText(passwordChangeMessage, "As senhas não conferem.");
+      return;
+    }
+    setText(passwordChangeMessage, "Atualizando senha...");
+    try {
+      await updatePassword(auth.currentUser, newPass);
+      const targetEmail = currentUserData?.email || auth.currentUser?.email;
+      if (targetEmail) {
+        await setDoc(
+          doc(db, "users", targetEmail.toLowerCase()),
+          {
+            mustChangePassword: false,
+            passwordChangedAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+      }
+      if (currentUserData) currentUserData.mustChangePassword = false;
+      if (passwordChangeModal) {
+        passwordChangeModal.hidden = true;
+        passwordChangeModal.setAttribute("hidden", "");
+        passwordChangeModal.style.display = "none";
+      }
+      document.body.classList.remove("portal-modal-open");
+      setText(passwordChangeMessage, "");
+    } catch (err) {
+      console.error("Erro ao atualizar senha:", err);
+      const code = err?.code || "";
+      const message =
+        code === "auth/requires-recent-login"
+          ? "Sessão expirada. Faça logout e entre novamente para atualizar a senha."
+          : "Erro ao atualizar senha. Tente novamente.";
+      setText(passwordChangeMessage, message);
     }
   });
 }

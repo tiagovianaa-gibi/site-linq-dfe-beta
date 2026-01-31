@@ -463,6 +463,29 @@
   }
 }
 
+.portal-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1.5rem;
+}
+
+.portal-modal-card {
+  width: min(420px, 100%);
+  background: #ffffff;
+  border-radius: 0.9rem;
+  padding: 1.25rem;
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.2);
+}
+
+.portal-modal-open {
+  overflow: hidden;
+}
+
 .quadrilha-item.is-open {
   z-index: 10;
 }
