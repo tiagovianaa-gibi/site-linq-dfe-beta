@@ -2365,6 +2365,12 @@ footer a:hover {
   background: #0b1320;
   color: #e8ecf5;
   padding: 1.25rem 0.75rem;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  z-index: 20;
 }
 
 /* IMPORTANTE: neutraliza o estilo global de nav dentro do sidebar */
@@ -2414,6 +2420,7 @@ footer a:hover {
 .portal-content {
   flex: 1;
   padding: 2rem 3rem;
+  margin-left: 240px;
 }
 
 .portal-section {

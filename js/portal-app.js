@@ -17,6 +17,9 @@ import {
   setDoc,
   addDoc,
   deleteDoc,
+  query,
+  where,
+  orderBy,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import {
@@ -150,6 +153,36 @@ const finKpiVencido = document.getElementById("finKpiVencido");
 const finKpiInadimplencia = document.getElementById("finKpiInadimplencia");
 const finYearChips = document.getElementById("finYearChips");
 const finClearFilters = document.getElementById("finClearFilters");
+
+// Pessoas / Elenco
+const pessoasSubtitle = document.getElementById("pessoasSubtitle");
+const pessoasAdminArea = document.getElementById("pessoasAdminArea");
+const pessoasNoAccess = document.getElementById("pessoasNoAccess");
+const assembleiaForm = document.getElementById("assembleiaForm");
+const assembleiaFormMessage = document.getElementById("assembleiaFormMessage");
+const assembleiaTituloInput = document.getElementById("assembleiaTitulo");
+const assembleiaDataInput = document.getElementById("assembleiaData");
+const assembleiaAtaInput = document.getElementById("assembleiaAtaUrl");
+const assembleiaQuadrilhasList = document.getElementById(
+  "assembleiaQuadrilhasList"
+);
+const assembleiasTableBody = document.getElementById("assembleiasTableBody");
+const pessoasKpiAssembleias = document.getElementById("pessoasKpiAssembleias");
+const pessoasKpiComFalta = document.getElementById("pessoasKpiComFalta");
+const pessoasKpiEmRisco = document.getElementById("pessoasKpiEmRisco");
+const faltasTableBody = document.getElementById("faltasTableBody");
+const votacoesQuadrilhasList = document.getElementById("votacoesQuadrilhasList");
+const votacoesTotalManter = document.getElementById("votacoesTotalManter");
+const votacoesTotalAlterar = document.getElementById("votacoesTotalAlterar");
+const votacoesTotalAbstencao = document.getElementById("votacoesTotalAbstencao");
+const votacoesClearAll = document.getElementById("votacoesClearAll");
+const faltasToggleBtn = document.getElementById("faltasToggleBtn");
+const faltasDashboardBody = document.getElementById("faltasDashboardBody");
+let editingAssembleiaId = null;
+const assembleiasToggleBtn = document.getElementById("assembleiasToggleBtn");
+const assembleiasBody = document.getElementById("assembleiasBody");
+const votacoesToggleBtn = document.getElementById("votacoesToggleBtn");
+const votacoesBody = document.getElementById("votacoesBody");
 
 if (!finFormCancelBtn && finForm) {
   const cancelBtn = document.createElement("button");
@@ -546,8 +579,8 @@ async function loadCurrentUserData(user) {
 }
 
 // ====== QUADRILHAS ======
-async function fetchQuadrilhas() {
-  if (quadrilhasCache) {
+async function fetchQuadrilhas(force = false) {
+  if (!force && quadrilhasCache) {
     return quadrilhasCache;
   }
 
@@ -584,11 +617,21 @@ function renderQuadrilhaCard(q, docStatusLabel) {
   const documentosLinha = docStatusLabel
     ? `<p class="card-text"><strong>Documentos:</strong> ${docStatusLabel}</p>`
     : `<p class="card-text"><strong>Documentos:</strong> --</p>`;
+  const anoFiliacao = `<p class="card-text"><strong>Ano de filiação:</strong> ${
+    q.ano_filiacao ? q.ano_filiacao : "—"
+  }</p>`;
+  const podeEditar = currentUserData?.papel === "LIGA_ADMIN";
+  const editBtn = podeEditar
+    ? `<button class="btn btn-light btn-sm js-edit-quadrilha" data-id="${q.id}">Editar quadrilha</button>`
+    : "";
+  const detalhesId = `quadrilha-detalhes-${q.id}`;
 
   return `
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">${q.nome || q.id}</h3>
+    <div class="card quadrilha-item" data-id="${q.id}">
+      <button class="quadrilha-summary" type="button" data-toggle="${detalhesId}">
+        <span class="quadrilha-name">${q.nome || q.id}</span>
+      </button>
+      <div id="${detalhesId}" class="card-body quadrilha-body" hidden>
         <p class="card-text">
           <strong>Sigla:</strong> ${q.sigla || q.id}
         </p>
@@ -598,11 +641,46 @@ function renderQuadrilhaCard(q, docStatusLabel) {
         <p class="card-text">
           <strong>Grupo atual:</strong> ${statusGrupo}
         </p>
+        ${anoFiliacao}
         ${documentosLinha}
         ${insta}
+        ${editBtn}
       </div>
     </div>
   `;
+}
+
+function startEditingQuadrilha(q) {
+  if (!quadrilhaForm) return;
+  const idInput = document.getElementById("qId");
+  const originalIdInput = document.getElementById("qOriginalId");
+  const nomeInput = document.getElementById("qNome");
+  const cidadeInput = document.getElementById("qCidade");
+  const ufInput = document.getElementById("qUF");
+  const grupoInput = document.getElementById("qGrupo");
+  const instagramInput = document.getElementById("qInstagram");
+  const anoFiliacaoInput = document.getElementById("qAnoFiliacao");
+
+  if (idInput) {
+    idInput.value = (q.sigla || q.id || "").toString();
+    idInput.disabled = true;
+  }
+  if (originalIdInput) originalIdInput.value = q.id || "";
+  if (nomeInput) nomeInput.value = q.nome || "";
+  if (cidadeInput) cidadeInput.value = q.cidade || "";
+  if (ufInput) ufInput.value = q.uf || "";
+  if (grupoInput) grupoInput.value = q.grupo_atual || "";
+  if (instagramInput) instagramInput.value = q.instagram || "";
+  if (anoFiliacaoInput)
+    anoFiliacaoInput.value = q.ano_filiacao ? String(q.ano_filiacao) : "";
+
+  if (quadrilhaFormMessage) {
+    quadrilhaFormMessage.textContent = "Editando quadrilha selecionada.";
+  }
+  if (quadrilhaAdminArea) {
+    quadrilhaAdminArea.style.display = "block";
+  }
+  quadrilhaForm.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 // ====== DOCUMENTOS ======
@@ -822,9 +900,386 @@ function updateFinanceiroStatusSelect() {
   finStatusSelect.value = statusCalc;
 }
 
+// ====== PESSOAS / ASSEMBLEIAS ======
+let assembleiasCache = null;
+let presencasCache = null;
+
+function formatDateShort(dateStr) {
+  if (!dateStr) return "-";
+  const d = new Date(dateStr);
+  if (Number.isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString("pt-BR");
+}
+
+function getAssembleiaAno(assembleia) {
+  const fromField = Number(assembleia?.ano);
+  if (Number.isFinite(fromField)) return fromField;
+  const parsed = parseDateValue(assembleia?.data);
+  return parsed ? parsed.getFullYear() : null;
+}
+
+
+async function fetchAssembleias() {
+  if (assembleiasCache) return assembleiasCache;
+  try {
+    const q = query(collection(db, "assembleias"), orderBy("data", "desc"));
+    const snap = await getDocs(q);
+    const items = [];
+    snap.forEach((docSnap) => {
+      items.push({ id: docSnap.id, ...docSnap.data() });
+    });
+    assembleiasCache = items;
+  } catch (err) {
+    console.error("Erro ao carregar assembleias:", err);
+    assembleiasCache = [];
+  }
+  return assembleiasCache;
+}
+
+async function fetchPresencas(assembleiaIds) {
+  if (presencasCache) return presencasCache;
+  if (!assembleiaIds.length) {
+    presencasCache = [];
+    return presencasCache;
+  }
+  try {
+    const results = [];
+    const chunks = [];
+    for (let i = 0; i < assembleiaIds.length; i += 10) {
+      chunks.push(assembleiaIds.slice(i, i + 10));
+    }
+    for (const chunk of chunks) {
+      const q = query(
+        collection(db, "assembleias_presencas"),
+        where("assembleiaId", "in", chunk)
+      );
+      const snap = await getDocs(q);
+      snap.forEach((docSnap) => {
+        results.push({ id: docSnap.id, ...docSnap.data() });
+      });
+    }
+    presencasCache = results;
+  } catch (err) {
+    console.error("Erro ao carregar presenças:", err);
+    presencasCache = [];
+  }
+  return presencasCache;
+}
+
+async function fetchPresencasByAssembleia(assembleiaId) {
+  if (!assembleiaId) return [];
+  try {
+    const q = query(
+      collection(db, "assembleias_presencas"),
+      where("assembleiaId", "==", assembleiaId)
+    );
+    const snap = await getDocs(q);
+    const items = [];
+    snap.forEach((docSnap) => {
+      items.push({ id: docSnap.id, ...docSnap.data() });
+    });
+    return items;
+  } catch (err) {
+    console.error("Erro ao carregar presenças da assembleia:", err);
+    return [];
+  }
+}
+
+function populateQuadrilhaSelect(selectEl, quadrilhas) {
+  if (!selectEl) return;
+  selectEl.innerHTML = '<option value="">Selecione...</option>';
+  quadrilhas.forEach((q) => {
+    const opt = document.createElement("option");
+    opt.value = q.id;
+    opt.textContent = q.nome || q.id;
+    selectEl.appendChild(opt);
+  });
+}
+
+
+function renderAssembleiasTable(assembleias) {
+  if (!assembleiasTableBody) return;
+  if (!assembleias.length) {
+    assembleiasTableBody.innerHTML =
+      '<tr><td colspan="4">Nenhuma assembleia cadastrada.</td></tr>';
+    return;
+  }
+  assembleiasTableBody.innerHTML = assembleias
+    .map((a) => {
+      const ata = a.ataUrl
+        ? `<a href="${a.ataUrl}" target="_blank" rel="noopener">Link</a>`
+        : "-";
+      return `
+        <tr>
+          <td>${formatDateShort(a.data)}</td>
+          <td>${a.titulo || "-"}</td>
+          <td>${ata}</td>
+          <td>
+            <button class="btn btn-sm btn-light js-assembleia-edit" data-id="${a.id}">Editar</button>
+            <button class="btn btn-sm btn-outline js-assembleia-delete" data-id="${a.id}">Excluir</button>
+          </td>
+        </tr>
+      `;
+    })
+    .join("");
+}
+
+function renderAssembleiaQuadrilhasList(quadrilhas) {
+  if (!assembleiaQuadrilhasList) return;
+  if (!quadrilhas.length) {
+    assembleiaQuadrilhasList.innerHTML =
+      '<p class="muted">Nenhuma quadrilha encontrada.</p>';
+    return;
+  }
+  const ordenadas = [...quadrilhas].sort((a, b) =>
+    (a.nome || a.id || "").localeCompare(b.nome || b.id || "")
+  );
+  assembleiaQuadrilhasList.innerHTML = ordenadas
+    .map(
+      (q) => `
+        <label class="pessoas-presenca-item">
+          <input type="checkbox" value="${q.id}" />
+          <span>${q.nome || q.id}</span>
+        </label>
+      `
+    )
+    .join("");
+}
+
+function getPesoVotacao(anoFiliacao) {
+  const currentYear = new Date().getFullYear();
+  if (!anoFiliacao || !Number.isFinite(anoFiliacao)) return 1;
+  if (anoFiliacao > currentYear) return 1;
+  const anos = currentYear - anoFiliacao + 1;
+  if (anos <= 5) return 1;
+  if (anos <= 10) return 1.5;
+  return 2;
+}
+
+function renderVotacoesList(quadrilhas) {
+  if (!votacoesQuadrilhasList) return;
+  if (!quadrilhas.length) {
+    votacoesQuadrilhasList.innerHTML =
+      '<p class="muted">Nenhuma quadrilha encontrada.</p>';
+    return;
+  }
+  const ordenadas = [...quadrilhas].sort((a, b) =>
+    (a.nome || a.id || "").localeCompare(b.nome || b.id || "")
+  );
+  votacoesQuadrilhasList.innerHTML = ordenadas
+    .map((q) => {
+      const peso = getPesoVotacao(Number(q.ano_filiacao));
+      const weightLabel = `Peso ${peso.toString().replace(".", ",")}`;
+      return `
+        <div class="votacao-item" data-quadrilha="${q.id}" data-weight="${peso}">
+          <div class="votacao-item-header">
+            <span>${q.nome || q.id}</span>
+            <div class="votacao-item-meta">
+              <span class="votacao-weight">${weightLabel}</span>
+              <button class="votacao-clear" type="button" data-clear="${q.id}">
+                Limpar
+              </button>
+            </div>
+          </div>
+          <div class="votacao-actions">
+            <label class="is-manter">
+              <input type="radio" name="voto_${q.id}" value="manter" />
+              Opção 1
+            </label>
+            <label class="is-alterar">
+              <input type="radio" name="voto_${q.id}" value="alterar" />
+              Opção 2
+            </label>
+            <label class="is-abstencao">
+              <input type="radio" name="voto_${q.id}" value="abstencao" />
+              Abstenção
+            </label>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function updateVotacoesTotals() {
+  if (!votacoesQuadrilhasList) return;
+  let totalManter = 0;
+  let totalAlterar = 0;
+  let totalAbstencao = 0;
+  const items = votacoesQuadrilhasList.querySelectorAll(".votacao-item");
+  items.forEach((item) => {
+    const weight = Number(item.dataset.weight) || 1;
+    const selected = item.querySelector("input[type='radio']:checked");
+    if (!selected) return;
+    if (selected.value === "manter") totalManter += weight;
+    if (selected.value === "alterar") totalAlterar += weight;
+    if (selected.value === "abstencao") totalAbstencao += weight;
+  });
+  if (votacoesTotalManter) {
+    votacoesTotalManter.textContent = totalManter.toLocaleString("pt-BR", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1,
+    });
+  }
+  if (votacoesTotalAlterar) {
+    votacoesTotalAlterar.textContent = totalAlterar.toLocaleString("pt-BR", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1,
+    });
+  }
+  if (votacoesTotalAbstencao) {
+    votacoesTotalAbstencao.textContent = totalAbstencao.toLocaleString("pt-BR", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1,
+    });
+  }
+}
+
+function buildFaltasResumo(quadrilhas, assembleias, presencas) {
+  const assembleiaOrder = [...assembleias].sort((a, b) =>
+    String(a.data || "").localeCompare(String(b.data || ""))
+  );
+  const presencaMap = new Map();
+  presencas.forEach((p) => {
+    const key = `${p.assembleiaId}_${p.quadrilhaId}`;
+    presencaMap.set(key, p);
+  });
+
+  const resumo = quadrilhas.map((q) => {
+    let alternadas = 0;
+    let maxSeguidas = 0;
+    let atualSeguidas = 0;
+
+    assembleiaOrder.forEach((a) => {
+      const key = `${a.id}_${q.id}`;
+      const record = presencaMap.get(key);
+      const presente =
+        record?.presente === true ||
+        (Array.isArray(record?.presentes) && record.presentes.length > 0);
+      if (presente) {
+        atualSeguidas = 0;
+      } else {
+        alternadas += 1;
+        atualSeguidas += 1;
+        if (atualSeguidas > maxSeguidas) maxSeguidas = atualSeguidas;
+      }
+    });
+
+    const emRisco = maxSeguidas >= 3 || alternadas >= 5;
+    const status = emRisco
+      ? maxSeguidas >= 3
+        ? "Critico"
+        : "Alerta"
+      : alternadas > 0
+      ? "Acompanhamento"
+      : "Regular";
+    return {
+      quadrilhaId: q.id,
+      nome: q.nome || q.id,
+      alternadas,
+      maxSeguidas,
+      emRisco,
+      status,
+    };
+  });
+
+  return { resumo, assembleiaOrder };
+}
+
+function renderFaltasDashboard(resumo, assembleiasCount) {
+  if (pessoasKpiAssembleias) {
+    pessoasKpiAssembleias.textContent = assembleiasCount.toString();
+  }
+  const comFalta = resumo.filter((r) => r.alternadas > 0);
+  if (pessoasKpiComFalta) {
+    pessoasKpiComFalta.textContent = comFalta.length.toString();
+  }
+  const emRisco = resumo.filter((r) => r.emRisco);
+  if (pessoasKpiEmRisco) {
+    pessoasKpiEmRisco.textContent = emRisco.length.toString();
+  }
+  if (!faltasTableBody) return;
+  if (!resumo.length) {
+    faltasTableBody.innerHTML = '<tr><td colspan="4">Sem dados.</td></tr>';
+    return;
+  }
+  faltasTableBody.innerHTML = resumo
+    .sort((a, b) => {
+      if (b.emRisco !== a.emRisco) return b.emRisco - a.emRisco;
+      if (b.alternadas !== a.alternadas) return b.alternadas - a.alternadas;
+      return (a.nome || "").localeCompare(b.nome || "");
+    })
+    .map((r) => {
+      let badgeClass = "status-ok";
+      if (r.emRisco) badgeClass = r.maxSeguidas >= 3 ? "status-critico" : "status-alerta";
+      else if (r.alternadas > 0) badgeClass = "status-alerta";
+      return `
+        <tr>
+          <td>${r.nome}</td>
+          <td>${r.alternadas}</td>
+          <td>${r.maxSeguidas}</td>
+          <td><span class="status-pill ${badgeClass}">${r.status}</span></td>
+        </tr>
+      `;
+    })
+    .join("");
+}
+
+async function loadPessoasForCurrentUser() {
+  if (!pessoasAdminArea) return;
+  const papel = currentUserData?.papel || "SEM_PAPEL";
+  const podeVer = papel === "LIGA_ADMIN";
+
+  pessoasAdminArea.style.display = podeVer ? "block" : "none";
+  if (pessoasNoAccess) pessoasNoAccess.style.display = podeVer ? "none" : "block";
+
+  if (!podeVer) return;
+
+  const [quadrilhas, assembleias] = await Promise.all([
+    fetchQuadrilhas(),
+    fetchAssembleias(),
+  ]);
+
+  renderAssembleiaQuadrilhasList(quadrilhas);
+
+  renderVotacoesList(quadrilhas);
+  updateVotacoesTotals();
+
+  if (assembleiasTableBody) renderAssembleiasTable(assembleias);
+  const assembleiaIds = assembleias.map((a) => a.id);
+  const presencas = await fetchPresencas(assembleiaIds);
+  const { resumo } = buildFaltasResumo(quadrilhas, assembleias, presencas);
+  renderFaltasDashboard(resumo, assembleias.length);
+
+  if (faltasDashboardBody) {
+    faltasDashboardBody.classList.add("is-collapsed");
+  }
+}
+
 function toChartKey(value, fallback = "Sem informação") {
   if (!value && value !== 0) return fallback;
   return String(value).trim() || fallback;
+}
+
+function normalizeQuadrilhaKey(value) {
+  if (!value && value !== 0) return "";
+  return String(value)
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function getQuadrilhaNomeById(id, mapaQuadrilhas) {
+  if (!id) return "";
+  const key = normalizeQuadrilhaKey(id);
+  return (
+    mapaQuadrilhas[id] ||
+    mapaQuadrilhas[key] ||
+    mapaQuadrilhas[key.replace(/\s+/g, "-")] ||
+    id
+  );
 }
 
 function buildFinanceiroChartData(lancamentos, labelGetter) {
@@ -909,7 +1364,7 @@ function renderFinanceiroCharts(lancamentos, mapaQuadrilhas) {
   if (!finChartQuadrilha && !finChartAno && !finChartTipo) return;
 
   const byQuadrilha = buildFinanceiroChartData(lancamentos, (l) => {
-    return (l.quadrilhaId && mapaQuadrilhas[l.quadrilhaId]) || l.quadrilhaId;
+    return getQuadrilhaNomeById(l.quadrilhaId, mapaQuadrilhas);
   });
   const byQuadrilhaTop = byQuadrilha.slice(0, 10);
   if (byQuadrilha.length > 10) {
@@ -965,8 +1420,10 @@ function applyFinanceiroFilters(lancamentos, mapaQuadrilhas) {
 
     let okBusca = true;
     if (busca) {
-      const nomeQuadrilha =
-        (l.quadrilhaId && mapaQuadrilhas[l.quadrilhaId]) || l.quadrilhaId || "";
+      const nomeQuadrilha = getQuadrilhaNomeById(
+        l.quadrilhaId,
+        mapaQuadrilhas
+      );
       const hay = `${nomeQuadrilha} ${l.descricao || ""} ${l.tipo || ""}`.toLowerCase();
       okBusca = hay.includes(busca);
     }
@@ -977,9 +1434,7 @@ function applyFinanceiroFilters(lancamentos, mapaQuadrilhas) {
   const ordenar = finOrdenacao?.value || "valor_desc";
   const getValor = (item) => Number(item.valor) || 0;
   const getNomeQuadrilha = (item) =>
-    (item.quadrilhaId && mapaQuadrilhas[item.quadrilhaId]) ||
-    item.quadrilhaId ||
-    "";
+    getQuadrilhaNomeById(item.quadrilhaId, mapaQuadrilhas);
   const getVenc = (item) => parseDateValue(item.dataVencimento)?.getTime() || 0;
 
   visiveis.sort((a, b) => {
@@ -1081,9 +1536,7 @@ async function fetchLancamentosFinanceiros() {
 
 function renderFinanceiroRow(l, mapaQuadrilhas, canEdit = false) {
   const nomeQuadrilha =
-    (l.quadrilhaId && mapaQuadrilhas[l.quadrilhaId]) ||
-    l.quadrilhaId ||
-    "?";
+    getQuadrilhaNomeById(l.quadrilhaId, mapaQuadrilhas) || "?";
 
   const tipoLabel = mapTipoLancamento(l.tipo);
   const statusLabel = mapStatusLancamento(getFinanceiroStatus(l));
@@ -1132,7 +1585,13 @@ async function loadFinanceiroForCurrentUser() {
 
     const mapaQuadrilhas = {};
     quadrilhas.forEach((q) => {
-      mapaQuadrilhas[q.id] = q.nome || q.id;
+      const nome = q.nome || q.id;
+      mapaQuadrilhas[q.id] = nome;
+      mapaQuadrilhas[normalizeQuadrilhaKey(q.nome || q.id)] = nome;
+      mapaQuadrilhas[normalizeQuadrilhaKey(q.id)] = nome;
+      if (q.sigla) {
+        mapaQuadrilhas[normalizeQuadrilhaKey(q.sigla)] = nome;
+      }
     });
 
     const previousTipoFilter = finFiltroTipo?.value || "";
@@ -1280,6 +1739,241 @@ if (finDataVencimentoInput) {
 if (finDataPagamentoInput) {
   finDataPagamentoInput.addEventListener("change", updateFinanceiroStatusSelect);
 }
+if (assembleiaForm) {
+  assembleiaForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (currentUserData?.papel !== "LIGA_ADMIN") {
+      setText(assembleiaFormMessage, "Sem permissão.");
+      return;
+    }
+    const titulo = (assembleiaTituloInput?.value || "").trim();
+    const data = assembleiaDataInput?.value || "";
+    if (!titulo || !data) {
+      setText(assembleiaFormMessage, "Preencha título e data.");
+      return;
+    }
+    const presentesQuadrilhas = Array.from(
+      assembleiaQuadrilhasList?.querySelectorAll("input[type='checkbox']") || []
+    )
+      .filter((el) => el.checked)
+      .map((el) => el.value);
+
+    const parsedData = parseDateValue(data);
+    const ano = parsedData ? parsedData.getFullYear() : null;
+    const payload = {
+      titulo,
+      data,
+      ano: ano || null,
+      ataUrl: (assembleiaAtaInput?.value || "").trim() || null,
+      createdAt: serverTimestamp(),
+    };
+    try {
+      const assembleiaId = editingAssembleiaId;
+      const assembleiaRef = assembleiaId
+        ? doc(db, "assembleias", assembleiaId)
+        : await addDoc(collection(db, "assembleias"), payload);
+      const assembleiaDocId =
+        assembleiaId || (assembleiaRef && assembleiaRef.id);
+      if (assembleiaId) {
+        await setDoc(doc(db, "assembleias", assembleiaId), payload);
+      }
+      if (assembleiaDocId) {
+        const existingPresencas = await fetchPresencasByAssembleia(
+          assembleiaDocId
+        );
+        const presentesSet = new Set(presentesQuadrilhas);
+        const ops = [];
+
+        existingPresencas.forEach((p) => {
+          if (p?.quadrilhaId && !presentesSet.has(p.quadrilhaId)) {
+            ops.push(deleteDoc(doc(db, "assembleias_presencas", p.id)));
+          }
+        });
+
+        presentesQuadrilhas.forEach((quadrilhaId) => {
+          ops.push(
+            setDoc(
+              doc(
+                db,
+                "assembleias_presencas",
+                `${assembleiaDocId}_${quadrilhaId}`
+              ),
+              {
+                assembleiaId: assembleiaDocId,
+                quadrilhaId,
+                presente: true,
+                updatedAt: serverTimestamp(),
+              },
+              { merge: true }
+            )
+          );
+        });
+
+        if (ops.length) {
+          await Promise.all(ops);
+        }
+      }
+      setText(assembleiaFormMessage, "Assembleia cadastrada.");
+      assembleiaForm.reset();
+      editingAssembleiaId = null;
+      assembleiasCache = null;
+      presencasCache = null;
+      await loadPessoasForCurrentUser();
+    } catch (err) {
+      console.error("Erro ao cadastrar assembleia:", err);
+      setText(assembleiaFormMessage, "Erro ao cadastrar assembleia.");
+    }
+  });
+}
+
+if (votacoesQuadrilhasList) {
+  votacoesQuadrilhasList.addEventListener("change", (event) => {
+    if (!event.target.closest("input[type='radio']")) return;
+    updateVotacoesTotals();
+  });
+  votacoesQuadrilhasList.addEventListener("click", (event) => {
+    const clearBtn = event.target.closest(".votacao-clear");
+    if (!clearBtn) return;
+    const quadrilhaId = clearBtn.dataset.clear;
+    if (!quadrilhaId) return;
+    const radios = votacoesQuadrilhasList.querySelectorAll(
+      `input[name="voto_${quadrilhaId}"]`
+    );
+    radios.forEach((radio) => {
+      radio.checked = false;
+    });
+    updateVotacoesTotals();
+  });
+}
+
+if (quadrilhaContent) {
+  quadrilhaContent.addEventListener("click", (event) => {
+    const btn = event.target.closest(".js-edit-quadrilha");
+    if (!btn || currentUserData?.papel !== "LIGA_ADMIN") return;
+    const id = btn.dataset.id;
+    if (!id) return;
+    const q = (quadrilhasCache || []).find((item) => item.id === id);
+    if (!q) return;
+    startEditingQuadrilha(q);
+  });
+  quadrilhaContent.addEventListener("click", (event) => {
+    const toggle = event.target.closest(".quadrilha-summary");
+    if (!toggle) return;
+    event.preventDefault();
+    const targetId = toggle.dataset.toggle;
+    if (!targetId) return;
+    const target = quadrilhaContent.querySelector(`#${CSS.escape(targetId)}`);
+    if (!target) return;
+
+    const isOpen = !target.hasAttribute("hidden");
+    const items = quadrilhaContent.querySelectorAll(".quadrilha-item");
+    items.forEach((item) => {
+      item.classList.remove("is-open");
+      const body = item.querySelector(".quadrilha-body");
+      if (body) body.setAttribute("hidden", "");
+    });
+    if (!isOpen) {
+      const parent = target.closest(".quadrilha-item");
+      if (parent) parent.classList.add("is-open");
+      target.removeAttribute("hidden");
+    }
+  });
+}
+
+if (votacoesClearAll) {
+  votacoesClearAll.addEventListener("click", () => {
+    if (!votacoesQuadrilhasList) return;
+    const radios = votacoesQuadrilhasList.querySelectorAll(
+      "input[type='radio']"
+    );
+    radios.forEach((radio) => {
+      radio.checked = false;
+    });
+    updateVotacoesTotals();
+  });
+}
+
+if (faltasToggleBtn && faltasDashboardBody) {
+  faltasToggleBtn.addEventListener("click", () => {
+    const isHidden = faltasDashboardBody.classList.toggle("is-collapsed");
+    faltasToggleBtn.textContent = isHidden ? "Mostrar" : "Ocultar";
+  });
+}
+
+if (assembleiasToggleBtn && assembleiasBody) {
+  assembleiasToggleBtn.addEventListener("click", () => {
+    const isHidden = assembleiasBody.classList.toggle("is-collapsed");
+    assembleiasToggleBtn.textContent = isHidden ? "Mostrar" : "Ocultar";
+  });
+}
+
+if (votacoesToggleBtn && votacoesBody) {
+  votacoesToggleBtn.addEventListener("click", () => {
+    const isHidden = votacoesBody.classList.toggle("is-collapsed");
+    votacoesToggleBtn.textContent = isHidden ? "Mostrar" : "Ocultar";
+  });
+}
+
+if (assembleiasTableBody) {
+  assembleiasTableBody.addEventListener("click", async (event) => {
+    const editBtn = event.target.closest(".js-assembleia-edit");
+    if (editBtn) {
+      if (currentUserData?.papel !== "LIGA_ADMIN") return;
+      const id = editBtn.dataset.id;
+      if (!id) return;
+      const assembleia = (assembleiasCache || []).find((a) => a.id === id);
+      if (!assembleia) return;
+      if (assembleiaTituloInput) assembleiaTituloInput.value = assembleia.titulo || "";
+      if (assembleiaDataInput)
+        assembleiaDataInput.value = formatDateForInput(assembleia.data);
+      if (assembleiaAtaInput) assembleiaAtaInput.value = assembleia.ataUrl || "";
+      if (assembleiaQuadrilhasList) {
+        const checks = assembleiaQuadrilhasList.querySelectorAll(
+          "input[type='checkbox']"
+        );
+        checks.forEach((checkbox) => {
+          checkbox.checked = false;
+        });
+        const presencas = await fetchPresencasByAssembleia(id);
+        const presentesSet = new Set(
+          presencas
+            .filter((p) => p.presente === true)
+            .map((p) => p.quadrilhaId)
+        );
+        checks.forEach((checkbox) => {
+          if (presentesSet.has(checkbox.value)) checkbox.checked = true;
+        });
+      }
+      editingAssembleiaId = id;
+      if (assembleiaFormMessage) {
+        assembleiaFormMessage.textContent = "Editando assembleia selecionada.";
+      }
+      assembleiaForm.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    const btn = event.target.closest(".js-assembleia-delete");
+    if (!btn || currentUserData?.papel !== "LIGA_ADMIN") return;
+    const id = btn.dataset.id;
+    if (!id) return;
+    const confirma = window.confirm("Excluir assembleia?");
+    if (!confirma) return;
+    try {
+      const presencas = await fetchPresencasByAssembleia(id);
+      if (presencas.length) {
+        await Promise.all(
+          presencas.map((p) => deleteDoc(doc(db, "assembleias_presencas", p.id)))
+        );
+      }
+      await deleteDoc(doc(db, "assembleias", id));
+      assembleiasCache = null;
+      presencasCache = null;
+      await loadPessoasForCurrentUser();
+    } catch (err) {
+      console.error("Erro ao excluir assembleia:", err);
+    }
+  });
+}
+
 
 if (finTableBody) {
   finTableBody.addEventListener("click", (event) => {
@@ -1298,7 +1992,7 @@ if (finTableBody) {
 // ====== DOCUMENTOS: RENDER E CARREGAMENTO ======
 function renderDocumentoRow(d, mapaQuadrilhas, canEdit) {
   const nomeQuadrilha =
-    (d.quadrilhaId && mapaQuadrilhas[d.quadrilhaId]) || d.quadrilhaId || "?";
+    getQuadrilhaNomeById(d.quadrilhaId, mapaQuadrilhas) || "?";
   const tipoLabel = mapTipoDocumento(d.tipo);
   const statusLabel = mapStatusDocumento(d.status);
   const dataValidade = d.dataValidade || "?";
@@ -1516,6 +2210,7 @@ async function loadQuadrilhasForCurrentUser() {
         return;
       }
 
+
       // resumo para o card "Status geral"
       if (statusCardText && papel === "LIGA_ADMIN") {
         const total = quadrilhas.length;
@@ -1533,7 +2228,10 @@ async function loadQuadrilhasForCurrentUser() {
           `Pendentes ou sem informação: ${pendenteOuSemInfo}.`;
       }
 
-      quadrilhaContent.innerHTML = quadrilhas
+      const ordenadas = [...quadrilhas].sort((a, b) =>
+        (a.nome || a.id || "").localeCompare(b.nome || b.id || "")
+      );
+      quadrilhaContent.innerHTML = ordenadas
         .map((q) => {
           const statusDoc = docStatusMap[q.id] || "Sem informação";
           return renderQuadrilhaCard(q, statusDoc);
@@ -1623,18 +2321,23 @@ if (quadrilhaForm) {
     }
 
     const idInput = document.getElementById("qId");
+    const originalIdInput = document.getElementById("qOriginalId");
     const nomeInput = document.getElementById("qNome");
     const cidadeInput = document.getElementById("qCidade");
     const ufInput = document.getElementById("qUF");
     const grupoInput = document.getElementById("qGrupo");
     const instagramInput = document.getElementById("qInstagram");
+    const anoFiliacaoInput = document.getElementById("qAnoFiliacao");
 
-    const id = idInput.value.trim().toUpperCase();
+    const originalId = (originalIdInput?.value || "").trim();
+    const id = originalId || idInput.value.trim().toUpperCase();
     const nome = nomeInput.value.trim();
     const cidade = cidadeInput.value.trim();
     const uf = ufInput.value.trim().toUpperCase();
     const grupo = grupoInput.value;
     const instagram = instagramInput.value.trim();
+    const anoFiliacaoRaw = (anoFiliacaoInput?.value || "").trim();
+    const anoFiliacao = anoFiliacaoRaw ? Number(anoFiliacaoRaw) : null;
 
     if (!id || !nome) {
       setText(
@@ -1647,27 +2350,39 @@ if (quadrilhaForm) {
     setText(quadrilhaFormMessage, "Salvando quadrilha...");
 
     try {
-      await setDoc(
-        doc(db, "quadrilhas", id),
-        {
-          nome,
-          sigla: id,
-          cidade: cidade || null,
-          uf: uf || null,
-          grupo_atual: grupo || null,
-          instagram: instagram || null,
-          entidade: "LINQ-DFE",
-          ativa: true,
-        },
-        { merge: true }
-      );
+      await setDoc(doc(db, "quadrilhas", id), {
+        nome,
+        sigla: id,
+        cidade: cidade || null,
+        uf: uf || null,
+        grupo_atual: grupo || null,
+        instagram: instagram || null,
+        ano_filiacao: Number.isFinite(anoFiliacao) ? anoFiliacao : null,
+        entidade: "LINQ-DFE",
+        ativa: true,
+      });
 
       setText(quadrilhaFormMessage, "Quadrilha salva com sucesso.");
       quadrilhaForm.reset();
+      if (idInput) idInput.disabled = false;
+      if (originalIdInput) originalIdInput.value = "";
 
       // Recarrega lista
       quadrilhasCache = null;
       await loadQuadrilhasForCurrentUser();
+      if (assembleiaQuadrilhasList || votacoesQuadrilhasList) {
+        const quadrilhasAtualizadas = await fetchQuadrilhas(true);
+        if (assembleiaQuadrilhasList) {
+          renderAssembleiaQuadrilhasList(quadrilhasAtualizadas);
+        }
+        if (votacoesQuadrilhasList) {
+          renderVotacoesList(quadrilhasAtualizadas);
+          updateVotacoesTotals();
+        }
+      }
+      if (pessoasAdminArea) {
+        await loadPessoasForCurrentUser();
+      }
     } catch (err) {
       console.error("Erro ao salvar quadrilha:", err);
       setText(
@@ -2425,6 +3140,7 @@ onAuthStateChanged(auth, async (user) => {
     await loadDocumentosForCurrentUser();
     await loadFinanceiroForCurrentUser();
     await loadNoticiasForCurrentUser();
+    await loadPessoasForCurrentUser();
   } catch (error) {
     console.error("Erro ao carregar dados do usuário:", error);
     if (userRoleTextP) {
@@ -2471,6 +3187,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!key) return;
 
       showSection(key);
+      window.scrollTo({ top: 0, behavior: "smooth" });
 
       // carregamentos específicos por aba (recarrega sob demanda)
       switch (key) {
@@ -2479,6 +3196,9 @@ document.addEventListener('DOMContentLoaded', () => {
           break;
         case "documentos":
           loadDocumentosForCurrentUser();
+          break;
+        case "pessoas":
+          loadPessoasForCurrentUser();
           break;
         case "financeiro":
           loadFinanceiroForCurrentUser();
@@ -2499,9 +3219,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const key = link.dataset.section;
       if (!key) return;
       showSection(key);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
 
   window.portalAppNavigationReady = true;
 });
+
+
+
+
+
 

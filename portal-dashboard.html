@@ -3,7 +3,6 @@
 
 <html lang="pt-BR">
 
-
 <head>
 
 
@@ -169,7 +168,7 @@
           <li><button class="portal-nav-link" type="button" data-section="quadrilha">Quadrilhas</button></li>
 
 
-          <li><button class="portal-nav-link" type="button" data-section="pessoas">Pessoas / Elenco</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="pessoas">Assembleias / Votações</button></li>
 
 
           <li><button class="portal-nav-link" type="button" data-section="documentos">Documentos</button></li>
@@ -730,7 +729,7 @@
 
 
 
-  <div id="quadrilhaContent" class="grid" style="margin-top: 1rem;">
+  <div id="quadrilhaContent" class="quadrilha-list" style="margin-top: 1rem;">
 
 
     <!-- O JS vai preencher aqui -->
@@ -776,6 +775,7 @@
 
 
           <form id="quadrilhaForm" class="portal-form">
+            <input type="hidden" id="qOriginalId" />
 
 
             <div class="form-group">
@@ -834,6 +834,14 @@
 
               </div>
 
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="qAnoFiliacao">Ano de filiação</label>
+
+              <input id="qAnoFiliacao" type="number" min="1950" max="2100" placeholder="Ex.: 2018" />
 
             </div>
 
@@ -1802,9 +1810,7 @@
 
         </div>
 
-
-      
-
+      </section>
 
           <!-- NOTÍCIAS -->
 
@@ -1821,12 +1827,174 @@
       <section id="section-pessoas" class="portal-section" style="display:none;">
 
 
-        <h1 class="section-title">Pessoas / Elenco</h1>
+        <h1 class="section-title">Assembleias / Votações</h1>
 
 
-        <p>Cadastro e gestão de elenco. Vamos montar depois.</p>
+        <p id="pessoasSubtitle" class="muted">
+          Gestão de assembleias, presenças e votações (a partir de 2026).
+        </p>
 
+        <div id="pessoasAdminArea" style="margin-top: 1.5rem; display: none;">
+          <div class="grid pessoas-grid">
+            <div class="card">
+              <div class="card-body">
+                <div class="pessoas-dashboard-header">
+                  <h3 class="card-title">Assembleias da Liga</h3>
+                  <button id="assembleiasToggleBtn" class="btn btn-light btn-sm" type="button">
+                    Ocultar
+                  </button>
+                </div>
+                <div id="assembleiasBody">
+                <form id="assembleiaForm" class="portal-form">
+                  <div class="form-group">
+                    <label for="assembleiaTitulo">Título</label>
+                    <input id="assembleiaTitulo" type="text" placeholder="Assembleia ordinária" required />
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="assembleiaData">Data</label>
+                      <input id="assembleiaData" type="date" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="assembleiaAtaUrl">Link da ata</label>
+                      <input id="assembleiaAtaUrl" type="url" placeholder="https://..." />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Quadrilhas presentes</label>
+                    <div id="assembleiaQuadrilhasList" class="pessoas-quadrilhas-list">
+                      <p class="muted">Carregando quadrilhas...</p>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn">Cadastrar assembleia</button>
+                  <p id="assembleiaFormMessage" class="form-message"></p>
+                </form>
 
+                <div class="table-wrapper pessoas-table">
+                  <table class="portal-table">
+                    <thead>
+                      <tr>
+                        <th>Data</th>
+                        <th>Título</th>
+                        <th>Ata</th>
+                        <th>Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody id="assembleiasTableBody">
+                      <tr><td colspan="4">Carregando assembleias...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card pessoas-votacoes-card">
+            <div class="card-body">
+              <div class="pessoas-votacoes-head">
+                <div>
+                  <h3 class="card-title">Votações</h3>
+                  <p class="muted">
+                    Pesos automáticos por ano de filiação: 1–5 anos (1), 6–10 (1,5), 11+ (2).
+                  </p>
+                </div>
+                <div class="pessoas-votacoes-actions">
+                  <button id="votacoesClearAll" class="btn btn-light btn-sm" type="button">
+                    Limpar tudo
+                  </button>
+                  <div class="pessoas-votacoes-totais">
+                    <div>
+                      <p class="muted">Opção 1</p>
+                      <h3 id="votacoesTotalManter" class="card-title">0</h3>
+                    </div>
+                    <div>
+                      <p class="muted">Opção 2</p>
+                      <h3 id="votacoesTotalAlterar" class="card-title">0</h3>
+                    </div>
+                    <div>
+                      <p class="muted">Abstenção</p>
+                      <h3 id="votacoesTotalAbstencao" class="card-title">0</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pessoas-dashboard-header" style="margin-bottom: 0.5rem;">
+                <span class="muted">Calculadora de votos</span>
+                <button id="votacoesToggleBtn" class="btn btn-light btn-sm" type="button">
+                  Ocultar
+                </button>
+              </div>
+              <div id="votacoesBody">
+              <div class="pessoas-votacoes-legend">
+                <span class="pill">Opção 1</span>
+                <span class="pill pill-alt">Opção 2</span>
+                <span class="pill pill-neutral">Abstenção</span>
+                <span class="muted">Selecione uma opção por quadrilha.</span>
+              </div>
+
+              <div id="votacoesQuadrilhasList" class="pessoas-votacoes-list">
+                <p class="muted">Carregando quadrilhas...</p>
+              </div>
+
+              <p class="muted pessoas-votacoes-nota">
+                Quadrilhas sem ano de filiação entram com peso 1.
+              </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card pessoas-dashboard-card">
+            <div class="card-body">
+              <div class="pessoas-dashboard-header">
+                <h3 class="card-title">Dashboard de faltas</h3>
+                <button id="faltasToggleBtn" class="btn btn-light btn-sm" type="button">
+                  Mostrar
+                </button>
+              </div>
+              <div id="faltasDashboardBody" class="pessoas-dashboard-body">
+              <div class="pessoas-kpi-grid">
+                <article class="card pessoas-kpi-card">
+                  <div class="card-body">
+                    <p class="muted">Assembleias (desde 2026)</p>
+                    <h3 id="pessoasKpiAssembleias" class="card-title">0</h3>
+                  </div>
+                </article>
+                <article class="card pessoas-kpi-card">
+                  <div class="card-body">
+                    <p class="muted">Quadrilhas com falta</p>
+                    <h3 id="pessoasKpiComFalta" class="card-title">0</h3>
+                  </div>
+                </article>
+                <article class="card pessoas-kpi-card">
+                  <div class="card-body">
+                    <p class="muted">Quadrilhas em risco</p>
+                    <h3 id="pessoasKpiEmRisco" class="card-title">0</h3>
+                  </div>
+                </article>
+              </div>
+
+              <div class="table-wrapper pessoas-table">
+                <table class="portal-table">
+                  <thead>
+                    <tr>
+                      <th>Quadrilha</th>
+                      <th>Faltas (alternadas)</th>
+                      <th>Faltas seguidas</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="faltasTableBody">
+                    <tr><td colspan="4">Carregando resumo...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p id="pessoasNoAccess" class="muted" style="display:none;">Sem acesso a esta área.</p>
       </section>
 
 
@@ -1989,6 +2157,7 @@
 
 
             showSection(key);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
 
           });
@@ -2016,6 +2185,7 @@
 
 
             showSection(key);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
 
           });
@@ -2152,6 +2322,7 @@
 
 
 </html>
+
 
 
 
