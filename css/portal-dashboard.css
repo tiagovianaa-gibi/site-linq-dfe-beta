@@ -493,3 +493,107 @@
 .quadrilha-item.is-open .quadrilha-summary::after {
   transform: rotate(180deg);
 }
+
+.portal-competicoes {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.portal-competicoes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.portal-competicoes-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.portal-competicoes-quesitos .grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.competicao-quesito-card {
+  padding: 0.9rem 1rem;
+}
+
+.competicao-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  margin-top: 0.35rem;
+}
+
+.competicao-bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: inherit;
+}
+
+.competicao-list {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.competicao-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+
+.competicao-bars {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.competicao-bar-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 70px;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.competicao-bar-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.competicao-bar-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+.competicao-bar-fill {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: inherit;
+}
+
+.competicao-bar-value {
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 800px) {
+  .competicao-bar-row {
+    grid-template-columns: 1fr;
+  }
+  .competicao-bar-value {
+    text-align: left;
+  }
+}

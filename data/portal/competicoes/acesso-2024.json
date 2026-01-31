@@ -1,0 +1,486 @@
+{
+  "meta": {
+    "ano": 2024,
+    "grupo": "acesso",
+    "etapas": [],
+    "fonte": "assets/planilhas/acesso-2024.xlsx",
+    "modelo": "classico"
+  },
+  "ranking_final": [],
+  "quesitos": {
+    "COREOGRAFIA": [
+      {
+        "posicao": null,
+        "quadrilha": "48.7",
+        "etapas": {
+          "1ª ETAPA": 48.7,
+          "2ª ETAPA": 49.3,
+          "3ª ETAPA": 49.1,
+          "4ª ETAPA": 48.8
+        },
+        "total": 195.89999999999998
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47",
+        "etapas": {
+          "1ª ETAPA": 47,
+          "2ª ETAPA": 48.6,
+          "3ª ETAPA": 49.699999999999996,
+          "4ª ETAPA": 49.4
+        },
+        "total": 194.7
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.3",
+        "etapas": {
+          "1ª ETAPA": 47.3,
+          "2ª ETAPA": 48.6,
+          "3ª ETAPA": 48.8,
+          "4ª ETAPA": 48.5
+        },
+        "total": 193.2
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.5",
+        "etapas": {
+          "1ª ETAPA": 47.5,
+          "2ª ETAPA": 48.5,
+          "3ª ETAPA": 48.2,
+          "4ª ETAPA": 48.7
+        },
+        "total": 192.89999999999998
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.6",
+        "etapas": {
+          "1ª ETAPA": 47.6,
+          "2ª ETAPA": 47.89999999999999,
+          "3ª ETAPA": 47.8,
+          "4ª ETAPA": 48.4
+        },
+        "total": 191.70000000000002
+      },
+      {
+        "posicao": null,
+        "quadrilha": "49.2",
+        "etapas": {
+          "1ª ETAPA": 49.2,
+          "2ª ETAPA": 49,
+          "3ª ETAPA": 48.4,
+          "4ª ETAPA": 0
+        },
+        "total": 146.6
+      },
+      {
+        "posicao": null,
+        "quadrilha": "46.7",
+        "etapas": {
+          "1ª ETAPA": 46.7,
+          "2ª ETAPA": 0,
+          "3ª ETAPA": 48.60000000000001,
+          "4ª ETAPA": 47.5
+        },
+        "total": 142.8
+      }
+    ],
+    "MARCAÇÃO": [
+      {
+        "posicao": null,
+        "quadrilha": "49",
+        "etapas": {
+          "1ª ETAPA": 49,
+          "2ª ETAPA": 49.7,
+          "3ª ETAPA": 49.2,
+          "4ª ETAPA": 49.6
+        },
+        "total": 197.5
+      },
+      {
+        "posicao": null,
+        "quadrilha": "48.2",
+        "etapas": {
+          "1ª ETAPA": 48.2,
+          "2ª ETAPA": 49.300000000000004,
+          "3ª ETAPA": 49.7,
+          "4ª ETAPA": 49.8
+        },
+        "total": 197.0
+      },
+      {
+        "posicao": null,
+        "quadrilha": "48.7",
+        "etapas": {
+          "1ª ETAPA": 48.7,
+          "2ª ETAPA": 49.5,
+          "3ª ETAPA": 48.5,
+          "4ª ETAPA": 49.8
+        },
+        "total": 196.5
+      },
+      {
+        "posicao": null,
+        "quadrilha": "48.400000000000006",
+        "etapas": {
+          "1ª ETAPA": 48.400000000000006,
+          "2ª ETAPA": 49.3,
+          "3ª ETAPA": 49,
+          "4ª ETAPA": 49.2
+        },
+        "total": 195.89999999999998
+      },
+      {
+        "posicao": null,
+        "quadrilha": "46.4",
+        "etapas": {
+          "1ª ETAPA": 46.4,
+          "2ª ETAPA": 49.1,
+          "3ª ETAPA": 49.2,
+          "4ª ETAPA": 49.2
+        },
+        "total": 193.89999999999998
+      },
+      {
+        "posicao": null,
+        "quadrilha": "49.4",
+        "etapas": {
+          "1ª ETAPA": 49.4,
+          "2ª ETAPA": 49,
+          "3ª ETAPA": 48.5,
+          "4ª ETAPA": 0
+        },
+        "total": 146.9
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.2",
+        "etapas": {
+          "1ª ETAPA": 47.2,
+          "2ª ETAPA": 0,
+          "3ª ETAPA": 49.1,
+          "4ª ETAPA": 48.7
+        },
+        "total": 145.0
+      }
+    ],
+    "ANIMAÇÃO": [
+      {
+        "posicao": null,
+        "quadrilha": "49.4",
+        "etapas": {
+          "1ª ETAPA": 49.4,
+          "2ª ETAPA": 49.400000000000006,
+          "3ª ETAPA": 50,
+          "4ª ETAPA": 49.5
+        },
+        "total": 198.3
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.900000000000006",
+        "etapas": {
+          "1ª ETAPA": 47.900000000000006,
+          "2ª ETAPA": 49.2,
+          "3ª ETAPA": 49.8,
+          "4ª ETAPA": 49.8
+        },
+        "total": 196.7
+      },
+      {
+        "posicao": null,
+        "quadrilha": "48.1",
+        "etapas": {
+          "1ª ETAPA": 48.1,
+          "2ª ETAPA": 48.9,
+          "3ª ETAPA": 49,
+          "4ª ETAPA": 49.3
+        },
+        "total": 195.3
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.9",
+        "etapas": {
+          "1ª ETAPA": 47.9,
+          "2ª ETAPA": 49.2,
+          "3ª ETAPA": 49.2,
+          "4ª ETAPA": 48.7
+        },
+        "total": 195.0
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.400000000000006",
+        "etapas": {
+          "1ª ETAPA": 47.400000000000006,
+          "2ª ETAPA": 48.5,
+          "3ª ETAPA": 48.099999999999994,
+          "4ª ETAPA": 48.6
+        },
+        "total": 192.6
+      },
+      {
+        "posicao": null,
+        "quadrilha": "49.699999999999996",
+        "etapas": {
+          "1ª ETAPA": 49.699999999999996,
+          "2ª ETAPA": 49.5,
+          "3ª ETAPA": 48.4,
+          "4ª ETAPA": 0
+        },
+        "total": 147.6
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.5",
+        "etapas": {
+          "1ª ETAPA": 47.5,
+          "2ª ETAPA": 0,
+          "3ª ETAPA": 49.099999999999994,
+          "4ª ETAPA": 47.6
+        },
+        "total": 144.2
+      }
+    ],
+    "FIGURINO": [
+      {
+        "posicao": null,
+        "quadrilha": "49.400000000000006",
+        "etapas": {
+          "1ª ETAPA": 49.400000000000006,
+          "2ª ETAPA": 50,
+          "3ª ETAPA": 50,
+          "4ª ETAPA": 49.9
+        },
+        "total": 199.3
+      },
+      {
+        "posicao": null,
+        "quadrilha": "49.3",
+        "etapas": {
+          "1ª ETAPA": 49.3,
+          "2ª ETAPA": 49.300000000000004,
+          "3ª ETAPA": 49.6,
+          "4ª ETAPA": 49.5
+        },
+        "total": 197.7
+      },
+      {
+        "posicao": null,
+        "quadrilha": "48.3",
+        "etapas": {
+          "1ª ETAPA": 48.3,
+          "2ª ETAPA": 49.099999999999994,
+          "3ª ETAPA": 50,
+          "4ª ETAPA": 49.4
+        },
+        "total": 196.79999999999998
+      },
+      {
+        "posicao": null,
+        "quadrilha": "49",
+        "etapas": {
+          "1ª ETAPA": 49,
+          "2ª ETAPA": 49.400000000000006,
+          "3ª ETAPA": 48.5,
+          "4ª ETAPA": 49.8
+        },
+        "total": 196.7
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.400000000000006",
+        "etapas": {
+          "1ª ETAPA": 47.400000000000006,
+          "2ª ETAPA": 49.599999999999994,
+          "3ª ETAPA": 49.8,
+          "4ª ETAPA": 49.6
+        },
+        "total": 196.4
+      },
+      {
+        "posicao": null,
+        "quadrilha": "50",
+        "etapas": {
+          "1ª ETAPA": 50,
+          "2ª ETAPA": 49.6,
+          "3ª ETAPA": 49.7,
+          "4ª ETAPA": 0
+        },
+        "total": 149.3
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.10000000000001",
+        "etapas": {
+          "1ª ETAPA": 47.10000000000001,
+          "2ª ETAPA": 0,
+          "3ª ETAPA": 49.3,
+          "4ª ETAPA": 48.2
+        },
+        "total": 144.60000000000002
+      }
+    ],
+    "CASAL DE NOIVOS": [
+      {
+        "posicao": null,
+        "quadrilha": "49.2",
+        "etapas": {
+          "1ª ETAPA": 49.2,
+          "2ª ETAPA": 49.4,
+          "3ª ETAPA": 49.5,
+          "4ª ETAPA": 49.8
+        },
+        "total": 197.89999999999998
+      },
+      {
+        "posicao": null,
+        "quadrilha": "48.6",
+        "etapas": {
+          "1ª ETAPA": 48.6,
+          "2ª ETAPA": 49.5,
+          "3ª ETAPA": 48.5,
+          "4ª ETAPA": 48.9
+        },
+        "total": 195.5
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.199999999999996",
+        "etapas": {
+          "1ª ETAPA": 47.199999999999996,
+          "2ª ETAPA": 49,
+          "3ª ETAPA": 49.699999999999996,
+          "4ª ETAPA": 49.3
+        },
+        "total": 195.2
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.8",
+        "etapas": {
+          "1ª ETAPA": 47.8,
+          "2ª ETAPA": 49.3,
+          "3ª ETAPA": 49,
+          "4ª ETAPA": 49.1
+        },
+        "total": 195.2
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.9",
+        "etapas": {
+          "1ª ETAPA": 47.9,
+          "2ª ETAPA": 48.4,
+          "3ª ETAPA": 47.8,
+          "4ª ETAPA": 48.6
+        },
+        "total": 192.7
+      },
+      {
+        "posicao": null,
+        "quadrilha": "49.5",
+        "etapas": {
+          "1ª ETAPA": 49.5,
+          "2ª ETAPA": 49.10000000000001,
+          "3ª ETAPA": 48.1,
+          "4ª ETAPA": 0
+        },
+        "total": 146.70000000000002
+      },
+      {
+        "posicao": null,
+        "quadrilha": "47.1",
+        "etapas": {
+          "1ª ETAPA": 47.1,
+          "2ª ETAPA": 0,
+          "3ª ETAPA": 49,
+          "4ª ETAPA": 47.8
+        },
+        "total": 143.89999999999998
+      }
+    ],
+    "TRILHA SONORA": [
+      {
+        "posicao": null,
+        "quadrilha": "48.7",
+        "etapas": {
+          "1ª ETAPA": 48.7,
+          "2ª ETAPA": 50,
+          "3ª ETAPA": 50,
+          "4ª ETAPA": 50
+        },
+        "total": 198.7
+      },
+      {
+        "posicao": null,
+        "quadrilha": "48.599999999999994",
+        "etapas": {
+          "1ª ETAPA": 48.599999999999994,
+          "2ª ETAPA": 49.5,
+          "3ª ETAPA": 50,
+          "4ª ETAPA": 50
+        },
+        "total": 198.1
+      },
+      {
+        "posicao": null,
+        "quadrilha": "48.3",
+        "etapas": {
+          "1ª ETAPA": 48.3,
+          "2ª ETAPA": 49.7,
+          "3ª ETAPA": 50,
+          "4ª ETAPA": 49.4
+        },
+        "total": 197.4
+      },
+      {
+        "posicao": null,
+        "quadrilha": "48.3",
+        "etapas": {
+          "1ª ETAPA": 48.3,
+          "2ª ETAPA": 49.9,
+          "3ª ETAPA": 48.7,
+          "4ª ETAPA": 49.8
+        },
+        "total": 196.7
+      },
+      {
+        "posicao": null,
+        "quadrilha": "46.400000000000006",
+        "etapas": {
+          "1ª ETAPA": 46.400000000000006,
+          "2ª ETAPA": 49.8,
+          "3ª ETAPA": 48.900000000000006,
+          "4ª ETAPA": 50
+        },
+        "total": 195.10000000000002
+      },
+      {
+        "posicao": null,
+        "quadrilha": "49.8",
+        "etapas": {
+          "1ª ETAPA": 49.8,
+          "2ª ETAPA": 49.8,
+          "3ª ETAPA": 48.6,
+          "4ª ETAPA": 0
+        },
+        "total": 148.2
+      },
+      {
+        "posicao": null,
+        "quadrilha": "46.8",
+        "etapas": {
+          "1ª ETAPA": 46.8,
+          "2ª ETAPA": 0,
+          "3ª ETAPA": 49,
+          "4ª ETAPA": 49.1
+        },
+        "total": 144.9
+      }
+    ]
+  }
+}

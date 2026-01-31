@@ -14,14 +14,6 @@ const REQUIRED_TAGS = [
   "Circuito de Quadrilhas",
 ];
 
-function sanitizeText(value) {
-  if (!value) return "";
-  return String(value)
-    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
-    .replace(/[<>]/g, "")
-    .trim();
-}
-
 function generateTempPassword() {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
   const bytes = crypto.randomBytes(12);
@@ -31,6 +23,15 @@ function generateTempPassword() {
   }
   return password;
 }
+
+function sanitizeText(value) {
+  if (!value) return "";
+  return String(value)
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+    .replace(/[<>]/g, "")
+    .trim();
+}
+
 
 function normalizeTags(tags, keywords) {
   const base = [
@@ -284,5 +285,5 @@ exports.createPortalUser = onCall({ cors: true }, async (request) => {
     { merge: true }
   );
 
-  return { password: tempPassword };
+  return { created: true };
 });

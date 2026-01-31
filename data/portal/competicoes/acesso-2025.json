@@ -1,0 +1,729 @@
+{
+  "meta": {
+    "ano": 2025,
+    "grupo": "acesso",
+    "etapas": [
+      "1ª ETAPA",
+      "2ª ETAPA",
+      "3ª ETAPA"
+    ],
+    "fonte": "assets/planilhas/acesso-2025.xlsx",
+    "modelo": "classico"
+  },
+  "ranking_final": [
+    {
+      "posicao": 1,
+      "quadrilha": "JUNINA MATULÃO",
+      "etapas": {
+        "1ª ETAPA": 179.3,
+        "2ª ETAPA": 178.8,
+        "3ª ETAPA": 179.5
+      },
+      "total": 537.6
+    },
+    {
+      "posicao": 2,
+      "quadrilha": "CHINELO DE COURO",
+      "etapas": {
+        "1ª ETAPA": 178.5,
+        "2ª ETAPA": 179.5,
+        "3ª ETAPA": 177.6
+      },
+      "total": 535.6
+    },
+    {
+      "posicao": 3,
+      "quadrilha": "XIQUE XIQUE",
+      "etapas": {
+        "1ª ETAPA": 178.1,
+        "2ª ETAPA": 177.7,
+        "3ª ETAPA": 179.6
+      },
+      "total": 535.4
+    },
+    {
+      "posicao": 4,
+      "quadrilha": "OS CABOCLOS DO SERTÃO",
+      "etapas": {
+        "1ª ETAPA": 178.6,
+        "2ª ETAPA": 178.7,
+        "3ª ETAPA": 176.5
+      },
+      "total": 533.8
+    },
+    {
+      "posicao": 5,
+      "quadrilha": "FORNALHA",
+      "etapas": {
+        "1ª ETAPA": 177.1,
+        "2ª ETAPA": 177.4,
+        "3ª ETAPA": 177.4
+      },
+      "total": 531.9
+    },
+    {
+      "posicao": 6,
+      "quadrilha": "MATINGUEIROS DO SERTÃO",
+      "etapas": {
+        "1ª ETAPA": 176.2,
+        "2ª ETAPA": 178.4,
+        "3ª ETAPA": 177.2
+      },
+      "total": 531.8
+    },
+    {
+      "posicao": 7,
+      "quadrilha": "XEM NHEM NHEM",
+      "etapas": {
+        "1ª ETAPA": 176.9,
+        "2ª ETAPA": 177.9,
+        "3ª ETAPA": 176.2
+      },
+      "total": 531.0
+    },
+    {
+      "posicao": 8,
+      "quadrilha": "SOL DE MARIA",
+      "etapas": {
+        "1ª ETAPA": 176.9,
+        "2ª ETAPA": 177.4,
+        "3ª ETAPA": 174.6
+      },
+      "total": 528.9
+    },
+    {
+      "posicao": 9,
+      "quadrilha": "TENGO LENGO",
+      "etapas": {
+        "1ª ETAPA": 175.4,
+        "2ª ETAPA": 176.6,
+        "3ª ETAPA": 174.7
+      },
+      "total": 526.7
+    },
+    {
+      "posicao": 10,
+      "quadrilha": "FURACÃO",
+      "etapas": {
+        "1ª ETAPA": 172.5,
+        "2ª ETAPA": "Desclas.",
+        "3ª ETAPA": 172.9
+      },
+      "total": 345.4
+    }
+  ],
+  "quesitos": {
+    "COREOGRAFIA": [
+      {
+        "posicao": 1,
+        "quadrilha": "CHINELO DE COURO",
+        "etapas": {
+          "1ª ETAPA": 29.500000000000004,
+          "2ª ETAPA": 29.899999999999995,
+          "3ª ETAPA": 29.299999999999997
+        },
+        "total": 88.69999999999999
+      },
+      {
+        "posicao": 2,
+        "quadrilha": "JUNINA MATULÃO",
+        "etapas": {
+          "1ª ETAPA": 29.499999999999993,
+          "2ª ETAPA": 29.599999999999994,
+          "3ª ETAPA": 29.599999999999998
+        },
+        "total": 88.69999999999999
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 29.299999999999997,
+          "2ª ETAPA": 29.200000000000003,
+          "3ª ETAPA": 29.799999999999994
+        },
+        "total": 88.3
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "OS CABOCLOS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 29.299999999999997,
+          "2ª ETAPA": 29.8,
+          "3ª ETAPA": 28.900000000000006
+        },
+        "total": 88.0
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "MATINGUEIROS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 29,
+          "2ª ETAPA": 29.600000000000005,
+          "3ª ETAPA": 29.300000000000004
+        },
+        "total": 87.9
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "XEM NHEM NHEM",
+        "etapas": {
+          "1ª ETAPA": 29,
+          "2ª ETAPA": 29.700000000000003,
+          "3ª ETAPA": 29.1
+        },
+        "total": 87.80000000000001
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "FORNALHA",
+        "etapas": {
+          "1ª ETAPA": 28.9,
+          "2ª ETAPA": 29.3,
+          "3ª ETAPA": 29.099999999999994
+        },
+        "total": 87.3
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "SOL DE MARIA",
+        "etapas": {
+          "1ª ETAPA": 29.100000000000005,
+          "2ª ETAPA": 29.20000000000001,
+          "3ª ETAPA": 28.5
+        },
+        "total": 86.80000000000001
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "TENGO LENGO",
+        "etapas": {
+          "1ª ETAPA": 28.799999999999997,
+          "2ª ETAPA": 29.299999999999997,
+          "3ª ETAPA": 28.599999999999994
+        },
+        "total": 86.69999999999999
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "FURACÃO",
+        "etapas": {
+          "1ª ETAPA": 28.300000000000004,
+          "2ª ETAPA": null,
+          "3ª ETAPA": 28.5
+        },
+        "total": 56.800000000000004
+      }
+    ],
+    "MARCAÇÃO": [
+      {
+        "posicao": 1,
+        "quadrilha": "JUNINA MATULÃO",
+        "etapas": {
+          "1ª ETAPA": 29.799999999999997,
+          "2ª ETAPA": 29.900000000000002,
+          "3ª ETAPA": 30
+        },
+        "total": 89.7
+      },
+      {
+        "posicao": 2,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 29.799999999999997,
+          "2ª ETAPA": 29.799999999999997,
+          "3ª ETAPA": 29.9
+        },
+        "total": 89.5
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "MATINGUEIROS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 29.600000000000005,
+          "2ª ETAPA": 29.9,
+          "3ª ETAPA": 29.8
+        },
+        "total": 89.3
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "MATULÃO",
+        "etapas": {
+          "1ª ETAPA": 29.7,
+          "2ª ETAPA": 29.600000000000005,
+          "3ª ETAPA": 29.500000000000007
+        },
+        "total": 88.80000000000001
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "CHINELO DE COURO",
+        "etapas": {
+          "1ª ETAPA": 29.4,
+          "2ª ETAPA": 29.8,
+          "3ª ETAPA": 29.4
+        },
+        "total": 88.6
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "SOL DE MARIA",
+        "etapas": {
+          "1ª ETAPA": 29.400000000000002,
+          "2ª ETAPA": 29.8,
+          "3ª ETAPA": 29.300000000000004
+        },
+        "total": 88.5
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "FORNALHA",
+        "etapas": {
+          "1ª ETAPA": 29.299999999999997,
+          "2ª ETAPA": 29.200000000000003,
+          "3ª ETAPA": 29.400000000000006
+        },
+        "total": 87.9
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "TENGO LENGO",
+        "etapas": {
+          "1ª ETAPA": 28.9,
+          "2ª ETAPA": 29.4,
+          "3ª ETAPA": 29.200000000000003
+        },
+        "total": 87.5
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "XEM NHEM NHEM",
+        "etapas": {
+          "1ª ETAPA": 28.799999999999997,
+          "2ª ETAPA": 29.300000000000004,
+          "3ª ETAPA": 29
+        },
+        "total": 87.1
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "FURACÃO",
+        "etapas": {
+          "1ª ETAPA": 28.599999999999994,
+          "2ª ETAPA": null,
+          "3ª ETAPA": 28.899999999999995
+        },
+        "total": 57.499999999999986
+      }
+    ],
+    "ANIMAÇÃO": [
+      {
+        "posicao": 1,
+        "quadrilha": "CHINELO DE COURO",
+        "etapas": {
+          "1ª ETAPA": 29.900000000000002,
+          "2ª ETAPA": 29.999999999999996,
+          "3ª ETAPA": 29.900000000000002
+        },
+        "total": 89.8
+      },
+      {
+        "posicao": 2,
+        "quadrilha": "JUNINA MATULÃO",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 29.7,
+          "3ª ETAPA": 30
+        },
+        "total": 89.7
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 29.399999999999995,
+          "3ª ETAPA": 30
+        },
+        "total": 89.39999999999999
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "FORNALHA",
+        "etapas": {
+          "1ª ETAPA": 29.6,
+          "2ª ETAPA": 29.7,
+          "3ª ETAPA": 29.799999999999994
+        },
+        "total": 89.1
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "XEM NHEM NHEM",
+        "etapas": {
+          "1ª ETAPA": 29.899999999999995,
+          "2ª ETAPA": 29.599999999999998,
+          "3ª ETAPA": 29.300000000000004
+        },
+        "total": 88.8
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "OS CABOCLOS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 29.8,
+          "2ª ETAPA": 29.5,
+          "3ª ETAPA": 29.499999999999993
+        },
+        "total": 88.79999999999998
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "MATINGUEIROS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 29.199999999999996,
+          "2ª ETAPA": 29.5,
+          "3ª ETAPA": 29.299999999999997
+        },
+        "total": 88.0
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "SOL DE MARIA",
+        "etapas": {
+          "1ª ETAPA": 29.4,
+          "2ª ETAPA": 29.300000000000004,
+          "3ª ETAPA": 29
+        },
+        "total": 87.7
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "TENGO LENGO",
+        "etapas": {
+          "1ª ETAPA": 29.200000000000003,
+          "2ª ETAPA": 29.199999999999996,
+          "3ª ETAPA": 28.999999999999993
+        },
+        "total": 87.39999999999999
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "FURACÃO",
+        "etapas": {
+          "1ª ETAPA": 28.799999999999997,
+          "2ª ETAPA": null,
+          "3ª ETAPA": 28.9
+        },
+        "total": 57.699999999999996
+      }
+    ],
+    "FIGURINO": [
+      {
+        "posicao": 1,
+        "quadrilha": "JUNINA MATULÃO",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 29.999999999999996,
+          "3ª ETAPA": 30
+        },
+        "total": 90.0
+      },
+      {
+        "posicao": 2,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 29.7,
+          "2ª ETAPA": 30.000000000000004,
+          "3ª ETAPA": 30
+        },
+        "total": 89.7
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "CHINELO DE COURO",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 29.599999999999998
+        },
+        "total": 89.6
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "MATINGUEIROS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 29.8,
+          "2ª ETAPA": 29.8,
+          "3ª ETAPA": 29.8
+        },
+        "total": 89.4
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "OS CABOCLOS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 29.900000000000002,
+          "2ª ETAPA": 29.9,
+          "3ª ETAPA": 29.599999999999998
+        },
+        "total": 89.39999999999999
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "FORNALHA",
+        "etapas": {
+          "1ª ETAPA": 29.799999999999997,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 29.499999999999996
+        },
+        "total": 89.3
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "XEM NHEM NHEM",
+        "etapas": {
+          "1ª ETAPA": 29.8,
+          "2ª ETAPA": 29.8,
+          "3ª ETAPA": 29.500000000000004
+        },
+        "total": 89.10000000000001
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "SOL DE MARIA",
+        "etapas": {
+          "1ª ETAPA": 29.7,
+          "2ª ETAPA": 29.8,
+          "3ª ETAPA": 29.20000000000001
+        },
+        "total": 88.70000000000002
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "TENGO LENGO",
+        "etapas": {
+          "1ª ETAPA": 29.399999999999995,
+          "2ª ETAPA": 29.600000000000005,
+          "3ª ETAPA": 29.20000000000001
+        },
+        "total": 88.20000000000002
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "FURACÃO",
+        "etapas": {
+          "1ª ETAPA": 28.5,
+          "2ª ETAPA": null,
+          "3ª ETAPA": 28.599999999999994
+        },
+        "total": 57.099999999999994
+      }
+    ],
+    "CASAL DE NOIVOS": [
+      {
+        "posicao": 1,
+        "quadrilha": "OS CABOCLOS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 29.900000000000002
+        },
+        "total": 89.9
+      },
+      {
+        "posicao": 2,
+        "quadrilha": "JUNINA MATULÃO",
+        "etapas": {
+          "1ª ETAPA": 29.999999999999996,
+          "2ª ETAPA": 29.600000000000005,
+          "3ª ETAPA": 29.9
+        },
+        "total": 89.5
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "CHINELO DE COURO",
+        "etapas": {
+          "1ª ETAPA": 29.7,
+          "2ª ETAPA": 29.799999999999994,
+          "3ª ETAPA": 29.599999999999998
+        },
+        "total": 89.1
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "XEM NHEM NHEM",
+        "etapas": {
+          "1ª ETAPA": 29.6,
+          "2ª ETAPA": 29.6,
+          "3ª ETAPA": 29.699999999999996
+        },
+        "total": 88.9
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 29.499999999999996,
+          "2ª ETAPA": 29.4,
+          "3ª ETAPA": 29.9
+        },
+        "total": 88.79999999999998
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "FORNALHA",
+        "etapas": {
+          "1ª ETAPA": 29.5,
+          "2ª ETAPA": 29.500000000000004,
+          "3ª ETAPA": 29.599999999999994
+        },
+        "total": 88.6
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "MATINGUEIROS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 29.100000000000005,
+          "2ª ETAPA": 29.699999999999996,
+          "3ª ETAPA": 29.1
+        },
+        "total": 87.9
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "TENGO LENGO",
+        "etapas": {
+          "1ª ETAPA": 29.299999999999997,
+          "2ª ETAPA": 29.39999999999999,
+          "3ª ETAPA": 29.199999999999996
+        },
+        "total": 87.89999999999998
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "SOL DE MARIA",
+        "etapas": {
+          "1ª ETAPA": 29.300000000000004,
+          "2ª ETAPA": 29.3,
+          "3ª ETAPA": 29
+        },
+        "total": 87.60000000000001
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "FURACÃO",
+        "etapas": {
+          "1ª ETAPA": 28.800000000000004,
+          "2ª ETAPA": null,
+          "3ª ETAPA": 28.6
+        },
+        "total": 57.400000000000006
+      }
+    ],
+    "TRILHA": [
+      {
+        "posicao": 1,
+        "quadrilha": "JUNINA MATULÃO",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30
+        },
+        "total": 90.0
+      },
+      {
+        "posicao": 2,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 29.899999999999995,
+          "3ª ETAPA": 30
+        },
+        "total": 89.89999999999999
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "CHINELO DE COURO",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 29.799999999999997
+        },
+        "total": 89.8
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "MATINGUEIROS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 29.900000000000002,
+          "3ª ETAPA": 29.899999999999995
+        },
+        "total": 89.8
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "FORNALHA",
+        "etapas": {
+          "1ª ETAPA": 29.999999999999996,
+          "2ª ETAPA": 29.7,
+          "3ª ETAPA": 30
+        },
+        "total": 89.69999999999999
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "SOL DE MARIA",
+        "etapas": {
+          "1ª ETAPA": 29.999999999999996,
+          "2ª ETAPA": 29.999999999999996,
+          "3ª ETAPA": 29.599999999999998
+        },
+        "total": 89.6
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "XEM NHEM NHEM",
+        "etapas": {
+          "1ª ETAPA": 29.8,
+          "2ª ETAPA": 29.900000000000002,
+          "3ª ETAPA": 29.599999999999994
+        },
+        "total": 89.3
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "TENGO LENGO",
+        "etapas": {
+          "1ª ETAPA": 29.8,
+          "2ª ETAPA": 29.7,
+          "3ª ETAPA": 29.700000000000003
+        },
+        "total": 89.2
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "OS CABOCLOS DO SERTÃO",
+        "etapas": {
+          "1ª ETAPA": 29.900000000000002,
+          "2ª ETAPA": 29.900000000000002,
+          "3ª ETAPA": 29.100000000000005
+        },
+        "total": 88.9
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "FURACÃO",
+        "etapas": {
+          "1ª ETAPA": 29.700000000000003,
+          "2ª ETAPA": null,
+          "3ª ETAPA": 29.400000000000006
+        },
+        "total": 59.10000000000001
+      }
+    ]
+  }
+}

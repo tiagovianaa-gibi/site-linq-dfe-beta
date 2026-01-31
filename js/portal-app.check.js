@@ -16,169 +16,22 @@
 
 
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
 
 
 
 
-import {
 
 
 
 
 
-  getAuth,
 
 
 
 
 
-  onAuthStateChanged,
 
-
-
-
-
-  signOut,
-
-
-
-
-
-  updatePassword,
-
-
-
-
-
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-
-
-
-
-
-
-
-
-
-
-import {
-
-
-
-
-
-  getFirestore,
-
-
-
-
-
-  doc,
-
-
-
-
-
-  getDoc,
-
-
-
-
-
-  collection,
-
-
-
-
-
-  getDocs,
-
-
-
-
-
-  setDoc,
-
-
-
-
-
-  addDoc,
-
-
-
-
-
-  deleteDoc,
-
-
-
-
-
-  query,
-
-
-
-
-
-  where,
-
-
-
-
-
-  orderBy,
-
-
-
-
-
-  serverTimestamp,
-
-
-
-
-
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-
-
-
-
-import {
-
-
-
-
-
-  getStorage,
-
-
-
-
-
-  ref as storageRef,
-
-
-
-
-
-  uploadBytes,
-
-
-
-
-
-  getDownloadURL,
-
-
-
-
-
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 
 
@@ -1109,20 +962,30 @@ const passwordChangeMessage = document.getElementById("passwordChangeMessage");
 
 
 const competicoesRankingBody = document.getElementById("competicoesRankingBody");
+
+
+
+
+
 const competicoesTotalQuadrilhas = document.getElementById("competicoesTotalQuadrilhas");
+
+
+
+
+
 const competicoesTotalEtapas = document.getElementById("competicoesTotalEtapas");
+
+
+
+
+
 const competicoesMaiorTotal = document.getElementById("competicoesMaiorTotal");
-const competicoesMediaTotal = document.getElementById("competicoesMediaTotal");
-const competicoesDesvioTotal = document.getElementById("competicoesDesvioTotal");
-const competicoesEtapaForte = document.getElementById("competicoesEtapaForte");
+
+
+
+
+
 const competicoesQuesitosGrid = document.getElementById("competicoesQuesitosGrid");
-const competicoesQuesitosChart = document.getElementById("competicoesQuesitosChart");
-const competicoesEtapasChart = document.getElementById("competicoesEtapasChart");
-const competicoesGrupoSelect = document.getElementById("competicoesGrupo");
-const competicoesAnoSelect = document.getElementById("competicoesAno");
-const competicoesApplyBtn = document.getElementById("competicoesApply");
-const competicoesTitle = document.getElementById("competicoesTitle");
-const competicoesSubtitle = document.getElementById("competicoesSubtitle");
 
 
 
@@ -1615,16 +1478,6 @@ let noticiasCache = null;
 
 
 let competicoesCache = null;
-const competicoesDatasets = [
-  { grupo: "acesso", ano: 2022 },
-  { grupo: "acesso", ano: 2023 },
-  { grupo: "acesso", ano: 2024 },
-  { grupo: "acesso", ano: 2025 },
-  { grupo: "especial", ano: 2022 },
-  { grupo: "especial", ano: 2023 },
-  { grupo: "especial", ano: 2024 },
-  { grupo: "especial", ano: 2025 },
-];
 
 
 
@@ -2247,16 +2100,53 @@ const MOJIBAKE_REPLACEMENTS = [
 
 
 function fixMojibake(text) {
+
+
+
+
+
   if (!text) return "";
-  const raw = String(text);
-  if (!/[\u00C3\u00C2]/.test(raw)) return raw;
-  try {
-    const bytes = Uint8Array.from(raw, (char) => char.charCodeAt(0));
-    const decoded = new TextDecoder("utf-8").decode(bytes);
-    return decoded.replace(/\u00A0/g, " ");
-  } catch (err) {
-    return raw.replace(/\u00A0/g, " ");
+
+
+
+
+
+  if (!/[ÂÃâ]/.test(text)) return text;
+
+
+
+
+
+  let out = text;
+
+
+
+
+
+  for (const [bad, good] of MOJIBAKE_REPLACEMENTS) {
+
+
+
+
+
+    out = out.split(bad).join(good);
+
+
+
+
+
   }
+
+
+
+
+
+  return out;
+
+
+
+
+
 }
 
 
@@ -19496,183 +19386,487 @@ function formatScore(value) {
 
 
 function renderCompeticoesDashboard(data) {
+
+
+
+
+
   if (!data) return;
 
+
+
+
+
+
+
+
+
+
+
   const ranking = Array.isArray(data.ranking_final) ? data.ranking_final : [];
-  const etapasRaw = data.meta?.etapas || (ranking[0] ? Object.keys(ranking[0].etapas || {}) : []);
-  const etapas = etapasRaw.map((etapa) => fixMojibake(String(etapa)));
+
+
+
+
+
+  const etapas = data.meta?.etapas || (ranking[0] ? Object.keys(ranking[0].etapas || {}) : []);
+
+
+
+
+
+
+
+
+
+
 
   if (competicoesTotalQuadrilhas) {
+
+
+
+
+
     competicoesTotalQuadrilhas.textContent = String(ranking.length || 0);
+
+
+
+
+
   }
+
+
+
+
 
   if (competicoesTotalEtapas) {
+
+
+
+
+
     competicoesTotalEtapas.textContent = String(etapas.length || 0);
+
+
+
+
+
   }
 
-  const totals = ranking
-    .map((item) => Number(item.total))
-    .filter((value) => Number.isFinite(value));
-  const totalAvg = totals.length ? totals.reduce((acc, val) => acc + val, 0) / totals.length : 0;
-  const totalStd = totals.length
-    ? Math.sqrt(totals.reduce((acc, val) => acc + Math.pow(val - totalAvg, 2), 0) / totals.length)
-    : 0;
+
+
+
 
   if (competicoesMaiorTotal) {
-    const maxTotal = totals.length ? Math.max(...totals) : 0;
+
+
+
+
+
+    const maxTotal = ranking.reduce((acc, item) => Math.max(acc, Number(item.total || 0)), 0);
+
+
+
+
+
     competicoesMaiorTotal.textContent = formatScore(maxTotal);
+
+
+
+
+
   }
 
-  if (competicoesMediaTotal) {
-    competicoesMediaTotal.textContent = formatScore(totalAvg);
-  }
 
-  if (competicoesDesvioTotal) {
-    competicoesDesvioTotal.textContent = formatScore(totalStd);
-  }
 
-  const etapasStats = etapasRaw.map((raw, index) => {
-    const values = ranking
-      .map((item) => Number(item.etapas?.[raw]))
-      .filter((value) => Number.isFinite(value));
-    const avg = values.length ? values.reduce((acc, val) => acc + val, 0) / values.length : 0;
-    return {
-      label: etapas[index] || fixMojibake(String(raw)),
-      value: avg,
-    };
-  });
 
-  if (competicoesEtapaForte) {
-    if (etapasStats.length) {
-      const best = etapasStats.reduce((acc, item) => (item.value > acc.value ? item : acc), etapasStats[0]);
-      competicoesEtapaForte.textContent = best.value ? `${best.label} (${formatScore(best.value)})` : "--";
-    } else {
-      competicoesEtapaForte.textContent = "--";
-    }
-  }
+
+
+
+
+
+
 
   if (competicoesRankingBody) {
+
+
+
+
+
     competicoesRankingBody.innerHTML = ranking
+
+
+
+
+
       .map((item) => {
-        const e1 = item.etapas?.[etapasRaw[0]] ?? "--";
-        const e2 = item.etapas?.[etapasRaw[1]] ?? "--";
-        const e3 = item.etapas?.[etapasRaw[2]] ?? "--";
-        const e4 = item.etapas?.[etapasRaw[3]] ?? "--";
+
+
+
+
+
+        const e1 = item.etapas?.[etapas[0]] ?? "--";
+
+
+
+
+
+        const e2 = item.etapas?.[etapas[1]] ?? "--";
+
+
+
+
+
+        const e3 = item.etapas?.[etapas[2]] ?? "--";
+
+
+
+
+
+        const e4 = item.etapas?.[etapas[3]] ?? "--";
+
+
+
+
+
         return `
+
+
+
+
+
           <tr>
+
+
+
+
+
             <td>${item.posicao ?? ""}</td>
-            <td>${fixMojibake(item.quadrilha || "")}</td>
+
+
+
+
+
+            <td>${item.quadrilha || ""}</td>
+
+
+
+
+
             <td>${formatScore(item.total)}</td>
+
+
+
+
+
             <td>${formatScore(e1)}</td>
+
+
+
+
+
             <td>${formatScore(e2)}</td>
+
+
+
+
+
             <td>${formatScore(e3)}</td>
+
+
+
+
+
             <td>${formatScore(e4)}</td>
+
+
+
+
+
           </tr>
+
+
+
+
+
         `;
+
+
+
+
+
       })
+
+
+
+
+
       .join("");
+
+
+
+
+
   }
 
-  if (competicoesTitle) {
-    const grupoLabel = data?.meta?.grupo === "especial" ? "Grupo Especial" : "Grupo de Acesso";
-    const anoLabel = data?.meta?.ano ? String(data.meta.ano) : "";
-    competicoesTitle.textContent = `${grupoLabel} ${anoLabel}`.trim();
-  }
-  if (competicoesSubtitle) {
-    competicoesSubtitle.textContent = "Fonte: planilha oficial do circuito.";
-  }
+
+
+
+
+
+
+
+
+
 
   if (competicoesQuesitosGrid) {
+
+
+
+
+
     const quesitos = data.quesitos || {};
+
+
+
+
+
     const maxOverall = Object.values(quesitos).reduce((acc, list) => {
+
+
+
+
+
       if (!Array.isArray(list) || !list.length) return acc;
+
+
+
+
+
       const maxQ = Math.max(...list.map((item) => Number(item.total || 0)));
+
+
+
+
+
       return Math.max(acc, maxQ);
+
+
+
+
+
     }, 0);
 
+
+
+
+
+
+
+
+
+
+
     competicoesQuesitosGrid.innerHTML = Object.entries(quesitos)
+
+
+
+
+
       .map(([key, list]) => {
+
+
+
+
+
         const items = (Array.isArray(list) ? list.slice() : [])
+
+
+
+
+
           .filter((item) => item && item.quadrilha)
+
+
+
+
+
           .sort((a, b) => Number(b.total || 0) - Number(a.total || 0))
+
+
+
+
+
           .slice(0, 5);
+
+
+
+
+
         const top = items[0] || {};
+
+
+
+
+
         const topTotal = Number(top.total || 0);
+
+
+
+
+
         const pct = maxOverall ? Math.max(8, Math.round((topTotal / maxOverall) * 100)) : 0;
-        const label = fixMojibake(key.replace(/_/g, " "));
+
+
+
+
+
+        const label = key.replace(/_/g, " ");
+
+
+
+
+
+
+
+
+
+
 
         const listHtml = items
+
+
+
+
+
           .map((item, idx) => {
-            return `<li><span>${idx + 1}. ${fixMojibake(item.quadrilha)}</span><strong>${formatScore(item.total)}</strong></li>`;
+
+
+
+
+
+            return `<li><span>${idx + 1}. ${item.quadrilha}</span><strong>${formatScore(item.total)}</strong></li>`;
+
+
+
+
+
           })
+
+
+
+
+
           .join("");
 
+
+
+
+
+
+
+
+
+
+
         return `
+
+
+
+
+
           <div class="card competicao-quesito-card">
+
+
+
+
+
             <h4 class="card-title">${label}</h4>
+
+
+
+
+
             <ul class="competicao-list">${listHtml}</ul>
+
+
+
+
+
             <div class="competicao-bar"><span style="width:${pct}%"></span></div>
+
+
+
+
+
           </div>
+
+
+
+
+
         `;
+
+
+
+
+
       })
+
+
+
+
+
       .join("");
+
+
+
+
+
   }
 
-  renderCompeticoesCharts(data, etapasRaw, etapas, etapasStats);
+
+
+
+
 }
 
-function renderCompeticoesBars(container, items) {
-  if (!container) return;
-  if (!Array.isArray(items) || !items.length) {
-    container.innerHTML = '<p class="muted">Sem dados.</p>';
+
+
+
+
+
+
+
+
+
+
+async function loadCompeticoesDashboard() {
+
+
+
+
+
+  if (competicoesCache) {
+
+
+
+
+
+    renderCompeticoesDashboard(competicoesCache);
+
+
+
+
+
     return;
+
+
+
+
+
   }
 
-  const maxValue = Math.max(...items.map((item) => Number(item.value) || 0), 0);
-  container.innerHTML = items
-    .map((item) => {
-      const value = Number(item.value) || 0;
-      const pct = maxValue ? Math.max(6, Math.round((value / maxValue) * 100)) : 0;
-      const label = item.label || "--";
-      return `
-        <div class="competicao-bar-row">
-          <span class="competicao-bar-label">${label}</span>
-          <div class="competicao-bar-track">
-            <div class="competicao-bar-fill" style="width:${pct}%"></div>
-          </div>
-          <span class="competicao-bar-value">${formatScore(value)}</span>
-        </div>
-      `;
-    })
-    .join("");
-}
-
-function renderCompeticoesCharts(data, etapasRaw, etapasLabels, etapasStats) {
-  const quesitos = data.quesitos || {};
-  const quesitoItems = Object.entries(quesitos)
-    .map(([key, list]) => {
-      const values = (Array.isArray(list) ? list : [])
-        .map((item) => Number(item.total || 0))
-        .filter((value) => Number.isFinite(value));
-      const avg = values.length ? values.reduce((acc, val) => acc + val, 0) / values.length : 0;
-      return {
-        label: fixMojibake(key.replace(/_/g, " ")),
-        value: avg,
-      };
-    })
-    .sort((a, b) => b.value - a.value);
-
-  renderCompeticoesBars(competicoesQuesitosChart, quesitoItems);
-
-  const etapaItems = Array.isArray(etapasStats)
-    ? etapasStats
-    : (etapasRaw || []).map((raw, index) => {
-        const label = etapasLabels?.[index] || fixMojibake(String(raw));
-        return { label, value: 0 };
-      });
-
-  renderCompeticoesBars(competicoesEtapasChart, etapaItems);
-}
 
 
 
@@ -19682,64 +19876,80 @@ function renderCompeticoesCharts(data, etapasRaw, etapasLabels, etapasStats) {
 
 
 
-
-
-
-
-
-function initCompeticoesFilters() {
-  if (!competicoesGrupoSelect || !competicoesAnoSelect) return;
-
-  const grupos = Array.from(new Set(competicoesDatasets.map((d) => d.grupo)));
-  competicoesGrupoSelect.innerHTML = grupos
-    .map((g) => `<option value="${g}">${g === "especial" ? "Grupo Especial" : "Grupo de Acesso"}</option>`)
-    .join("");
-
-  const anos = Array.from(new Set(competicoesDatasets.map((d) => d.ano))).sort();
-  competicoesAnoSelect.innerHTML = anos
-    .map((a) => `<option value="${a}">${a}</option>`)
-    .join("");
-
-  // default: latest year + acesso
-  const latest = Math.max(...anos);
-  competicoesGrupoSelect.value = "acesso";
-  competicoesAnoSelect.value = String(latest);
-
-  const apply = () => {
-    const grupo = competicoesGrupoSelect.value;
-    const ano = Number(competicoesAnoSelect.value);
-    loadCompeticoesDashboard(grupo, ano);
-  };
-
-  if (competicoesApplyBtn) {
-    competicoesApplyBtn.addEventListener("click", apply);
-  }
-
-  // auto-load
-  apply();
-}
-
-async function loadCompeticoesDashboard(grupo, ano) {
-  const cacheKey = `${grupo}-${ano}`;
-  if (competicoesCache && competicoesCache.key === cacheKey) {
-    renderCompeticoesDashboard(competicoesCache.data);
-    return;
-  }
 
   try {
-    const response = await fetch(`data/portal/competicoes/${grupo}-${ano}.json`);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    competicoesCache = { key: cacheKey, data };
-    renderCompeticoesDashboard(data);
-  } catch (err) {
-    console.error("Erro ao carregar dados de competi\u00E7\u00F5es:", err);
-    if (competicoesRankingBody) {
-      competicoesRankingBody.innerHTML = '<tr><td colspan="7">Erro ao carregar dados.</td></tr>';
-    }
-  }
-}
 
+
+
+
+
+    const response = await fetch("data/portal/competicoes/acesso-2022.json");
+
+
+
+
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+
+
+
+
+    const data = await response.json();
+
+
+
+
+
+    competicoesCache = data;
+
+
+
+
+
+    renderCompeticoesDashboard(data);
+
+
+
+
+
+  } catch (err) {
+
+
+
+
+
+    console.error("Erro ao carregar dados de competições:", err);
+
+
+
+
+
+    if (competicoesRankingBody) {
+
+
+
+
+
+      competicoesRankingBody.innerHTML = '<tr><td colspan="7">Erro ao carregar dados.</td></tr>';
+
+
+
+
+
+    }
+
+
+
+
+
+  }
+
+
+
+
+
+}
 
 
 
@@ -20057,7 +20267,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-          initCompeticoesFilters();
+          loadCompeticoesDashboard();
 
 
 
@@ -20196,7 +20406,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
-
 
 
 

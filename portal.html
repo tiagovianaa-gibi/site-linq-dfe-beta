@@ -1,152 +1,357 @@
-﻿<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
-  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Language" content="pt-BR">
-  <title>Portal da Liga | LINQ-DFE</title>
-  <meta name="description" content="Área restrita da LINQ-DFE para quadrilhas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
-  <meta name="robots" content="noindex,nofollow">
-  <link rel="canonical" href="https://linqdfe.com.br/portal">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Portal da Liga | LINQ-DFE">
-  <meta property="og:description" content="Área restrita da LINQ-DFE para quadrilhas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
-  <meta property="og:url" content="https://linqdfe.com.br/portal">
-  <meta property="og:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
-  <meta property="og:site_name" content="LINQ-DFE">
-  <meta property="og:locale" content="pt_BR">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Portal da Liga | LINQ-DFE">
-  <meta name="twitter:description" content="Área restrita da LINQ-DFE para quadrilhas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
-  <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "LINQ-DFE",
-      "url": "https://linqdfe.com.br",
-      "logo": "https://linqdfe.com.br/assets/logos/linq-dfe.png",
-      "sameAs": ["https://instagram.com/linqdfe"]
-    }
-  </script>
-  <link rel="stylesheet" href="css/style.min.css">
-</head>
-<body class="portal-body">
-  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
-  <nav>
-  <div class="container">
-    <div class="logo">
-      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
-      <span class="logo-text">LINQ-DFE</span>
-    </div>
-    <ul>
-      <li><a href="index.html">Inicial</a></li>
-      <li><a href="circuito.html">Circuito</a></li>
-      <li><a href="quadrilhas.html">Quadrilhas</a></li>
-      <li><a href="mapa.html">Mapa</a></li>
-      <li><a href="noticias.html">Not&iacute;cias</a></li>
-      <li><a href="acervo.html">Acervo</a></li>
-      <li><a href="diretoria.html">Diretoria</a></li>
-      <li><a href="documentos.html">Documentos</a></li>
-      <li><a href="portal.html">Portal da Liga</a></li>
-    </ul>
-  </div>
-</nav>
-  <main class="portal-main">
-    <section class="section">
-      <div class="container portal-login-container">
-        <div class="card portal-login-card">
-          <div class="card-body">
-            <h1 class="section-title" style="text-align:center; margin-bottom: var(--spacing-md);">
-              Portal da Liga
-            </h1>
-            <p style="text-align:center; margin-bottom: var(--spacing-lg);">
-              Acesso exclusivo para quadrilhas, diretoria da Liga, equipe de credenciamento e jurados.
-            </p>
-            <form id="portalLoginForm" class="form-vertical" novalidate>
-              <div class="form-group">
-                <label for="email">E-mail institucional</label>
-                <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="emailHelp">
-                <small id="emailHelp" class="muted">Use o e-mail cadastrado para sua quadrilha.</small>
-              </div>
-
-              <div class="form-group">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" name="senha" autocomplete="current-password" required>
-              </div>
-
-              <div class="form-actions">
-                <button type="submit" class="btn" style="width:100%; margin-top: var(--spacing-md);">
-                  Entrar
-                </button>
-                <button type="button" class="btn btn-light" id="forgotBtn" style="width:100%; margin-top: var(--spacing-sm);">
-                  Esqueci minha senha
-                </button>
-              </div>
-
-              <div id="loginStatus" role="alert" aria-live="polite" class="muted" style="margin-top: var(--spacing-md); min-height: 1.4rem;"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-<!-- Depois a gente troca por JS com Firebase Auth -->
-  <script type="module" src="js/portal-login.min.js?v=20250119"></script>
-  <script type="module" src="js/shared.min.js"></script>
-<footer class="site-footer" aria-label="Rodap&eacute;">
-  <div class="container footer-grid">
-    <div class="footer-col footer-brand">
-      <div class="logo">
-        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE">
-        <span class="logo-text">LINQ-DFE</span>
-      </div>
-      <p>Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
-      <div class="footer-social">
-        <a href="https://instagram.com/linqdfe" target="_blank" rel="noopener">Instagram</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h3 class="footer-title">Institucional</h3>
-      <ul class="footer-links">
-        <li><a href="index.html">Inicial</a></li>
-        <li><a href="diretoria.html">Diretoria</a></li>
-        <li><a href="documentos.html">Documentos</a></li>
-        <li><a href="portal.html">Portal da Liga</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h3 class="footer-title">Circuito</h3>
-      <ul class="footer-links">
-        <li><a href="circuito.html">Circuito de Quadrilhas</a></li>
-        <li><a href="grupo-especial.html">Grupo Especial</a></li>
-        <li><a href="grupo-acesso.html">Grupo de Acesso</a></li>
-        <li><a href="temporada-2025.html">Ranking e resultados 2025</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h3 class="footer-title">Conte&uacute;do</h3>
-      <ul class="footer-links">
-        <li><a href="quadrilhas.html">Quadrilhas</a></li>
-        <li><a href="noticias.html">Not&iacute;cias</a></li>
-        <li><a href="acervo.html">Acervo</a></li>
-        <li><a href="sitemap.xml">Sitemap</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
-  </div>
-</footer>
-</body>
-</html>
-
-
-
-
-
+<!DOCTYPE html>
+
+
+<html lang="pt-BR">
+
+
+<head>
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png">
+
+
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png">
+
+
+  <meta charset="UTF-8">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <meta http-equiv="Content-Language" content="pt-BR">
+
+
+  <title>Portal da Liga | LINQ-DFE</title>
+
+
+  <meta name="description" content="Área restrita da LINQ-DFE para quadrilhas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
+
+
+  <meta name="robots" content="noindex,nofollow">
+
+
+  <link rel="canonical" href="https://linqdfe.com.br/portal">
+
+
+  <meta property="og:type" content="website">
+
+
+  <meta property="og:title" content="Portal da Liga | LINQ-DFE">
+
+
+  <meta property="og:description" content="Área restrita da LINQ-DFE para quadrilhas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
+
+
+  <meta property="og:url" content="https://linqdfe.com.br/portal">
+
+
+  <meta property="og:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
+
+
+  <meta property="og:site_name" content="LINQ-DFE">
+
+
+  <meta property="og:locale" content="pt_BR">
+
+
+  <meta name="twitter:card" content="summary_large_image">
+
+
+  <meta name="twitter:title" content="Portal da Liga | LINQ-DFE">
+
+
+  <meta name="twitter:description" content="Área restrita da LINQ-DFE para quadrilhas e diretoria com acesso a serviços internos, documentos e comunicação institucional.">
+
+
+  <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
+
+
+  <script type="application/ld+json">
+
+
+    {
+
+
+      "@context": "https://schema.org",
+
+
+      "@type": "Organization",
+
+
+      "name": "LINQ-DFE",
+
+
+      "url": "https://linqdfe.com.br",
+
+
+      "logo": "https://linqdfe.com.br/assets/logos/linq-dfe.png",
+
+
+      "sameAs": ["https://instagram.com/linqdfe"]
+
+
+    }
+
+
+  </script>
+
+
+  <link rel="stylesheet" href="css/style.min.css">
+
+
+</head>
+
+
+<body class="portal-body">
+
+
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+
+
+  <nav>
+
+
+  <div class="container">
+
+
+    <div class="logo">
+
+
+      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+
+
+      <span class="logo-text">LINQ-DFE</span>
+
+
+    </div>
+
+
+    <ul>
+
+
+      <li><a href="index.html">Inicial</a></li>
+
+
+      <li><a href="circuito.html">Circuito</a></li>
+
+
+      <li><a href="quadrilhas.html">Quadrilhas</a></li>
+
+
+      <li><a href="mapa.html">Mapa</a></li>
+
+
+      <li><a href="noticias.html">Not&iacute;cias</a></li>
+
+
+      <li><a href="acervo.html">Acervo</a></li>
+
+
+      <li><a href="diretoria.html">Diretoria</a></li>
+
+
+      <li><a href="documentos.html">Documentos</a></li>
+
+
+      <li><a href="portal.html">Portal da Liga</a></li>
+
+
+    </ul>
+
+
+  </div>
+
+
+</nav>
+
+
+  <main class="portal-main">
+
+
+    <section class="section">
+
+
+      <div class="container portal-login-container">
+
+
+        <div class="card portal-login-card">
+
+
+          <div class="card-body">
+
+
+            <h1 class="section-title" style="text-align:center; margin-bottom: var(--spacing-md);">
+
+
+              Portal da Liga
+
+
+            </h1>
+
+
+            <p style="text-align:center; margin-bottom: var(--spacing-lg);">
+
+
+              Acesso exclusivo para quadrilhas, diretoria da Liga, equipe de credenciamento e jurados.
+
+
+            </p>
+
+
+            <form id="portalLoginForm" class="form-vertical" novalidate>
+<div class="form-actions">
+
+                <button type="button" class="btn btn-light" id="googleBtn" style="width:100%; margin-top: 
+var(--spacing-sm);">
+
+
+                  Entrar com Google
+                </button>
+
+              </div>
+
+
+
+
+
+              <div id="loginStatus" role="alert" aria-live="polite" class="muted" style="margin-top: var(--spacing-md); min-height: 1.4rem;"></div>
+
+
+            </form>
+
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+<!-- Depois a gente troca por JS com Firebase Auth -->
+
+
+  <script type="module" src="js/portal-login.js?v=20260131-2"></script>
+  <script type="module" src="js/shared.min.js"></script>
+
+
+<footer class="site-footer" aria-label="Rodap&eacute;">
+
+  <div class="container footer-grid">
+
+    <div class="footer-col footer-brand">
+
+      <div class="logo">
+
+        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE">
+
+        <span class="logo-text">LINQ-DFE</span>
+
+      </div>
+
+      <p>Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+
+      <div class="footer-social">
+
+        <a href="https://instagram.com/linqdfe" target="_blank" rel="noopener">Instagram</a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-col">
+
+      <h3 class="footer-title">Institucional</h3>
+
+      <ul class="footer-links">
+
+        <li><a href="index.html">Inicial</a></li>
+
+        <li><a href="diretoria.html">Diretoria</a></li>
+
+        <li><a href="documentos.html">Documentos</a></li>
+
+        <li><a href="portal.html">Portal da Liga</a></li>
+
+      </ul>
+
+    </div>
+
+    <div class="footer-col">
+
+      <h3 class="footer-title">Circuito</h3>
+
+      <ul class="footer-links">
+
+        <li><a href="circuito.html">Circuito de Quadrilhas</a></li>
+
+        <li><a href="grupo-especial.html">Grupo Especial</a></li>
+
+        <li><a href="grupo-acesso.html">Grupo de Acesso</a></li>
+
+        <li><a href="temporada-2025.html">Ranking e resultados 2025</a></li>
+
+      </ul>
+
+    </div>
+
+    <div class="footer-col">
+
+      <h3 class="footer-title">Conte&uacute;do</h3>
+
+      <ul class="footer-links">
+
+        <li><a href="quadrilhas.html">Quadrilhas</a></li>
+
+        <li><a href="noticias.html">Not&iacute;cias</a></li>
+
+        <li><a href="acervo.html">Acervo</a></li>
+
+        <li><a href="sitemap.xml">Sitemap</a></li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+
+    <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+
+  </div>
+
+</footer>
+
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

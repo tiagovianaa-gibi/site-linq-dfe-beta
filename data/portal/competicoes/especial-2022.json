@@ -1,0 +1,1108 @@
+{
+  "meta": {
+    "ano": 2022,
+    "grupo": "especial",
+    "etapas": [
+      "1ª ETAPA",
+      "2ª ETAPA",
+      "3ª ETAPA",
+      "4ª ETAPA"
+    ],
+    "fonte": "assets/planilhas/especial-2022.xlsx",
+    "modelo": "classico"
+  },
+  "ranking_final": [
+    {
+      "posicao": 1,
+      "quadrilha": "SI BOBIÁ A GENTE PIMBA",
+      "etapas": {
+        "1ª ETAPA": 179.5,
+        "2ª ETAPA": 179.9,
+        "3ª ETAPA": 179.9,
+        "4ª ETAPA": 180
+      },
+      "total": 719.3
+    },
+    {
+      "posicao": 2,
+      "quadrilha": "FORMIGA DA ROÇA",
+      "etapas": {
+        "1ª ETAPA": 179.4,
+        "2ª ETAPA": 179.9,
+        "3ª ETAPA": 179.8,
+        "4ª ETAPA": 179.9
+      },
+      "total": 719.0
+    },
+    {
+      "posicao": 3,
+      "quadrilha": "PAIXÃO CANGAÇO",
+      "etapas": {
+        "1ª ETAPA": 178.5,
+        "2ª ETAPA": 178.8,
+        "3ª ETAPA": 179.9,
+        "4ª ETAPA": 180
+      },
+      "total": 717.2
+    },
+    {
+      "posicao": 4,
+      "quadrilha": "ARROXA O NÓ",
+      "etapas": {
+        "1ª ETAPA": 178.4,
+        "2ª ETAPA": 179.8,
+        "3ª ETAPA": 178.6,
+        "4ª ETAPA": 179.7
+      },
+      "total": 716.5
+    },
+    {
+      "posicao": 5,
+      "quadrilha": "SABUGO DE MILHO",
+      "etapas": {
+        "1ª ETAPA": 177.20000000000002,
+        "2ª ETAPA": 178.6,
+        "3ª ETAPA": 179.8,
+        "4ª ETAPA": 179.9
+      },
+      "total": 715.5
+    },
+    {
+      "posicao": 6,
+      "quadrilha": "RASGA O FOLE",
+      "etapas": {
+        "1ª ETAPA": 177.1,
+        "2ª ETAPA": 178.79999999999998,
+        "3ª ETAPA": 178.6,
+        "4ª ETAPA": 178.8
+      },
+      "total": 713.3
+    },
+    {
+      "posicao": 7,
+      "quadrilha": "RIBULIÇO",
+      "etapas": {
+        "1ª ETAPA": 177.20000000000002,
+        "2ª ETAPA": 178,
+        "3ª ETAPA": 178.6,
+        "4ª ETAPA": 179.2
+      },
+      "total": 713.0
+    },
+    {
+      "posicao": 8,
+      "quadrilha": "ARRAIÁ DOS MATUTOS",
+      "etapas": {
+        "1ª ETAPA": 176.3,
+        "2ª ETAPA": 177.4,
+        "3ª ETAPA": 178.9,
+        "4ª ETAPA": 179
+      },
+      "total": 711.6
+    },
+    {
+      "posicao": 9,
+      "quadrilha": "AMOR JUNINO",
+      "etapas": {
+        "1ª ETAPA": 173.8,
+        "2ª ETAPA": 177.7,
+        "3ª ETAPA": 179.4,
+        "4ª ETAPA": 179.8
+      },
+      "total": 710.7
+    },
+    {
+      "posicao": 10,
+      "quadrilha": "SANFONA LASCADA",
+      "etapas": {
+        "1ª ETAPA": 173.9,
+        "2ª ETAPA": 177.4,
+        "3ª ETAPA": 179.4,
+        "4ª ETAPA": 179.1
+      },
+      "total": 709.8000000000001
+    },
+    {
+      "posicao": 11,
+      "quadrilha": "XAMEGAR",
+      "etapas": {
+        "1ª ETAPA": 172.20000000000002,
+        "2ª ETAPA": 177.8,
+        "3ª ETAPA": 178.8,
+        "4ª ETAPA": 179.7
+      },
+      "total": 708.5
+    },
+    {
+      "posicao": 12,
+      "quadrilha": "XÉM NHEM NHÉM",
+      "etapas": {
+        "1ª ETAPA": 175.8,
+        "2ª ETAPA": 175.3,
+        "3ª ETAPA": 179,
+        "4ª ETAPA": 176.6
+      },
+      "total": 706.7
+    },
+    {
+      "posicao": 13,
+      "quadrilha": "PULA FOGUEIRA",
+      "etapas": {
+        "1ª ETAPA": 172.9,
+        "2ª ETAPA": 170.5,
+        "3ª ETAPA": 177.2,
+        "4ª ETAPA": 178.2
+      },
+      "total": 698.8
+    },
+    {
+      "posicao": 14,
+      "quadrilha": "XIQUE XIQUE",
+      "etapas": {
+        "1ª ETAPA": 176,
+        "2ª ETAPA": 174.6,
+        "3ª ETAPA": 179.5,
+        "4ª ETAPA": 0
+      },
+      "total": 530.1
+    }
+  ],
+  "quesitos": {
+    "COREOGRAFIA_HARMONIA": [
+      {
+        "posicao": 1,
+        "quadrilha": "FORMIGA DA ROÇA",
+        "etapas": {
+          "1ª ETAPA": 29.799999999999997,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 29.8,
+          "4ª ETAPA": 30
+        },
+        "total": 119.6
+      },
+      {
+        "posicao": 2,
+        "quadrilha": "SI BOBIÁ A GENTE PIMBA",
+        "etapas": {
+          "1ª ETAPA": 29.7,
+          "2ª ETAPA": 29.9,
+          "3ª ETAPA": 29.9,
+          "4ª ETAPA": 30
+        },
+        "total": 119.5
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "PAIXÃO CANGAÇO",
+        "etapas": {
+          "1ª ETAPA": 29.5,
+          "2ª ETAPA": 29.999999999999996,
+          "3ª ETAPA": 29.9,
+          "4ª ETAPA": 30
+        },
+        "total": 119.4
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "SABUGO DE MILHO",
+        "etapas": {
+          "1ª ETAPA": 29.4,
+          "2ª ETAPA": 29.899999999999995,
+          "3ª ETAPA": 30.000000000000004,
+          "4ª ETAPA": 29.899999999999995
+        },
+        "total": 119.19999999999999
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "ARROXA O NÓ",
+        "etapas": {
+          "1ª ETAPA": 29.599999999999998,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 29.400000000000006,
+          "4ª ETAPA": 29.799999999999997
+        },
+        "total": 118.8
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "RIBULIÇO",
+        "etapas": {
+          "1ª ETAPA": 29.4,
+          "2ª ETAPA": 29.799999999999997,
+          "3ª ETAPA": 29.299999999999997,
+          "4ª ETAPA": 29.899999999999995
+        },
+        "total": 118.39999999999999
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "ARRAIÁ DOS MATUTOS",
+        "etapas": {
+          "1ª ETAPA": 29.199999999999996,
+          "2ª ETAPA": 29.599999999999994,
+          "3ª ETAPA": 29.599999999999998,
+          "4ª ETAPA": 29.500000000000007
+        },
+        "total": 117.9
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "AMOR JUNINO",
+        "etapas": {
+          "1ª ETAPA": 29.000000000000007,
+          "2ª ETAPA": 29.299999999999997,
+          "3ª ETAPA": 29.7,
+          "4ª ETAPA": 29.899999999999995
+        },
+        "total": 117.89999999999999
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "RASGA O FOLE",
+        "etapas": {
+          "1ª ETAPA": 29.29999999999999,
+          "2ª ETAPA": 29.599999999999998,
+          "3ª ETAPA": 29.4,
+          "4ª ETAPA": 29.599999999999994
+        },
+        "total": 117.89999999999998
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "SANFONA LASCADA",
+        "etapas": {
+          "1ª ETAPA": 28.9,
+          "2ª ETAPA": 29.4,
+          "3ª ETAPA": 29.59999999999999,
+          "4ª ETAPA": 29.499999999999996
+        },
+        "total": 117.39999999999999
+      },
+      {
+        "posicao": 11,
+        "quadrilha": "XAMEGAR",
+        "etapas": {
+          "1ª ETAPA": 28.700000000000003,
+          "2ª ETAPA": 29.40000000000001,
+          "3ª ETAPA": 29.399999999999995,
+          "4ª ETAPA": 29.799999999999997
+        },
+        "total": 117.3
+      },
+      {
+        "posicao": 12,
+        "quadrilha": "XÉM NHEM NHÉM",
+        "etapas": {
+          "1ª ETAPA": 29.299999999999997,
+          "2ª ETAPA": 28.9,
+          "3ª ETAPA": 29.599999999999998,
+          "4ª ETAPA": 29.199999999999996
+        },
+        "total": 117.0
+      },
+      {
+        "posicao": 13,
+        "quadrilha": "PULA FOGUEIRA",
+        "etapas": {
+          "1ª ETAPA": 28.299999999999997,
+          "2ª ETAPA": 29.000000000000004,
+          "3ª ETAPA": 29.1,
+          "4ª ETAPA": 29.200000000000003
+        },
+        "total": 115.60000000000001
+      },
+      {
+        "posicao": 14,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 29.2,
+          "2ª ETAPA": 28.500000000000004,
+          "3ª ETAPA": 29.599999999999994,
+          "4ª ETAPA": 0
+        },
+        "total": 87.3
+      }
+    ],
+    "MARCAÇÃO": [
+      {
+        "posicao": 1,
+        "quadrilha": "PAIXÃO CANGAÇO",
+        "etapas": {
+          "1ª ETAPA": 29.900000000000002,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.9
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "FORMIGA DA ROÇA",
+        "etapas": {
+          "1ª ETAPA": 29.8,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.8
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "ARROXA O NÓ",
+        "etapas": {
+          "1ª ETAPA": 29.7,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 29.900000000000002,
+          "4ª ETAPA": 30
+        },
+        "total": 119.60000000000001
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "RIBULIÇO",
+        "etapas": {
+          "1ª ETAPA": 29.6,
+          "2ª ETAPA": 29.8,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30.000000000000004
+        },
+        "total": 119.4
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "ARRAIÁ DOS MATUTOS",
+        "etapas": {
+          "1ª ETAPA": 29.199999999999996,
+          "2ª ETAPA": 29.599999999999998,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 29.999999999999996
+        },
+        "total": 118.8
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "RASGA O FOLE",
+        "etapas": {
+          "1ª ETAPA": 29.500000000000004,
+          "2ª ETAPA": 29.8,
+          "3ª ETAPA": 29.499999999999996,
+          "4ª ETAPA": 30
+        },
+        "total": 118.8
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "XAMEGAR",
+        "etapas": {
+          "1ª ETAPA": 29.000000000000007,
+          "2ª ETAPA": 29.6,
+          "3ª ETAPA": 29.899999999999995,
+          "4ª ETAPA": 30
+        },
+        "total": 118.5
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "AMOR JUNINO",
+        "etapas": {
+          "1ª ETAPA": 28.800000000000004,
+          "2ª ETAPA": 29.6,
+          "3ª ETAPA": 29.900000000000002,
+          "4ª ETAPA": 30
+        },
+        "total": 118.30000000000001
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "SABUGO DE MILHO",
+        "etapas": {
+          "1ª ETAPA": 29.000000000000007,
+          "2ª ETAPA": 29.3,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 118.30000000000001
+      },
+      {
+        "posicao": 11,
+        "quadrilha": "SANFONA LASCADA",
+        "etapas": {
+          "1ª ETAPA": 28.9,
+          "2ª ETAPA": 29.4,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30.000000000000004
+        },
+        "total": 118.3
+      },
+      {
+        "posicao": 12,
+        "quadrilha": "PULA FOGUEIRA",
+        "etapas": {
+          "1ª ETAPA": 28.6,
+          "2ª ETAPA": 29.199999999999996,
+          "3ª ETAPA": 29.5,
+          "4ª ETAPA": 29.8
+        },
+        "total": 117.1
+      },
+      {
+        "posicao": 13,
+        "quadrilha": "XÉM NHEM NHÉM",
+        "etapas": {
+          "1ª ETAPA": 28.800000000000008,
+          "2ª ETAPA": 29.4,
+          "3ª ETAPA": 29.8,
+          "4ª ETAPA": 29.1
+        },
+        "total": 117.1
+      },
+      {
+        "posicao": 14,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 29.5,
+          "2ª ETAPA": 29.400000000000002,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 0
+        },
+        "total": 88.9
+      },
+      {
+        "posicao": null,
+        "quadrilha": "SI BOBIÁ A GENTE PIMBA",
+        "etapas": {
+          "1ª ETAPA": 29.900000000000002,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.9
+      }
+    ],
+    "ANIMAÇÃO": [
+      {
+        "posicao": 1,
+        "quadrilha": "FORMIGA DA ROÇA",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 120.0
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "PAIXÃO CANGAÇO",
+        "etapas": {
+          "1ª ETAPA": 29.900000000000002,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.9
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "SABUGO DE MILHO",
+        "etapas": {
+          "1ª ETAPA": 29.8,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 29.9,
+          "4ª ETAPA": 30
+        },
+        "total": 119.69999999999999
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "ARROXA O NÓ",
+        "etapas": {
+          "1ª ETAPA": 29.7,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 29.8,
+          "4ª ETAPA": 30
+        },
+        "total": 119.5
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "RIBULIÇO",
+        "etapas": {
+          "1ª ETAPA": 29.400000000000002,
+          "2ª ETAPA": 29.6,
+          "3ª ETAPA": 29.8,
+          "4ª ETAPA": 29.799999999999994
+        },
+        "total": 118.6
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "ARRAIÁ DOS MATUTOS",
+        "etapas": {
+          "1ª ETAPA": 29.1,
+          "2ª ETAPA": 29.6,
+          "3ª ETAPA": 29.9,
+          "4ª ETAPA": 29.899999999999995
+        },
+        "total": 118.49999999999999
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "RASGA O FOLE",
+        "etapas": {
+          "1ª ETAPA": 29.3,
+          "2ª ETAPA": 29.7,
+          "3ª ETAPA": 29.8,
+          "4ª ETAPA": 29.599999999999998
+        },
+        "total": 118.39999999999999
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "AMOR JUNINO",
+        "etapas": {
+          "1ª ETAPA": 28.599999999999994,
+          "2ª ETAPA": 29.799999999999994,
+          "3ª ETAPA": 29.900000000000002,
+          "4ª ETAPA": 29.999999999999996
+        },
+        "total": 118.3
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "SANFONA LASCADA",
+        "etapas": {
+          "1ª ETAPA": 28.800000000000008,
+          "2ª ETAPA": 29.6,
+          "3ª ETAPA": 29.900000000000002,
+          "4ª ETAPA": 29.899999999999995
+        },
+        "total": 118.2
+      },
+      {
+        "posicao": 11,
+        "quadrilha": "XAMEGAR",
+        "etapas": {
+          "1ª ETAPA": 28.599999999999994,
+          "2ª ETAPA": 29.400000000000006,
+          "3ª ETAPA": 29.799999999999997,
+          "4ª ETAPA": 30
+        },
+        "total": 117.8
+      },
+      {
+        "posicao": 12,
+        "quadrilha": "PULA FOGUEIRA",
+        "etapas": {
+          "1ª ETAPA": 28.700000000000003,
+          "2ª ETAPA": 29,
+          "3ª ETAPA": 29.599999999999998,
+          "4ª ETAPA": 29.899999999999995
+        },
+        "total": 117.19999999999999
+      },
+      {
+        "posicao": 13,
+        "quadrilha": "XÉM NHEM NHÉM",
+        "etapas": {
+          "1ª ETAPA": 28.999999999999993,
+          "2ª ETAPA": 29.1,
+          "3ª ETAPA": 29.799999999999997,
+          "4ª ETAPA": 29.300000000000004
+        },
+        "total": 117.19999999999999
+      },
+      {
+        "posicao": 14,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 29,
+          "2ª ETAPA": 28.8,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 0
+        },
+        "total": 87.8
+      },
+      {
+        "posicao": null,
+        "quadrilha": "SI BOBIÁ A GENTE PIMBA",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 120.0
+      }
+    ],
+    "FIGURINO": [
+      {
+        "posicao": 1,
+        "quadrilha": "SI BOBIÁ A GENTE PIMBA",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 120.0
+      },
+      {
+        "posicao": 2,
+        "quadrilha": "FORMIGA DA ROÇA",
+        "etapas": {
+          "1ª ETAPA": 29.9,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 29.9
+        },
+        "total": 119.80000000000001
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "SANFONA LASCADA",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 29.599999999999998,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 29.999999999999996
+        },
+        "total": 119.6
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "SABUGO DE MILHO",
+        "etapas": {
+          "1ª ETAPA": 29.600000000000005,
+          "2ª ETAPA": 29.900000000000002,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.5
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "ARROXA O NÓ",
+        "etapas": {
+          "1ª ETAPA": 29.8,
+          "2ª ETAPA": 29.9,
+          "3ª ETAPA": 29.7,
+          "4ª ETAPA": 29.9
+        },
+        "total": 119.30000000000001
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "AMOR JUNINO",
+        "etapas": {
+          "1ª ETAPA": 29.299999999999997,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.3
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "RASGA O FOLE",
+        "etapas": {
+          "1ª ETAPA": 29.6,
+          "2ª ETAPA": 29.900000000000002,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 29.799999999999997
+        },
+        "total": 119.3
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "PAIXÃO CANGAÇO",
+        "etapas": {
+          "1ª ETAPA": 29.599999999999998,
+          "2ª ETAPA": 29.600000000000005,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.2
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "RIBULIÇO",
+        "etapas": {
+          "1ª ETAPA": 29.7,
+          "2ª ETAPA": 29.600000000000005,
+          "3ª ETAPA": 29.799999999999997,
+          "4ª ETAPA": 29.9
+        },
+        "total": 119.0
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "ARRAIÁ DOS MATUTOS",
+        "etapas": {
+          "1ª ETAPA": 29.699999999999996,
+          "2ª ETAPA": 29.499999999999996,
+          "3ª ETAPA": 29.699999999999996,
+          "4ª ETAPA": 29.899999999999995
+        },
+        "total": 118.79999999999997
+      },
+      {
+        "posicao": 11,
+        "quadrilha": "XÉM NHEM NHÉM",
+        "etapas": {
+          "1ª ETAPA": 29.800000000000004,
+          "2ª ETAPA": 29.099999999999994,
+          "3ª ETAPA": 29.899999999999995,
+          "4ª ETAPA": 29.899999999999995
+        },
+        "total": 118.69999999999999
+      },
+      {
+        "posicao": 12,
+        "quadrilha": "PULA FOGUEIRA",
+        "etapas": {
+          "1ª ETAPA": 29.200000000000003,
+          "2ª ETAPA": 29.8,
+          "3ª ETAPA": 29.8,
+          "4ª ETAPA": 29.599999999999998
+        },
+        "total": 118.39999999999999
+      },
+      {
+        "posicao": 13,
+        "quadrilha": "XAMEGAR",
+        "etapas": {
+          "1ª ETAPA": 28.5,
+          "2ª ETAPA": 29.900000000000002,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 29.9
+        },
+        "total": 118.30000000000001
+      },
+      {
+        "posicao": 14,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 29.199999999999996,
+          "2ª ETAPA": 29.000000000000004,
+          "3ª ETAPA": 29.9,
+          "4ª ETAPA": 0
+        },
+        "total": 88.1
+      }
+    ],
+    "CASAL DE NOIVOS": [
+      {
+        "posicao": 1,
+        "quadrilha": "SI BOBIÁ A GENTE PIMBA",
+        "etapas": {
+          "1ª ETAPA": 29.9,
+          "2ª ETAPA": 29.999999999999996,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.89999999999999
+      },
+      {
+        "posicao": 2,
+        "quadrilha": "FORMIGA DA ROÇA",
+        "etapas": {
+          "1ª ETAPA": 29.900000000000002,
+          "2ª ETAPA": 29.9,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.8
+      },
+      {
+        "posicao": 3,
+        "quadrilha": "ARROXA O NÓ",
+        "etapas": {
+          "1ª ETAPA": 29.6,
+          "2ª ETAPA": 29.9,
+          "3ª ETAPA": 29.799999999999994,
+          "4ª ETAPA": 30
+        },
+        "total": 119.3
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "SABUGO DE MILHO",
+        "etapas": {
+          "1ª ETAPA": 29.400000000000006,
+          "2ª ETAPA": 29.900000000000002,
+          "3ª ETAPA": 29.9,
+          "4ª ETAPA": 30
+        },
+        "total": 119.20000000000002
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "PAIXÃO CANGAÇO",
+        "etapas": {
+          "1ª ETAPA": 29.699999999999996,
+          "2ª ETAPA": 29.499999999999996,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.19999999999999
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "RASGA O FOLE",
+        "etapas": {
+          "1ª ETAPA": 29.6,
+          "2ª ETAPA": 29.8,
+          "3ª ETAPA": 29.9,
+          "4ª ETAPA": 29.8
+        },
+        "total": 119.10000000000001
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "ARRAIÁ DOS MATUTOS",
+        "etapas": {
+          "1ª ETAPA": 29.2,
+          "2ª ETAPA": 29.500000000000004,
+          "3ª ETAPA": 29.900000000000002,
+          "4ª ETAPA": 29.899999999999995
+        },
+        "total": 118.5
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "RIBULIÇO",
+        "etapas": {
+          "1ª ETAPA": 29.200000000000003,
+          "2ª ETAPA": 29.6,
+          "3ª ETAPA": 29.699999999999996,
+          "4ª ETAPA": 29.59999999999999
+        },
+        "total": 118.1
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "SANFONA LASCADA",
+        "etapas": {
+          "1ª ETAPA": 28.799999999999997,
+          "2ª ETAPA": 29.499999999999996,
+          "3ª ETAPA": 29.9,
+          "4ª ETAPA": 29.700000000000006
+        },
+        "total": 117.89999999999999
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "XAMEGAR",
+        "etapas": {
+          "1ª ETAPA": 28.499999999999993,
+          "2ª ETAPA": 29.499999999999996,
+          "3ª ETAPA": 29.7,
+          "4ª ETAPA": 30
+        },
+        "total": 117.69999999999999
+      },
+      {
+        "posicao": 11,
+        "quadrilha": "AMOR JUNINO",
+        "etapas": {
+          "1ª ETAPA": 28.300000000000004,
+          "2ª ETAPA": 29.300000000000004,
+          "3ª ETAPA": 29.900000000000002,
+          "4ª ETAPA": 29.900000000000002
+        },
+        "total": 117.40000000000002
+      },
+      {
+        "posicao": 12,
+        "quadrilha": "XÉM NHEM NHÉM",
+        "etapas": {
+          "1ª ETAPA": 28.900000000000006,
+          "2ª ETAPA": 29.400000000000002,
+          "3ª ETAPA": 29.900000000000002,
+          "4ª ETAPA": 29.200000000000003
+        },
+        "total": 117.40000000000002
+      },
+      {
+        "posicao": 13,
+        "quadrilha": "PULA FOGUEIRA",
+        "etapas": {
+          "1ª ETAPA": 28.6,
+          "2ª ETAPA": 29.499999999999993,
+          "3ª ETAPA": 29.5,
+          "4ª ETAPA": 29.700000000000006
+        },
+        "total": 117.3
+      },
+      {
+        "posicao": 14,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 29.399999999999995,
+          "2ª ETAPA": 29.299999999999997,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 0
+        },
+        "total": 88.69999999999999
+      }
+    ],
+    "TRILHA SONORA": [
+      {
+        "posicao": 1,
+        "quadrilha": "ARROXA O NÓ",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 29.999999999999996,
+          "4ª ETAPA": 30
+        },
+        "total": 120.0
+      },
+      {
+        "posicao": 4,
+        "quadrilha": "SANFONA LASCADA",
+        "etapas": {
+          "1ª ETAPA": 29.999999999999996,
+          "2ª ETAPA": 29.9,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.89999999999999
+      },
+      {
+        "posicao": 5,
+        "quadrilha": "RASGA O FOLE",
+        "etapas": {
+          "1ª ETAPA": 29.799999999999997,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30.000000000000004
+        },
+        "total": 119.8
+      },
+      {
+        "posicao": 6,
+        "quadrilha": "PAIXÃO CANGAÇO",
+        "etapas": {
+          "1ª ETAPA": 29.9,
+          "2ª ETAPA": 29.699999999999996,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.6
+      },
+      {
+        "posicao": 7,
+        "quadrilha": "SABUGO DE MILHO",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 29.599999999999994,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.6
+      },
+      {
+        "posicao": 8,
+        "quadrilha": "AMOR JUNINO",
+        "etapas": {
+          "1ª ETAPA": 29.800000000000004,
+          "2ª ETAPA": 29.699999999999992,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.5
+      },
+      {
+        "posicao": 9,
+        "quadrilha": "RIBULIÇO",
+        "etapas": {
+          "1ª ETAPA": 29.900000000000002,
+          "2ª ETAPA": 29.6,
+          "3ª ETAPA": 29.999999999999996,
+          "4ª ETAPA": 30.000000000000004
+        },
+        "total": 119.5
+      },
+      {
+        "posicao": 10,
+        "quadrilha": "XAMEGAR",
+        "etapas": {
+          "1ª ETAPA": 29.4,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 119.4
+      },
+      {
+        "posicao": 11,
+        "quadrilha": "XÉM NHEM NHÉM",
+        "etapas": {
+          "1ª ETAPA": 30.000000000000004,
+          "2ª ETAPA": 29.400000000000002,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 29.9
+        },
+        "total": 119.30000000000001
+      },
+      {
+        "posicao": 12,
+        "quadrilha": "ARRAIÁ DOS MATUTOS",
+        "etapas": {
+          "1ª ETAPA": 29.900000000000002,
+          "2ª ETAPA": 29.599999999999998,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 29.799999999999994
+        },
+        "total": 119.3
+      },
+      {
+        "posicao": 13,
+        "quadrilha": "PULA FOGUEIRA",
+        "etapas": {
+          "1ª ETAPA": 29.499999999999996,
+          "2ª ETAPA": 28.999999999999996,
+          "3ª ETAPA": 29.7,
+          "4ª ETAPA": 30.000000000000004
+        },
+        "total": 118.19999999999999
+      },
+      {
+        "posicao": 14,
+        "quadrilha": "XIQUE XIQUE",
+        "etapas": {
+          "1ª ETAPA": 29.7,
+          "2ª ETAPA": 29.599999999999998,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 0
+        },
+        "total": 89.3
+      },
+      {
+        "posicao": null,
+        "quadrilha": "FORMIGA DA ROÇA",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 120.0
+      },
+      {
+        "posicao": null,
+        "quadrilha": "SI BOBIÁ A GENTE PIMBA",
+        "etapas": {
+          "1ª ETAPA": 30,
+          "2ª ETAPA": 30,
+          "3ª ETAPA": 30,
+          "4ª ETAPA": 30
+        },
+        "total": 120.0
+      }
+    ]
+  }
+}
