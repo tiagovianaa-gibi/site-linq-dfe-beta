@@ -1,0 +1,73 @@
+.fin-controls-card .card-body {
+  padding: 1.1rem 1.25rem;
+}
+
+.fin-controls-header {
+  align-items: center;
+}
+
+.fin-year {
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fin-year-label {
+  min-width: 42px;
+}
+
+.fin-clear-btn {
+  height: 34px;
+  align-self: center;
+}
+
+.fin-controls-grid {
+  align-items: end;
+}
+
+.fin-controls-grid .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.fin-controls-grid label {
+  font-size: 0.85rem;
+  color: #5b6672;
+  font-weight: 600;
+}
+
+.fin-controls-grid input,
+.fin-controls-grid select {
+  height: 36px;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fin-controls-grid input:focus,
+.fin-controls-grid select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px rgba(211, 47, 47, 0.15);
+}
+
+.fin-kpi-card .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+
+@media (max-width: 900px) {
+  .fin-controls-header {
+    align-items: flex-start;
+  }
+
+  .fin-clear-btn {
+    align-self: flex-start;
+  }
+}

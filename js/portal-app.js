@@ -94,11 +94,7 @@ const statDocsPend = document.getElementById("statDocsPend");
 const statQuadrilhasTotal = document.getElementById("statQuadrilhasTotal");
 const statQuadrilhasEspecial = document.getElementById("statQuadrilhasEspecial");
 const statQuadrilhasAcesso = document.getElementById("statQuadrilhasAcesso");
-const statFinanceiroAPagar =
-  document.getElementById("statFinanceiroAPagar") ||
-  document.getElementById("statFinanceiroAberto");
-const statFinanceiroVencido = document.getElementById("statFinanceiroVencido");
-const statFinanceiroPago = document.getElementById("statFinanceiroPago");
+const statFinanceiroDebito = document.getElementById("statFinanceiroDebito");
 
 // FINANCEIRO
 const finSubtitle = document.getElementById("finSubtitle");
@@ -732,23 +728,17 @@ function updateDashboardWidgets() {
 
   // Financeiro
   const fin = financeiroCache || [];
-  let aPagar = 0;
-  let vencido = 0;
-  let pago = 0;
+  const debitoQuadrilhas = new Set();
   fin.forEach((l) => {
-    const val = Number(l.valor) || 0;
+    if (!l?.quadrilhaId) return;
     const statusCalc = getFinanceiroStatus(l);
-    if (statusCalc === "PAGO") pago += val;
-    else if (statusCalc === "VENCIDO") vencido += val;
-    else aPagar += val;
+    if (statusCalc !== "PAGO") {
+      debitoQuadrilhas.add(String(l.quadrilhaId));
+    }
   });
-  if (statFinanceiroAPagar) {
-    setText(statFinanceiroAPagar, formatCurrencyBR(aPagar));
+  if (statFinanceiroDebito) {
+    setText(statFinanceiroDebito, debitoQuadrilhas.size.toString());
   }
-  if (statFinanceiroVencido) {
-    setText(statFinanceiroVencido, formatCurrencyBR(vencido));
-  }
-  if (statFinanceiroPago) setText(statFinanceiroPago, formatCurrencyBR(pago));
 }
 
 // ====== FINANCEIRO ======
@@ -803,6 +793,26 @@ function mapStatusLancamento(status) {
   }
 }
 
+function normalizeFinanceiroCompare(value) {
+  if (!value) return "";
+  return value
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function formatQuadrilhaList(items, limit = 8) {
+  if (!items || !items.length) return "";
+  const names = items.map((q) => q.nome || q.id || "?");
+  if (names.length <= limit) return names.join(", ");
+  return `${names.slice(0, limit).join(", ")} e mais ${
+    names.length - limit
+  }`;
+}
+
 function updateFinanceiroStatusSelect() {
   if (!finStatusSelect) return;
   const statusCalc = getFinanceiroStatus({
@@ -854,7 +864,7 @@ function updateFinanceiroKpis(lancamentos) {
   if (finKpiAPagar) setText(finKpiAPagar, formatCurrencyBR(aPagar));
   if (finKpiVencido) setText(finKpiVencido, formatCurrencyBR(vencido));
   if (finKpiInadimplencia) {
-    const base = aPagar + vencido;
+    const base = total;
     const perc = base ? Math.round((vencido / base) * 100) : 0;
     setText(finKpiInadimplencia, `${perc}%`);
   }
@@ -1020,6 +1030,7 @@ function ensureAnoSelecionado(lancamentos) {
 function populateAnoOptions(lancamentos) {
   if (!finFiltroAno) return;
   const anos = getSortedAnos(lancamentos);
+  const previousAno = finFiltroAno.value;
   finFiltroAno.innerHTML = '<option value="">Todos</option>';
   anos.forEach((ano) => {
     const opt = document.createElement("option");
@@ -1027,6 +1038,9 @@ function populateAnoOptions(lancamentos) {
     opt.textContent = ano;
     finFiltroAno.appendChild(opt);
   });
+  if (previousAno && anos.includes(String(previousAno))) {
+    finFiltroAno.value = String(previousAno);
+  }
   renderYearChips(anos);
 }
 
@@ -1259,6 +1273,7 @@ if (finFormCancelBtn) {
     resetFinanceiroFormState();
   });
 }
+
 if (finDataVencimentoInput) {
   finDataVencimentoInput.addEventListener("change", updateFinanceiroStatusSelect);
 }
@@ -2489,3 +2504,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.portalAppNavigationReady = true;
 });
+
