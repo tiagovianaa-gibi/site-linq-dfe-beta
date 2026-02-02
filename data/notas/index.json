@@ -1,0 +1,96 @@
+{
+  "downloads": {
+    "2022": [
+      {
+        "label": "Grupo de Acesso 2022 (PDF)",
+        "path": "assets/notas/2022/acesso-2022.pdf"
+      },
+      {
+        "label": "Grupo Especial 2022 (PDF)",
+        "path": "assets/notas/2022/especial-2022.pdf"
+      }
+    ],
+    "2023": [
+      {
+        "label": "Grupo de Acesso 2023 (PDF)",
+        "path": "assets/notas/2023/acesso-2023.pdf"
+      },
+      {
+        "label": "Grupo Especial 2023 (PDF)",
+        "path": "assets/notas/2023/especial-2023.pdf"
+      }
+    ],
+    "2024": [
+      {
+        "label": "Grupo de Acesso 2024 (PDF)",
+        "path": "assets/notas/2024/acesso-2024.pdf"
+      },
+      {
+        "label": "Grupo Especial 2024 (PDF)",
+        "path": "assets/notas/2024/especial-2024.pdf"
+      }
+    ],
+    "2025": [
+      {
+        "label": "Grupo de Acesso 2025 (PDF)",
+        "path": "assets/notas/2025/acesso-2025.pdf"
+      },
+      {
+        "label": "Grupo Especial 2025 (PDF)",
+        "path": "assets/notas/2025/especial-2025.pdf"
+      }
+    ],
+    "distrito_junino_2025": [
+      {
+        "label": "Distrito Junino 2025 - 1a etapa (PDF)",
+        "path": "assets/notas/2025/distrito-junino/1-etapa.pdf"
+      },
+      {
+        "label": "Distrito Junino 2025 - 2a etapa (PDF)",
+        "path": "assets/notas/2025/distrito-junino/2-etapa.pdf"
+      },
+      {
+        "label": "Distrito Junino 2025 - 3a etapa (PDF)",
+        "path": "assets/notas/2025/distrito-junino/3-etapa.pdf"
+      },
+      {
+        "label": "Distrito Junino 2025 - 4a etapa (PDF)",
+        "path": "assets/notas/2025/distrito-junino/4-etapa.pdf"
+      },
+      {
+        "label": "Distrito Junino 2025 - resultado final (PDF)",
+        "path": "assets/notas/2025/distrito-junino/resultado-final.pdf"
+      }
+    ]
+  },
+  "temporada_2026": {
+    "etapas": [],
+    "final": [],
+    "parse_config": {
+      "grupo_candidates": [
+        "grupo",
+        "categoria"
+      ],
+      "quadrilha_candidates": [
+        "quadrilha",
+        "nome",
+        "equipe"
+      ],
+      "total_candidates": [
+        "total",
+        "nota_total",
+        "nota final",
+        "pontuacao",
+        "pontos"
+      ],
+      "ignore_candidates": [
+        "pos",
+        "ranking",
+        "classificacao",
+        "colocacao",
+        "jurado",
+        "quesito"
+      ]
+    }
+  }
+}

@@ -538,3 +538,220 @@
   transform: rotate(180deg);
 }
 
+.portal-notas .table-responsive table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.portal-notas .table-responsive th,
+.portal-notas .table-responsive td {
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.45rem 0.5rem;
+  text-align: left;
+}
+
+.portal-notas .table-responsive th:last-child,
+.portal-notas .table-responsive td:last-child {
+  text-align: right;
+}
+
+.portal-notas .notas-small {
+  font-size: 0.82rem;
+}
+
+.portal-notas .notas-download-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.portal-notas .notas-download-btn {
+  display: inline-flex;
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 0.5rem;
+}
+
+.portal-notas .notas-download-btn::before {
+  content: "\2193";
+  font-weight: 700;
+}
+
+.portal-notas .notas-accordion {
+  border: 1px solid var(--border-color);
+  border-radius: 0.65rem;
+  background: #fff;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.portal-notas .notas-accordion summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.7rem 0.8rem;
+  font-weight: 600;
+  background: #f8fafc;
+  border-bottom: 1px solid transparent;
+}
+
+.portal-notas .notas-accordion[open] summary {
+  border-bottom-color: var(--border-color);
+}
+
+.portal-notas .notas-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.portal-notas .notas-accordion summary::after {
+  content: " +";
+  float: right;
+}
+
+.portal-notas .notas-accordion[open] summary::after {
+  content: " -";
+}
+
+.portal-notas .notas-accordion-body {
+  padding: 0.7rem;
+}
+
+.portal-credenciamento .cred-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.portal-credenciamento .cred-role-box {
+  min-width: 220px;
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 0.7rem 0.8rem;
+  background: #f8fafc;
+}
+
+.portal-credenciamento .cred-grid-top {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 0.9rem;
+}
+
+.portal-credenciamento .cred-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 0.8rem;
+}
+
+.portal-credenciamento .cred-form-row .form-group {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.portal-credenciamento .cred-form-row label {
+  font-size: 0.85rem;
+  color: #5b6672;
+  font-weight: 600;
+}
+
+.portal-credenciamento .cred-form-row select {
+  height: 36px;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  background: #fff;
+}
+
+.portal-credenciamento .cred-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.portal-credenciamento .cred-actions-grid.cred-actions-grid--cred {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.portal-credenciamento .cred-actions-grid .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.portal-credenciamento .cred-status {
+  margin-top: 0.65rem;
+  min-height: 1.1rem;
+}
+
+.portal-credenciamento .cred-presenca-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.portal-credenciamento .cred-presenca-head .form-row {
+  display: flex;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.portal-credenciamento .form-row .btn-sm {
+  padding: 0.4rem 0.65rem;
+}
+
+.cred-presencas-list {
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+  min-height: 140px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.45rem;
+}
+
+.cred-presenca-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: #fff;
+  border-radius: 0.6rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cred-presenca-item:hover {
+  border-color: rgba(211, 47, 47, 0.3);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.07);
+}
+
+.cred-presenca-item input[type="checkbox"] {
+  margin-top: 0.2rem;
+  accent-color: var(--accent-primary);
+}
+
+@media (max-width: 980px) {
+  .portal-credenciamento .cred-header {
+    flex-direction: column;
+  }
+
+  .portal-credenciamento .cred-role-box {
+    width: 100%;
+  }
+
+  .portal-credenciamento .cred-form-row,
+  .portal-credenciamento .cred-actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-credenciamento .cred-presenca-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+

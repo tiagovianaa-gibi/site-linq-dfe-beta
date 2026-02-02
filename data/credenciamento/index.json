@@ -1,0 +1,35 @@
+{
+  "template": {
+    "titulo_evento": "Circuito de Quadrilhas Juninas 2026",
+    "subtitulo": "Certificado de Participacao",
+    "assinatura_1": "Presidencia LINQ-DFE",
+    "assinatura_2": "Coordenacao de Credenciamento"
+  },
+  "etapas": [
+    {
+      "id": "2026-etapa-1",
+      "nome": "1a Etapa 2026",
+      "data": "2026-05-10",
+      "status": "aberta",
+      "arquivos": []
+    }
+  ],
+  "import_config": {
+    "nome_candidates": [
+      "nome",
+      "participante",
+      "brincante",
+      "integrante"
+    ],
+    "funcao_candidates": [
+      "funcao",
+      "papel",
+      "categoria"
+    ],
+    "documento_candidates": [
+      "cpf",
+      "documento",
+      "rg"
+    ]
+  }
+}

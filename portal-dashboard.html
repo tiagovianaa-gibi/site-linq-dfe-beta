@@ -1431,6 +1431,7 @@
 
 
           <li><button class="portal-nav-link" type="button" data-section="credenciamento">Credenciamento</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="notas">Notas</button></li>
           <li><button class="portal-nav-link" type="button" data-section="regulamentos">Regulamentos</button></li>
 
 
@@ -15816,126 +15817,110 @@
 
 
       </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <section id="section-credenciamento" class="portal-section" style="display:none;">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <h1 class="section-title">Credenciamento</h1>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <p>Escalação por etapa e credenciamento no dia.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      <section id="section-credenciamento" class="portal-section portal-credenciamento" style="display:none;">
+        <div class="cred-header">
+          <div>
+            <h1 class="section-title">Credenciamento</h1>
+            <p class="muted">Fluxo por perfil: credenciador marca presen&ccedil;a, quadrilha baixa certificados e administra&ccedil;&atilde;o da Liga gerencia tudo.</p>
+          </div>
+          <div class="cred-role-box">
+            <span id="credPerfilChip" class="chip">Perfil</span>
+            <p id="credPerfilHint" class="muted notas-small">Carregando permiss&otilde;es...</p>
+          </div>
+        </div>
+
+        <div class="grid cred-grid-top">
+          <article class="card" id="credAdminCard" style="display:none;">
+            <div class="card-body">
+              <h3 class="card-title">Opera&ccedil;&atilde;o da etapa</h3>
+              <p class="muted notas-small">Use este bloco para importar listas, carregar/salvar presen&ccedil;a e fechar etapa.</p>
+              <div class="form-row cred-form-row">
+                <div class="form-group">
+                  <label for="credEtapaSelect">Etapa</label>
+                  <select id="credEtapaSelect"></select>
+                </div>
+                <div class="form-group">
+                  <label for="credQuadrilhaSelect">Quadrilha</label>
+                  <select id="credQuadrilhaSelect"></select>
+                </div>
+              </div>
+              <div class="cred-actions-grid" id="credActionsGrid">
+                <button id="credImportListaBtn" class="btn btn-light" type="button">Importar lista (assets)</button>
+                <button id="credLoadPresencasBtn" class="btn btn-light" type="button">Carregar presen&ccedil;a</button>
+                <button id="credSavePresencasBtn" class="btn" type="button">Salvar presen&ccedil;a</button>
+                <button id="credFecharEtapaBtn" class="btn btn-outline" type="button">Fechar etapa</button>
+              </div>
+              <p id="credAdminStatus" class="muted notas-small cred-status"></p>
+            </div>
+          </article>
+
+          <article class="card" id="credQuadCard" style="display:none;">
+            <div class="card-body">
+              <h3 class="card-title">Certificados da quadrilha</h3>
+              <p class="muted notas-small">Gera&ccedil;&atilde;o em lote sob demanda (sem armazenamento em servidor).</p>
+              <div class="form-row cred-form-row">
+                <div class="form-group">
+                  <label for="credQuadEtapaSelect">Etapa</label>
+                  <select id="credQuadEtapaSelect"></select>
+                </div>
+                <div class="form-group" id="credQuadSelectWrap">
+                  <label for="credQuadSelect">Quadrilha</label>
+                  <select id="credQuadSelect"></select>
+                </div>
+              </div>
+              <div class="cred-actions-grid">
+                <button id="credGerarCertificadosBtn" class="btn" type="button">Gerar e baixar certificados (ZIP)</button>
+              </div>
+              <p id="credQuadStatus" class="muted notas-small cred-status"></p>
+            </div>
+          </article>
+        </div>
+
+        <div class="card" id="credPresencaCard" style="display:none;">
+          <div class="card-body">
+            <div class="cred-presenca-head">
+              <h3 class="card-title">Lista de presen&ccedil;a</h3>
+              <div class="form-row">
+                <button id="credMarcarTodosBtn" class="btn btn-light btn-sm" type="button">Marcar todos</button>
+                <button id="credDesmarcarTodosBtn" class="btn btn-light btn-sm" type="button">Desmarcar todos</button>
+              </div>
+            </div>
+            <div id="credPresencasLista" class="cred-presencas-list">
+              <p class="muted">Selecione etapa e quadrilha para carregar.</p>
+            </div>
+          </div>
+        </div>
       </section>
+
+      <section id="section-notas" class="portal-section portal-notas" style="display:none;">
+        <h1 class="section-title">Notas e Planilhas</h1>
+        <p class="muted">Arquivos oficiais para download (hist&oacute;rico e temporada atual).</p>
+
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-md);">
+          <article class="card">
+            <div class="card-body">
+              <h3 class="card-title">Hist&oacute;rico 2022-2025</h3>
+              <div id="notasDownloadsHistorico" class="notas-small muted">Carregando arquivos...</div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3 class="card-title">Distrito Junino 2025</h3>
+              <div id="notasDownloadsDistrito" class="notas-small muted">Carregando arquivos...</div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3 class="card-title">Temporada 2026</h3>
+              <p id="notasResumo2026" class="muted notas-small">Carregando status da temporada...</p>
+              <div id="notasDownloads2026" class="notas-small muted">Nenhum arquivo listado.</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section id="section-penalidades" class="portal-section" style="display:none;">
 
 
@@ -16177,6 +16162,8 @@
 
 
   <script type="module" src="js/portal-app.js?v=20260131-16"></script>
+  <script type="module" src="js/portal-credenciamento.js?v=20260202-1"></script>
+  <script type="module" src="js/portal-notas.js?v=20260202-1"></script>
 
 
 
