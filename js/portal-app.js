@@ -1123,6 +1123,17 @@ const competicoesAnoSelect = document.getElementById("competicoesAno");
 const competicoesApplyBtn = document.getElementById("competicoesApply");
 const competicoesTitle = document.getElementById("competicoesTitle");
 const competicoesSubtitle = document.getElementById("competicoesSubtitle");
+const competicoesPeriodoInicio = document.getElementById("competicoesPeriodoInicio");
+const competicoesPeriodoFim = document.getElementById("competicoesPeriodoFim");
+const competicoesQuadrilhaSelect = document.getElementById("competicoesQuadrilha");
+const competicoesQuesitoSelect = document.getElementById("competicoesQuesito");
+const competicoesCompareSelect = document.getElementById("competicoesCompare");
+const competicoesAnalyticsApplyBtn = document.getElementById("competicoesAnalyticsApply");
+const competicoesLinhaTotal = document.getElementById("competicoesLinhaTotal");
+const competicoesLinhaQuesito = document.getElementById("competicoesLinhaQuesito");
+const competicoesCompareEtapas = document.getElementById("competicoesCompareEtapas");
+const competicoesPlanilhaQuadrilha = document.getElementById("competicoesPlanilhaQuadrilha");
+const competicoesResumoPeriodo = document.getElementById("competicoesResumoPeriodo");
 
 
 
@@ -1615,6 +1626,7 @@ let noticiasCache = null;
 
 
 let competicoesCache = null;
+const competicoesDatasetCache = new Map();
 const competicoesDatasets = [
   { grupo: "acesso", ano: 2022 },
   { grupo: "acesso", ano: 2023 },
@@ -2249,7 +2261,8 @@ const MOJIBAKE_REPLACEMENTS = [
 function fixMojibake(text) {
   if (!text) return "";
   const raw = String(text);
-  if (!/[\u00C3\u00C2]/.test(raw)) return raw;
+  // Only fix when the string looks like UTF-8 decoded as Latin-1/Windows-1252.
+  if (!/[ÃÂâ][\u0080-\u00BF]/.test(raw)) return raw;
   try {
     const bytes = Uint8Array.from(raw, (char) => char.charCodeAt(0));
     const decoded = new TextDecoder("utf-8").decode(bytes);
@@ -2257,6 +2270,11 @@ function fixMojibake(text) {
   } catch (err) {
     return raw.replace(/\u00A0/g, " ");
   }
+}
+
+function formatQuadrilhaName(name) {
+  if (!name) return "";
+  return fixMojibake(String(name)).toUpperCase();
 }
 
 
@@ -19495,6 +19513,404 @@ function formatScore(value) {
 
 
 
+function setSelectOptions(select, options, selectedValue) {
+  if (!select) return;
+  const current = selectedValue ?? select.value;
+  select.innerHTML = options
+    .map((opt) => `<option value="${opt.value}">${opt.label}</option>`)
+    .join("");
+  if (current && options.some((opt) => opt.value === current)) {
+    select.value = current;
+  } else if (options.length) {
+    select.value = options[0].value;
+  }
+}
+
+function getCompeticoesYearsForGroup(grupo) {
+  return Array.from(
+    new Set(competicoesDatasets.filter((d) => d.grupo === grupo).map((d) => d.ano))
+  ).sort((a, b) => a - b);
+}
+
+function updateCompeticoesPeriodSelectors(grupo) {
+  if (!competicoesPeriodoInicio || !competicoesPeriodoFim) return;
+  const years = getCompeticoesYearsForGroup(grupo);
+  const options = years.map((year) => ({ value: String(year), label: String(year) }));
+  const currentStart = competicoesPeriodoInicio.value;
+  const currentEnd = competicoesPeriodoFim.value;
+  setSelectOptions(competicoesPeriodoInicio, options, currentStart);
+  setSelectOptions(competicoesPeriodoFim, options, currentEnd);
+
+  const maxYear = years.length ? Math.max(...years) : null;
+  const minYear = years.length ? Math.min(...years) : null;
+  if (maxYear !== null && !currentEnd) {
+    competicoesPeriodoFim.value = String(maxYear);
+  }
+  if (minYear !== null && !currentStart) {
+    const defaultStart = Math.max(minYear, (maxYear ?? minYear) - 3);
+    competicoesPeriodoInicio.value = String(defaultStart);
+  }
+
+  const start = Number(competicoesPeriodoInicio.value);
+  const end = Number(competicoesPeriodoFim.value);
+  if (Number.isFinite(start) && Number.isFinite(end) && start > end) {
+    competicoesPeriodoFim.value = String(start);
+  }
+}
+
+function updateCompeticoesAnalyticsSelectors(data) {
+  if (!data) return;
+  const ranking = Array.isArray(data.ranking_final) ? data.ranking_final.slice() : [];
+  ranking.sort((a, b) => Number(a.posicao || 0) - Number(b.posicao || 0));
+  const quadrilhas = ranking
+    .map((item) => formatQuadrilhaName(item.quadrilha || ""))
+    .filter((name) => name.trim());
+  if (competicoesQuadrilhaSelect) {
+    const options = quadrilhas.map((name) => ({ value: name, label: name }));
+    setSelectOptions(competicoesQuadrilhaSelect, options);
+  }
+  if (competicoesCompareSelect) {
+    const options = [
+      { value: "", label: "Sem comparação" },
+      ...quadrilhas.map((name) => ({ value: name, label: name })),
+    ];
+    setSelectOptions(competicoesCompareSelect, options);
+  }
+  if (competicoesQuesitoSelect) {
+    const quesitos = Object.keys(data.quesitos || {});
+    const options = quesitos.map((key) => ({
+      value: key,
+      label: fixMojibake(key.replace(/_/g, " ")),
+    }));
+    setSelectOptions(competicoesQuesitoSelect, options);
+  }
+
+  const grupo = competicoesGrupoSelect?.value || data?.meta?.grupo || "acesso";
+  updateCompeticoesPeriodSelectors(grupo);
+}
+
+async function fetchCompeticoesDataset(grupo, ano) {
+  const cacheKey = `${grupo}-${ano}`;
+  if (competicoesDatasetCache.has(cacheKey)) {
+    return competicoesDatasetCache.get(cacheKey);
+  }
+  const response = await fetch(`data/portal/competicoes/${grupo}-${ano}.json`);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const data = await response.json();
+  competicoesDatasetCache.set(cacheKey, data);
+  return data;
+}
+
+async function loadCompeticoesPeriodDatasets(grupo, startAno, endAno) {
+  const anos = getCompeticoesYearsForGroup(grupo).filter(
+    (ano) => ano >= startAno && ano <= endAno
+  );
+  const datasets = await Promise.all(anos.map((ano) => fetchCompeticoesDataset(grupo, ano)));
+  return datasets
+    .filter(Boolean)
+    .sort((a, b) => Number(a?.meta?.ano || 0) - Number(b?.meta?.ano || 0));
+}
+
+function buildCompeticoesLineChart(container, labels, series) {
+  if (!container) return;
+  if (!Array.isArray(labels) || !labels.length) {
+    container.innerHTML = '<p class="muted">Sem dados.</p>';
+    return;
+  }
+  const values = series
+    .flatMap((s) => s.points.map((p) => p.value))
+    .filter((value) => Number.isFinite(value));
+  if (!values.length) {
+    container.innerHTML = '<p class="muted">Sem dados.</p>';
+    return;
+  }
+
+  const width = 600;
+  const height = 190;
+  const paddingX = 42;
+  const paddingTop = 18;
+  const paddingBottom = 28;
+  const plotWidth = width - paddingX * 2;
+  const plotHeight = height - paddingTop - paddingBottom;
+  const minVal = Math.min(...values);
+  const maxVal = Math.max(...values);
+  const range = maxVal - minVal || 1;
+
+  const xForIndex = (index) => {
+    if (labels.length === 1) return paddingX + plotWidth / 2;
+    return paddingX + (plotWidth * index) / (labels.length - 1);
+  };
+  const yForValue = (value) => paddingTop + ((maxVal - value) / range) * plotHeight;
+
+  const gridLines = Array.from({ length: 5 }).map((_, idx) => {
+    const y = paddingTop + (plotHeight * idx) / 4;
+    return `<line x1="${paddingX}" y1="${y}" x2="${width - paddingX}" y2="${y}" stroke="rgba(15,23,42,0.08)" stroke-width="1" />`;
+  });
+
+  const paths = series
+    .map((serie) => {
+      let path = "";
+      let started = false;
+      const points = serie.points.map((point, index) => {
+        const value = point.value;
+        if (!Number.isFinite(value)) {
+          started = false;
+          return "";
+        }
+        const x = xForIndex(index);
+        const y = yForValue(value);
+        path += `${started ? "L" : "M"}${x} ${y} `;
+        started = true;
+        return `<circle cx="${x}" cy="${y}" r="3.5" fill="${serie.color}" />`;
+      });
+      const pathEl = path
+        ? `<path d="${path}" fill="none" stroke="${serie.color}" stroke-width="2.5" stroke-linecap="round" />`
+        : "";
+      return `${pathEl}${points.join("")}`;
+    })
+    .join("");
+
+  const xLabels = labels
+    .map((label, index) => {
+      const x = xForIndex(index);
+      return `<text x="${x}" y="${height - 8}" text-anchor="middle" font-size="11" fill="#64748b">${label}</text>`;
+    })
+    .join("");
+
+  const yLabels = `
+    <text x="${paddingX - 6}" y="${paddingTop + 4}" text-anchor="end" font-size="11" fill="#94a3b8">${formatScore(maxVal)}</text>
+    <text x="${paddingX - 6}" y="${height - paddingBottom}" text-anchor="end" font-size="11" fill="#94a3b8">${formatScore(minVal)}</text>
+  `;
+
+  const legend = series
+    .map((serie) => {
+      return `<span class="competicoes-legend-item"><i style="background:${serie.color}"></i>${serie.label}</span>`;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <div class="competicoes-legend">${legend}</div>
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Gráfico de evolução">
+      ${gridLines.join("")}
+      ${yLabels}
+      ${paths}
+      ${xLabels}
+    </svg>
+  `;
+}
+
+function renderCompeticoesResumoPeriodo(history) {
+  if (!competicoesResumoPeriodo) return;
+  if (!Array.isArray(history) || !history.length) {
+    competicoesResumoPeriodo.innerHTML = '<span class="competicoes-kpi">Sem dados no per?odo</span>';
+    return;
+  }
+  const totals = history.map((item) => Number(item.total)).filter((val) => Number.isFinite(val));
+  const avg = totals.length ? totals.reduce((acc, val) => acc + val, 0) / totals.length : 0;
+  const best = history.reduce((acc, item) => (item.total > acc.total ? item : acc), history[0]);
+  const worst = history.reduce((acc, item) => (item.total < acc.total ? item : acc), history[0]);
+  const trend = totals.length > 1 ? totals[totals.length - 1] - totals[0] : 0;
+  const trendLabel = trend >= 0 ? `+${formatScore(trend)}` : formatScore(trend);
+  competicoesResumoPeriodo.innerHTML = [
+    `<span class="competicoes-kpi">M?dia ${formatScore(avg)}</span>`,
+    `<span class="competicoes-kpi">Melhor ano ${best.ano} (${formatScore(best.total)})</span>`,
+    `<span class="competicoes-kpi">Pior ano ${worst.ano} (${formatScore(worst.total)})</span>`,
+    `<span class="competicoes-kpi">Variação ${trendLabel}</span>`,
+  ].join("");
+}
+
+function renderCompeticoesPlanilha(history, quesitoLabel) {
+  if (!competicoesPlanilhaQuadrilha) return;
+  if (!Array.isArray(history) || !history.length) {
+    competicoesPlanilhaQuadrilha.innerHTML = '<p class="muted">Sem dados.</p>';
+    return;
+  }
+  const rows = history
+    .map((item) => {
+      const melhorEtapa = item.melhorEtapa || "--";
+      const quesitoValue = Number(item.quesitoValue);
+      const quesitoDisplay = Number.isFinite(quesitoValue) ? formatScore(quesitoValue) : "--";
+      return `
+        <tr>
+          <td>${item.ano}</td>
+          <td>${item.posicao ?? "--"}</td>
+          <td>${formatScore(item.total)}</td>
+          <td>${melhorEtapa}</td>
+          <td>${quesitoLabel}</td>
+          <td>${quesitoDisplay}</td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  competicoesPlanilhaQuadrilha.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Ano</th>
+          <th>Posição</th>
+          <th>Total</th>
+          <th>Melhor etapa</th>
+          <th>Quesito</th>
+          <th>Nota</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+function renderCompeticoesCompareEtapasTable(data, quadrilha, compare) {
+  if (!competicoesCompareEtapas) return;
+  const etapas = data?.meta?.etapas || [];
+  if (!Array.isArray(etapas) || !etapas.length) {
+    competicoesCompareEtapas.innerHTML = '<p class="muted">Sem dados.</p>';
+    return;
+  }
+  const quadrilhaLabel = formatQuadrilhaName(quadrilha) || "QUADRILHA";
+  const compareLabel = compare ? formatQuadrilhaName(compare) : "COMPARAÇÃO";
+  const ranking = Array.isArray(data?.ranking_final) ? data.ranking_final : [];
+  const findEntry = (name) => {
+    const key = normalizeQuadrilhaKey(name || "");
+    return ranking.find((item) => normalizeQuadrilhaKey(item.quadrilha) === key);
+  };
+  const entryMain = findEntry(quadrilha);
+  const entryCompare = compare ? findEntry(compare) : null;
+
+  const rows = etapas
+    .map((etapa) => {
+      const v1 = entryMain?.etapas?.[etapa];
+      const v2 = entryCompare?.etapas?.[etapa];
+      return `
+        <tr>
+          <td>${fixMojibake(String(etapa))}</td>
+          <td>${formatScore(v1)}</td>
+          <td>${compare ? formatScore(v2) : "--"}</td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  competicoesCompareEtapas.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Etapa</th>
+          <th>${quadrilhaLabel}</th>
+          <th>${compareLabel}</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+let competicoesAnalyticsRequestId = 0;
+
+async function loadCompeticoesAnalytics() {
+  if (!competicoesLinhaTotal && !competicoesLinhaQuesito && !competicoesPlanilhaQuadrilha) return;
+  const grupo = competicoesGrupoSelect?.value || "acesso";
+  updateCompeticoesPeriodSelectors(grupo);
+  const startAno = Number(competicoesPeriodoInicio?.value);
+  const endAno = Number(competicoesPeriodoFim?.value);
+  if (!Number.isFinite(startAno) || !Number.isFinite(endAno)) return;
+
+  const quadrilha = competicoesQuadrilhaSelect?.value || "";
+  const compare = competicoesCompareSelect?.value || "";
+  const quadrilhaLabel = formatQuadrilhaName(quadrilha) || "QUADRILHA";
+  const compareLabel = compare ? formatQuadrilhaName(compare) : "";
+  const quesitoKey = competicoesQuesitoSelect?.value || "";
+  const quesitoLabel = quesitoKey ? fixMojibake(quesitoKey.replace(/_/g, " ")) : "Quesito";
+
+  if (competicoesLinhaTotal) competicoesLinhaTotal.innerHTML = '<p class="muted">Carregando...</p>';
+  if (competicoesLinhaQuesito) competicoesLinhaQuesito.innerHTML = '<p class="muted">Carregando...</p>';
+  if (competicoesPlanilhaQuadrilha) competicoesPlanilhaQuadrilha.innerHTML = '<p class="muted">Carregando...</p>';
+
+  const requestId = ++competicoesAnalyticsRequestId;
+  let datasets = [];
+  try {
+    datasets = await loadCompeticoesPeriodDatasets(grupo, startAno, endAno);
+  } catch (err) {
+    console.error("Erro ao carregar histórico de competições:", err);
+  }
+  if (requestId !== competicoesAnalyticsRequestId) return;
+
+  const history = datasets.map((data) => {
+    const ano = Number(data?.meta?.ano);
+    const ranking = Array.isArray(data?.ranking_final) ? data.ranking_final : [];
+    const key = normalizeQuadrilhaKey(quadrilha);
+    const entry = ranking.find((item) => normalizeQuadrilhaKey(item.quadrilha) === key);
+    const total = Number(entry?.total);
+    const etapas = entry?.etapas || {};
+    const melhorEtapa = data?.meta?.etapas?.length
+      ? data.meta.etapas.reduce((acc, etapa) => {
+          const valor = Number(etapas?.[etapa]);
+          if (!Number.isFinite(valor)) return acc;
+          if (!acc || valor > acc.valor) {
+            return { label: fixMojibake(String(etapa)), valor };
+          }
+          return acc;
+        }, null)
+      : null;
+    let quesitoValue = null;
+    if (quesitoKey && data?.quesitos?.[quesitoKey]) {
+      const list = Array.isArray(data.quesitos[quesitoKey]) ? data.quesitos[quesitoKey] : [];
+      const item = list.find((q) => normalizeQuadrilhaKey(q.quadrilha) === key);
+      quesitoValue = Number(item?.total);
+    }
+    return {
+      ano,
+      posicao: entry?.posicao,
+      total: Number.isFinite(total) ? total : null,
+      melhorEtapa: melhorEtapa ? `${melhorEtapa.label} (${formatScore(melhorEtapa.valor)})` : "--",
+      quesitoValue,
+    };
+  });
+
+  const compareHistory = compare
+    ? datasets.map((data) => {
+        const ano = Number(data?.meta?.ano);
+        const ranking = Array.isArray(data?.ranking_final) ? data.ranking_final : [];
+        const key = normalizeQuadrilhaKey(compare);
+        const entry = ranking.find((item) => normalizeQuadrilhaKey(item.quadrilha) === key);
+        return { ano, total: Number(entry?.total) };
+      })
+    : [];
+
+  const labels = history.map((item) => item.ano).filter((ano) => Number.isFinite(ano));
+  const mainSeries = {
+    label: quadrilhaLabel,
+    color: "#d32f2f",
+    points: history.map((item) => ({ label: item.ano, value: item.total })),
+  };
+  const series = [mainSeries];
+  if (compare) {
+    series.push({
+      label: compareLabel,
+      color: "#2563eb",
+      points: compareHistory.map((item) => ({ label: item.ano, value: item.total })),
+    });
+  }
+  if (competicoesLinhaTotal) buildCompeticoesLineChart(competicoesLinhaTotal, labels, series);
+
+  const quesitoSeries = [
+    {
+      label: `${quadrilhaLabel} - ${quesitoLabel}`,
+      color: "#0f766e",
+      points: history.map((item) => ({ label: item.ano, value: item.quesitoValue })),
+    },
+  ];
+  if (competicoesLinhaQuesito) buildCompeticoesLineChart(competicoesLinhaQuesito, labels, quesitoSeries);
+
+  renderCompeticoesResumoPeriodo(history);
+  renderCompeticoesPlanilha(history, quesitoLabel);
+
+  const currentData = competicoesCache?.data || datasets[datasets.length - 1];
+  if (currentData) {
+    renderCompeticoesCompareEtapasTable(currentData, quadrilha, compare);
+  }
+}
+
 function renderCompeticoesDashboard(data) {
   if (!data) return;
 
@@ -19561,7 +19977,7 @@ function renderCompeticoesDashboard(data) {
         return `
           <tr>
             <td>${item.posicao ?? ""}</td>
-            <td>${fixMojibake(item.quadrilha || "")}</td>
+            <td>${formatQuadrilhaName(item.quadrilha || "")}</td>
             <td>${formatScore(item.total)}</td>
             <td>${formatScore(e1)}</td>
             <td>${formatScore(e2)}</td>
@@ -19603,7 +20019,7 @@ function renderCompeticoesDashboard(data) {
 
         const listHtml = items
           .map((item, idx) => {
-            return `<li><span>${idx + 1}. ${fixMojibake(item.quadrilha)}</span><strong>${formatScore(item.total)}</strong></li>`;
+            return `<li><span>${idx + 1}. ${formatQuadrilhaName(item.quadrilha)}</span><strong>${formatScore(item.total)}</strong></li>`;
           })
           .join("");
 
@@ -19619,6 +20035,8 @@ function renderCompeticoesDashboard(data) {
   }
 
   renderCompeticoesCharts(data, etapasRaw, etapas, etapasStats);
+  updateCompeticoesAnalyticsSelectors(data);
+  loadCompeticoesAnalytics();
 }
 
 function renderCompeticoesBars(container, items) {
@@ -19713,6 +20131,33 @@ function initCompeticoesFilters() {
 
   if (competicoesApplyBtn) {
     competicoesApplyBtn.addEventListener("click", apply);
+  }
+
+  // analytics filters
+  updateCompeticoesPeriodSelectors(competicoesGrupoSelect.value);
+
+  const analyticsUpdate = () => {
+    loadCompeticoesAnalytics();
+  };
+
+  if (competicoesAnalyticsApplyBtn) {
+    competicoesAnalyticsApplyBtn.addEventListener("click", analyticsUpdate);
+  }
+
+  [
+    competicoesPeriodoInicio,
+    competicoesPeriodoFim,
+    competicoesQuadrilhaSelect,
+    competicoesQuesitoSelect,
+    competicoesCompareSelect,
+  ].forEach((el) => {
+    if (el) el.addEventListener("change", analyticsUpdate);
+  });
+
+  if (competicoesGrupoSelect) {
+    competicoesGrupoSelect.addEventListener("change", () => {
+      updateCompeticoesPeriodSelectors(competicoesGrupoSelect.value);
+    });
   }
 
   // auto-load
@@ -19895,13 +20340,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // estado inicial: dashboard
-
-
-
-
-
-  showSection("dashboard");
+  // estado inicial: permite abrir direto pela querystring (?section=...)
+  const params = new URLSearchParams(window.location.search);
+  const requestedSection = params.get("section");
+  const validSections = new Set(
+    Array.from(sections).map((section) => (section.id || "").replace("section-", ""))
+  );
+  if (requestedSection && validSections.has(requestedSection)) {
+    showSection(requestedSection);
+  } else {
+    showSection("dashboard");
+  }
 
 
 

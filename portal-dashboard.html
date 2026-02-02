@@ -1455,6 +1455,7 @@
 
 
           <li><button class="portal-nav-link" type="button" data-section="competicoes">Competições & Notas</button></li>
+          <li><a class="portal-nav-link" href="power-bi.html">Dados</a></li>
 
 
 
@@ -1678,7 +1679,7 @@
 
 
 
-      <section id="section-dashboard" class="portal-section">
+      <section id="section-dashboard" class="portal-section" style="display:none;">
 
 
 
@@ -16059,6 +16060,32 @@
                 <button id="competicoesApply" class="btn btn-light" type="button">Carregar</button>
               </div>
             </div>
+            <div class="form-row form-row-analytics">
+              <div class="form-group">
+                <label for="competicoesPeriodoInicio">Período (início)</label>
+                <select id="competicoesPeriodoInicio"></select>
+              </div>
+              <div class="form-group">
+                <label for="competicoesPeriodoFim">Período (fim)</label>
+                <select id="competicoesPeriodoFim"></select>
+              </div>
+              <div class="form-group">
+                <label for="competicoesQuadrilha">Quadrilha</label>
+                <select id="competicoesQuadrilha"></select>
+              </div>
+              <div class="form-group">
+                <label for="competicoesQuesito">Quesito</label>
+                <select id="competicoesQuesito"></select>
+              </div>
+              <div class="form-group">
+                <label for="competicoesCompare">Comparar com</label>
+                <select id="competicoesCompare"></select>
+              </div>
+              <div class="form-group">
+                <label>&nbsp;</label>
+                <button id="competicoesAnalyticsApply" class="btn btn-primary" type="button">Atualizar painel</button>
+              </div>
+            </div>
           </div>
 
           <div class="portal-competicoes-cards">
@@ -16105,6 +16132,34 @@
                 </thead>
                 <tbody id="competicoesRankingBody"></tbody>
               </table>
+            </div>
+          </div>
+
+          <div class="card portal-competicoes-analytics">
+            <div class="portal-competicoes-analytics-header">
+              <div>
+                <h3 class="card-title">Painel analítico</h3>
+                <p class="muted">Histórico de evolução, comparativos e visão consolidada do período.</p>
+              </div>
+              <div class="portal-competicoes-analytics-kpis" id="competicoesResumoPeriodo"></div>
+            </div>
+            <div class="portal-competicoes-analytics-grid">
+              <div class="card soft">
+                <h4 class="card-title">Evolução total por quadrilha</h4>
+                <div id="competicoesLinhaTotal" class="competicoes-chart"></div>
+              </div>
+              <div class="card soft">
+                <h4 class="card-title">Evolução por quesito</h4>
+                <div id="competicoesLinhaQuesito" class="competicoes-chart"></div>
+              </div>
+              <div class="card soft">
+                <h4 class="card-title">Comparativo de etapas</h4>
+                <div id="competicoesCompareEtapas" class="competicoes-chart"></div>
+              </div>
+              <div class="card soft">
+                <h4 class="card-title">Planilha da quadrilha</h4>
+                <div id="competicoesPlanilhaQuadrilha" class="competicoes-table"></div>
+              </div>
             </div>
           </div>
 

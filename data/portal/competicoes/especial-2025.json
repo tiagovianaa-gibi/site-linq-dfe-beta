@@ -12,8 +12,8 @@
   },
   "ranking_final": [
     {
-      "posicao": null,
-      "quadrilha": "1",
+      "posicao": 1,
+      "quadrilha": "Arroxa o Nó",
       "etapas": {
         "1ª ETAPA": 209.6,
         "2ª ETAPA": 209.9,
@@ -22,8 +22,8 @@
       "total": 629.2
     },
     {
-      "posicao": null,
-      "quadrilha": "2",
+      "posicao": 2,
+      "quadrilha": "Formiga da Roça",
       "etapas": {
         "1ª ETAPA": 209.9,
         "2ª ETAPA": 209.9,
@@ -32,8 +32,8 @@
       "total": 629.2
     },
     {
-      "posicao": null,
-      "quadrilha": "3",
+      "posicao": 3,
+      "quadrilha": "Ribuliço",
       "etapas": {
         "1ª ETAPA": 208.9,
         "2ª ETAPA": 209.9,
@@ -42,8 +42,8 @@
       "total": 628.4
     },
     {
-      "posicao": null,
-      "quadrilha": "4",
+      "posicao": 4,
+      "quadrilha": "Rasga o Fole",
       "etapas": {
         "1ª ETAPA": 209.1,
         "2ª ETAPA": 209.7,
@@ -52,8 +52,8 @@
       "total": 627.6999999999999
     },
     {
-      "posicao": null,
-      "quadrilha": "5",
+      "posicao": 5,
+      "quadrilha": "Caipirada",
       "etapas": {
         "1ª ETAPA": 209.1,
         "2ª ETAPA": 209.1,
@@ -62,8 +62,8 @@
       "total": 627.4
     },
     {
-      "posicao": null,
-      "quadrilha": "6",
+      "posicao": 6,
+      "quadrilha": "Pinga em Mim",
       "etapas": {
         "1ª ETAPA": 208.6,
         "2ª ETAPA": 208.7,
@@ -72,8 +72,8 @@
       "total": 626.6999999999999
     },
     {
-      "posicao": null,
-      "quadrilha": "7",
+      "posicao": 7,
+      "quadrilha": "Xamegar",
       "etapas": {
         "1ª ETAPA": 209,
         "2ª ETAPA": 209.3,
@@ -82,8 +82,8 @@
       "total": 626.0
     },
     {
-      "posicao": null,
-      "quadrilha": "8",
+      "posicao": 8,
+      "quadrilha": "Vai Mas Não Vai",
       "etapas": {
         "1ª ETAPA": 208.3,
         "2ª ETAPA": 208.9,
@@ -92,8 +92,8 @@
       "total": 625.8000000000001
     },
     {
-      "posicao": null,
-      "quadrilha": "9",
+      "posicao": 9,
+      "quadrilha": "Amor Junino",
       "etapas": {
         "1ª ETAPA": 208.6,
         "2ª ETAPA": 209.7,
@@ -102,8 +102,8 @@
       "total": 625.5999999999999
     },
     {
-      "posicao": null,
-      "quadrilha": "10",
+      "posicao": 10,
+      "quadrilha": "Mala Véia",
       "etapas": {
         "1ª ETAPA": 209.2,
         "2ª ETAPA": 208.9,
@@ -112,8 +112,8 @@
       "total": 625.2
     },
     {
-      "posicao": null,
-      "quadrilha": "11",
+      "posicao": 11,
+      "quadrilha": "Eita Bagaceira",
       "etapas": {
         "1ª ETAPA": 207.7,
         "2ª ETAPA": 209,
@@ -122,8 +122,8 @@
       "total": 623.7
     },
     {
-      "posicao": null,
-      "quadrilha": "12",
+      "posicao": 12,
+      "quadrilha": "Arraiá dos Matutos",
       "etapas": {
         "1ª ETAPA": 207.1,
         "2ª ETAPA": 208.3,
@@ -132,8 +132,8 @@
       "total": 622.3
     },
     {
-      "posicao": null,
-      "quadrilha": "13",
+      "posicao": 13,
+      "quadrilha": "Espalha Brasa",
       "etapas": {
         "1ª ETAPA": 206.8,
         "2ª ETAPA": 208.5,
@@ -142,8 +142,8 @@
       "total": 622.3
     },
     {
-      "posicao": null,
-      "quadrilha": "14",
+      "posicao": 14,
+      "quadrilha": "Coisas da Roça",
       "etapas": {
         "1ª ETAPA": 206.5,
         "2ª ETAPA": 209.1,
@@ -152,8 +152,8 @@
       "total": 621.9000000000001
     },
     {
-      "posicao": null,
-      "quadrilha": "15",
+      "posicao": 15,
+      "quadrilha": "Tico Tico no Fubá",
       "etapas": {
         "1ª ETAPA": 206.3,
         "2ª ETAPA": 208,

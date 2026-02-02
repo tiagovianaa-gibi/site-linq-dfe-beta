@@ -1,0 +1,61 @@
+-- Medidas base (recomendo criar uma tabela "Medidas" vazia e colocar tudo nela)
+
+Total Final :=
+MAX ( fact_final[TotalFinal] )
+
+Rank Final (oficial) :=
+MIN ( fact_final[RankFinal] )
+
+Total Etapa :=
+SUM ( fact_etapa[TotalEtapa] )
+
+Média por Etapa :=
+AVERAGEX ( VALUES ( dim_etapa[Etapa] ), [Total Etapa] )
+
+Desvio Padrão (Etapas) :=
+STDEVX.P ( VALUES ( dim_etapa[Etapa] ), [Total Etapa] )
+
+Melhor Total (no recorte) :=
+CALCULATE ( MAX ( [Total Final] ), ALLSELECTED ( dim_quadrilha[Quadrilha] ) )
+
+% do Melhor (normalizado) :=
+DIVIDE ( [Total Final], [Melhor Total (no recorte)] )
+
+Nota Quesito (Etapa) :=
+SUM ( fact_quesito_etapa[NotaQuesitoEtapa] )
+
+Total Quesito (Ano) :=
+SUMX ( VALUES ( dim_etapa[Etapa] ), [Nota Quesito (Etapa)] )
+
+Melhor Quesito (no recorte) :=
+CALCULATE ( MAX ( [Total Quesito (Ano)] ), ALLSELECTED ( dim_quadrilha[Quadrilha] ) )
+
+% do Melhor Quesito :=
+DIVIDE ( [Total Quesito (Ano)], [Melhor Quesito (no recorte)] )
+
+Etapas Participadas :=
+MAX ( fact_final[EtapasParticipadas] )
+
+Etapas no Ano :=
+MAX ( fact_final[EtapasNoAno] )
+
+% Participação :=
+DIVIDE ( [Etapas Participadas], [Etapas no Ano] )
+
+Status :=
+SELECTEDVALUE ( fact_final[Status] )
+
+-- Evolução (quando Ano no eixo)
+Total Final (Evolução) :=
+[Total Final]
+
+Variação vs Ano Anterior :=
+VAR AnoAtual = MAX ( dim_ano[Ano] )
+VAR ValorAtual = [Total Final]
+VAR ValorAnterior =
+    CALCULATE ( [Total Final], FILTER ( ALL ( dim_ano[Ano] ), dim_ano[Ano] = AnoAtual - 1 ) )
+RETURN
+IF ( ISBLANK ( ValorAnterior ), BLANK(), ValorAtual - ValorAnterior )
+
+Rank (dinâmico) :=
+RANKX ( ALLSELECTED ( dim_quadrilha[Quadrilha] ), [Total Final],, DESC, Dense )

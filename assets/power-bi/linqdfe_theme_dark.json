@@ -1,0 +1,91 @@
+{
+  "name": "LINQ-DFE (dark)",
+  "dataColors": [
+    "#E53935",
+    "#FF7043",
+    "#FBC02D",
+    "#43A047",
+    "#1E88E5",
+    "#8E24AA",
+    "#00ACC1",
+    "#6D4C41",
+    "#C0CA33",
+    "#5E35B1"
+  ],
+  "background": "#0B1622",
+  "foreground": "#FFFFFF",
+  "tableAccent": "#E53935",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "title": [
+          {
+            "show": true,
+            "fontFamily": "Segoe UI",
+            "fontSize": 12,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        ],
+        "labels": [
+          {
+            "fontFamily": "Segoe UI",
+            "color": {
+              "solid": {
+                "color": "#D6DEE8"
+              }
+            }
+          }
+        ],
+        "categoryLabels": [
+          {
+            "fontFamily": "Segoe UI",
+            "color": {
+              "solid": {
+                "color": "#D6DEE8"
+              }
+            }
+          }
+        ],
+        "legend": [
+          {
+            "fontFamily": "Segoe UI",
+            "titleColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": "#D6DEE8"
+              }
+            }
+          }
+        ],
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#0B1622"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#1C2A3A"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -2100,53 +2100,17 @@ const MOJIBAKE_REPLACEMENTS = [
 
 
 function fixMojibake(text) {
-
-
-
-
-
   if (!text) return "";
-
-
-
-
-
-  if (!/[ÂÃâ]/.test(text)) return text;
-
-
-
-
-
-  let out = text;
-
-
-
-
-
-  for (const [bad, good] of MOJIBAKE_REPLACEMENTS) {
-
-
-
-
-
-    out = out.split(bad).join(good);
-
-
-
-
-
+  const raw = String(text);
+  // Only fix when the string looks like UTF-8 decoded as Latin-1/Windows-1252.
+  if (!/[???][-¿]/.test(raw)) return raw;
+  try {
+    const bytes = Uint8Array.from(raw, (char) => char.charCodeAt(0));
+    const decoded = new TextDecoder("utf-8").decode(bytes);
+    return decoded.replace(/ /g, " ");
+  } catch (err) {
+    return raw.replace(/ /g, " ");
   }
-
-
-
-
-
-  return out;
-
-
-
-
-
 }
 
 
