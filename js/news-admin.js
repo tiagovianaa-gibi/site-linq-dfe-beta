@@ -21,15 +21,12 @@ import {
   const root = document.getElementById("section-noticias");
   if (!root) return;
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCm9ANrGwedzgdvCaSf05-qZsTPJMgrWOA",
-    authDomain: "portal-da-liga.firebaseapp.com",
-    projectId: "portal-da-liga",
-    storageBucket: "portal-da-liga.appspot.com",
-    messagingSenderId: "129376570268",
-    appId: "1:129376570268:web:b13e414ee188a189869659",
-    measurementId: "G-2LS730BX44",
-  };
+  if (!window.RUNTIME_CONFIG || !window.RUNTIME_CONFIG.firebase) {
+  console.error("Configuracao ausente: crie js/runtime-config.js a partir do example.");
+  throw new Error("Configuracao ausente: crie js/runtime-config.js a partir do example.");
+}
+
+const firebaseConfig = window.RUNTIME_CONFIG.firebase;
 
   const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
   const db = getFirestore(app);

@@ -150,7 +150,19 @@
     </section>
   </main>
 <!-- Script da pgina de Notícia individual -->
-  <script type="module" src="js/noticia.js"></script>
+  <script src="js/runtime-config.js"></script>
+<script>
+  if (!window.RUNTIME_CONFIG || !window.RUNTIME_CONFIG.firebase) {
+    console.error("Configuracao ausente: crie js/runtime-config.js a partir do example.");
+    document.addEventListener("DOMContentLoaded", function () {
+      const msg = document.createElement("p");
+      msg.textContent = "Configuracao ausente: crie js/runtime-config.js a partir do example.";
+      msg.style.cssText = "margin:16px;padding:12px;border:1px solid #cc0000;background:#fff3f3;color:#660000;font-family:system-ui,sans-serif;";
+      document.body.prepend(msg);
+    });
+  }
+</script>
+<script type="module" src="js/noticia.js"></script>
   <script type="module" src="js/shared.min.js"></script>
 <footer class="site-footer" aria-label="Rodap&eacute;">
   <div class="container footer-grid">

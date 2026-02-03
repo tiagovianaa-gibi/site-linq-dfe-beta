@@ -12,3 +12,6 @@ Thumbs.db
 **/*gcloud*.json
 **/*google-credentials*.json
 **/portal-da-liga-firebase-adminsdk-*.json
+
+# Runtime Firebase config (local only)
+js/runtime-config.js
