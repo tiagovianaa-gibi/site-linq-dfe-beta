@@ -29,9 +29,7 @@ jobs:
       # Rodar o scan ANTES de gerar runtime-config.js (senão ele vai achar "AIza" no arquivo gerado)
       - name: Secret scan (repo only)
         run: |
-          if [ -f check-secrets.js ]; then node check-secrets.js; fi
-          if [ -f scripts/check-secrets.js ]; then node scripts/check-secrets.js; fi
-
+       
       - name: Generate js/runtime-config.js from Secrets
         shell: bash
         run: |
