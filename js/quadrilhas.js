@@ -8,7 +8,8 @@ import {
   applyImageCandidates,
   applyFocal,
   setActiveNav,
-  debounce
+  debounce,
+  slugify
 } from "./shared.js";
 
 let quadrilhas = [];
@@ -62,8 +63,8 @@ function renderQuadrilhas() {
   }
 
   filtered.forEach((quad) => {
-    const slug = quad.slug || "";
-    const href = slug ? `quadrilha/${slug}.html` : `quadrilha.html?id=${quad.id}`;
+    const slug = quad.slug || slugify(quad.nome || "");
+    const href = `quadrilha/${slug}.html`;
 
     const card = document.createElement("a");
     card.className = "card quadrilha-card";

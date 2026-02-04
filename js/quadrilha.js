@@ -24,6 +24,10 @@ function getKeyFromUrl() {
 /** Junta histórico próprio + arquivo de anos anteriores */
 function buildHistorico(quad, historicoCircuito) {
   const out = [];
+  const grupoTemporada2025 =
+    typeof quad.grupo_2025 === 'string'
+      ? (quad.grupo_2025.toLowerCase() === 'acesso' ? 'Acesso' : 'Especial')
+      : (quad.grupo || null);
 
   // do próprio objeto
   if (Array.isArray(quad.historico)) {
@@ -38,7 +42,7 @@ function buildHistorico(quad, historicoCircuito) {
   } else if (quad.pontos2025 && quad.posicao_2025) {
     out.push({
       ano: 2025,
-      grupo: quad.grupo || null,
+      grupo: grupoTemporada2025,
       pos: quad.posicao_2025,
       total: quad.pontos2025,
     });
@@ -363,6 +367,15 @@ function renderQuadrilhaInfo(quad, historico) {
   const temaLabel = temaAno ? `Tema ${temaAno}` : 'Tema';
   const temporadaLabel = temaAno ? `Temporada ${temaAno}` : 'Temporada';
   const temporadaDescricao = perfil.temporada_2025_descricao || perfil.temporada_2024_descricao || '';
+  const grupo2025Label =
+    typeof quad.grupo_2025 === 'string'
+      ? (quad.grupo_2025.toLowerCase() === 'acesso' ? 'Acesso' : 'Especial')
+      : '';
+  const grupoAtualLabel = quad.grupo || '';
+  const grupoMudouDesde2025 =
+    grupoAtualLabel &&
+    grupo2025Label &&
+    grupoAtualLabel.toLowerCase() !== grupo2025Label.toLowerCase();
   const casalAno = perfil.casal_noivos_2025 ? 2025 : (perfil.casal_noivos_2024 ? 2024 : null);
   const casalValor = perfil.casal_noivos_2025 || perfil.casal_noivos_2024 || '';
   const casalLabel = casalAno ? `Casal de noivos ${casalAno}` : 'Casal de noivos';
@@ -430,6 +443,7 @@ function renderQuadrilhaInfo(quad, historico) {
       <li><strong>Idade do grupo:</strong> ${perfil.idade_grupo || '—'}</li>
       <li><strong>Elenco aproximado:</strong> ${perfil.elenco_aproximado || '—'}</li>
       <li><strong>Marcador:</strong> ${perfil.marcador || '—'}</li>
+      ${grupoMudouDesde2025 ? `<li><strong>Grupo em 2025:</strong> ${grupo2025Label}</li>` : ''}
       <li><strong>${casalLabel}:</strong> ${casalValor || '—'}</li>
       <li><strong>${temporadaLabel}:</strong> ${temaValor ? `"${temaValor}"` : '—'}</li>
     `;

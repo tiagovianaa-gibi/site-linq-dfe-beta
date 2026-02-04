@@ -2,7 +2,8 @@
   loadJSON,
   buildPhotoCandidates,
   setupImageFallbacks,
-  setActiveNav
+  setActiveNav,
+  slugify
 } from "./shared.js";
 
 const SEASONS = [2026, 2025, 2024, 2023, 2022];
@@ -238,10 +239,8 @@ function renderRankingTables(ano) {
             const foto = match?.foto || "";
             const cidade = match?.cidade || item.cidade || "";
             const id = match?.id;
-            const slug = match?.slug;
-            const href = slug
-              ? `quadrilha/${slug}.html`
-              : (id ? `quadrilha.html?id=${id}` : null);
+            const slug = match?.slug || slugify(item.quadrilha || "");
+            const href = slug ? `quadrilha/${slug}.html` : null;
 
             const pos = item.pos ?? idx + 1;
             const total = Number(item.total ?? item.pontos ?? 0);
@@ -329,9 +328,7 @@ function renderRankingTables(ano) {
           const dataCandidates = candidates.length
             ? `data-candidates="${candidates.join("|")}" data-fallback="assets/logos/placeholder.png"`
             : "";
-          const href = q.slug
-            ? `quadrilha/${q.slug}.html`
-            : `quadrilha.html?id=${q.id}`;
+          const href = `quadrilha/${q.slug || slugify(q.nome || "")}.html`;
 
           return `
             <tr>

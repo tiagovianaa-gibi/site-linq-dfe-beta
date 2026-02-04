@@ -1,4 +1,4 @@
-const fs = require("fs");
+﻿const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -18,7 +18,7 @@ const ORG = {
   sameAs: ["https://instagram.com/linqdfe"],
 };
 
-const SUBTITLE = "Conheça todas as quadrilhas que fazem parte da LINQ-DFE";
+const SUBTITLE = "ConheÃ§a todas as quadrilhas que fazem parte da LINQ-DFE";
 
 function replaceOnce(html, pattern, replacement, required = true) {
   const next = html.replace(pattern, replacement);
@@ -120,7 +120,7 @@ function buildCardsFromData() {
     .sort((a, b) => (a.nome || "").localeCompare(b.nome || "", "pt-BR"))
     .map((quad) => {
       const slug = quad.slug || "";
-      const href = slug ? `quadrilha/${slug}.html` : `quadrilha.html?id=${quad.id}`;
+      const href = `quadrilha/${slug}.html`;
       const foto = quad.foto_capa || quad.foto || "assets/banners/placeholder.jpg";
       const cleanedFoto = foto.startsWith("/") ? foto.slice(1) : foto;
       const src = cleanedFoto.includes("/")
@@ -217,13 +217,13 @@ function validate(cards, html) {
       throw new Error(`JSON-LD position mismatch at ${index + 1}.`);
     }
     if (!item.url || !item.url.startsWith("https://linqdfe.com.br/")) {
-      throw new Error(`JSON-LD url inválida: ${item.url}`);
+      throw new Error(`JSON-LD url invÃ¡lida: ${item.url}`);
     }
   });
 
   cards.forEach((card) => {
-    if (!card.alt.includes("—") || !card.alt.includes("Grupo")) {
-      throw new Error(`Alt inválido: ${card.alt}`);
+    if (!card.alt.includes("â€”") || !card.alt.includes("Grupo")) {
+      throw new Error(`Alt invÃ¡lido: ${card.alt}`);
     }
   });
 }
@@ -285,3 +285,4 @@ function main() {
 }
 
 main();
+

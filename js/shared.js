@@ -235,9 +235,7 @@ async function initQuadrilhaDropdown(dataUrl) {
   const sorted = [...data].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
   menu.innerHTML = sorted
     .map(q => {
-      const href = q.slug
-         ? `/quadrilha/${q.slug}.html`
-        : `/quadrilha.html?id=${q.id}`;
+      const href = `/quadrilha/${q.slug || slugify(q.nome)}.html`;
       return `<a href="${href}">${q.nome}</a>`;
     })
     .join('');

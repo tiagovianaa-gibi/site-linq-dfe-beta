@@ -16,7 +16,7 @@ function buildList(items) {
     .map((item) => {
       const slug = item.slug || slugify(item.nome);
       const candidates = buildLogoCandidates(item);
-      const href = slug ? `quadrilha/${slug}.html` : `quadrilha.html?id=${item.id}`;
+      const href = `quadrilha/${slug}.html`;
       return `
         <li class="ranking-item">
           <span class="ranking-name">
@@ -51,7 +51,7 @@ function buildLogoWall(items) {
     .map((item) => {
       const slug = item.slug || slugify(item.nome);
       const candidates = buildLogoCandidates(item);
-      const href = slug ? `quadrilha/${slug}.html` : `quadrilha.html?id=${item.id}`;
+      const href = `quadrilha/${slug}.html`;
       return `
         <a class="hero-logo-item" href="${href}" aria-label="${item.nome}">
           <img class="hero-logo" src="${candidates[0]}" data-candidates="${candidates.join("|")}" alt="Logo ${item.nome}">

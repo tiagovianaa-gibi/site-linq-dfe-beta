@@ -17,6 +17,7 @@
 /quadrilha.html /quadrilha 301
 /portal.html /portal 301
 /portal-dashboard.html /portal-dashboard 301
+/sitemap /sitemap.xml 301
 
 / /index.html 200
 /circuito /circuito.html 200
@@ -50,3 +51,4 @@
 /circuito/temporadas/:year /temporada-:year.html 301
 /portal /portal.html 200
 /portal-dashboard /portal-dashboard.html 200
+/sitemap.xml /sitemap.xml 200

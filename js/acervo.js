@@ -159,6 +159,7 @@ function groupByEtapa(items){
   const paramYear = params.get("ano") || params.get("year");
   const paramEtapa = params.get("etapa"); // id da etapa
   const paramQuad = params.get("quad");   // id da quadrilha (opcional)
+  const paramModo = params.get("modo");
 
   const etapaNotice = document.getElementById("etapaNotice");
   const verTudoLink = document.getElementById("verTudoLink");
@@ -176,6 +177,25 @@ function groupByEtapa(items){
 
   let currentYear = (paramYear && years.includes(paramYear)) ? paramYear : (years[0] || "2026");
   let etapaFilterId = paramEtapa ? String(paramEtapa) : "";
+
+  function syncUrl() {
+    const url = new URL(window.location.href);
+    const p = url.searchParams;
+    p.set("ano", currentYear);
+
+    const quadId = quadFilter?.value || "";
+    if (quadId) p.set("quad", quadId);
+    else p.delete("quad");
+
+    const mode = viewMode?.value || "todos";
+    if (mode === "etapas") p.set("modo", "etapas");
+    else p.delete("modo");
+
+    if (etapaFilterId) p.set("etapa", etapaFilterId);
+    else p.delete("etapa");
+
+    history.replaceState(null, "", `${url.pathname}?${p.toString()}`);
+  }
 
   // Tabs de anos
   if(yearTabs){
@@ -208,6 +228,8 @@ function groupByEtapa(items){
     viewMode.value = "etapas";
     etapaNotice.style.display = "block";
     if(verTudoLink) verTudoLink.href = `acervo.html?ano=${currentYear}`;
+  } else if (viewMode && paramModo === "etapas") {
+    viewMode.value = "etapas";
   }
 
   async function render(){
@@ -328,12 +350,20 @@ function groupByEtapa(items){
       verTudoLink.href = `acervo.html?ano=${currentYear}`;
     }
 
+    syncUrl();
     render();
   });
 
-  quadFilter?.addEventListener("change", render);
-  viewMode?.addEventListener("change", render);
+  quadFilter?.addEventListener("change", () => {
+    syncUrl();
+    render();
+  });
+  viewMode?.addEventListener("change", () => {
+    syncUrl();
+    render();
+  });
 
+  syncUrl();
   render();
 
 })();

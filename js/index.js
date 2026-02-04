@@ -88,8 +88,8 @@ function renderQuadrilhaCard(quad, destacado = false) {
   const card = document.createElement('div');
   card.className = destacado ? 'card quadrilha-card' : 'card quadrilha-card';
   card.onclick = () => {
-    const slug = quad.slug || '';
-    const target = slug ? `quadrilha/${slug}.html` : `quadrilha.html?id=${quad.id}`;
+    const slug = quad.slug || slugify(quad.nome || '');
+    const target = `quadrilha/${slug}.html`;
     window.location.href = target;
   };
 

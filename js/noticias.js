@@ -11,22 +11,10 @@ import {
   loadJSON,
 } from './shared.js';
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  query,
-  orderBy,
-  limit,
-  startAfter,
-} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-if (!window.RUNTIME_CONFIG || !window.RUNTIME_CONFIG.firebase) {
-  console.error("Configuracao ausente: crie js/runtime-config.js a partir do example.");
-  throw new Error("Configuracao ausente: crie js/runtime-config.js a partir do example.");
-}
-
-const firebaseConfig = window.RUNTIME_CONFIG.firebase;
+const hasFirebaseConfig = !!(window.RUNTIME_CONFIG && window.RUNTIME_CONFIG.firebase);
+const firebaseConfig = hasFirebaseConfig ? window.RUNTIME_CONFIG.firebase : null;
 
 let firebaseApp = null;
 let firestoreDb = null;
@@ -40,6 +28,7 @@ const CACHE_TTL = 10 * 60 * 1000; // 10 minutos
 const PAGE_SIZE = 200; // traz tudo de uma vez
 
 function ensureFirestore() {
+  if (!hasFirebaseConfig || !firebaseConfig) return null;
   if (firestoreDb) return firestoreDb;
   firebaseApp = firebaseApp || initializeApp(firebaseConfig);
   firestoreDb = getFirestore(firebaseApp);
@@ -114,6 +103,10 @@ function mapFirestoreNoticia(docSnap) {
 }
 
 async function loadNoticiasData() {
+  if (!hasFirebaseConfig) {
+    console.warn('Runtime config ausente: carregando noticias apenas do JSON local.');
+  }
+
   // primeiro carrega do JSON local para garantir conteudo estatico
   const localNoticias = (await loadNoticiasLocal()) || [];
   if (localNoticias.length) {
@@ -257,6 +250,7 @@ async function loadNoticiasLocal() {
 async function fetchNoticiasPage(reset = false) {
   try {
     const db = ensureFirestore();
+    if (!db) return [];
     // Busca simples: traz todas as notícias sem depender de campo dataPublicacao
     const snap = await getDocs(collection(db, 'noticias'));
 
@@ -281,6 +275,7 @@ async function fetchNoticiasPage(reset = false) {
 async function fetchNoticiasFullFallback() {
   try {
     const db = ensureFirestore();
+    if (!db) return [];
     const snap = await getDocs(collection(db, 'noticias'));
     const items = [];
     snap.forEach((docSnap) => items.push(mapFirestoreNoticia(docSnap)));
