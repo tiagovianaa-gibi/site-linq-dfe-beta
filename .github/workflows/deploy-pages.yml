@@ -45,6 +45,9 @@ jobs:
           test -s js/runtime-config.js
           node -e "const fs=require('fs'); const s=fs.readFileSync('js/runtime-config.js','utf8'); if(!s.includes('window.RUNTIME_CONFIG')) process.exit(1);"
 
+      - name: Validate canonical assets/data
+        run: node scripts/validate-assets-data.js
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
