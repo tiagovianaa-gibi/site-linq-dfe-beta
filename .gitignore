@@ -15,3 +15,7 @@ Thumbs.db
 
 # Runtime Firebase config (local only)
 js/runtime-config.js
+js/runtime-config.min.js
+
+# Generated JS (do not commit)
+js/portal-notas.min.js

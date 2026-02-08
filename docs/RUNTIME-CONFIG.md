@@ -1,6 +1,7 @@
 # Runtime Config no GitHub Pages
 
 `js/runtime-config.js` **nao deve ser commitado**. Ele e gerado no workflow de deploy a partir de GitHub Secrets.
+`js/runtime-config.min.js` **tambem nao deve ser commitado** (arquivo local/derivado).
 
 ## Desenvolvimento local
 

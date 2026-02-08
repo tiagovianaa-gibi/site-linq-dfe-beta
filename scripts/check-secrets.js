@@ -7,7 +7,10 @@ const path = require("node:path");
 
 const ROOT_DIR = process.cwd();
 const FALLBACK_IGNORED_DIRS = new Set([".git", "node_modules"]);
-const FALLBACK_IGNORED_FILES = new Set(["js/runtime-config.js"]);
+const FALLBACK_IGNORED_FILES = new Set([
+  "js/runtime-config.js",
+  "js/runtime-config.min.js",
+]);
 const SCAN_EXCLUDED_FILES = new Set(["scripts/check-secrets.js"]);
 
 const SECRET_PATTERNS = [
