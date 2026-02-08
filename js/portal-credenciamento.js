@@ -22,6 +22,9 @@ const XLSX_URL = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/+esm";
 const JSPDF_URL = "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/+esm";
 const JSZIP_URL = "https://cdn.jsdelivr.net/npm/jszip@3.10.1/+esm";
 
+const A4_LANDSCAPE = { widthMm: 297, heightMm: 210 };
+const A4_CANVAS = { widthPx: 1600, heightPx: 1131 };
+
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -287,6 +290,7 @@ async function importListaAssets() {
     const nomeHeader = inferHeader(headers, cfg.nome_candidates || ["nome"]);
     const funcaoHeader = inferHeader(headers, cfg.funcao_candidates || ["funcao"]);
     const docHeader = inferHeader(headers, cfg.documento_candidates || ["cpf"]);
+    const cidadeHeader = inferHeader(headers, cfg.cidade_candidates || ["cidade"]);
 
     if (!nomeHeader) {
       statusAdmin("Nao foi possivel identificar a coluna de nome.");
@@ -324,6 +328,7 @@ async function importListaAssets() {
 
       const funcao = funcaoHeader ? String(row[funcaoHeader] || "").trim() : "";
       const documento = docHeader ? String(row[docHeader] || "").trim() : "";
+      const cidadeEtapa = cidadeHeader ? String(row[cidadeHeader] || "").trim() : "";
       const pid = slug(`${nome}-${documento || imported}`);
 
       await setDoc(
@@ -333,6 +338,7 @@ async function importListaAssets() {
           nome,
           funcao: funcao || null,
           documento: documento || null,
+          cidade: cidadeEtapa || null,
           importedAt: serverTimestamp(),
         },
         { merge: true }
@@ -465,36 +471,130 @@ async function fecharEtapa() {
   }
 }
 
+function loadImageAsCanvas(path, targetSize) {
+  if (!path) return Promise.resolve(null);
+
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      const width = targetSize?.widthPx || img.naturalWidth || img.width;
+      const height = targetSize?.heightPx || img.naturalHeight || img.height;
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+      resolve({ canvas, width, height });
+    };
+    img.onerror = () => reject(new Error(`Falha ao carregar imagem: ${path}`));
+    img.src = path;
+  });
+}
+
 function buildCertificateDoc(jsPDF, template, participante, quadrilhaNome, etapaNome, etapaData) {
   const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+  const hoje = new Date();
+  const dataEmissao = new Intl.DateTimeFormat("pt-BR").format(hoje);
+  const cidade = "Brasília";
+  const layout = {
+    centerX: 148,
+    subtitleY: Number(template?.subtitle_y_mm) || 50,
+    titleY: Number(template?.title_y_mm) || 62,
+    introY: Number(template?.intro_y_mm) || 86,
+    nameY: Number(template?.name_y_mm) || 104,
+    quadY: Number(template?.quad_y_mm) || 120,
+    etapaY: Number(template?.etapa_y_mm) || 130,
+    dataY: Number(template?.data_y_mm) || 140,
+    cidadeY: Number(template?.cidade_y_mm) || 146,
+    funcaoY: Number(template?.funcao_y_mm) || 154,
+    emissaoY: Number(template?.emissao_y_mm) || 168,
+    signY: Number(template?.sign_y_mm) || 188,
+    signLineY: Number(template?.sign_line_y_mm) || 181,
+    signLeftX: Number(template?.sign_left_x_mm) || 72,
+    signRightX: Number(template?.sign_right_x_mm) || 224,
+    signLineLeftX1: Number(template?.sign_line_left_x1_mm) || 35,
+    signLineLeftX2: Number(template?.sign_line_left_x2_mm) || 110,
+    signLineRightX1: Number(template?.sign_line_right_x1_mm) || 185,
+    signLineRightX2: Number(template?.sign_line_right_x2_mm) || 260,
+  };
+  const fontSizes = {
+    subtitle: Number(template?.subtitle_size) || 22,
+    title: Number(template?.title_size) || 12,
+    intro: Number(template?.intro_size) || 14,
+    name: Number(template?.name_size) || 20,
+    body: Number(template?.body_size) || 13,
+    data: Number(template?.data_size) || 11,
+    cidade: Number(template?.cidade_size) || 11,
+    emission: Number(template?.emission_size) || 11,
+    sign: Number(template?.sign_size) || 11,
+  };
+
+  if (template?.backgroundCanvas?.canvas) {
+    pdf.addImage(
+      template.backgroundCanvas.canvas,
+      "PNG",
+      0,
+      0,
+      A4_LANDSCAPE.widthMm,
+      A4_LANDSCAPE.heightMm
+    );
+  }
+
+  if (template?.logoCanvas?.canvas) {
+    const logoWidth = Number(template?.logo_width_mm) || 40;
+    const logoX = Number(template?.logo_x_mm) || 15;
+    const logoY = Number(template?.logo_y_mm) || 12;
+    const ratio = template.logoCanvas.height / template.logoCanvas.width;
+    const logoHeight = logoWidth * ratio;
+    pdf.addImage(template.logoCanvas.canvas, "PNG", logoX, logoY, logoWidth, logoHeight);
+  }
 
   pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(22);
-  pdf.text(template?.subtitulo || "Certificado de Participacao", 148, 42, { align: "center" });
+  pdf.setFontSize(fontSizes.subtitle);
+  pdf.text(template?.subtitulo || "Certificado de Participacao", layout.centerX, layout.subtitleY, {
+    align: "center",
+  });
 
   pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(12);
-  pdf.text(template?.titulo_evento || "Circuito de Quadrilhas Juninas", 148, 52, { align: "center" });
+  pdf.setFontSize(fontSizes.title);
+  pdf.text(template?.titulo_evento || "Circuito de Quadrilhas Juninas", layout.centerX, layout.titleY, {
+    align: "center",
+  });
 
-  pdf.setFontSize(14);
-  pdf.text("Certificamos que", 148, 78, { align: "center" });
+  pdf.setFontSize(fontSizes.intro);
+  pdf.text("Certificamos que", layout.centerX, layout.introY, { align: "center" });
 
   pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(20);
-  pdf.text(participante.nome || "Participante", 148, 94, { align: "center" });
+  pdf.setFontSize(fontSizes.name);
+  pdf.text(participante.nome || "Participante", layout.centerX, layout.nameY, { align: "center" });
 
   pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(13);
-  pdf.text(`da quadrilha ${quadrilhaNome}`, 148, 108, { align: "center" });
-  pdf.text(`participou da etapa ${etapaNome}.`, 148, 118, { align: "center" });
-  pdf.text(`Data da etapa: ${etapaData || "--"}`, 148, 128, { align: "center" });
-  pdf.text(`Funcao: ${participante.funcao || "Participante"}`, 148, 138, { align: "center" });
+  pdf.setFontSize(fontSizes.body);
+  pdf.text(`da quadrilha ${quadrilhaNome}`, layout.centerX, layout.quadY, { align: "center" });
+  pdf.text(`participou da etapa ${etapaNome}.`, layout.centerX, layout.etapaY, { align: "center" });
+  pdf.text(`Data da etapa: ${etapaData || "--"}`, layout.centerX, layout.dataY, { align: "center" });
+  if (participante.cidade) {
+    pdf.setFontSize(fontSizes.cidade);
+    pdf.text(`Cidade da etapa: ${participante.cidade}`, layout.centerX, layout.cidadeY, {
+      align: "center",
+    });
+    pdf.setFontSize(fontSizes.body);
+  }
+  pdf.text(`Funcao: ${participante.funcao || "Participante"}`, layout.centerX, layout.funcaoY, {
+    align: "center",
+  });
 
-  pdf.setFontSize(11);
-  pdf.text(template?.assinatura_1 || "LINQ-DFE", 72, 185, { align: "center" });
-  pdf.text(template?.assinatura_2 || "Credenciamento", 224, 185, { align: "center" });
-  pdf.line(35, 178, 110, 178);
-  pdf.line(185, 178, 260, 178);
+  pdf.setFontSize(fontSizes.emission);
+  pdf.text(`${cidade}, ${dataEmissao}`, layout.centerX, layout.emissaoY, { align: "center" });
+
+  pdf.setFontSize(fontSizes.sign);
+  pdf.text(template?.assinatura_1 || "LINQ-DFE", layout.signLeftX, layout.signY, { align: "center" });
+  pdf.text(template?.assinatura_2 || "Credenciamento", layout.signRightX, layout.signY, {
+    align: "center",
+  });
+  pdf.line(layout.signLineLeftX1, layout.signLineY, layout.signLineLeftX2, layout.signLineY);
+  pdf.line(layout.signLineRightX1, layout.signLineY, layout.signLineRightX2, layout.signLineY);
 
   return pdf;
 }
@@ -514,19 +614,59 @@ async function gerarCertificadosZip() {
   try {
     statusQuad("Carregando presencas...");
 
-    const [partSnap, presSnap] = await Promise.all([
-      getDocs(collection(db, "etapas", etapaId, "quadrilhas", quadrilhaId, "participantes")),
-      getDocs(collection(db, "etapas", etapaId, "quadrilhas", quadrilhaId, "presencas")),
-    ]);
+    let participantes = [];
 
-    const presentIds = new Set(
-      presSnap.docs
-        .map((d) => d.data())
-        .filter((p) => p?.presente === true)
-        .map((p) => p.participanteId)
-    );
+    try {
+      const [partSnap, presSnap] = await Promise.all([
+        getDocs(collection(db, "etapas", etapaId, "quadrilhas", quadrilhaId, "participantes")),
+        getDocs(collection(db, "etapas", etapaId, "quadrilhas", quadrilhaId, "presencas")),
+      ]);
 
-    const participantes = partSnap.docs.map((d) => d.data()).filter((p) => presentIds.has(p.id));
+      const presentIds = new Set(
+        presSnap.docs
+          .map((d) => d.data())
+          .filter((p) => p?.presente === true)
+          .map((p) => p.participanteId)
+      );
+
+      participantes = partSnap.docs.map((d) => d.data()).filter((p) => presentIds.has(p.id));
+    } catch (err) {
+      console.warn("Falha ao carregar presencas do Firestore, tentando planilha local.", err);
+      const etapa = getEtapaFromIndex(etapaId);
+      const fileEntry = (etapa?.arquivos || []).find((a) => (a.quadrilhaId || "") === quadrilhaId);
+
+      if (!fileEntry?.path) {
+        statusQuad("Arquivo da quadrilha nao mapeado no index.");
+        return;
+      }
+
+      const rows = await readRowsFromAsset(fileEntry.path);
+      if (!rows.length) {
+        statusQuad("Arquivo sem linhas validas.");
+        return;
+      }
+
+      const headers = Object.keys(rows[0]);
+      const cfg = state.index?.import_config || {};
+      const nomeHeader = inferHeader(headers, cfg.nome_candidates || ["nome"]);
+      const funcaoHeader = inferHeader(headers, cfg.funcao_candidates || ["funcao"]);
+      const cidadeHeader = inferHeader(headers, cfg.cidade_candidates || ["cidade"]);
+
+      if (!nomeHeader) {
+        statusQuad("Nao foi possivel identificar a coluna de nome.");
+        return;
+      }
+
+      participantes = rows
+        .map((row, idx) => ({
+          id: slug(`${row[nomeHeader] || "participante"}-${idx}`),
+          nome: String(row[nomeHeader] || "").trim(),
+          funcao: funcaoHeader ? String(row[funcaoHeader] || "").trim() : "",
+          cidade: cidadeHeader ? String(row[cidadeHeader] || "").trim() : "",
+        }))
+        .filter((p) => p.nome);
+    }
+
     if (!participantes.length) {
       statusQuad("Nenhum participante presente para gerar certificado.");
       return;
@@ -540,7 +680,19 @@ async function gerarCertificadosZip() {
 
     const etapa = getEtapaFromIndex(etapaId);
     const quadrilha = listQuadrilhasForEtapa(etapaId).find((q) => q.id === quadrilhaId);
-    const template = state.index?.template || {};
+    const template = { ...(state.index?.template || {}) };
+
+    try {
+      template.backgroundCanvas = await loadImageAsCanvas(template.background, A4_CANVAS);
+    } catch (err) {
+      console.warn("Falha ao carregar fundo do certificado:", err);
+    }
+
+    try {
+      template.logoCanvas = await loadImageAsCanvas(template.logo);
+    } catch (err) {
+      console.warn("Falha ao carregar logo do certificado:", err);
+    }
 
     for (const participante of participantes) {
       const docPdf = buildCertificateDoc(

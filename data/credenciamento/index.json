@@ -1,17 +1,49 @@
 {
   "template": {
-    "titulo_evento": "Circuito de Quadrilhas Juninas 2026",
+    "titulo_evento": "26o Circuito de Quadrilhas Juninas do DF e Entorno",
     "subtitulo": "Certificado de Participacao",
     "assinatura_1": "Presidencia LINQ-DFE",
-    "assinatura_2": "Coordenacao de Credenciamento"
+    "assinatura_2": "Coordenacao de Credenciamento",
+    "background": "assets/credenciamento/certificados/certificado-padrao.svg",
+    "logo": "assets/credenciamento/certificados/logo-linq-dfe.svg",
+    "logo_width_mm": 40,
+    "logo_x_mm": 15,
+    "logo_y_mm": 12,
+    "subtitle_y_mm": 46,
+    "title_y_mm": 58,
+    "intro_y_mm": 78,
+    "name_y_mm": 98,
+    "quad_y_mm": 114,
+    "etapa_y_mm": 124,
+    "data_y_mm": 138,
+    "cidade_y_mm": 144,
+    "funcao_y_mm": 150,
+    "emissao_y_mm": 165,
+    "sign_y_mm": 183,
+    "sign_line_y_mm": 176,
+    "subtitle_size": 20,
+    "title_size": 11,
+    "intro_size": 12,
+    "name_size": 22,
+    "body_size": 12,
+    "data_size": 10,
+    "cidade_size": 10,
+    "emission_size": 10,
+    "sign_size": 10
   },
   "etapas": [
     {
       "id": "2026-etapa-1",
-      "nome": "1a Etapa 2026",
+      "nome": "1a Etapa do 26o Circuito de Quadrilhas Juninas do Distrito Federal e Entorno",
       "data": "2026-05-10",
       "status": "aberta",
-      "arquivos": []
+      "arquivos": [
+        {
+          "quadrilhaId": "amor-junino",
+          "quadrilhaNome": "Amor Junino",
+          "path": "assets/credenciamento/etapa-1/amor-junino.xlsx"
+        }
+      ]
     }
   ],
   "import_config": {
@@ -30,6 +62,11 @@
       "cpf",
       "documento",
       "rg"
+    ],
+    "cidade_candidates": [
+      "cidade",
+      "cidade_etapa",
+      "municipio"
     ]
   }
 }

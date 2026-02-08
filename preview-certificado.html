@@ -1,0 +1,108 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Preview Certificado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --w: 2000;
+      --h: 1414;
+    }
+    body {
+      margin: 0;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    #canvas {
+      position: relative;
+      width: calc(var(--w) * 1px);
+      height: calc(var(--h) * 1px);
+      background: center / cover no-repeat url('assets/credenciamento/certificados/certificado-padrao.svg');
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      transform: scale(0.5);
+      transform-origin: top left;
+    }
+    .t {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      color: #2b2b2b;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .title { font-family: 'Cinzel', serif; letter-spacing: 2px; }
+    .name { font-family: 'Cinzel', serif; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div id="canvas">
+    <div id="subtitle" class="t title"></div>
+    <div id="event" class="t"></div>
+    <div id="intro" class="t"></div>
+    <div id="name" class="t name"></div>
+    <div id="line1" class="t"></div>
+    <div id="line2" class="t"></div>
+    <div id="line3" class="t"></div>
+    <div id="emissao" class="t"></div>
+    <div id="sign1" class="t"></div>
+    <div id="sign2" class="t"></div>
+  </div>
+
+  <script>
+    const A4 = { w: 297, h: 210 };
+    const W = 2000;
+    const H = 1414;
+    const mmToPxX = (mm) => (mm / A4.w) * W;
+    const mmToPxY = (mm) => (mm / A4.h) * H;
+
+    function setPos(id, yMm, size) {
+      const el = document.getElementById(id);
+      el.style.top = `${mmToPxY(yMm)}px`;
+      el.style.fontSize = `${size * 3.6}px`;
+    }
+
+    fetch('data/credenciamento/index.json')
+      .then(r => r.json())
+      .then(cfg => {
+        const t = cfg.template || {};
+        const etapa = (cfg.etapas || [])[0] || {};
+        const dataEtapa = etapa.data || '--';
+        const cidade = 'Brasília';
+        const hoje = new Date();
+        const dataEmissao = hoje.toLocaleDateString('pt-BR');
+
+        document.getElementById('subtitle').textContent = (t.subtitulo || '').toUpperCase();
+        document.getElementById('event').textContent = t.titulo_evento || '';
+        document.getElementById('intro').textContent = 'Certificamos que';
+        document.getElementById('name').textContent = 'Rafael Pereira Gomes';
+        document.getElementById('line1').textContent = 'integrando a Quadrilha Junina Amor Junino, na funcao de Producao';
+        document.getElementById('line2').textContent = `com apresentacao realizada na ${etapa.nome || 'Etapa'} — Modulo X, temporada 2026.`;
+        document.getElementById('line3').textContent = `Data da etapa: ${dataEtapa}`;
+        document.getElementById('emissao').textContent = `${cidade}, ${dataEmissao}`;
+        document.getElementById('sign1').textContent = t.assinatura_1 || 'Presidencia LINQ-DFE';
+        document.getElementById('sign2').textContent = t.assinatura_2 || 'Coordenacao de Credenciamento';
+
+        setPos('subtitle', t.subtitle_y_mm || 46, t.subtitle_size || 20);
+        setPos('event', t.title_y_mm || 58, t.title_size || 11);
+        setPos('intro', t.intro_y_mm || 78, t.intro_size || 12);
+        setPos('name', t.name_y_mm || 98, t.name_size || 22);
+        setPos('line1', t.quad_y_mm || 114, t.body_size || 12);
+        setPos('line2', t.etapa_y_mm || 124, t.body_size || 12);
+        setPos('line3', t.data_y_mm || 138, t.data_size || 10);
+        setPos('emissao', t.emissao_y_mm || 165, t.emission_size || 10);
+
+        const signY = t.sign_y_mm || 183;
+        setPos('sign1', signY, t.sign_size || 10);
+        setPos('sign2', signY, t.sign_size || 10);
+        document.getElementById('sign1').style.left = `${mmToPxX((t.sign_left_x_mm || 72) - 148)}px`;
+        document.getElementById('sign2').style.left = `${mmToPxX((t.sign_right_x_mm || 224) - 148)}px`;
+      });
+  </script>
+</body>
+</html>
