@@ -18,7 +18,7 @@ const ORG = {
   sameAs: ["https://instagram.com/linqdfe"],
 };
 
-const SUBTITLE = "ConheÃ§a todas as quadrilhas que fazem parte da LINQ-DFE";
+const SUBTITLE = "Conheça todas as quadrilhas que fazem parte da LINQ-DFE";
 
 function replaceOnce(html, pattern, replacement, required = true) {
   const next = html.replace(pattern, replacement);
@@ -217,13 +217,13 @@ function validate(cards, html) {
       throw new Error(`JSON-LD position mismatch at ${index + 1}.`);
     }
     if (!item.url || !item.url.startsWith("https://linqdfe.com.br/")) {
-      throw new Error(`JSON-LD url invÃ¡lida: ${item.url}`);
+      throw new Error(`JSON-LD url inválida: ${item.url}`);
     }
   });
 
   cards.forEach((card) => {
-    if (!card.alt.includes("â€”") || !card.alt.includes("Grupo")) {
-      throw new Error(`Alt invÃ¡lido: ${card.alt}`);
+    if (!card.alt.includes("—") || !card.alt.includes("Grupo")) {
+      throw new Error(`Alt inválido: ${card.alt}`);
     }
   });
 }

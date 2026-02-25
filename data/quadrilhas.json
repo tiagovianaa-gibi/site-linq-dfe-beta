@@ -1126,5 +1126,77 @@
       "casal_noivos_2024": "Geysa Pereira e Jean Morais"
     },
     "logo": "paixao-cangaco.png"
+  },
+  {
+    "id": 28,
+    "nome": "Xuva de Prata",
+    "slug": "xuva-de-prata",
+    "cidade": "Santa Maria/DF",
+    "uf": "DF",
+    "grupo": "Acesso",
+    "grupo_2025": "acesso",
+    "posicao_2025": null,
+    "foto": "xuva-de-prata.jpeg",
+    "foto_capa": "xuva-de-prata-capa.jpeg",
+    "instagram": "A confirmar",
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -15.98,
+      "lng": -48
+    },
+    "pontos2025": null,
+    "notas_2025": {
+      "total": null
+    },
+    "historico": [],
+    "perfil": {
+      "bio": "A Quadrilha Xuva de Prata é de Santa Maria/DF e completa 26 anos de história em 2026. A Xuva de Prata faz parte da história junina de Santa Maria. São 26 anos de trajetória construída com comunidade, ensaio, amizade e muito forró.",
+      "tema_2026": "A confirmar",
+      "temporada_2026_descricao": "Depois de um período parada, a quadrilha retoma as atividades em 2026, trazendo de volta o que sempre foi a base do grupo: tradição, organização e vontade de fazer bonito na arena. O retorno é com o pé no chão e com todo mundo junto: quem já viveu a Xuva, quem está voltando agora e quem quer chegar pra somar. A Xuva de Prata está de portas abertas para novos integrantes e apoiadores, seja no elenco, na produção, no figurino, na comunicação ou na equipe de bastidores.",
+      "idade_grupo": "26 anos",
+      "elenco_aproximado": "A confirmar",
+      "marcador": "A confirmar",
+      "casal_noivos_2026": "A confirmar"
+    },
+    "logo": "xuva-de-prata.jpeg"
+  },
+  {
+    "id": 29,
+    "nome": "Traia V\u00e9ia",
+    "slug": "traia-veia",
+    "cidade": "Luzi\u00e2nia/GO",
+    "uf": "GO",
+    "grupo": "Acesso",
+    "grupo_2025": "acesso",
+    "posicao_2025": null,
+    "foto": "assets/banners/placeholder.jpg",
+    "foto_capa": "assets/banners/placeholder.jpg",
+    "instagram": "A confirmar",
+    "focal": {
+      "x": 0.5,
+      "y": 0.2
+    },
+    "coords": {
+      "lat": -16.25,
+      "lng": -47.95
+    },
+    "pontos2025": null,
+    "notas_2025": {
+      "total": null
+    },
+    "historico": [],
+    "perfil": {
+      "bio": "A Quadrilha Traia V\u00e9ia \u00e9 de Luzi\u00e2nia/GO e completa 1 ano de hist\u00f3ria em 2026. A Traia V\u00e9ia nasceu da vontade de preservar as ra\u00edzes do S\u00e3o Jo\u00e3o sem ficar parada no tempo. A proposta \u00e9 misturar a simplicidade do matuto com a for\u00e7a dos espet\u00e1culos juninos de hoje, mantendo o respeito pela tradi\u00e7\u00e3o e entregando um trabalho bem feito em cena. O nome \"Traia V\u00e9ia\" \u00e9 uma homenagem direta ao sertanejo, \u00e0s vestimentas e aos costumes que constru\u00edram a cultura nordestina. E no tablado a ideia \u00e9 clara: tradi\u00e7\u00e3o no peito e renova\u00e7\u00e3o no conjunto. A quadrilha aposta em coreografias firmes, figurinos bem trabalhados e uma harmonia de elenco que prende o p\u00fablico do come\u00e7o ao fim. Fundada oficialmente em 28 de julho de 2025, a Traia V\u00e9ia re\u00fane profissionais e entusiastas com experi\u00eancia no movimento junino e em projetos culturais. O grupo nasce com base t\u00e9cnica e paix\u00e3o verdadeira pelo S\u00e3o Jo\u00e3o, levando essa energia para representar Luzi\u00e2nia com for\u00e7a e responsabilidade.",
+      "tema_2026": "\"A confirmar\"",
+      "temporada_2026_descricao": "Tradi\u00e7\u00e3o no peito e renova\u00e7\u00e3o no conjunto.",
+      "idade_grupo": "1 ano",
+      "elenco_aproximado": "A confirmar",
+      "marcador": "A confirmar",
+      "casal_noivos_2026": "A confirmar"
+    },
+    "logo": "traia-veia.PNG"
   }
 ]

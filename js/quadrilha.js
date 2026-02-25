@@ -21,6 +21,13 @@ function getKeyFromUrl() {
   return { id: id ? Number(id) : null, slug: slug || null };
 }
 
+function getInstagramHandle(value) {
+  if (!value) return '';
+  const raw = value.trim();
+  if (raw.toLowerCase() === 'a confirmar') return '';
+  return raw.startsWith('@') ? raw.slice(1) : raw;
+}
+
 /** Junta histórico próprio + arquivo de anos anteriores */
 function buildHistorico(quad, historicoCircuito) {
   const out = [];
@@ -245,8 +252,7 @@ function renderLandingSections(quad, acervoItems) {
   const container = main.querySelector('.container');
   if (!container) return;
 
-  const instagramHandle = quad.instagram || '';
-  const handle = instagramHandle.startsWith('@') ? instagramHandle.slice(1) : instagramHandle;
+  const handle = getInstagramHandle(quad.instagram);
   const instaUrl = handle ? `https://instagram.com/${handle}` : '';
   const cidade = quad.cidade || '';
   const uf = quad.uf ? `/${quad.uf}` : '';
@@ -287,9 +293,11 @@ function updateSeoMeta(quad, coverUrl, resumo) {
   const cidade = quad.cidade || '';
   const uf = quad.uf ? `/${quad.uf}` : '';
   const perfil = quad.perfil || {};
-  const temaInfo = perfil.tema_2025
-    ? { ano: 2025, tema: perfil.tema_2025 }
-    : (perfil.tema_2024 ? { ano: 2024, tema: perfil.tema_2024 } : null);
+  const temaInfo = perfil.tema_2026
+    ? { ano: 2026, tema: perfil.tema_2026 }
+    : (perfil.tema_2025
+      ? { ano: 2025, tema: perfil.tema_2025 }
+      : (perfil.tema_2024 ? { ano: 2024, tema: perfil.tema_2024 } : null));
   const tema = temaInfo ? `Tema ${temaInfo.ano}: ${temaInfo.tema}.` : '';
   const description = `${nome} de ${cidade}${uf}. Contrata\u00e7\u00e3o, portf\u00f3lio, equipe, fotos e v\u00eddeos. ${tema}`.trim();
   const pageTitle = `${nome} | Quadrilha Junina | LINQ-DFE`;
@@ -331,8 +339,7 @@ function updateSeoMeta(quad, coverUrl, resumo) {
     document.head.appendChild(ld);
   }
 
-  const instagramHandle = quad.instagram || '';
-  const handle = instagramHandle.startsWith('@') ? instagramHandle.slice(1) : instagramHandle;
+  const handle = getInstagramHandle(quad.instagram);
   const instaUrl = handle ? `https://instagram.com/${handle}` : '';
   const data = {
     '@context': 'https://schema.org',
@@ -362,11 +369,11 @@ function renderQuadrilhaInfo(quad, historico) {
   const infoListEl = document.getElementById('quadrilhaInfoList');
 
   const perfil = quad.perfil || {};
-  const temaAno = perfil.tema_2025 ? 2025 : (perfil.tema_2024 ? 2024 : null);
-  const temaValor = perfil.tema_2025 || perfil.tema_2024 || '';
+  const temaAno = perfil.tema_2026 ? 2026 : (perfil.tema_2025 ? 2025 : (perfil.tema_2024 ? 2024 : null));
+  const temaValor = perfil.tema_2026 || perfil.tema_2025 || perfil.tema_2024 || '';
   const temaLabel = temaAno ? `Tema ${temaAno}` : 'Tema';
   const temporadaLabel = temaAno ? `Temporada ${temaAno}` : 'Temporada';
-  const temporadaDescricao = perfil.temporada_2025_descricao || perfil.temporada_2024_descricao || '';
+  const temporadaDescricao = perfil.temporada_2026_descricao || perfil.temporada_2025_descricao || perfil.temporada_2024_descricao || '';
   const grupo2025Label =
     typeof quad.grupo_2025 === 'string'
       ? (quad.grupo_2025.toLowerCase() === 'acesso' ? 'Acesso' : 'Especial')
@@ -376,8 +383,8 @@ function renderQuadrilhaInfo(quad, historico) {
     grupoAtualLabel &&
     grupo2025Label &&
     grupoAtualLabel.toLowerCase() !== grupo2025Label.toLowerCase();
-  const casalAno = perfil.casal_noivos_2025 ? 2025 : (perfil.casal_noivos_2024 ? 2024 : null);
-  const casalValor = perfil.casal_noivos_2025 || perfil.casal_noivos_2024 || '';
+  const casalAno = perfil.casal_noivos_2026 ? 2026 : (perfil.casal_noivos_2025 ? 2025 : (perfil.casal_noivos_2024 ? 2024 : null));
+  const casalValor = perfil.casal_noivos_2026 || perfil.casal_noivos_2025 || perfil.casal_noivos_2024 || '';
   const casalLabel = casalAno ? `Casal de noivos ${casalAno}` : 'Casal de noivos';
   let coverUrl = normalizeImageUrl('assets/banners/placeholder.jpg', 'assets/banners/placeholder.jpg');
 
@@ -402,9 +409,15 @@ function renderQuadrilhaInfo(quad, historico) {
 
   if (instagramEl) {
     if (quad.instagram) {
-      instagramEl.textContent = quad.instagram;
-      const handle = quad.instagram.startsWith('@') ? quad.instagram.slice(1) : quad.instagram;
-      instagramEl.href = `https://instagram.com/${handle}`;
+      const rawInstagram = quad.instagram.trim();
+      const normalizedInstagram = rawInstagram.toLowerCase();
+      instagramEl.textContent = rawInstagram;
+      if (normalizedInstagram === 'a confirmar') {
+        instagramEl.removeAttribute('href');
+      } else {
+        const handle = getInstagramHandle(rawInstagram);
+        instagramEl.href = `https://instagram.com/${handle}`;
+      }
     } else {
       instagramEl.textContent = '—';
       instagramEl.removeAttribute('href');
