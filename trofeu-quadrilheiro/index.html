@@ -23,6 +23,34 @@
   <meta name="twitter:description" content="O Troféu Quadrilheiro reconhece os destaques da temporada do São João da Liga. Em 2026, acontece no Paranoá/DF em 20 de março, premiando a temporada 2025." />
   <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png" />
   <link rel="stylesheet" href="../css/style.min.css" />
+  <style>
+    .trofeu-hero-grid {
+      align-items: center;
+    }
+
+    .trofeu-logo-wrap {
+      width: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .trofeu-logo {
+      width: min(420px, 100%);
+      max-width: 420px;
+      height: auto;
+      display: block;
+      transform: scale(1.2);
+      transform-origin: center right;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
+    }
+
+    @media (max-width: 900px) {
+      .trofeu-logo-wrap {
+        justify-content: flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -49,13 +77,20 @@
   <main class="page" id="conteudo">
     <section class="section competition-hero">
       <div class="container">
-        <p class="hero-kicker">Premiação oficial</p>
-        <h1 class="hero-title">Troféu Quadrilheiro</h1>
-        <p class="hero-lead">Reconhecimento dos destaques da temporada na arena e nos bastidores, valorizando performance, entrega e trabalho coletivo.</p>
-        <div class="hero-actions hero-shortcuts">
-          <a class="btn" href="../circuito-2026.html">Calendário</a>
-          <a class="btn btn-outline" href="../noticias.html">Notícias</a>
-          <a class="btn btn-outline" href="../diretoria.html">Contato</a>
+        <div class="hero-grid trofeu-hero-grid">
+          <div>
+            <p class="hero-kicker">Premiação oficial</p>
+            <h1 class="hero-title">Troféu Quadrilheiro</h1>
+            <p class="hero-lead">Reconhecimento dos destaques da temporada na arena e nos bastidores, valorizando performance, entrega e trabalho coletivo.</p>
+            <div class="hero-actions hero-shortcuts">
+              <a class="btn" href="../circuito-2026.html">Calendário</a>
+              <a class="btn btn-outline" href="../noticias.html">Notícias</a>
+              <a class="btn btn-outline" href="../diretoria.html">Contato</a>
+            </div>
+          </div>
+          <div class="trofeu-logo-wrap">
+            <img class="trofeu-logo" src="../assets/logos/trofeu-quadrilheiro.png" alt="Logo do Troféu Quadrilheiro" />
+          </div>
         </div>
       </div>
     </section>
@@ -131,12 +166,6 @@
             </div>
           </article>
         </div>
-      </div>
-    </section>
-
-    <section class="section rich-media-strip">
-      <div class="container">
-        <img src="../assets/banners/placeholder.jpg" alt="Faixa de mídia do Troféu Quadrilheiro em atualização" />
       </div>
     </section>
 

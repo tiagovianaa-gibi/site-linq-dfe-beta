@@ -23,6 +23,34 @@
   <meta name="twitter:description" content="Pré São João da Liga: abertura da temporada com ensaios e apresentações abertas. Em 2026, acontece em Planaltina/GO nos dias 10, 11 e 12 de abril." />
   <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png" />
   <link rel="stylesheet" href="../css/style.min.css" />
+  <style>
+    .pre-sao-joao-hero-grid {
+      align-items: center;
+    }
+
+    .pre-sao-joao-logo-wrap {
+      width: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .pre-sao-joao-logo {
+      width: min(420px, 100%);
+      max-width: 420px;
+      height: auto;
+      display: block;
+      transform: scale(1.2);
+      transform-origin: center right;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
+    }
+
+    @media (max-width: 900px) {
+      .pre-sao-joao-logo-wrap {
+        justify-content: flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -49,13 +77,20 @@
   <main class="page" id="conteudo">
     <section class="section competition-hero">
       <div class="container">
-        <p class="hero-kicker">Abertura da temporada</p>
-        <h1 class="hero-title">Pré São João da Liga</h1>
-        <p class="hero-lead">Abertura da temporada — ensaios e apresentações abertas</p>
-        <div class="hero-actions hero-shortcuts">
-          <a class="btn" href="../circuito-2026.html">Calendário</a>
-          <a class="btn btn-outline" href="../noticias.html">Notícias</a>
-          <a class="btn btn-outline" href="../diretoria.html">Contato</a>
+        <div class="hero-grid pre-sao-joao-hero-grid">
+          <div>
+            <p class="hero-kicker">Abertura da temporada</p>
+            <h1 class="hero-title">Pré São João da Liga</h1>
+            <p class="hero-lead">Abertura da temporada — ensaios e apresentações abertas</p>
+            <div class="hero-actions hero-shortcuts">
+              <a class="btn" href="../circuito-2026.html">Calendário</a>
+              <a class="btn btn-outline" href="../noticias.html">Notícias</a>
+              <a class="btn btn-outline" href="../diretoria.html">Contato</a>
+            </div>
+          </div>
+          <div class="pre-sao-joao-logo-wrap">
+            <img class="pre-sao-joao-logo" src="../assets/logos/pre-sao-joao.png" alt="Logo do Pré São João da Liga" />
+          </div>
         </div>
       </div>
     </section>
@@ -128,12 +163,6 @@
             </div>
           </article>
         </div>
-      </div>
-    </section>
-
-    <section class="section rich-media-strip">
-      <div class="container">
-        <img src="../assets/banners/placeholder.jpg" alt="Faixa de mídia do Pré São João em atualização" />
       </div>
     </section>
 
