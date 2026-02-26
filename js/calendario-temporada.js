@@ -19,7 +19,11 @@ function createEventItem(event) {
   li.appendChild(time);
 
   const h3 = document.createElement("h3");
-  h3.textContent = event.title || "";
+  const isCircuito = event.tag === "Circuito";
+  const cleanedTitle = isCircuito
+    ? String(event.title || "").replace(/\s-\s[^-]+(?=\s-\s(?:\d|Final))/u, "")
+    : event.title || "";
+  h3.textContent = cleanedTitle;
   li.appendChild(h3);
 
   if (Array.isArray(event.details)) {
@@ -46,9 +50,11 @@ function createEventItem(event) {
     meta.appendChild(tag);
   }
 
-  const loc = document.createElement("span");
-  loc.textContent = `Local: ${event.location || "A confirmar"}`;
-  meta.appendChild(loc);
+  if (!isCircuito) {
+    const loc = document.createElement("span");
+    loc.textContent = `Local: ${event.location || "A confirmar"}`;
+    meta.appendChild(loc);
+  }
 
   li.appendChild(meta);
   return li;
