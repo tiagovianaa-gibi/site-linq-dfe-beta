@@ -262,7 +262,12 @@ window.filterMapa = function filterMapa(grupo) {
 async function init() {
   initMap();
 
-  quadrilhas = (await loadJSON('data/quadrilhas.json')) || [];
+  const excludedSlugs = new Set(['xuva-de-prata', 'traia-veia']);
+  const loaded = (await loadJSON('data/quadrilhas.json')) || [];
+  quadrilhas = loaded.filter((q) => {
+    const slug = (q.slug || slugify(q.nome || '')).toLowerCase();
+    return !excludedSlugs.has(slug);
+  });
   render();
 
   const searchInput = document.getElementById('searchMapa');

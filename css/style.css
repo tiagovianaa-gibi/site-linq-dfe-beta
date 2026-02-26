@@ -3876,3 +3876,16 @@ body.page-noticia .noticia-page {
 .footer-bottom p {
   margin: 0;
 }
+
+/* Menu principal em largura total */
+nav .container {
+  max-width: none;
+  width: 100%;
+  padding-inline: clamp(12px, 2vw, 32px);
+}
+
+nav ul {
+  flex: 1;
+  margin-left: clamp(12px, 2vw, 28px);
+}
+

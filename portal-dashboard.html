@@ -1430,7 +1430,7 @@
 
 
 
-          <li><button class="portal-nav-link" type="button" data-section="credenciamento">Credenciamento</button></li>
+          <li><button class="portal-nav-link" type="button" data-section="credenciamento">Certificados</button></li>
           <li><button class="portal-nav-link" type="button" data-section="notas">Notas</button></li>
           <li><button class="portal-nav-link" type="button" data-section="regulamentos">Regulamentos</button></li>
 
@@ -15821,44 +15821,14 @@
       <section id="section-credenciamento" class="portal-section portal-credenciamento" style="display:none;">
         <div class="cred-header">
           <div>
-            <h1 class="section-title">Credenciamento</h1>
-            <p class="muted">Fluxo por perfil: credenciador marca presen&ccedil;a, quadrilha baixa certificados e administra&ccedil;&atilde;o da Liga gerencia tudo.</p>
-          </div>
-          <div class="cred-role-box">
-            <span id="credPerfilChip" class="chip">Perfil</span>
-            <p id="credPerfilHint" class="muted notas-small">Carregando permiss&otilde;es...</p>
+            <h1 class="section-title">Certificados</h1>
           </div>
         </div>
 
         <div class="grid cred-grid-top">
-          <article class="card" id="credAdminCard" style="display:none;">
-            <div class="card-body">
-              <h3 class="card-title">Opera&ccedil;&atilde;o da etapa</h3>
-              <p class="muted notas-small">Use este bloco para importar listas, carregar/salvar presen&ccedil;a e fechar etapa.</p>
-              <div class="form-row cred-form-row">
-                <div class="form-group">
-                  <label for="credEtapaSelect">Etapa</label>
-                  <select id="credEtapaSelect"></select>
-                </div>
-                <div class="form-group">
-                  <label for="credQuadrilhaSelect">Quadrilha</label>
-                  <select id="credQuadrilhaSelect"></select>
-                </div>
-              </div>
-              <div class="cred-actions-grid" id="credActionsGrid">
-                <button id="credImportListaBtn" class="btn btn-light" type="button">Importar lista (assets)</button>
-                <button id="credLoadPresencasBtn" class="btn btn-light" type="button">Carregar presen&ccedil;a</button>
-                <button id="credSavePresencasBtn" class="btn" type="button">Salvar presen&ccedil;a</button>
-                <button id="credFecharEtapaBtn" class="btn btn-outline" type="button">Fechar etapa</button>
-              </div>
-              <p id="credAdminStatus" class="muted notas-small cred-status"></p>
-            </div>
-          </article>
-
           <article class="card" id="credQuadCard" style="display:none;">
             <div class="card-body">
               <h3 class="card-title">Certificados da quadrilha</h3>
-              <p class="muted notas-small">Gera&ccedil;&atilde;o em lote sob demanda (sem armazenamento em servidor).</p>
               <div class="form-row cred-form-row">
                 <div class="form-group">
                   <label for="credQuadEtapaSelect">Etapa</label>
@@ -15894,6 +15864,43 @@
       </section>
 
       
+      <section id="section-notas" class="portal-section portal-notas" style="display:none;">
+        <h1 class="section-title">Notas</h1>
+        <p class="muted">Notas oficiais por temporada e arquivos de apoio.</p>
+
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-md);">
+          <article class="card">
+            <div class="card-body">
+              <h3 class="card-title">Temporadas 2022 a 2025</h3>
+              <p class="muted notas-small">Arquivos oficiais por temporada.</p>
+              <div id="notasDownloadsHistorico">
+                <p class="muted notas-small">Carregando arquivos...</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3 class="card-title">Distrito Junino 2025</h3>
+              <p class="muted notas-small">Etapas e resultado final.</p>
+              <div id="notasDownloadsDistrito">
+                <p class="muted notas-small">Carregando arquivos...</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <h3 class="card-title">Temporada 2026</h3>
+              <p id="notasResumo2026" class="muted notas-small">Carregando status...</p>
+              <div id="notasDownloads2026">
+                <p class="muted notas-small">Carregando arquivos...</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section id="section-regulamentos" class="portal-section" style="display:none;">
         <h1 class="section-title">Regulamentos</h1>
         <p class="muted">Documentos oficiais do Circuito para consulta e download.</p>
@@ -15915,79 +15922,6 @@
             </div>
           </article>
         </div>
-      </section>
- class="portal-section" style="display:none;">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <h1 class="section-title">Penalidades</h1>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <p>Registro de ocorrências e penalidades por etapa/circuito.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </section>
 
 

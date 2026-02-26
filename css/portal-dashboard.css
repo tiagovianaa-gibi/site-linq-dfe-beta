@@ -639,6 +639,20 @@
   gap: 0.9rem;
 }
 
+.portal-credenciamento #credQuadCard {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.portal-credenciamento #credQuadCard .cred-form-row {
+  grid-template-columns: minmax(0, 1fr) 160px;
+}
+
+.portal-credenciamento #credQuadCard .cred-actions-grid {
+  grid-template-columns: 1fr;
+}
+
 .portal-credenciamento .cred-form-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -746,6 +760,10 @@
 
   .portal-credenciamento .cred-form-row,
   .portal-credenciamento .cred-actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-credenciamento #credQuadCard .cred-form-row {
     grid-template-columns: 1fr;
   }
 

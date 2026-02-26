@@ -108,7 +108,7 @@ function isQuadrilhaAdmin() {
 }
 
 function canUseOperacao() {
-  return isLigaAdmin() || isCredenciamento();
+  return isLigaAdmin();
 }
 
 function canUseCertificados() {
@@ -127,15 +127,15 @@ function setRoleHeader() {
   ui.perfilChip.textContent = labels[papel] || "Perfil";
 
   if (isLigaAdmin()) {
-    ui.perfilHint.textContent = "Acesso completo: importar planilha, preparar e publicar certificados.";
+    ui.perfilHint.textContent = "Fluxo da Liga: validar planilhas em assets e liberar certificados por etapa.";
     return;
   }
   if (isCredenciamento()) {
-    ui.perfilHint.textContent = "Acesso operacional: importar planilhas e preparar certificados.";
+    ui.perfilHint.textContent = "Perfil sem operacao neste modulo.";
     return;
   }
   if (isQuadrilhaAdmin()) {
-    ui.perfilHint.textContent = "Acesso da quadrilha: baixar certificados prontos em lote.";
+    ui.perfilHint.textContent = "Acesso da quadrilha: download apenas dos certificados da propria quadrilha.";
     return;
   }
   ui.perfilHint.textContent = "Sem permissao para usar este modulo.";
@@ -247,9 +247,13 @@ function setupSelects() {
 
   const quadEtapaId = ui.quadEtapa?.value || "";
   const quadEtapaQuadrilhas = listQuadrilhasForEtapa(quadEtapaId);
-  const quadDownloadOptions = quadEtapaQuadrilhas.length
-    ? quadEtapaQuadrilhas.map((q) => ({ value: q.id, label: q.nome }))
-    : [{ value: "", label: "Nenhuma quadrilha mapeada" }];
+  const quadDownloadList =
+    isQuadrilhaAdmin() && state.perfil?.quadrilhaId
+      ? quadEtapaQuadrilhas.filter((q) => q.id === state.perfil.quadrilhaId)
+      : quadEtapaQuadrilhas;
+  const quadDownloadOptions = quadDownloadList.length
+    ? quadDownloadList.map((q) => ({ value: q.id, label: q.nome }))
+    : [{ value: "", label: "Nenhuma quadrilha mapeada para este perfil" }];
   fillSelect(ui.quadSelect, quadDownloadOptions, ui.quadSelect?.value || "");
 
   if (isQuadrilhaAdmin() && state.perfil?.quadrilhaId) {
@@ -271,6 +275,10 @@ async function refreshQuadDownloadStatus() {
     statusQuad("Selecione etapa e quadrilha.");
     return;
   }
+  if (isQuadrilhaAdmin() && state.perfil?.quadrilhaId && quadrilhaId !== state.perfil.quadrilhaId) {
+    statusQuad("Seu login pode acessar apenas os certificados da propria quadrilha.");
+    return;
+  }
 
   const etapa = getEtapaFromIndex(etapaId);
   const fileEntry = (etapa?.arquivos || []).find((a) => (a.quadrilhaId || "") === quadrilhaId);
@@ -282,6 +290,10 @@ async function refreshQuadDownloadStatus() {
 }
 
 async function importListaAssets() {
+  if (!canUseOperacao()) {
+    statusAdmin("Somente a Liga pode importar planilhas.");
+    return;
+  }
   const etapaId = getSelectedEtapa();
   const quadrilhaId = getSelectedQuadrilha();
   if (!etapaId || !quadrilhaId) {
@@ -338,6 +350,10 @@ async function importListaAssets() {
 }
 
 async function loadPresencas() {
+  if (!canUseOperacao()) {
+    statusAdmin("Somente a Liga pode operar presenca.");
+    return;
+  }
   const etapaId = getSelectedEtapa();
   const quadrilhaId = getSelectedQuadrilha();
   if (!etapaId || !quadrilhaId) {
@@ -387,6 +403,10 @@ async function loadPresencas() {
 }
 
 async function savePresencas() {
+  if (!canUseOperacao()) {
+    statusAdmin("Somente a Liga pode operar presenca.");
+    return;
+  }
   const etapaId = getSelectedEtapa();
   const quadrilhaId = getSelectedQuadrilha();
   if (!etapaId || !quadrilhaId) {
@@ -429,6 +449,10 @@ async function savePresencas() {
 }
 
 async function fecharEtapa() {
+  if (!canUseOperacao()) {
+    statusAdmin("Somente a Liga pode publicar etapa.");
+    return;
+  }
   const etapaId = getSelectedEtapa();
   const quadrilhaId = getSelectedQuadrilha();
   if (!etapaId || !quadrilhaId) {
@@ -595,6 +619,10 @@ async function gerarCertificadosZip() {
   const quadrilhaId = ui.quadSelect?.value || "";
   if (!etapaId || !quadrilhaId) {
     statusQuad("Selecione etapa e quadrilha.");
+    return;
+  }
+  if (isQuadrilhaAdmin() && state.perfil?.quadrilhaId && quadrilhaId !== state.perfil.quadrilhaId) {
+    statusQuad("Seu login pode acessar apenas os certificados da propria quadrilha.");
     return;
   }
 
