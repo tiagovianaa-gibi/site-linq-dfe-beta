@@ -1,0 +1,140 @@
+{
+  "season": "2026",
+  "events": [
+    {
+      "id": "trofeu-quadrilheiro-2026",
+      "dateStart": "2026-03-20",
+      "period": "20/03/2026",
+      "title": "Troféu Quadrilheiro",
+      "tag": "Troféu Quadrilheiro",
+      "badge": "Premiação",
+      "location": "Paranoá/DF",
+      "details": [
+        "Premiação oficial dos destaques da temporada 2025."
+      ]
+    },
+    {
+      "id": "bloco-arriuna-2026-dia-1",
+      "dateStart": "2026-03-21",
+      "period": "21/03/2026",
+      "title": "Bloco Arriúna",
+      "tag": "Bloco Arriúna",
+      "badge": "Bloco",
+      "location": "Paranoá/DF",
+      "details": [
+        "Primeira edição do bloco do movimento junino no Carnaval."
+      ]
+    },
+    {
+      "id": "bloco-arriuna-2026-dia-2",
+      "dateStart": "2026-03-22",
+      "period": "22/03/2026",
+      "title": "Bloco Arriúna",
+      "tag": "Bloco Arriúna",
+      "badge": "Bloco",
+      "location": "Paranoá/DF",
+      "details": [
+        "Continuidade da programação oficial do bloco."
+      ]
+    },
+    {
+      "id": "pre-sao-joao-2026-dia-1",
+      "dateStart": "2026-04-10",
+      "period": "10/04/2026",
+      "title": "Pré São João da Liga",
+      "tag": "Pré São João",
+      "badge": "Abertura",
+      "location": "Planaltina/GO",
+      "details": [
+        "Abertura da temporada com ensaios e apresentações abertas."
+      ]
+    },
+    {
+      "id": "pre-sao-joao-2026-dia-2",
+      "dateStart": "2026-04-11",
+      "period": "11/04/2026",
+      "title": "Pré São João da Liga",
+      "tag": "Pré São João",
+      "badge": "Abertura",
+      "location": "Planaltina/GO",
+      "details": [
+        "Programação aberta para quadrilhas, público e comunidade."
+      ]
+    },
+    {
+      "id": "pre-sao-joao-2026-dia-3",
+      "dateStart": "2026-04-12",
+      "period": "12/04/2026",
+      "title": "Pré São João da Liga",
+      "tag": "Pré São João",
+      "badge": "Abertura",
+      "location": "Planaltina/GO",
+      "details": [
+        "Encerramento do evento de abertura da temporada."
+      ]
+    },
+    {
+      "id": "circuito-2026-etapa-1",
+      "dateStart": "2026-05-29",
+      "period": "29/05 a 07/06/2026",
+      "title": "Acesso e Especial - Paranoá - 1ª Etapa",
+      "tag": "Circuito",
+      "badge": "Acesso + Especial",
+      "location": "Praça Central, s/n - lt 1 - Paranoá, Brasília - DF, 71570-050 - Estacionamento da Administração Regional - Paranoá",
+      "details": [
+        "Grupo Especial: 29/05 a 31/05",
+        "Grupo de Acesso: 05/06 a 07/06"
+      ]
+    },
+    {
+      "id": "circuito-2026-etapa-2",
+      "dateStart": "2026-06-05",
+      "period": "05/06 a 14/06/2026",
+      "title": "Acesso e Especial - Santa Maria - 2ª Etapa",
+      "tag": "Circuito",
+      "badge": "Acesso + Especial",
+      "location": "QC 1 - Santa Maria, Brasília - DF - Estacionamento do Ginásio Poliesportivo de Santa Maria",
+      "details": [
+        "Grupo Especial: 05/06 a 07/06",
+        "Grupo de Acesso: 12/06 a 14/06"
+      ]
+    },
+    {
+      "id": "circuito-2026-etapa-3-especial",
+      "dateStart": "2026-06-19",
+      "period": "19/06 a 21/06/2026",
+      "title": "Grupo Especial - Taguatinga - 3ª Etapa",
+      "tag": "Circuito",
+      "badge": "Grupo Especial",
+      "location": "Centro Metropolitano - Taguatinga, Brasília - DF, 72158-000 - Estacionamento do Estádio Serejão - Taguatinga",
+      "details": [
+        "Grupo Especial: 19/06 a 21/06"
+      ]
+    },
+    {
+      "id": "circuito-2026-etapa-3-acesso",
+      "dateStart": "2026-06-19",
+      "period": "19/06 a 21/06/2026",
+      "title": "Grupo Acesso - Águas Lindas/GO - 3ª Etapa",
+      "tag": "Circuito",
+      "badge": "Grupo de Acesso",
+      "location": "A confirmar",
+      "details": [
+        "Grupo de Acesso: 19/06 a 21/06"
+      ]
+    },
+    {
+      "id": "circuito-2026-etapa-4-final",
+      "dateStart": "2026-06-26",
+      "period": "26/06 a 05/07/2026",
+      "title": "Acesso e Especial - Ceilândia - Final - 4ª Etapa",
+      "tag": "Circuito",
+      "badge": "Acesso + Especial",
+      "location": "St. M QNM 13 - Ceilândia, Brasília - DF, 72215-130 - Praça do Trabalhador - Administração Regional de Ceilândia",
+      "details": [
+        "Grupo Especial - Final: 26/06 a 28/06",
+        "Grupo de Acesso - Final: 03/07 a 05/07"
+      ]
+    }
+  ]
+}

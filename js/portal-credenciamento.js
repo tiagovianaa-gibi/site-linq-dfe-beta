@@ -120,22 +120,22 @@ function setRoleHeader() {
   const papel = state.perfil?.papel || "";
   const labels = {
     LIGA_ADMIN: "Adm Liga",
-    CREDENCIAMENTO: "Credenciador",
+    CREDENCIAMENTO: "Operacao",
     QUADRILHA_ADMIN: "Quadrilha",
   };
 
   ui.perfilChip.textContent = labels[papel] || "Perfil";
 
   if (isLigaAdmin()) {
-    ui.perfilHint.textContent = "Acesso completo: operacao da etapa, presenca e certificados.";
+    ui.perfilHint.textContent = "Acesso completo: importar planilha, preparar e publicar certificados.";
     return;
   }
   if (isCredenciamento()) {
-    ui.perfilHint.textContent = "Acesso de campo: carregar e salvar presenca por etapa.";
+    ui.perfilHint.textContent = "Acesso operacional: importar planilhas e preparar certificados.";
     return;
   }
   if (isQuadrilhaAdmin()) {
-    ui.perfilHint.textContent = "Acesso da quadrilha: gerar e baixar certificados em lote.";
+    ui.perfilHint.textContent = "Acesso da quadrilha: baixar certificados prontos em lote.";
     return;
   }
   ui.perfilHint.textContent = "Sem permissao para usar este modulo.";
@@ -260,6 +260,25 @@ function setupSelects() {
     ui.quadSelectWrap.style.display = "block";
     ui.quadSelect.disabled = false;
   }
+
+  refreshQuadDownloadStatus();
+}
+
+async function refreshQuadDownloadStatus() {
+  const etapaId = ui.quadEtapa?.value || "";
+  const quadrilhaId = ui.quadSelect?.value || "";
+  if (!etapaId || !quadrilhaId) {
+    statusQuad("Selecione etapa e quadrilha.");
+    return;
+  }
+
+  const etapa = getEtapaFromIndex(etapaId);
+  const fileEntry = (etapa?.arquivos || []).find((a) => (a.quadrilhaId || "") === quadrilhaId);
+  if (!fileEntry?.path) {
+    statusQuad("Planilha da quadrilha nao encontrada no index de assets.");
+    return;
+  }
+  statusQuad("Certificados disponiveis para download a partir da planilha em assets.");
 }
 
 async function importListaAssets() {
@@ -297,30 +316,6 @@ async function importListaAssets() {
       return;
     }
 
-    const etapaRef = doc(db, "etapas", etapaId);
-    await setDoc(
-      etapaRef,
-      {
-        id: etapaId,
-        nome: etapa?.nome || etapaId,
-        data: etapa?.data || null,
-        status: etapa?.status || "aberta",
-        updatedAt: serverTimestamp(),
-      },
-      { merge: true }
-    );
-
-    const quadRef = doc(db, "etapas", etapaId, "quadrilhas", quadrilhaId);
-    await setDoc(
-      quadRef,
-      {
-        id: quadrilhaId,
-        nome: fileEntry.quadrilhaNome || quadrilhaId,
-        updatedAt: serverTimestamp(),
-      },
-      { merge: true }
-    );
-
     let imported = 0;
     for (const row of rows) {
       const nome = String(row[nomeHeader] || "").trim();
@@ -331,22 +326,11 @@ async function importListaAssets() {
       const cidadeEtapa = cidadeHeader ? String(row[cidadeHeader] || "").trim() : "";
       const pid = slug(`${nome}-${documento || imported}`);
 
-      await setDoc(
-        doc(db, "etapas", etapaId, "quadrilhas", quadrilhaId, "participantes", pid),
-        {
-          id: pid,
-          nome,
-          funcao: funcao || null,
-          documento: documento || null,
-          cidade: cidadeEtapa || null,
-          importedAt: serverTimestamp(),
-        },
-        { merge: true }
-      );
       imported += 1;
     }
 
-    statusAdmin(`Lista importada com sucesso: ${imported} participante(s).`);
+    statusAdmin(`Lista validada em assets: ${imported} participante(s). Certificados prontos para download.`);
+    refreshQuadDownloadStatus();
   } catch (err) {
     console.error("Erro ao importar lista:", err);
     statusAdmin("Falha ao importar lista.");
@@ -362,7 +346,7 @@ async function loadPresencas() {
   }
 
   try {
-    statusAdmin("Carregando lista de presenca...");
+    statusAdmin("Carregando lista de participantes...");
 
     const [partSnap, presSnap] = await Promise.all([
       getDocs(collection(db, "etapas", etapaId, "quadrilhas", quadrilhaId, "participantes")),
@@ -397,8 +381,8 @@ async function loadPresencas() {
 
     statusAdmin(`${state.participants.length} participante(s) carregados.`);
   } catch (err) {
-    console.error("Erro ao carregar presenca:", err);
-    statusAdmin("Falha ao carregar presenca.");
+    console.error("Erro ao carregar participantes:", err);
+    statusAdmin("Falha ao carregar participantes.");
   }
 }
 
@@ -417,7 +401,7 @@ async function savePresencas() {
       return;
     }
 
-    statusAdmin("Salvando presenca...");
+    statusAdmin("Salvando organizacao...");
 
     for (const check of checks) {
       const pid = check.getAttribute("data-participante-id");
@@ -437,34 +421,37 @@ async function savePresencas() {
       );
     }
 
-    statusAdmin("Presenca salva com sucesso.");
+    statusAdmin("Organizacao salva com sucesso.");
   } catch (err) {
-    console.error("Erro ao salvar presenca:", err);
-    statusAdmin("Falha ao salvar presenca.");
+    console.error("Erro ao salvar organizacao:", err);
+    statusAdmin("Falha ao salvar organizacao.");
   }
 }
 
 async function fecharEtapa() {
   const etapaId = getSelectedEtapa();
-  if (!etapaId) {
-    statusAdmin("Selecione uma etapa.");
+  const quadrilhaId = getSelectedQuadrilha();
+  if (!etapaId || !quadrilhaId) {
+    statusAdmin("Selecione etapa e quadrilha.");
     return;
   }
 
   try {
-    await setDoc(
-      doc(db, "etapas", etapaId),
-      {
-        status: "fechada",
-        fechadaEm: serverTimestamp(),
-        fechadaPor: {
-          uid: state.user?.uid || null,
-          email: state.user?.email || null,
-        },
-      },
-      { merge: true }
+    const etapa = getEtapaFromIndex(etapaId);
+    const fileEntry = (etapa?.arquivos || []).find((a) => (a.quadrilhaId || "") === quadrilhaId);
+    if (!fileEntry?.path) {
+      statusAdmin("Planilha da quadrilha nao encontrada no index de assets.");
+      return;
+    }
+
+    const rows = await readRowsFromAsset(fileEntry.path);
+    const total = rows.length;
+    statusAdmin(
+      total > 0
+        ? `Certificados publicados para download (${total} participante(s)).`
+        : "Nenhum participante encontrado na planilha para publicar certificados."
     );
-    statusAdmin("Etapa fechada.");
+    refreshQuadDownloadStatus();
   } catch (err) {
     console.error("Erro ao fechar etapa:", err);
     statusAdmin("Falha ao fechar etapa.");
@@ -590,7 +577,7 @@ function buildCertificateDoc(jsPDF, template, participante, quadrilhaNome, etapa
 
   pdf.setFontSize(fontSizes.sign);
   pdf.text(template?.assinatura_1 || "LINQ-DFE", layout.signLeftX, layout.signY, { align: "center" });
-  pdf.text(template?.assinatura_2 || "Credenciamento", layout.signRightX, layout.signY, {
+  pdf.text(template?.assinatura_2 || "Diretoria LINQ-DFE", layout.signRightX, layout.signY, {
     align: "center",
   });
   pdf.line(layout.signLineLeftX1, layout.signLineY, layout.signLineLeftX2, layout.signLineY);
@@ -612,63 +599,46 @@ async function gerarCertificadosZip() {
   }
 
   try {
-    statusQuad("Carregando presencas...");
+    statusQuad("Carregando certificados prontos...");
 
     let participantes = [];
 
-    try {
-      const [partSnap, presSnap] = await Promise.all([
-        getDocs(collection(db, "etapas", etapaId, "quadrilhas", quadrilhaId, "participantes")),
-        getDocs(collection(db, "etapas", etapaId, "quadrilhas", quadrilhaId, "presencas")),
-      ]);
+    const etapa = getEtapaFromIndex(etapaId);
+    const fileEntry = (etapa?.arquivos || []).find((a) => (a.quadrilhaId || "") === quadrilhaId);
 
-      const presentIds = new Set(
-        presSnap.docs
-          .map((d) => d.data())
-          .filter((p) => p?.presente === true)
-          .map((p) => p.participanteId)
-      );
-
-      participantes = partSnap.docs.map((d) => d.data()).filter((p) => presentIds.has(p.id));
-    } catch (err) {
-      console.warn("Falha ao carregar presencas do Firestore, tentando planilha local.", err);
-      const etapa = getEtapaFromIndex(etapaId);
-      const fileEntry = (etapa?.arquivos || []).find((a) => (a.quadrilhaId || "") === quadrilhaId);
-
-      if (!fileEntry?.path) {
-        statusQuad("Arquivo da quadrilha nao mapeado no index.");
-        return;
-      }
-
-      const rows = await readRowsFromAsset(fileEntry.path);
-      if (!rows.length) {
-        statusQuad("Arquivo sem linhas validas.");
-        return;
-      }
-
-      const headers = Object.keys(rows[0]);
-      const cfg = state.index?.import_config || {};
-      const nomeHeader = inferHeader(headers, cfg.nome_candidates || ["nome"]);
-      const funcaoHeader = inferHeader(headers, cfg.funcao_candidates || ["funcao"]);
-      const cidadeHeader = inferHeader(headers, cfg.cidade_candidates || ["cidade"]);
-
-      if (!nomeHeader) {
-        statusQuad("Nao foi possivel identificar a coluna de nome.");
-        return;
-      }
-
-      participantes = rows
-        .map((row, idx) => ({
-          id: slug(`${row[nomeHeader] || "participante"}-${idx}`),
-          nome: String(row[nomeHeader] || "").trim(),
-          funcao: funcaoHeader ? String(row[funcaoHeader] || "").trim() : "",
-          cidade: cidadeHeader ? String(row[cidadeHeader] || "").trim() : "",
-        }))
-        .filter((p) => p.nome);
+    if (!fileEntry?.path) {
+      statusQuad("Arquivo da quadrilha nao mapeado no index.");
+      return;
     }
 
+    const rows = await readRowsFromAsset(fileEntry.path);
+    if (!rows.length) {
+      statusQuad("Arquivo sem linhas validas.");
+      return;
+    }
+
+    const headers = Object.keys(rows[0]);
+    const cfg = state.index?.import_config || {};
+    const nomeHeader = inferHeader(headers, cfg.nome_candidates || ["nome"]);
+    const funcaoHeader = inferHeader(headers, cfg.funcao_candidates || ["funcao"]);
+    const cidadeHeader = inferHeader(headers, cfg.cidade_candidates || ["cidade"]);
+
+    if (!nomeHeader) {
+      statusQuad("Nao foi possivel identificar a coluna de nome.");
+      return;
+    }
+
+    participantes = rows
+      .map((row, idx) => ({
+        id: slug(`${row[nomeHeader] || "participante"}-${idx}`),
+        nome: String(row[nomeHeader] || "").trim(),
+        funcao: funcaoHeader ? String(row[funcaoHeader] || "").trim() : "",
+        cidade: cidadeHeader ? String(row[cidadeHeader] || "").trim() : "",
+      }))
+      .filter((p) => p.nome);
+
     if (!participantes.length) {
-      statusQuad("Nenhum participante presente para gerar certificado.");
+      statusQuad("Nenhum participante apto para gerar certificado.");
       return;
     }
 
@@ -678,7 +648,6 @@ async function gerarCertificadosZip() {
     const JSZip = zipModule.default;
     const zip = new JSZip();
 
-    const etapa = getEtapaFromIndex(etapaId);
     const quadrilha = listQuadrilhasForEtapa(etapaId).find((q) => q.id === quadrilhaId);
     const template = { ...(state.index?.template || {}) };
 
@@ -735,11 +704,13 @@ function applyRoleUI() {
   const showCertificados = canUseCertificados();
 
   if (ui.adminCard) ui.adminCard.style.display = showOperacao ? "block" : "none";
-  if (ui.presencaCard) ui.presencaCard.style.display = showOperacao ? "block" : "none";
+  if (ui.presencaCard) ui.presencaCard.style.display = "none";
   if (ui.quadCard) ui.quadCard.style.display = showCertificados ? "block" : "none";
 
   if (ui.importBtn) ui.importBtn.style.display = isLigaAdmin() ? "" : "none";
   if (ui.fecharBtn) ui.fecharBtn.style.display = isLigaAdmin() ? "" : "none";
+  if (ui.loadBtn) ui.loadBtn.style.display = "none";
+  if (ui.saveBtn) ui.saveBtn.style.display = "none";
   if (ui.actionsGrid) {
     ui.actionsGrid.classList.toggle("cred-actions-grid--cred", isCredenciamento());
   }
@@ -751,6 +722,7 @@ function bindEvents() {
 
   ui.etapa?.addEventListener("change", setupSelects);
   ui.quadEtapa?.addEventListener("change", setupSelects);
+  ui.quadSelect?.addEventListener("change", refreshQuadDownloadStatus);
   ui.importBtn?.addEventListener("click", importListaAssets);
   ui.loadBtn?.addEventListener("click", loadPresencas);
   ui.saveBtn?.addEventListener("click", savePresencas);
@@ -760,7 +732,11 @@ function bindEvents() {
   ui.unmarkAll?.addEventListener("click", () => toggleTodos(false));
 
   const navCred = document.querySelector('.portal-nav-link[data-section="credenciamento"]');
-  if (navCred) navCred.addEventListener("click", () => statusAdmin(""));
+  if (navCred)
+    navCred.addEventListener("click", () => {
+      statusAdmin("");
+      refreshQuadDownloadStatus();
+    });
 }
 
 async function initForUser() {

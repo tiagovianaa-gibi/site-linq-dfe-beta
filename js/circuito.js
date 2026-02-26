@@ -115,7 +115,7 @@ async function renderSeasonContent(ano) {
   const isCurrent = ano === CURRENT_SEASON;
   titleEl.textContent = `Circuito ${ano}`;
   subtitleEl.textContent = isCurrent
-    ? "Temporada em construcao: inscricoes, calendario e comunicados oficiais em um lugar so."
+    ? "Temporada em construcao: calendario e comunicados oficiais em um lugar so."
     : "Classificacao final, etapas e acervo desta edicao.";
 
   renderSeasonHighlights(isCurrent);
@@ -130,14 +130,14 @@ function renderPreSeasonBox() {
   sec.innerHTML = `
     <h2>${CURRENT_SEASON} vem ai</h2>
     <p>
-      Esta temporada esta em fase de organizacao. Aqui voce acompanha inscricoes,
+      Esta temporada esta em fase de organizacao. Aqui voce acompanha
       calendario e informacoes oficiais.
     </p>
 
     <div class="grid-2">
       <div class="card">
-        <h3>Inscricoes ${CURRENT_SEASON}</h3>
-        <p>Em breve publicaremos o formulario e os requisitos completos.</p>
+        <h3>Comunicados ${CURRENT_SEASON}</h3>
+        <p>Atualizacoes oficiais da temporada serao publicadas aqui.</p>
         <a class="btn" href="documentos.html">Ver documentos</a>
       </div>
 
@@ -414,5 +414,6 @@ function formatDate(iso) {
     return "em breve";
   }
 }
+
 
 

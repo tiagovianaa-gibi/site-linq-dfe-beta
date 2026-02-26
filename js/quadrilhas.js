@@ -16,6 +16,7 @@ let quadrilhas = [];
 let currentFilter = "all"; // 'all' | 'Especial' | 'Acesso'
 let currentSearch = "";
 let currentCity = "";
+const EXCLUDED_SLUGS = new Set(["xuva-de-prata", "traia-veia"]);
 
 window.filterFiliadas = function (grupo) {
   currentFilter = grupo;
@@ -119,7 +120,10 @@ function populateCityFilter() {
 }
 
 async function init() {
-  quadrilhas = (await loadJSON("data/quadrilhas.json")) || [];
+  quadrilhas = ((await loadJSON("data/quadrilhas.json")) || []).filter((q) => {
+    const slug = (q.slug || slugify(q.nome || "")).toLowerCase();
+    return !EXCLUDED_SLUGS.has(slug);
+  });
 
   populateCityFilter();
   renderQuadrilhas();

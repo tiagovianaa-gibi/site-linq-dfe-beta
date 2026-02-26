@@ -653,6 +653,8 @@ const finFiltroAno = document.getElementById("finFiltroAno");
 
 const finFiltroTipo = document.getElementById("finFiltroTipo");
 
+const finFiltroNatureza = document.getElementById("finFiltroNatureza");
+
 
 
 
@@ -724,6 +726,8 @@ const finQuadrilhaSelect = document.getElementById("finQuadrilhaId");
 
 
 const finTipoSelect = document.getElementById("finTipo");
+
+const finNaturezaSelect = document.getElementById("finNatureza");
 
 
 
@@ -3256,7 +3260,7 @@ async function loadCurrentUserData(user) {
 
 
 
-        "Perfil de credenciamento. Em breve você verá aqui os eventos do dia e o leitor de QR.";
+        "Perfil operacional de certificados. Aqui voce organiza listas e liberacao de certificados.";
 
 
 
@@ -5104,6 +5108,102 @@ function mapTipoLancamento(tipo) {
 
 
 
+    case "DESPESA_EVENTO":
+
+
+
+
+
+      return "Despesa de evento";
+
+
+
+
+
+    case "DESPESA_ESTRUTURA":
+
+
+
+
+
+      return "Despesa de estrutura";
+
+
+
+
+
+    case "DESPESA_SERVICOS":
+
+
+
+
+
+      return "Servicos de terceiros";
+
+
+
+
+
+    case "DESPESA_COMUNICACAO":
+
+
+
+
+
+      return "Comunicacao";
+
+
+
+
+
+    case "DESPESA_TRANSPORTE":
+
+
+
+
+
+      return "Transporte";
+
+
+
+
+
+    case "DESPESA_ALIMENTACAO":
+
+
+
+
+
+      return "Alimentacao";
+
+
+
+
+
+    case "DESPESA_ADMINISTRATIVA":
+
+
+
+
+
+      return "Despesa administrativa";
+
+
+
+
+
+    case "DESPESA_OUTROS":
+
+
+
+
+
+      return "Outras despesas";
+
+
+
+
+
     default:
 
 
@@ -5133,6 +5233,22 @@ function mapTipoLancamento(tipo) {
 
 
 
+
+function normalizeFinanceiroNatureza(value) {
+
+  return value === "DESPESA" ? "DESPESA" : "RECEITA";
+
+}
+
+function mapNaturezaLancamento(natureza) {
+
+  return normalizeFinanceiroNatureza(natureza) === "DESPESA"
+
+    ? "Despesa"
+
+    : "Receita";
+
+}
 
 function mapStatusLancamento(status) {
 
@@ -6088,6 +6204,12 @@ function renderAssembleiasTable(assembleias) {
 
 
 
+            <button class="btn btn-sm btn-light js-assembleia-report" data-id="${a.id}">Relat&oacute;rio</button>
+
+
+
+
+
             <button class="btn btn-sm btn-light js-assembleia-edit" data-id="${a.id}">Editar</button>
 
 
@@ -6137,6 +6259,294 @@ function renderAssembleiasTable(assembleias) {
 
 
 
+
+
+
+
+
+function escapeHtmlReport(value) {
+
+
+
+
+
+  if (value === null || value === undefined) return "";
+
+
+
+
+
+  return String(value)
+
+
+
+
+
+    .replace(/&/g, "&amp;")
+
+
+
+
+
+    .replace(/</g, "&lt;")
+
+
+
+
+
+    .replace(/>/g, "&gt;")
+
+
+
+
+
+    .replace(/"/g, "&quot;");
+
+
+
+
+
+}
+
+
+
+
+
+async function openAssembleiaRelatorio(assembleiaId) {
+
+
+
+
+
+  const assembleia = (assembleiasCache || []).find((a) => a.id === assembleiaId);
+
+
+
+
+
+  if (!assembleia) return;
+
+
+
+
+
+  const [quadrilhas, presencas] = await Promise.all([
+
+
+
+
+
+    fetchQuadrilhas(),
+
+
+
+
+
+    fetchPresencasByAssembleia(assembleiaId),
+
+
+
+
+
+  ]);
+
+
+
+
+
+  const nomePorId = new Map(
+
+
+
+
+
+    (quadrilhas || []).map((q) => [q.id, q.nome || q.id || "Quadrilha"])
+
+
+
+
+
+  );
+
+
+
+
+
+  const presentes = (presencas || [])
+
+
+
+
+
+    .filter((p) => p?.presente === true && p?.quadrilhaId)
+
+
+
+
+
+    .map((p) => nomePorId.get(p.quadrilhaId) || p.quadrilhaId)
+
+
+
+
+
+    .sort((a, b) => String(a).localeCompare(String(b), "pt-BR"));
+
+
+
+
+
+  const data = formatDateShort(assembleia.data);
+
+
+
+
+
+  const titulo = assembleia.titulo || "-";
+
+
+
+
+
+  const ataUrl = (assembleia.ataUrl || "").trim();
+
+
+
+
+
+  const presentesHtml = presentes.length
+
+
+
+
+
+    ? presentes.map((nome) => `<li>${escapeHtmlReport(nome)}</li>`).join("")
+
+
+
+
+
+    : "<li>Nenhuma quadrilha marcada como presente.</li>";
+
+
+
+
+
+  const ataHtml = ataUrl
+
+
+
+
+
+    ? `<a href="${escapeHtmlReport(ataUrl)}" target="_blank" rel="noopener">${escapeHtmlReport(ataUrl)}</a>`
+
+
+
+
+
+    : "N&atilde;o informado";
+
+
+
+
+
+  const html = `<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Relat&oacute;rio da Assembleia - ${escapeHtmlReport(titulo)}</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; color: #111827; }
+    h1 { margin: 0 0 16px; font-size: 24px; }
+    .meta { margin: 0 0 16px; line-height: 1.6; }
+    .meta strong { display: inline-block; width: 120px; }
+    h2 { font-size: 18px; margin: 20px 0 8px; }
+    ul { margin: 0; padding-left: 20px; }
+    li { margin-bottom: 4px; }
+    .top-actions { margin-bottom: 12px; }
+    @media print { .top-actions { display: none; } body { margin: 0.8cm; } }
+  </style>
+</head>
+<body>
+  <div class="top-actions">
+    <button onclick="window.print()">Imprimir / Salvar PDF</button>
+  </div>
+  <h1>Relat&oacute;rio da Assembleia</h1>
+  <div class="meta">
+    <div><strong>T&iacute;tulo:</strong> ${escapeHtmlReport(titulo)}</div>
+    <div><strong>Data:</strong> ${escapeHtmlReport(data)}</div>
+    <div><strong>Ata:</strong> ${ataHtml}</div>
+  </div>
+  <h2>Quadrilhas presentes (${presentes.length})</h2>
+  <ul>${presentesHtml}</ul>
+</body>
+</html>`;
+
+
+
+
+
+  const relatorioWindow = window.open("", "_blank", "noopener,noreferrer");
+
+
+
+
+
+  if (!relatorioWindow) {
+
+
+
+
+
+    window.alert(
+
+
+
+
+
+      "Não foi possível abrir o relatório. Verifique o bloqueador de pop-ups."
+
+
+
+
+
+    );
+
+
+
+
+
+    return;
+
+
+
+
+
+  }
+
+
+
+
+
+  relatorioWindow.document.open();
+
+
+
+
+
+  relatorioWindow.document.write(html);
+
+
+
+
+
+  relatorioWindow.document.close();
+
+
+
+
+
+}
 
 
 
@@ -8320,7 +8730,7 @@ function renderFinanceiroCharts(lancamentos, mapaQuadrilhas) {
 
 
 
-  renderFinanceiroChart(finChartTipo, "Por tipo de pagamento", byTipo);
+  renderFinanceiroChart(finChartTipo, "Por tipo de lancamento", byTipo);
 
 
 
@@ -8363,6 +8773,8 @@ function applyFinanceiroFilters(lancamentos, mapaQuadrilhas) {
 
 
   const filtroTipo = finFiltroTipo?.value || "";
+
+  const filtroNatureza = finFiltroNatureza?.value || "";
 
 
 
@@ -8458,6 +8870,10 @@ function applyFinanceiroFilters(lancamentos, mapaQuadrilhas) {
 
 
 
+    const natureza = normalizeFinanceiroNatureza(l.natureza);
+
+    const okNatureza = !filtroNatureza || natureza === filtroNatureza;
+
     let okVenc = true;
 
 
@@ -8542,7 +8958,7 @@ function applyFinanceiroFilters(lancamentos, mapaQuadrilhas) {
 
 
 
-      const hay = `${nomeQuadrilha} ${l.descricao || ""} ${l.tipo || ""}`.toLowerCase();
+      const hay = `${nomeQuadrilha} ${l.descricao || ""} ${l.tipo || ""} ${mapNaturezaLancamento(l.natureza)}`.toLowerCase();
 
 
 
@@ -8566,7 +8982,7 @@ function applyFinanceiroFilters(lancamentos, mapaQuadrilhas) {
 
 
 
-    return okQuadrilha && okAno && okStatus && okTipo && okVenc && okBusca;
+    return okQuadrilha && okAno && okStatus && okTipo && okNatureza && okVenc && okBusca;
 
 
 
@@ -9228,6 +9644,8 @@ function renderFinanceiroRow(l, mapaQuadrilhas, canEdit = false) {
 
   const tipoLabel = mapTipoLancamento(l.tipo);
 
+  const naturezaLabel = mapNaturezaLancamento(l.natureza);
+
 
 
 
@@ -9336,6 +9754,8 @@ function renderFinanceiroRow(l, mapaQuadrilhas, canEdit = false) {
 
       <td>${tipoLabel}</td>
 
+      <td>${naturezaLabel}</td>
+
 
 
 
@@ -9424,7 +9844,7 @@ async function loadFinanceiroForCurrentUser() {
 
 
 
-    '<tr><td colspan="9">Carregando lançamentos...</td></tr>';
+    '<tr><td colspan="10">Carregando lancamentos...</td></tr>';
 
 
 
@@ -9552,6 +9972,10 @@ async function loadFinanceiroForCurrentUser() {
 
     });
 
+    // Lançamentos de despesa podem ser da própria Liga.
+    mapaQuadrilhas.LIGA = "LIGA";
+    mapaQuadrilhas[normalizeQuadrilhaKey("LIGA")] = "LIGA";
+
 
 
 
@@ -9564,27 +9988,35 @@ async function loadFinanceiroForCurrentUser() {
 
     const previousTipoFilter = finFiltroTipo?.value || "";
 
+    const previousNaturezaFilter = finFiltroNatureza?.value || "";
 
+    if (finFiltroNatureza) {
 
+      finFiltroNatureza.innerHTML = `
+        <option value="">Todas</option>
+        <option value="RECEITA">Receitas</option>
+        <option value="DESPESA">Despesas</option>
+      `;
 
+      const naturezaValida = ["", "RECEITA", "DESPESA"].includes(previousNaturezaFilter)
+        ? previousNaturezaFilter
+        : "";
+
+      finFiltroNatureza.value = naturezaValida;
+
+    }
 
     const tiposSet = new Set();
 
+    const naturezaSelecionada = finFiltroNatureza?.value || "";
 
+    const lancamentosParaTipo = naturezaSelecionada
+      ? lancamentos.filter((l) => normalizeFinanceiroNatureza(l.natureza) === naturezaSelecionada)
+      : lancamentos;
 
-
-
-    lancamentos.forEach((l) => {
-
-
-
-
+    lancamentosParaTipo.forEach((l) => {
 
       if (l.tipo) tiposSet.add(l.tipo);
-
-
-
-
 
     });
 
@@ -9994,7 +10426,7 @@ async function loadFinanceiroForCurrentUser() {
 
 
 
-        '<tr><td colspan="9">Nenhum lançamento encontrado.</td></tr>';
+        '<tr><td colspan="10">Nenhum lancamento encontrado.</td></tr>';
 
 
 
@@ -10084,7 +10516,7 @@ async function loadFinanceiroForCurrentUser() {
 
 
 
-      '<tr><td colspan="9">Erro ao carregar financeiro.</td></tr>';
+      '<tr><td colspan="10">Erro ao carregar financeiro.</td></tr>';
 
 
 
@@ -10152,6 +10584,8 @@ function resetFinanceiroFormState(clearMessage = true) {
 
   if (clearMessage && finFormMessage) setText(finFormMessage, "");
 
+  if (finNaturezaSelect) finNaturezaSelect.value = "RECEITA";
+
 
 
 
@@ -10205,6 +10639,10 @@ function startEditingLancamento(lancamento) {
 
 
   if (finTipoSelect) finTipoSelect.value = lancamento.tipo || "";
+
+  if (finNaturezaSelect)
+
+    finNaturezaSelect.value = normalizeFinanceiroNatureza(lancamento.natureza);
 
 
 
@@ -10876,7 +11314,7 @@ if (assembleiaForm) {
 
 
 
-      setText(assembleiaFormMessage, "Assembleia cadastrada.");
+      setText(assembleiaFormMessage, "Assembleia cadastrada. Use o botao Relatorio na tabela abaixo.");
 
 
 
@@ -11489,6 +11927,54 @@ if (assembleiasTableBody) {
 
 
   assembleiasTableBody.addEventListener("click", async (event) => {
+
+
+
+
+
+    const reportBtn = event.target.closest(".js-assembleia-report");
+
+
+
+
+
+    if (reportBtn) {
+
+
+
+
+
+      if (currentUserData?.papel !== "LIGA_ADMIN") return;
+
+
+
+
+
+      const id = reportBtn.dataset.id;
+
+
+
+
+
+      if (!id) return;
+
+
+
+
+
+      await openAssembleiaRelatorio(id);
+
+
+
+
+
+      return;
+
+
+
+
+
+    }
 
 
 
@@ -13716,6 +14202,11 @@ function populateQuadrilhaSelects(quadrilhas) {
 
     finQuadrilhaSelect.innerHTML = '<option value="">Selecione...</option>';
 
+    const optLiga = document.createElement("option");
+    optLiga.value = "LIGA";
+    optLiga.textContent = "LIGA (Responsável)";
+    finQuadrilhaSelect.appendChild(optLiga);
+
 
 
 
@@ -13781,6 +14272,11 @@ function populateQuadrilhaSelects(quadrilhas) {
 
 
     finFiltroQuadrilha.innerHTML = '<option value="">Todas</option>';
+
+    const optLiga = document.createElement("option");
+    optLiga.value = "LIGA";
+    optLiga.textContent = "LIGA";
+    finFiltroQuadrilha.appendChild(optLiga);
 
 
 
@@ -15564,6 +16060,8 @@ if (finForm) {
 
     const tipo = finTipoSelect.value;
 
+    const natureza = normalizeFinanceiroNatureza(finNaturezaSelect?.value);
+
 
 
 
@@ -15616,7 +16114,7 @@ if (finForm) {
 
 
 
-    if (!quadrilhaId || !tipo || !ano || !descricao || !valor) {
+    if (!quadrilhaId || !tipo || !natureza || !ano || !descricao || !valor) {
 
 
 
@@ -15719,6 +16217,8 @@ if (finForm) {
 
 
         tipo,
+
+        natureza,
 
 
 
@@ -16132,6 +16632,16 @@ if (finFiltroTipo) {
 
 
 
+if (finFiltroNatureza) {
+
+  finFiltroNatureza.addEventListener("change", () => {
+
+    loadFinanceiroForCurrentUser();
+
+  });
+
+}
+
 if (finFiltroStatus) {
 
 
@@ -16241,6 +16751,8 @@ if (finClearFilters) {
 
 
     if (finFiltroTipo) finFiltroTipo.value = "";
+
+    if (finFiltroNatureza) finFiltroNatureza.value = "";
 
 
 

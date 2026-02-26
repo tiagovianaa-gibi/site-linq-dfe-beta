@@ -66,7 +66,6 @@ export function buildPhotoCandidates(value, folder = "assets/fotos-quadrilhas") 
     withRoot(`${normalized}.png`),
     withRoot(`${normalized}.jpg`),
     withRoot(`${normalized}.jpeg`),
-    { href: new URL('confebraq.html', circuitoLink.href).href, label: 'CONFEBRAQ' },
   ];
 }
 
@@ -232,7 +231,10 @@ async function initQuadrilhaDropdown(dataUrl) {
     return;
   }
 
-  const sorted = [...data].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+  const excludedSlugs = new Set(["xuva-de-prata", "traia-veia"]);
+  const sorted = [...data]
+    .filter((q) => !excludedSlugs.has((q.slug || slugify(q.nome || "")).toLowerCase()))
+    .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
   menu.innerHTML = sorted
     .map(q => {
       const href = `/quadrilha/${q.slug || slugify(q.nome)}.html`;
@@ -285,13 +287,137 @@ function setupCircuitoDropdown() {
     { href: new URL('grupo-acesso.html', circuitoLink.href).href, label: 'Grupo de Acesso' },
     { href: new URL('edicoes-anteriores.html', circuitoLink.href).href, label: 'Edi&#231;&#245;es anteriores' },
     { href: new URL('campeoes-circuito.html', circuitoLink.href).href, label: 'Campe&#227;s do Circuito' },
-    { href: new URL('confebraq.html', circuitoLink.href).href, label: 'CONFEBRAQ' },
   ];
 
   const menu = li.querySelector('.nav-circuito-menu');
   menu.innerHTML = links.map(item => `<a href="${item.href}">${item.label}</a>`).join('');
 
   setupDropdownClick(li, circuitoLink);
+}
+
+function setupDiretoriaDropdown() {
+  const diretoriaLink = document.querySelector('nav a[href$="diretoria.html"]');
+  if (!diretoriaLink) return;
+  const li = diretoriaLink.closest('li') || diretoriaLink.parentElement;
+  if (!li) return;
+
+  li.classList.add('has-dropdown');
+
+  if (!li.querySelector('.nav-diretoria-menu')) {
+    const menu = document.createElement('div');
+    menu.className = 'dropdown-menu nav-diretoria-menu';
+    li.appendChild(menu);
+  }
+
+  const links = [
+    { href: new URL('documentos.html', diretoriaLink.href).href, label: 'Documentos' },
+  ];
+
+  const menu = li.querySelector('.nav-diretoria-menu');
+  menu.innerHTML = links.map(item => `<a href="${item.href}">${item.label}</a>`).join('');
+
+  setupDropdownClick(li, diretoriaLink);
+}
+
+function setupInstitutionalMenuLinks() {
+  const navList = document.querySelector("nav ul");
+  if (!navList) return;
+  if (navList.querySelector('a[href*="pre-junino"]')) return;
+
+  const homeLink = navList.querySelector('a[href$="index.html"]');
+  const homeHref = homeLink ? homeLink.getAttribute("href") || "" : "";
+  let prefix = "";
+  if (homeHref.startsWith("../")) prefix = "../";
+  else if (homeHref.startsWith("/")) prefix = "/";
+
+  const links = [
+    { href: `${prefix}calendario-temporada.html`, label: "Temporada" },
+    { href: `${prefix}pre-junino/`, label: "Pré São João" },
+    { href: `${prefix}trofeu-quadrilheiro/`, label: "Troféu Quadrilheiro" },
+    { href: `${prefix}bloco-arriuna/`, label: "Bloco Arriúna" },
+    { href: `${prefix}confebraq.html`, label: "CONFEBRAQ" },
+  ];
+
+  const portalAnchor = navList.querySelector('a[href$="portal.html"]');
+  const insertBeforeLi = portalAnchor ? portalAnchor.closest("li") : null;
+
+  links.forEach((item) => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = item.href;
+    a.textContent = item.label;
+    li.appendChild(a);
+
+    if (insertBeforeLi) navList.insertBefore(li, insertBeforeLi);
+    else navList.appendChild(li);
+  });
+}
+
+function normalizeMainMenu() {
+  const navList = document.querySelector("nav ul");
+  if (!navList) return;
+
+  const homeLink = navList.querySelector('a[href$="index.html"]');
+  const homeHref = homeLink ? homeLink.getAttribute("href") || "" : "";
+  let prefix = "";
+  if (homeHref.startsWith("../")) prefix = "../";
+  else if (homeHref.startsWith("/")) prefix = "/";
+
+  const items = [
+    { href: `${prefix}index.html`, label: "Inicial" },
+    { href: `${prefix}circuito.html`, label: "Circuito" },
+    { href: `${prefix}quadrilhas.html`, label: "Quadrilhas" },
+    { href: `${prefix}mapa.html`, label: "Mapa" },
+    { href: `${prefix}noticias.html`, label: "Notícias" },
+    { href: `${prefix}diretoria.html`, label: "Diretoria" },
+    { href: `${prefix}calendario-temporada.html`, label: "Temporada" },
+    { href: `${prefix}pre-junino/`, label: "Pré São João" },
+    { href: `${prefix}trofeu-quadrilheiro/`, label: "Troféu Quadrilheiro" },
+    { href: `${prefix}bloco-arriuna/`, label: "Bloco Arriúna" },
+    { href: `${prefix}confebraq.html`, label: "CONFEBRAQ" },
+    { href: `${prefix}portal.html`, label: "Portal da Liga" },
+  ];
+
+  navList.innerHTML = items
+    .map((item) => `<li><a href="${item.href}">${item.label}</a></li>`)
+    .join("");
+}
+
+function ensureDiretoriaLink() {
+  const navList = document.querySelector("nav ul");
+  if (!navList) return;
+  if (navList.querySelector('a[href$="diretoria.html"]')) return;
+
+  const homeLink = navList.querySelector('a[href$="index.html"]');
+  const homeHref = homeLink ? homeLink.getAttribute("href") || "" : "";
+  let prefix = "";
+  if (homeHref.startsWith("../")) prefix = "../";
+  else if (homeHref.startsWith("/")) prefix = "/";
+
+  const li = document.createElement("li");
+  const a = document.createElement("a");
+  a.href = `${prefix}diretoria.html`;
+  a.textContent = "Diretoria";
+  li.appendChild(a);
+
+  const portalAnchor = navList.querySelector('a[href$="portal.html"]');
+  const insertBeforeLi = portalAnchor ? portalAnchor.closest("li") : null;
+  if (insertBeforeLi) navList.insertBefore(li, insertBeforeLi);
+  else navList.appendChild(li);
+}
+
+function removeMainMenuItems() {
+  const navList = document.querySelector("nav ul");
+  if (!navList) return;
+
+  const blocked = new Set(["acervo", "documentos"]);
+  const links = navList.querySelectorAll("a");
+  links.forEach((a) => {
+    const text = (a.textContent || "").trim().toLowerCase();
+    if (!blocked.has(text)) return;
+    const li = a.closest("li");
+    if (li) li.remove();
+  });
 }
 
 function setupDropdownClick(li, link) {
@@ -459,8 +585,32 @@ function setupAccessibilityHelpers() {
   }
 }
 
+function syncNavHeight() {
+  const nav = document.querySelector("nav");
+  if (!nav) return;
+
+  const update = () => {
+    const height = Math.ceil(nav.getBoundingClientRect().height);
+    if (height > 0) {
+      document.documentElement.style.setProperty("--nav-height", `${height}px`);
+    }
+  };
+
+  update();
+  window.addEventListener("resize", update, { passive: true });
+  window.addEventListener("orientationchange", update, { passive: true });
+
+  if ("ResizeObserver" in window) {
+    const observer = new ResizeObserver(update);
+    observer.observe(nav);
+  }
+}
+
+runWhenReady(normalizeMainMenu);
 runWhenReady(setupFiliadasDropdown);
 runWhenReady(setupCircuitoDropdown);
+runWhenReady(setupDiretoriaDropdown);
+runWhenReady(syncNavHeight);
 runWhenReady(initRankingFilters);
 runWhenReady(setupAccessibilityHelpers);
 

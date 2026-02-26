@@ -101,6 +101,31 @@
 
 
   <link rel="stylesheet" href="css/style.min.css">
+  <style>
+    .etapa-destaque {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin: 0.35rem 0 0.85rem;
+      padding: 0.45rem 0.7rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.96rem;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(217, 43, 43, 0.35);
+      background: rgba(217, 43, 43, 0.1);
+      color: #8f1212;
+    }
+    .etapa-destaque .etapa-label {
+      text-transform: uppercase;
+      font-size: 0.73rem;
+      letter-spacing: 0.08em;
+      opacity: 0.9;
+    }
+    .etapa-destaque .etapa-data {
+      color: #5d0b0b;
+    }
+  </style>
 
 
 </head>
@@ -257,7 +282,7 @@
 
               </p>
 
-              <p class="card-text"><strong>1&ordf; etapa:</strong> 29/05 a 31/05</p>
+              <p class="etapa-destaque"><span class="etapa-label">1&ordf; etapa</span><span class="etapa-data">29/05 a 31/05</span></p>
 
               <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
 
@@ -285,7 +310,7 @@
 
               </p>
 
-              <p class="card-text"><strong>1&ordf; etapa:</strong> 05/06 a 07/06</p>
+              <p class="etapa-destaque"><span class="etapa-label">1&ordf; etapa</span><span class="etapa-data">05/06 a 07/06</span></p>
 
               <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
 
@@ -758,7 +783,6 @@
 
 
 </html>
-
 
 
 

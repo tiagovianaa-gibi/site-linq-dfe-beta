@@ -3590,6 +3590,85 @@ body.page-noticia .noticia-page {
   color: var(--text-primary);
 }
 
+.hero-shortcuts {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.rich-cards-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 0;
+}
+
+.rich-info-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.rich-media-strip {
+  padding-top: 0;
+}
+
+.rich-media-strip .container {
+  padding-top: 0;
+}
+
+.rich-media-strip img {
+  width: 100%;
+  height: 240px;
+  border-radius: var(--border-radius);
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+}
+
+.rich-day-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: none;
+}
+
+.rich-day-grid .card {
+  margin-top: var(--spacing-md);
+}
+
+.badge-status {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.75rem;
+}
+
+.badge-status-abertura {
+  background: rgba(245, 124, 0, 0.92);
+}
+
+.badge-status-premiacao {
+  background: rgba(11, 31, 90, 0.9);
+}
+
+.badge-status-bloco {
+  background: rgba(46, 125, 50, 0.92);
+}
+
+@media (max-width: 980px) {
+  .rich-cards-grid,
+  .rich-day-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rich-day-grid {
+    display: grid;
+  }
+
+  .table-wrapper + .rich-day-grid {
+    margin-top: var(--spacing-sm);
+  }
+
+  .table-wrapper {
+    display: none;
+  }
+}
+
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
