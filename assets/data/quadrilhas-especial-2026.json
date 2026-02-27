@@ -1,0 +1,77 @@
+[
+  {
+    "id": "amor-junino",
+    "nome": "Amor Junino",
+    "logo": "/assets/logos-quadrilhas/amor-junino-logo.png"
+  },
+  {
+    "id": "arraia-dos-matutos",
+    "nome": "Arraiá dos Matutos",
+    "logo": "/assets/logos-quadrilhas/arraia-dos-matutos-logo.jpeg"
+  },
+  {
+    "id": "arroxa-o-no",
+    "nome": "Arroxa o Nó",
+    "logo": "/assets/logos-quadrilhas/arroxa-o-no-logo.png"
+  },
+  {
+    "id": "caipirada",
+    "nome": "Caipirada",
+    "logo": "/assets/logos-quadrilhas/caipirada-logo.png"
+  },
+  {
+    "id": "chinelo-de-couro",
+    "nome": "Chinelo de Couro",
+    "logo": "/assets/logos-quadrilhas/chinelo-de-couro-logo.png"
+  },
+  {
+    "id": "eita-bagaceira",
+    "nome": "Eita Bagaceira",
+    "logo": "/assets/logos-quadrilhas/eita-bagaceira-logo.jpg"
+  },
+  {
+    "id": "formiga-da-roca",
+    "nome": "Formiga da Roça",
+    "logo": "/assets/logos-quadrilhas/formiga-da-roca-logo.png"
+  },
+  {
+    "id": "mala-veia",
+    "nome": "Mala Véia",
+    "logo": "/assets/logos-quadrilhas/mala-veia-logo.png"
+  },
+  {
+    "id": "matulao",
+    "nome": "Matulão",
+    "logo": "/assets/logos-quadrilhas/matulao-logo.png"
+  },
+  {
+    "id": "pinga-em-mim",
+    "nome": "Pinga em Mim",
+    "logo": "/assets/logos-quadrilhas/pinga-em-mim-logo.png"
+  },
+  {
+    "id": "rasga-o-fole",
+    "nome": "Rasga o Fole",
+    "logo": "/assets/logos-quadrilhas/rasga-o-fole-logo.png"
+  },
+  {
+    "id": "ribulico",
+    "nome": "Ribuliço",
+    "logo": "/assets/logos-quadrilhas/ribulico-logo.png"
+  },
+  {
+    "id": "vai-mas-nao-vai",
+    "nome": "Vai Mas Não Vai",
+    "logo": "/assets/logos-quadrilhas/vai-mas-nao-vai-logo.jpeg"
+  },
+  {
+    "id": "xamegar",
+    "nome": "Xamegar",
+    "logo": "/assets/logos-quadrilhas/xamegar-logo.jpg"
+  },
+  {
+    "id": "xique-xique",
+    "nome": "Xique Xique",
+    "logo": "/assets/logos-quadrilhas/xique-xique-logo.jpg"
+  }
+]

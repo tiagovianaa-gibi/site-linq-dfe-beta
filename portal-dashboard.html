@@ -1390,7 +1390,6 @@
 
 
 
-          <li><button class="portal-nav-link" type="button" data-section="documentos">Documentos</button></li>
 
 
 
@@ -1414,7 +1413,6 @@
 
 
 
-          <li><button class="portal-nav-link" type="button" data-section="financeiro">Financeiro</button></li>
 
 
 
@@ -1465,6 +1463,7 @@
 
 
           <li><button class="portal-nav-link" type="button" data-section="noticias">Notícias</button></li>
+          <li id="portalNavSorteioItem" style="display:none;"><button class="portal-nav-link" type="button" data-section="sorteio">Sorteio 2026</button></li>
 
 
 
@@ -3472,7 +3471,7 @@
 
 
 
-                      <option value="title_asc">Título: A–Z</option>
+                      <option value="title_asc">Título: A-Z</option>
 
 
 
@@ -3480,7 +3479,7 @@
 
 
 
-                      <option value="title_desc">Título: Z–A</option>
+                      <option value="title_desc">Título: Z-A</option>
 
 
 
@@ -11745,7 +11744,7 @@
 
 
 
-                  <option value="quadrilha_asc">Quadrilha (A–Z)</option>
+                  <option value="quadrilha_asc">Quadrilha (A-Z)</option>
 
 
 
@@ -15033,7 +15032,7 @@
 
 
 
-                    Pesos automáticos por ano de filiação: 1–5 anos (1), 6–10 (1,5), 11+ (2).
+                    Pesos automáticos por ano de filiação: 1-5 anos (1), 6-10 (1,5), 11+ (2).
 
 
 
@@ -15889,16 +15888,6 @@
 
           <article class="card">
             <div class="card-body">
-              <h3 class="card-title">Distrito Junino 2025</h3>
-              <p class="muted notas-small">Etapas e resultado final.</p>
-              <div id="notasDownloadsDistrito">
-                <p class="muted notas-small">Carregando arquivos...</p>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-body">
               <h3 class="card-title">Temporada 2026</h3>
               <p id="notasResumo2026" class="muted notas-small">Carregando status...</p>
               <div id="notasDownloads2026">
@@ -15929,6 +15918,21 @@
               <a class="btn" href="assets/documentos/Regulamento Grupo de Acesso.pdf" target="_blank" rel="noopener">Abrir regulamento</a>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section id="section-sorteio" class="portal-section" style="display:none;">
+        <h1 class="section-title">Sorteio 2026</h1>
+        <p class="muted">Acesso restrito ao perfil Administrador da Liga.</p>
+        <div class="card">
+          <div class="card-body">
+            <iframe
+              title="Sorteio 2026"
+              src="/portal/sorteio-2026.html?embed=1"
+              style="width:100%; min-height:78vh; border:1px solid #d6dbe6; border-radius:12px; background:#fff;"
+              loading="lazy"
+            ></iframe>
+          </div>
         </div>
       </section>
 
@@ -18217,6 +18221,8 @@
 
 
 </html>
+
+
 
 
 

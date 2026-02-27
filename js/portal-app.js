@@ -666,6 +666,8 @@ const finFiltroStatus = document.getElementById("finFiltroStatus");
 
 
 const finAdminArea = document.getElementById("finAdminArea");
+const portalNavSorteioItem = document.getElementById("portalNavSorteioItem");
+const portalSectionSorteio = document.getElementById("section-sorteio");
 
 
 
@@ -3428,6 +3430,13 @@ async function loadCurrentUserData(user) {
 
 
 
+  }
+
+  if (portalNavSorteioItem) {
+    portalNavSorteioItem.style.display = papel === "LIGA_ADMIN" ? "list-item" : "none";
+  }
+  if (portalSectionSorteio && papel !== "LIGA_ADMIN") {
+    portalSectionSorteio.style.display = "none";
   }
 
 
@@ -19992,6 +20001,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   function showSection(sectionKey) {
+    if (sectionKey === "sorteio" && currentUserData?.papel !== "LIGA_ADMIN") {
+      sectionKey = "dashboard";
+    }
 
 
 

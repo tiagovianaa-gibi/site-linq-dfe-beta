@@ -1,0 +1,62 @@
+[
+  {
+    "id": "arraia-chapeu-de-palha",
+    "nome": "Arraiá Chapéu de Palha",
+    "logo": "/assets/logos-quadrilhas/arraia-chapeu-de-palha-logo.png"
+  },
+  {
+    "id": "coisas-da-roca",
+    "nome": "Coisas da Roça",
+    "logo": "/assets/logos-quadrilhas/coisas-da-roca-logo.png"
+  },
+  {
+    "id": "espalha-brasa",
+    "nome": "Espalha Brasa",
+    "logo": "/assets/logos-quadrilhas/espalha-brasa-logo.png"
+  },
+  {
+    "id": "fornalha",
+    "nome": "Fornalha",
+    "logo": "/assets/logos-quadrilhas/fornalha-logo.jpeg"
+  },
+  {
+    "id": "furacao",
+    "nome": "Furacão",
+    "logo": "/assets/logos-quadrilhas/furacao-logo.jpg"
+  },
+  {
+    "id": "matingueiros-do-sertao",
+    "nome": "Matingueiros do Sertão",
+    "logo": "/assets/logos-quadrilhas/matingueiros-do-sertao-logo.png"
+  },
+  {
+    "id": "os-caboclos-do-sertao",
+    "nome": "Os Caboclos do Sertão",
+    "logo": "/assets/logos-quadrilhas/os-caboclos-do-sertao-logo.png"
+  },
+  {
+    "id": "paixao-cangaco",
+    "nome": "Paixão Cangaço",
+    "logo": "/assets/logos-quadrilhas/paixao-cangaco.png"
+  },
+  {
+    "id": "sol-de-maria",
+    "nome": "Sol de Maria",
+    "logo": "/assets/logos-quadrilhas/sol-de-maria-logo.png"
+  },
+  {
+    "id": "tengo-lengo",
+    "nome": "Tengo Lengo",
+    "logo": "/assets/logos-quadrilhas/tengo-lengo-logo.png"
+  },
+  {
+    "id": "tico-tico-no-fuba",
+    "nome": "Tico Tico no Fubá",
+    "logo": "/assets/logos-quadrilhas/tico-tico-no-fuba-logo.png"
+  },
+  {
+    "id": "xem-nhem-nhem",
+    "nome": "Xém Nhem Nhém",
+    "logo": "/assets/logos-quadrilhas/xem-nhem-nhem-logo.png"
+  }
+]

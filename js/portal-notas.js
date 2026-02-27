@@ -33,7 +33,7 @@ function mount(section) {
   const hostDistrito = section.querySelector("#notasDownloadsDistrito");
   const host2026 = section.querySelector("#notasDownloads2026");
   const resumo2026 = section.querySelector("#notasResumo2026");
-  if (!hostHistorico || !hostDistrito || !host2026 || !resumo2026) return;
+  if (!hostHistorico || !host2026 || !resumo2026) return;
 
   loadJSON("data/notas/index.json")
     .then((index) => {
@@ -51,9 +51,11 @@ function mount(section) {
         { title: "Temporada 2025", items: downloads["2025"] || [] },
       ]);
 
-      hostDistrito.innerHTML = renderAccordion([
-        { title: "Distrito Junino 2025", items: downloads["distrito_junino_2025"] || [] },
-      ]);
+      if (hostDistrito) {
+        hostDistrito.innerHTML = renderAccordion([
+          { title: "Distrito Junino 2025", items: downloads["distrito_junino_2025"] || [] },
+        ]);
+      }
 
       const etapas = index?.temporada_2026?.etapas || [];
       const finais = index?.temporada_2026?.final || [];
@@ -66,7 +68,7 @@ function mount(section) {
     .catch((err) => {
       console.error("Erro ao carregar indice de notas:", err);
       hostHistorico.innerHTML = '<p class="muted notas-small">Erro ao carregar arquivos.</p>';
-      hostDistrito.innerHTML = '<p class="muted notas-small">Erro ao carregar arquivos.</p>';
+      if (hostDistrito) hostDistrito.innerHTML = '<p class="muted notas-small">Erro ao carregar arquivos.</p>';
       host2026.innerHTML = '<p class="muted notas-small">Erro ao carregar arquivos.</p>';
       resumo2026.textContent = "Nao foi possivel carregar o status de 2026.";
     });

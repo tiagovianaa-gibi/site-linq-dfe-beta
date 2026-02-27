@@ -1,0 +1,1753 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta http-equiv="Content-Language" content="pt-BR" />
+  <title>Sorteio 2026 (Temporário) | LINQ-DFE</title>
+  <meta name="description" content="Página temporária para condução do sorteio 2026 da LINQ-DFE." />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logos/linq-dfe.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logos/linq-dfe.png" />
+  <link rel="apple-touch-icon" href="/assets/logos/linq-dfe.png" />
+  <link rel="stylesheet" href="/css/style.min.css" />
+  <style>
+    .sorteio-portal {
+      --sp-bg: radial-gradient(1100px 420px at 50% -160px, #f3d2c9 0%, #efe6e2 45%, #eef1f6 100%);
+      --sp-line: rgba(12, 18, 31, .13);
+      --sp-card: rgba(255, 255, 255, .84);
+      --sp-accent: #d62828;
+      --sp-ink: #151923;
+      background: var(--sp-bg);
+      position: relative;
+      overflow: hidden;
+    }
+    body.auth-pending main,
+    body.auth-pending .site-footer {
+      display: none;
+    }
+    body.embedded nav,
+    body.embedded .site-footer {
+      display: none;
+    }
+    body.embedded main {
+      padding-top: 0;
+    }
+    body.embedded .competition-hero,
+    body.embedded .circuito-hero {
+      display: none;
+    }
+    body.embedded .sorteio-wrap {
+      padding-top: 8px;
+      padding-bottom: 10px;
+    }
+    .sorteio-wrap { padding-top: var(--spacing-lg); padding-bottom: var(--spacing-xl); }
+    .sorteio-tabs { display: flex; gap: 10px; margin-bottom: 14px; }
+    .sorteio-tab {
+      border: 1px solid var(--sp-line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.88);
+      color: var(--sp-ink);
+      padding: 9px 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .sorteio-tab:hover { transform: translateY(-1px); box-shadow: 0 10px 16px rgba(15,23,42,.1); }
+    .sorteio-tab.active {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 12px 20px rgba(185, 28, 28, .34);
+    }
+    .sorteio-layout { display: grid; grid-template-columns: 260px 1fr; gap: 14px; }
+    .sorteio-card {
+      background: var(--sp-card);
+      border: 1px solid var(--sp-line);
+      border-radius: 14px;
+      backdrop-filter: blur(7px);
+      box-shadow: 0 14px 30px rgba(12,18,31,.07);
+      padding: 14px;
+    }
+    .sidebar-title, .panel-title { margin: 0 0 10px; font-size: 1rem; font-weight: 800; color: #334155; }
+    .stage-list { display: grid; gap: 8px; margin-bottom: 14px; }
+    .stage-btn {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--sp-line);
+      background: #fff;
+      border-radius: 10px;
+      padding: 9px 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .stage-btn.active { border-color: #dc2626; background: #fff4f4; color: #991b1b; }
+    .sidebar-actions { display: grid; gap: 8px; }
+    .sidebar-actions .btn { width: 100%; }
+    .complete-table-wrap { margin-top: 14px; border-top: 1px solid var(--sp-line); padding-top: 12px; }
+    .complete-table-wrap.is-hidden { display: none; }
+    .complete-table-grid { display: grid; gap: 10px; }
+    .complete-stage-card { border: 1px solid var(--sp-line); border-radius: 10px; background: #fff; padding: 10px; }
+    .complete-stage-title { margin: 0 0 8px; font-size: .95rem; font-weight: 800; color: #334155; }
+    .complete-day-columns { display: grid; gap: 8px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .complete-day-columns.two-days { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .draw-bar {
+      border: 1px solid rgba(220,38,38,.22);
+      background: linear-gradient(135deg, #fff, #fff6f6);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .draw-bar-row {
+      display: grid;
+      grid-template-columns: 1fr 220px auto;
+      gap: 8px;
+      align-items: end;
+    }
+    .draw-label { font-weight: 800; color: #6b7280; font-size: .92rem; }
+    .draw-input-wrap { display: grid; gap: 6px; }
+    .draw-input-wrap label { font-weight: 700; font-size: .86rem; }
+    .draw-input-wrap input {
+      height: 44px; border-radius: 10px; border: 1px solid #cbd5e1; padding: 0 12px; font-size: 1.05rem;
+    }
+    .draw-input-wrap input:focus { outline: none; border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220,38,38,.16); }
+    .preview {
+      min-height: 48px;
+      border: 1px dashed #cfd6e1;
+      border-radius: 10px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      font-weight: 700;
+    }
+    .day-columns { display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .day-columns.two-days { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .day-card { border: 1px solid var(--sp-line); background: #fff; border-radius: 10px; padding: 10px; }
+    .day-title { margin: 0 0 8px; font-size: 1rem; font-weight: 800; }
+    .slot-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    .slot-item {
+      border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 8px; background: #fafafa; font-size: .88rem;
+      display: grid; gap: 4px;
+    }
+    .slot-item.filled { background: #fff; border-color: #cbd5e1; }
+    .slot-item.blocked { background: #fff6f6; border-color: #fecaca; }
+    .slot-item.candidate { background: #f0fdf4; border-color: #86efac; }
+    .slot-item.slot-last { border-color: #dc2626; background: #fff3f3; box-shadow: 0 0 0 2px rgba(220,38,38,.12) inset; }
+    .slot-item.locked { background: #fff7ed; border-color: #fed7aa; }
+    .slot-top { display: flex; justify-content: space-between; font-weight: 800; color: #475569; }
+    .slot-main { display: flex; align-items: center; gap: 7px; font-weight: 700; color: #111827; }
+    .slot-reason { font-size: .76rem; color: #991b1b; font-weight: 700; }
+    .slot-candidate { font-size: .76rem; color: #166534; font-weight: 700; }
+    .mini-logo { width: 24px; height: 24px; border-radius: 6px; object-fit: contain; background: #fff; border: 1px solid #e5e7eb; }
+    .slot-hit { outline: 3px solid rgba(220,38,38,.9); animation: pulse 1.2s ease-in-out 2; }
+    .status-row { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .last-rule-box {
+      margin-top: 10px;
+      border: 1px solid #fecaca;
+      background: #fff7f7;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: .86rem;
+    }
+    .last-rule-box strong { color: #991b1b; }
+    .badge { border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 800; }
+    .badge.ok { background: #e8f8ee; color: #1d6b3f; }
+    .badge.warn { background: #fff5e5; color: #8f5b00; }
+    .badge.info { background: #edf4ff; color: #174ea6; }
+    details.roster-box { margin-top: 12px; }
+    details.roster-box summary { cursor: pointer; font-weight: 800; color: #334155; margin-bottom: 10px; }
+    .roster-grid { display: grid; gap: 6px; max-height: 280px; overflow: auto; padding-right: 2px; }
+    .roster-item { display: flex; align-items: center; gap: 8px; font-size: .88rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 8px; }
+    .error-box { margin-top: 10px; }
+    .alert { background: #fff1f1; border: 1px solid #fecaca; border-radius: 8px; color: #991b1b; padding: 8px 10px; }
+    .draw-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.75);
+      display: flex; align-items: center; justify-content: center; z-index: 9999;
+    }
+    .draw-overlay.hidden { display: none; }
+    .draw-stage {
+      width: min(980px, 92vw); background: #0b0f14; border: 1px solid rgba(255,255,255,.08); border-radius: 18px;
+      padding: 22px; box-shadow: 0 30px 80px rgba(0,0,0,.55); color: #e8eef6;
+    }
+    .bowl {
+      position: relative; height: 220px; border-radius: 999px; border: 2px solid rgba(255,255,255,.12); overflow: hidden;
+      background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.12), rgba(255,255,255,.03) 45%, rgba(0,0,0,.35)); margin-bottom: 16px;
+    }
+    .ball {
+      position: absolute; width: 34px; height: 34px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, #d9d9d9 55%, #aaa); opacity: .9;
+    }
+    .ball:nth-child(1) { left: 8%; top: 56%; }
+    .ball:nth-child(2) { left: 22%; top: 38%; }
+    .ball:nth-child(3) { left: 36%; top: 62%; }
+    .ball:nth-child(4) { left: 52%; top: 42%; }
+    .ball:nth-child(5) { left: 68%; top: 58%; }
+    .ball:nth-child(6) { left: 82%; top: 40%; }
+    .reveal-number { font-size: clamp(44px, 6vw, 82px); font-weight: 900; letter-spacing: .02em; transform: scale(.92); opacity: 0; }
+    .reveal-number.show { animation: pop .45s ease forwards; }
+    .flip { perspective: 900px; }
+    .flip-inner { position: relative; transform-style: preserve-3d; transition: transform .55s ease; min-height: 84px; }
+    .flip.revealed .flip-inner { transform: rotateY(180deg); }
+    .face { backface-visibility: hidden; border-radius: 14px; border: 1px solid rgba(255,255,255,.10); padding: 14px; background: rgba(255,255,255,.04); }
+    .back { transform: rotateY(180deg); display: flex; gap: 12px; align-items: center; position: absolute; inset: 0; }
+    .draw-logo { width: 54px; height: 54px; object-fit: contain; border-radius: 10px; background: rgba(255,255,255,.06); padding: 6px; }
+    .reveal-dest { margin-top: 8px; color: #cbd5e1; font-weight: 700; }
+    .lock { font-size: 12px; color: #b45309; font-weight: 800; }
+    .muted { color: #64748b; font-size: .82rem; }
+    .inputs-locked { pointer-events: none; opacity: .7; }
+    @keyframes orbit {
+      0% { transform: translate(60px, 120px) scale(.9); }
+      25% { transform: translate(220px, 60px) scale(1); }
+      50% { transform: translate(520px, 120px) scale(.92); }
+      75% { transform: translate(260px, 170px) scale(.98); }
+      100% { transform: translate(60px, 120px) scale(.9); }
+    }
+    @keyframes pop {
+      0% { opacity: 0; transform: scale(.75); }
+      70% { opacity: 1; transform: scale(1.08); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 rgba(220,38,38,0); }
+      50% { box-shadow: 0 0 20px rgba(220,38,38,.55); }
+      100% { box-shadow: 0 0 0 rgba(220,38,38,0); }
+    }
+    @media (max-width: 980px) {
+      .sorteio-layout { grid-template-columns: 1fr; }
+      .draw-bar-row { grid-template-columns: 1fr; }
+      .day-columns { grid-template-columns: 1fr; }
+      .day-columns.two-days { grid-template-columns: 1fr; }
+      .complete-day-columns, .complete-day-columns.two-days { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .slot-hit, .ball, .reveal-number.show { animation: none !important; }
+    }
+  </style>
+</head>
+<body class="auth-pending">
+  <nav>
+    <div class="container">
+      <div class="logo">
+        <img src="/assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+        <span class="logo-text">LINQ-DFE</span>
+      </div>
+      <ul>
+        <li><a href="/index.html">Inicial</a></li>
+        <li><a href="/circuito.html">Circuito</a></li>
+        <li><a href="/quadrilhas.html">Quadrilhas</a></li>
+        <li><a href="/mapa.html">Mapa</a></li>
+        <li><a href="/noticias.html">Notícias</a></li>
+        <li><a href="/acervo.html">Acervo</a></li>
+        <li><a href="/diretoria.html">Diretoria</a></li>
+        <li><a href="/documentos.html">Documentos</a></li>
+        <li><a href="/portal.html">Portal da Liga</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <script src="/js/runtime-config.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const params = new URLSearchParams(window.location.search);
+    const isEmbedded = params.get("embed") === "1";
+    if (isEmbedded) document.body.classList.add("embedded");
+
+    function deny(url) {
+      if (isEmbedded && window.top && window.top !== window) {
+        window.top.location.replace(url);
+      } else {
+        window.location.replace(url);
+      }
+    }
+
+    if (!window.RUNTIME_CONFIG || !window.RUNTIME_CONFIG.firebase) {
+      deny("/portal.html");
+    } else {
+      const app = initializeApp(window.RUNTIME_CONFIG.firebase);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+          deny("/portal.html");
+          return;
+        }
+        try {
+          let snap = await getDoc(doc(db, "users", user.email));
+          if (!snap.exists()) {
+            snap = await getDoc(doc(db, "users", user.uid));
+          }
+          const data = snap.exists() ? snap.data() : null;
+          if (!data || data.papel !== "LIGA_ADMIN") {
+            deny("/portal-dashboard.html");
+            return;
+          }
+          document.body.classList.remove("auth-pending");
+        } catch (err) {
+          console.error("Erro ao validar acesso ao sorteio:", err);
+          deny("/portal-dashboard.html");
+        }
+      });
+    }
+  </script>
+
+  <main class="page sorteio-portal" id="conteudo">
+    <section class="section competition-hero circuito-hero">
+      <div class="container">
+        <p class="hero-kicker">Temporada 2026</p>
+        <h1 class="hero-title">Sorteio 2026</h1>
+        <p class="hero-lead">Painel oficial do sorteio por número da bolinha, com regras automáticas e auditoria.</p>
+      </div>
+    </section>
+
+    <section class="section sorteio-wrap">
+      <div class="container">
+        <div class="sorteio-tabs" id="tabs"></div>
+
+        <div class="sorteio-layout">
+          <aside class="sorteio-card">
+            <h2 class="sidebar-title">Etapas</h2>
+            <div id="stageList" class="stage-list"></div>
+
+            <div class="sidebar-actions">
+              <button id="undoBtn" class="btn btn-outline" type="button">Desfazer último</button>
+              <button id="resetBtn" class="btn btn-outline" type="button">Resetar</button>
+              <button id="fullTableBtn" class="btn btn-outline" type="button">Tabela completa</button>
+              <button id="downloadTableBtn" class="btn btn-outline" type="button">Baixar tabela completa</button>
+              <button id="downloadAuditBtn" class="btn btn-outline" type="button">Baixar auditoria</button>
+            </div>
+          </aside>
+
+          <section class="sorteio-card">
+            <h2 class="panel-title">Sorteio</h2>
+
+            <div class="draw-bar">
+              <div class="draw-label" id="activeStageLabel">Etapa 1</div>
+              <div class="draw-bar-row">
+                <div class="draw-input-wrap">
+                  <label for="drawNumber">Número da bolinha</label>
+                  <input id="drawNumber" type="number" inputmode="numeric" autocomplete="off" placeholder="Digite o número" />
+                </div>
+                <div id="previewBox" class="preview">Digite um número para visualizar a quadrilha.</div>
+                <button id="registerBtn" class="btn" type="button">Registrar</button>
+              </div>
+              <div class="muted" id="rangeHint"></div>
+            </div>
+
+            <div id="dayColumns" class="day-columns"></div>
+
+            <div id="statusSummary" class="muted" style="margin-top:10px;"></div>
+            <div id="statusBadges" class="status-row"></div>
+            <div id="lastRuleBox" class="last-rule-box">Última alocação: -</div>
+
+            <details class="roster-box">
+              <summary>Lista oficial (ordem alfabética)</summary>
+              <div id="rosterList" class="roster-grid"></div>
+            </details>
+            <section id="completeTableWrap" class="complete-table-wrap is-hidden" aria-live="polite"></section>
+            <div id="errorBox" class="error-box"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="drawOverlay" class="draw-overlay hidden" aria-hidden="true">
+    <div class="draw-stage">
+      <div class="bowl" aria-hidden="true">
+        <span class="ball"></span><span class="ball"></span><span class="ball"></span><span class="ball"></span>
+        <span class="ball"></span><span class="ball"></span><span class="ball"></span><span class="ball"></span>
+      </div>
+      <div class="reveal">
+        <div class="reveal-number">#--</div>
+        <div class="flip">
+          <div class="flip-inner">
+            <div class="face front">Sorteando...</div>
+            <div class="face back"><img class="draw-logo" data-logo alt="Logo"><div data-name></div></div>
+          </div>
+        </div>
+        <div class="reveal-dest" data-dest>Destino: -</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEYS = {
+      especial: 'linqdfe_sorteio_especial_2026',
+      acesso: 'linqdfe_sorteio_acesso_2026'
+    };
+    const GROUP_CONFIG = {
+      especial: { label: 'Especial', totalQuadrilhas: 15, totalPosicoes: 15, dataPath: '/assets/data/quadrilhas-especial-2026.json' },
+      acesso: { label: 'Acesso', totalQuadrilhas: 12, totalPosicoes: 12, dataPath: '/assets/data/quadrilhas-acesso-2026.json' }
+    };
+    const collator = new Intl.Collator('pt-BR', { sensitivity: 'base' });
+    const app = {
+      schemaVersion: 'sorteio-2026.v2',
+      activeGroup: 'especial',
+      activeStage: { especial: 1, acesso: 1 },
+      showCompleteTable: { especial: false, acesso: false },
+      inputDebounceTimer: null,
+      drawBusy: false,
+      lastPlacement: { especial: null, acesso: null },
+      groups: {
+        especial: createEmptyGroupState('especial'),
+        acesso: createEmptyGroupState('acesso')
+      }
+    };
+
+    function createEmptyGroupState(grupo) {
+      const cfg = GROUP_CONFIG[grupo];
+      return {
+        grupo,
+        roster: [],
+        stages: Array.from({ length: 4 }, () => Array(cfg.totalPosicoes).fill(null)),
+        fechamento: null,
+        reservedSlot: grupo === 'especial' ? { etapa: 4, posicao: 4 } : null,
+        actionLog: [],
+        history: []
+      };
+    }
+
+    function getDiaByPosicao(grupo, posicao) {
+      if (grupo === 'especial') {
+        if (posicao <= 4) return 'sexta';
+        if (posicao <= 10) return 'sabado';
+        return 'domingo';
+      }
+      return posicao <= 6 ? 'sabado' : 'domingo';
+    }
+
+    function getTurnoByPosicao(grupo, posicao) {
+      if (grupo === 'especial') {
+        if (posicao >= 1 && posicao <= 2) return 'comeco';    // sexta
+        if (posicao >= 5 && posicao <= 6) return 'comeco';    // sabado
+        if (posicao >= 11 && posicao <= 12) return 'comeco';  // domingo
+        return 'final';
+      }
+      // acesso: duas primeiras de cada dia
+      if (posicao >= 1 && posicao <= 2) return 'comeco';     // sabado
+      if (posicao >= 7 && posicao <= 8) return 'comeco';     // domingo
+      return 'final';
+    }
+
+    function isStartOfDay(grupo, posicao) {
+      return getTurnoByPosicao(grupo, posicao) === 'comeco';
+    }
+
+    function isDayOpener(grupo, posicao) {
+      if (grupo === 'especial') return posicao === 1 || posicao === 5 || posicao === 11;
+      return posicao === 1 || posicao === 7;
+    }
+
+    function getDaysForGroup(grupo) {
+      return grupo === 'especial' ? ['sexta', 'sabado', 'domingo'] : ['sabado', 'domingo'];
+    }
+
+    function positionsForDay(grupo, dia) {
+      const out = [];
+      const total = GROUP_CONFIG[grupo].totalPosicoes;
+      for (let p = 1; p <= total; p += 1) if (getDiaByPosicao(grupo, p) === dia) out.push(p);
+      return out;
+    }
+
+    async function buildRoster(grupo) {
+      const cfg = GROUP_CONFIG[grupo];
+      const res = await fetch(cfg.dataPath, { cache: 'no-store' });
+      if (!res.ok) throw new Error('Falha ao carregar roster de ' + grupo);
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length !== cfg.totalQuadrilhas) throw new Error('Roster inválido de ' + grupo);
+      const roster = data
+        .slice()
+        .sort((a, b) => collator.compare(String(a.nome || ''), String(b.nome || '')))
+        .map((q, idx) => ({ id: q.id, nome: q.nome, logo: q.logo, numero: idx + 1 }));
+      app.groups[grupo].roster = roster;
+      return roster;
+    }
+
+    function getQuadrilhaByNumero(grupo, numero) {
+      return app.groups[grupo].roster.find((q) => q.numero === numero) || null;
+    }
+
+    function computeStats(grupo) {
+      const st = app.groups[grupo];
+      const map = {};
+      st.roster.forEach((q) => { map[q.id] = { sexta: 0, sabado: 0, domingo: 0, comeco: 0, final: 0, inicioDia: 0, aberturaDia: 0, total: 0 }; });
+      st.stages.forEach((stage) => stage.forEach((entry) => {
+        if (!entry || !map[entry.quadrilhaId]) return;
+        map[entry.quadrilhaId][entry.dia] += 1;
+        map[entry.quadrilhaId][entry.turno] += 1;
+        if (isStartOfDay(grupo, entry.posicao)) map[entry.quadrilhaId].inicioDia += 1;
+        if (isDayOpener(grupo, entry.posicao)) map[entry.quadrilhaId].aberturaDia += 1;
+        map[entry.quadrilhaId].total += 1;
+      }));
+      return map;
+    }
+
+    function hasQuadrilhaNaEtapa(grupo, etapa, quadrilhaId) {
+      return app.groups[grupo].stages[etapa - 1].some((e) => e && e.quadrilhaId === quadrilhaId);
+    }
+
+    function buildEntry(grupo, etapa, posicao, quadrilha) {
+      return {
+        etapa,
+        posicao,
+        dia: getDiaByPosicao(grupo, posicao),
+        turno: getTurnoByPosicao(grupo, posicao),
+        numero: quadrilha.numero,
+        quadrilhaId: quadrilha.id,
+        quadrilhaNome: quadrilha.nome,
+        quadrilhaLogo: quadrilha.logo
+      };
+    }
+
+    function reconcileEspecialFechamento() {
+      const st = app.groups.especial;
+      const p4e1 = st.stages[0][3];
+      if (!p4e1) return;
+
+      st.fechamento = {
+        id: p4e1.quadrilhaId,
+        nome: p4e1.quadrilhaNome,
+        numero: p4e1.numero,
+        logo: p4e1.quadrilhaLogo
+      };
+
+      const p4e4 = st.stages[3][3];
+      if (!p4e4 || p4e4.quadrilhaId !== p4e1.quadrilhaId) {
+        const q = st.roster.find((item) => item.id === p4e1.quadrilhaId) || {
+          id: p4e1.quadrilhaId,
+          nome: p4e1.quadrilhaNome,
+          logo: p4e1.quadrilhaLogo,
+          numero: p4e1.numero
+        };
+        st.stages[3][3] = buildEntry('especial', 4, 4, q);
+      }
+    }
+
+    function countEmptySlotsByDay(grupo, dia, ignoreReservedSexta) {
+      const st = app.groups[grupo];
+      let n = 0;
+      for (let e = 0; e < 4; e += 1) {
+        for (let i = 0; i < st.stages[e].length; i += 1) {
+          const pos = i + 1;
+          if (st.stages[e][i]) continue;
+          if (getDiaByPosicao(grupo, pos) !== dia) continue;
+          if (ignoreReservedSexta && grupo === 'especial' && e === 3 && pos === 4 && !st.stages[3][3]) continue;
+          n += 1;
+        }
+      }
+      return n;
+    }
+
+    function calcExtrasEspecial(stats) {
+      let sab = 0;
+      let dom = 0;
+      Object.values(stats).forEach((s) => {
+        sab += Math.max(0, s.sabado - 1);
+        dom += Math.max(0, s.domingo - 1);
+      });
+      return { sab, dom };
+    }
+
+    function viabilityCheckEspecial() {
+      const st = app.groups.especial;
+      const stats = computeStats('especial');
+      for (const q of st.roster) {
+        const s = stats[q.id];
+        if (s.sabado > 2 || s.domingo > 2) return { ok: false };
+        if (s.aberturaDia > 1) return { ok: false };
+        const missing = ['sexta', 'sabado', 'domingo'].filter((d) => s[d] === 0).length;
+        const remaining = 4 - s.total;
+        if (missing > remaining) return { ok: false };
+        if (q.id !== (st.fechamento && st.fechamento.id) && s.sexta > 1) return { ok: false };
+        if (q.id === (st.fechamento && st.fechamento.id) && s.sexta > 2) return { ok: false };
+      }
+      const needSexta = st.roster.filter((q) => stats[q.id].sexta === 0).length;
+      const needSabado = st.roster.filter((q) => stats[q.id].sabado === 0).length;
+      const needDomingo = st.roster.filter((q) => stats[q.id].domingo === 0).length;
+      if (needSexta > countEmptySlotsByDay('especial', 'sexta', true)) return { ok: false };
+      if (needSabado > countEmptySlotsByDay('especial', 'sabado', false)) return { ok: false };
+      if (needDomingo > countEmptySlotsByDay('especial', 'domingo', false)) return { ok: false };
+      const extra = calcExtrasEspecial(stats);
+      if (extra.sab > 9 || extra.dom > 5) return { ok: false };
+      return { ok: true };
+    }
+
+    function viabilityCheckAcesso() {
+      return { ok: true };
+    }
+
+    function placeTempAndCheck(grupo, etapa, posicao, entry, checker) {
+      const st = app.groups[grupo];
+      st.stages[etapa - 1][posicao - 1] = entry;
+      const ok = checker().ok;
+      st.stages[etapa - 1][posicao - 1] = null;
+      return ok;
+    }
+
+    function cloneStatsMap(stats) {
+      const out = {};
+      Object.keys(stats).forEach((id) => {
+        out[id] = { ...stats[id] };
+      });
+      return out;
+    }
+
+    function canAddDayForQuadrilha(grupo, quadrilhaId, dia, stats) {
+      const st = app.groups[grupo];
+      const s = stats[quadrilhaId] || { sexta: 0, sabado: 0, domingo: 0, comeco: 0, final: 0, inicioDia: 0, aberturaDia: 0 };
+      if (grupo === 'especial') {
+        const fechamentoId = st.fechamento && st.fechamento.id;
+        if (dia === 'sexta') {
+          if (quadrilhaId === fechamentoId) return s.sexta < 2;
+          return s.sexta < 1;
+        }
+        if (dia === 'sabado') return s.sabado < 2;
+        return s.domingo < 2;
+      }
+      if (dia === 'sabado') return s.sabado < 2;
+      return s.domingo < 2;
+    }
+
+    function canAddSlotForQuadrilha(grupo, quadrilhaId, posicao, stats) {
+      const dia = getDiaByPosicao(grupo, posicao);
+      const s = stats[quadrilhaId] || { sexta: 0, sabado: 0, domingo: 0, comeco: 0, final: 0, inicioDia: 0, aberturaDia: 0 };
+      if (grupo === 'especial' && isDayOpener(grupo, posicao) && s.aberturaDia >= 1) return false;
+      return canAddDayForQuadrilha(grupo, quadrilhaId, dia, stats);
+    }
+
+    function finalRulesSatisfied(grupo, stats) {
+      const st = app.groups[grupo];
+      for (const q of st.roster) {
+        const s = stats[q.id];
+        if (!s || s.total !== 4) return false;
+        if (grupo === 'especial') {
+          if (s.aberturaDia > 1) return false;
+          if (s.sexta < 1 || s.sabado < 1 || s.domingo < 1) return false;
+          if (s.sabado > 2 || s.domingo > 2) return false;
+          if (q.id !== (st.fechamento && st.fechamento.id) && s.sexta > 1) return false;
+          if (q.id === (st.fechamento && st.fechamento.id) && s.sexta > 2) return false;
+        } else {
+          if (s.sabado < 1 || s.domingo < 1) return false;
+          if (s.sabado > 2 || s.domingo > 2) return false;
+        }
+      }
+      if (grupo === 'especial') {
+        const extra = calcExtrasEspecial(stats);
+        if (extra.sab > 9 || extra.dom > 5) return false;
+      }
+      return true;
+    }
+
+    function quickPruneGlobal(grupo, stats, remainingByDay) {
+      const st = app.groups[grupo];
+      const requiredDays = grupo === 'especial' ? ['sexta', 'sabado', 'domingo'] : ['sabado', 'domingo'];
+      const need = { sexta: 0, sabado: 0, domingo: 0 };
+      for (const q of st.roster) {
+        const s = stats[q.id];
+        if (!s) return false;
+        if (s.total > 4) return false;
+        if (grupo === 'especial') {
+          if (s.aberturaDia > 1) return false;
+          const fechamentoId = st.fechamento && st.fechamento.id;
+          if (q.id !== fechamentoId && s.sexta > 1) return false;
+          if (q.id === fechamentoId && s.sexta > 2) return false;
+          if (s.sabado > 2 || s.domingo > 2) return false;
+        } else if (s.sabado > 2 || s.domingo > 2) {
+          return false;
+        }
+
+        const missing = requiredDays.filter((d) => s[d] === 0).length;
+        const remaining = 4 - s.total;
+        if (missing > remaining) return false;
+        requiredDays.forEach((d) => { if (s[d] === 0) need[d] += 1; });
+      }
+
+      if (need.sabado > (remainingByDay.sabado || 0)) return false;
+      if (need.domingo > (remainingByDay.domingo || 0)) return false;
+      if (grupo === 'especial' && need.sexta > (remainingByDay.sexta || 0)) return false;
+
+      if (grupo === 'especial') {
+        const extra = calcExtrasEspecial(stats);
+        if (extra.sab > 9 || extra.dom > 5) return false;
+      }
+      return true;
+    }
+
+    function countFutureEmptyByDay(grupo, fromStageIdx) {
+      const st = app.groups[grupo];
+      const out = { sexta: 0, sabado: 0, domingo: 0, comeco: 0, final: 0 };
+      for (let e = Math.max(0, fromStageIdx); e < 4; e += 1) {
+        for (let i = 0; i < st.stages[e].length; i += 1) {
+          if (st.stages[e][i]) continue;
+          const dia = getDiaByPosicao(grupo, i + 1);
+          out[dia] += 1;
+        }
+      }
+      return out;
+    }
+
+    function isStateGloballySolvable(grupo, startEtapa) {
+      const st = app.groups[grupo];
+      const stageStartIdx = Math.max(0, (startEtapa || 1) - 1);
+      const rosterIds = st.roster.map((q) => q.id);
+      const stats = cloneStatsMap(computeStats(grupo));
+
+      function recurseStage(stageIdx) {
+        if (stageIdx >= 4) return finalRulesSatisfied(grupo, stats);
+
+        const stage = st.stages[stageIdx];
+        const fixedIds = new Set();
+        for (let i = 0; i < stage.length; i += 1) {
+          const entry = stage[i];
+          if (!entry) continue;
+          if (fixedIds.has(entry.quadrilhaId)) return false;
+          fixedIds.add(entry.quadrilhaId);
+        }
+
+        let missingIds = rosterIds.filter((id) => !fixedIds.has(id));
+        const cap = { sexta: 0, sabado: 0, domingo: 0, comeco: 0, final: 0 };
+        const openPositions = [];
+        for (let i = 0; i < stage.length; i += 1) {
+          if (stage[i]) continue;
+          const pos = i + 1;
+          if (grupo === 'especial' && stageIdx === 3 && pos === 4) continue;
+          cap[getDiaByPosicao(grupo, pos)] += 1;
+          openPositions.push(pos);
+        }
+
+        let forcedFechamento = false;
+        if (grupo === 'especial' && stageIdx === 3 && st.fechamento) {
+          const fechamentoId = st.fechamento.id;
+          const p4 = stage[3];
+          if (p4 && p4.quadrilhaId !== fechamentoId) return false;
+          for (let i = 0; i < stage.length; i += 1) {
+            if (i === 3) continue;
+            if (stage[i] && stage[i].quadrilhaId === fechamentoId) return false;
+          }
+          if (!p4) {
+            if (!missingIds.includes(fechamentoId)) return false;
+            if (!canAddSlotForQuadrilha('especial', fechamentoId, 4, stats)) return false;
+            stats[fechamentoId].sexta += 1;
+            stats[fechamentoId].total += 1;
+            missingIds = missingIds.filter((id) => id !== fechamentoId);
+            forcedFechamento = true;
+          }
+        }
+
+        const openCount = openPositions.length;
+        if (missingIds.length !== openCount) {
+          if (forcedFechamento && st.fechamento) {
+            stats[st.fechamento.id].sexta -= 1;
+            stats[st.fechamento.id].total -= 1;
+          }
+          return false;
+        }
+
+        const future = countFutureEmptyByDay(grupo, stageIdx + 1);
+        const remainingAtStart = {
+          sexta: cap.sexta + future.sexta,
+          sabado: cap.sabado + future.sabado,
+          domingo: cap.domingo + future.domingo,
+          comeco: 0,
+          final: 0
+        };
+        if (!quickPruneGlobal(grupo, stats, remainingAtStart)) {
+          if (forcedFechamento && st.fechamento) {
+            stats[st.fechamento.id].sexta -= 1;
+            stats[st.fechamento.id].total -= 1;
+          }
+          return false;
+        }
+
+        function assignMissing(idsLeft, positionsLeft) {
+          if (!idsLeft.length) return recurseStage(stageIdx + 1);
+
+          let pick = null;
+          let pickDomain = null;
+          for (let i = 0; i < idsLeft.length; i += 1) {
+            const qid = idsLeft[i];
+            const domain = [];
+            for (let p = 0; p < positionsLeft.length; p += 1) {
+              const pos = positionsLeft[p];
+              if (!canAddSlotForQuadrilha(grupo, qid, pos, stats)) continue;
+              domain.push(pos);
+            }
+            if (!domain.length) return false;
+            if (!pick || domain.length < pickDomain.length) {
+              pick = qid;
+              pickDomain = domain;
+            }
+          }
+
+          const nextIds = idsLeft.filter((id) => id !== pick);
+          for (let i = 0; i < pickDomain.length; i += 1) {
+            const pos = pickDomain[i];
+            const dia = getDiaByPosicao(grupo, pos);
+            const isOpener = isDayOpener(grupo, pos);
+            cap[dia] -= 1;
+            stats[pick][dia] += 1;
+            if (isOpener) stats[pick].aberturaDia += 1;
+            stats[pick].total += 1;
+
+            const remainingNow = {
+              sexta: cap.sexta + future.sexta,
+              sabado: cap.sabado + future.sabado,
+              domingo: cap.domingo + future.domingo,
+              comeco: 0,
+              final: 0
+            };
+            const nextPositions = positionsLeft.filter((p) => p !== pos);
+            if (quickPruneGlobal(grupo, stats, remainingNow) && assignMissing(nextIds, nextPositions)) return true;
+
+            stats[pick].total -= 1;
+            stats[pick][dia] -= 1;
+            if (isOpener) stats[pick].aberturaDia -= 1;
+            cap[dia] += 1;
+          }
+          return false;
+        }
+
+        const solved = assignMissing(missingIds, openPositions);
+        if (forcedFechamento && st.fechamento) {
+          stats[st.fechamento.id].sexta -= 1;
+          stats[st.fechamento.id].total -= 1;
+        }
+        return solved;
+      }
+
+      return recurseStage(stageStartIdx);
+    }
+
+    function computeStatsExcludingStage(grupo, etapaExcluida) {
+      const st = app.groups[grupo];
+      const map = {};
+      st.roster.forEach((q) => { map[q.id] = { sexta: 0, sabado: 0, domingo: 0, comeco: 0, final: 0, inicioDia: 0, aberturaDia: 0, total: 0 }; });
+      st.stages.forEach((stage, idx) => {
+        if (idx + 1 === etapaExcluida) return;
+        stage.forEach((entry) => {
+          if (!entry || !map[entry.quadrilhaId]) return;
+          map[entry.quadrilhaId][entry.dia] += 1;
+          map[entry.quadrilhaId][entry.turno] += 1;
+          if (isStartOfDay(grupo, entry.posicao)) map[entry.quadrilhaId].inicioDia += 1;
+          if (isDayOpener(grupo, entry.posicao)) map[entry.quadrilhaId].aberturaDia += 1;
+          map[entry.quadrilhaId].total += 1;
+        });
+      });
+      return map;
+    }
+
+    function isSlotAllowedHard(grupo, etapa, quadrilhaId, posicao, baseStats) {
+      const dia = getDiaByPosicao(grupo, posicao);
+      const st = app.groups[grupo];
+      const fechamentoId = st.fechamento && st.fechamento.id;
+      const s = baseStats[quadrilhaId] || { sexta: 0, sabado: 0, domingo: 0, comeco: 0, final: 0, inicioDia: 0, aberturaDia: 0 };
+
+      if (grupo === 'especial' && isDayOpener(grupo, posicao) && s.aberturaDia >= 1) return false;
+
+      if (grupo === 'especial') {
+        if (etapa === 4) {
+          if (fechamentoId && quadrilhaId === fechamentoId && posicao !== 4) return false;
+          if (fechamentoId && quadrilhaId !== fechamentoId && posicao === 4) return false;
+        } else if (posicao === 4 && st.stages[3][3] && fechamentoId && quadrilhaId !== fechamentoId) {
+          // mantém p4 da etapa 4 reservado quando já preenchido com fechamento
+        }
+
+        if (dia === 'sexta') {
+          const isFechamentoSlot = etapa === 4 && posicao === 4 && quadrilhaId === fechamentoId;
+          if (isFechamentoSlot) return s.sexta < 2;
+          return s.sexta < 1;
+        }
+        if (dia === 'sabado') return s.sabado < 2;
+        return s.domingo < 2;
+      }
+
+      if (dia === 'sabado') return s.sabado < 2;
+      return s.domingo < 2;
+    }
+
+    function tryAutoArrangeCurrentStage(grupo, etapa, incomingQuadrilha, strictViability) {
+      const st = app.groups[grupo];
+      const stage = st.stages[etapa - 1];
+      const baseStats = computeStatsExcludingStage(grupo, etapa);
+      const shouldCheckViability = strictViability !== false;
+      const participants = [];
+      const currentPosById = {};
+      stage.forEach((entry, idx) => {
+        if (!entry) return;
+        if (!participants.includes(entry.quadrilhaId)) participants.push(entry.quadrilhaId);
+        currentPosById[entry.quadrilhaId] = idx + 1;
+      });
+      if (!participants.includes(incomingQuadrilha.id)) participants.push(incomingQuadrilha.id);
+
+      const allPositions = Array.from({ length: GROUP_CONFIG[grupo].totalPosicoes }, (_, i) => i + 1);
+      const optionsById = {};
+      for (const qid of participants) {
+        const options = allPositions.filter((pos) => isSlotAllowedHard(grupo, etapa, qid, pos, baseStats));
+        const current = currentPosById[qid];
+        options.sort((a, b) => {
+          if (a === current) return -1;
+          if (b === current) return 1;
+          return a - b;
+        });
+        if (!options.length) return null;
+        optionsById[qid] = options;
+      }
+
+      const ordered = participants.slice().sort((a, b) => optionsById[a].length - optionsById[b].length);
+      const used = new Set();
+      const assign = {};
+
+      function backtrack(i) {
+        if (i >= ordered.length) return true;
+        const qid = ordered[i];
+        for (const pos of optionsById[qid]) {
+          if (used.has(pos)) continue;
+          used.add(pos);
+          assign[qid] = pos;
+          if (backtrack(i + 1)) return true;
+          used.delete(pos);
+          delete assign[qid];
+        }
+        return false;
+      }
+
+      if (!backtrack(0)) return null;
+
+      const snapshotStage = stage.map((e) => (e ? { ...e } : null));
+      st.stages[etapa - 1] = Array(stage.length).fill(null);
+      for (const qid of participants) {
+        const q = st.roster.find((item) => item.id === qid);
+        st.stages[etapa - 1][assign[qid] - 1] = buildEntry(grupo, etapa, assign[qid], q);
+      }
+      const viable = (grupo === 'especial' ? viabilityCheckEspecial() : viabilityCheckAcesso()).ok;
+      if (shouldCheckViability && !viable) {
+        st.stages[etapa - 1] = snapshotStage;
+        return null;
+      }
+
+      return {
+        posicao: assign[incomingQuadrilha.id],
+        dia: getDiaByPosicao(grupo, assign[incomingQuadrilha.id]),
+        criterio: shouldCheckViability
+          ? 'Realocação automática da etapa para manter regras sem travar'
+          : 'Realocação automática de contingência (regras duras preservadas)'
+      };
+    }
+
+    function suggestSlotEspecial(quadrilha, etapa) {
+      const stats = computeStats('especial');
+      const s = stats[quadrilha.id] || { sexta: 0, sabado: 0, domingo: 0, comeco: 0, final: 0, inicioDia: 0, aberturaDia: 0, total: 0 };
+      const st = app.groups.especial;
+      for (let p = 1; p <= 15; p += 1) {
+        if (st.stages[etapa - 1][p - 1]) continue;
+        if (etapa === 4 && p === 4) continue;
+        const dia = getDiaByPosicao('especial', p);
+        if (dia === 'sexta' && s.sexta > 0) continue;
+        if (dia === 'sabado' && s.sabado >= 2) continue;
+        if (dia === 'domingo' && s.domingo >= 2) continue;
+        if (isDayOpener('especial', p) && s.aberturaDia >= 1) continue;
+        const entry = buildEntry('especial', etapa, p, quadrilha);
+        st.stages[etapa - 1][p - 1] = entry;
+        const ok = isStateGloballySolvable('especial', etapa);
+        st.stages[etapa - 1][p - 1] = null;
+        if (ok) return { posicao: p, dia, criterio: 'Primeira posicao possivel com solvabilidade global' };
+      }
+      return null;
+    }
+
+    function suggestSlotAcesso(quadrilha, etapa) {
+      const st = app.groups.acesso;
+      for (let p = 1; p <= 12; p += 1) {
+        if (st.stages[etapa - 1][p - 1]) continue;
+        return { posicao: p, dia: getDiaByPosicao('acesso', p), criterio: 'Primeira posicao livre da etapa (sorteio simples)' };
+      }
+      return null;
+    }
+
+    function buildRegraDidatica(params) {
+      const {
+        grupo,
+        etapa,
+        posicao,
+        dia,
+        criterioTecnico,
+        qStatsBefore,
+        isFechamentoReserved,
+        isFechamentoAuto
+      } = params;
+
+      if (isFechamentoAuto) {
+        return [
+          'Escolha aplicada: Etapa 1, P4 (sexta).',
+          'Regra C1: a quadrilha de P4 da Etapa 1 vira FECHAMENTO.',
+          'Acao automatica: o sistema ja preencheu E4/P4 com a mesma quadrilha.'
+        ].join(' ');
+      }
+
+      if (isFechamentoReserved) {
+        return [
+          'Escolha aplicada: Etapa 4, P4 (sexta).',
+          'Regra C1: slot reservado exclusivamente para o FECHAMENTO.',
+          'Validacao: mantida sem repetir quadrilha na etapa e sem quebrar cobertura global.'
+        ].join(' ');
+      }
+
+      if (etapa === 1) {
+        return [
+          'Escolha aplicada: Etapa 1, P' + posicao + ' (' + dia + ').',
+          'Regra da Etapa 1: preenchimento sequencial da proxima posicao livre (P1 ate o final).',
+          'Validacao: sem repeticao da mesma quadrilha na etapa.'
+        ].join(' ');
+      }
+
+      const linhas = [];
+      linhas.push('Escolha aplicada: Etapa ' + etapa + ', P' + posicao + ' (' + dia + ').');
+      if (criterioTecnico) linhas.push('Criterio tecnico: ' + criterioTecnico + '.');
+      linhas.push('Regra base: primeira posicao viavel sem repetir quadrilha na etapa atual.');
+
+      if (grupo === 'especial') {
+        linhas.push('Regras do Especial preservadas: controle de sexta, limite maximo de 2x em sabado e 2x em domingo, e cobertura final sexta+sabado+domingo.');
+        linhas.push('Tambem preserva as cotas globais de extras.');
+        linhas.push('Regra adicional: abertura do dia (P1, P5 ou P11) so pode ocorrer 1 vez por quadrilha.');
+      } else {
+        linhas.push('Regra do Acesso: sorteio simples por numero, preenchendo a primeira posicao livre da etapa.');
+        linhas.push('O dia e automatico pela posicao: P1-P6 sabado e P7-P12 domingo.');
+      }
+
+      if (qStatsBefore) {
+        const beforeDia = Number(qStatsBefore[dia] || 0);
+        const afterDia = beforeDia + 1;
+        if (beforeDia === 0) {
+          linhas.push('Impacto desta alocacao: este foi o 1o registro da quadrilha em ' + dia + '.');
+        } else {
+          linhas.push('Impacto desta alocacao: a quadrilha ficou com ' + afterDia + ' apresentacao(oes) em ' + dia + '.');
+        }
+        if (grupo === 'especial' && isDayOpener('especial', posicao)) {
+          linhas.push('Abertura do dia: esta alocacao usou o 1o slot do dia (limite total de abertura = 1).');
+        }
+      }
+
+      if (criterioTecnico && /realoc/i.test(criterioTecnico)) {
+        linhas.push('Observacao: houve realocacao automatica para evitar travamento nas proximas entradas.');
+      }
+
+      return linhas.join(' ');
+    }
+    function registrarSorteio(numero) {
+      clearError();
+      const grupo = app.activeGroup;
+      const etapa = app.activeStage[grupo];
+      const cfg = GROUP_CONFIG[grupo];
+      const st = app.groups[grupo];
+      const statsBefore = computeStats(grupo);
+      const snapshotBefore = {
+        stages: st.stages.map((stage) => stage.map((e) => (e ? { ...e } : null))),
+        fechamento: st.fechamento ? { ...st.fechamento } : null,
+        actionLogLength: st.actionLog.length
+      };
+      if (!Number.isInteger(numero) || numero < 1 || numero > cfg.totalQuadrilhas) return fail('Numero invalido.');
+      if (etapa > 1 && st.stages[0].some((e) => !e)) return fail('Conclua a Etapa 1 antes.');
+      const quadrilha = getQuadrilhaByNumero(grupo, numero);
+      if (!quadrilha) return fail('Numero nao encontrado.');
+      if (hasQuadrilhaNaEtapa(grupo, etapa, quadrilha.id)) return fail('Quadrilha ja sorteada nesta etapa.');
+
+      let posicao = null;
+      let dia = null;
+      let regraAplicada = '';
+      let criterioTecnico = '';
+      let isFechamentoReserved = false;
+      let isFechamentoAuto = false;
+
+      if (etapa === 1) {
+        const next = st.stages[0].findIndex((e) => !e);
+        if (next < 0) return fail('Etapa 1 completa.');
+        posicao = next + 1;
+        dia = getDiaByPosicao(grupo, posicao);
+        criterioTecnico = 'Etapa 1: preenchimento sequencial';
+      } else if (grupo === 'especial') {
+        const isFech = st.fechamento && st.fechamento.id === quadrilha.id;
+        if (etapa === 4 && isFech && !st.stages[3][3]) {
+          posicao = 4;
+          dia = 'sexta';
+          const entryTest = buildEntry('especial', etapa, posicao, quadrilha);
+          isFechamentoReserved = true;
+          if (!placeTempAndCheck('especial', etapa, posicao, entryTest, viabilityCheckEspecial)) {
+            criterioTecnico = 'Regra C1: FECHAMENTO no slot reservado (E4/Sexta/P4) com contingencia automatica';
+          } else {
+            criterioTecnico = 'Regra C1: FECHAMENTO no slot reservado (E4/Sexta/P4)';
+          }
+        } else {
+          let slot = suggestSlotEspecial(quadrilha, etapa);
+          if (!slot) slot = tryAutoArrangeCurrentStage('especial', etapa, quadrilha, true);
+          if (!slot) return fail('Nao foi possivel alocar automaticamente com as regras atuais.');
+          posicao = slot.posicao;
+          dia = slot.dia;
+          criterioTecnico = slot.criterio || 'Primeira posicao possivel';
+        }
+      } else {
+        const slot = suggestSlotAcesso(quadrilha, etapa);
+        if (!slot) return fail('Etapa completa.');
+        posicao = slot.posicao;
+        dia = slot.dia;
+        criterioTecnico = slot.criterio || 'Primeira posicao possivel';
+      }
+
+      const entry = buildEntry(grupo, etapa, posicao, quadrilha);
+      st.stages[etapa - 1][posicao - 1] = entry;
+      if (grupo === 'especial' && etapa === 1 && posicao === 4 && !st.fechamento) {
+        st.fechamento = { id: entry.quadrilhaId, nome: entry.quadrilhaNome, numero: entry.numero, logo: entry.quadrilhaLogo };
+        if (!st.stages[3][3]) {
+          st.stages[3][3] = buildEntry('especial', 4, 4, quadrilha);
+          isFechamentoAuto = true;
+          criterioTecnico = 'Regra C1: P4 da Etapa 1 definiu FECHAMENTO e preencheu E4/P4 automaticamente';
+        }
+      }
+
+      const qStatsBefore = statsBefore[quadrilha.id] || null;
+      regraAplicada = buildRegraDidatica({
+        grupo,
+        etapa,
+        posicao,
+        dia,
+        criterioTecnico,
+        qStatsBefore,
+        isFechamentoReserved,
+        isFechamentoAuto
+      });
+
+      st.actionLog.push({ acao: 'registrar', grupo, etapa, numero, quadrilhaId: quadrilha.id, posicao, dia, regra: regraAplicada, dataISO: new Date().toISOString() });
+      st.history.push({ type: 'register', snapshotBefore });
+      if (grupo === 'especial') reconcileEspecialFechamento();
+      app.lastPlacement[grupo] = { etapa, posicao, dia, regra: regraAplicada, quadrilhaNome: quadrilha.nome, numero };
+      saveGroupState(grupo);
+      return { ok: true, quadrilha, destino: { etapa, posicao, dia }, numero, regra: regraAplicada };
+    }
+
+    function undo() {
+      clearError();
+      const st = app.groups[app.activeGroup];
+      const last = st.history.pop();
+      if (!last) return fail('Não há ações para desfazer.');
+      if (last.snapshotBefore) {
+        st.stages = last.snapshotBefore.stages.map((stage) => stage.map((e) => (e ? { ...e } : null)));
+        st.fechamento = last.snapshotBefore.fechamento ? { ...last.snapshotBefore.fechamento } : null;
+        st.actionLog = st.actionLog.slice(0, last.snapshotBefore.actionLogLength);
+      } else {
+        st.stages[last.etapa - 1][last.posicao - 1] = null;
+        st.fechamento = last.fechamentoBefore || null;
+        if (st.actionLog.length) st.actionLog.pop();
+      }
+      const lastAction = st.actionLog[st.actionLog.length - 1];
+      app.lastPlacement[app.activeGroup] = lastAction
+        ? {
+            etapa: lastAction.etapa,
+            posicao: lastAction.posicao,
+            dia: lastAction.dia,
+            regra: lastAction.regra || 'Primeira posição possível',
+            quadrilhaNome: (st.roster.find((q) => q.id === lastAction.quadrilhaId) || {}).nome || '',
+            numero: lastAction.numero
+          }
+        : null;
+      saveGroupState(app.activeGroup);
+      renderUI();
+      return true;
+    }
+
+    function reset() {
+      clearError();
+      if (!window.confirm('Resetar o grupo atual?')) return;
+      const grupo = app.activeGroup;
+      const roster = app.groups[grupo].roster.slice();
+      app.groups[grupo] = createEmptyGroupState(grupo);
+      app.groups[grupo].roster = roster;
+      saveGroupState(grupo);
+      renderUI();
+    }
+
+    function saveGroupState(grupo) {
+      const st = app.groups[grupo];
+      localStorage.setItem(STORAGE_KEYS[grupo], JSON.stringify({
+        stages: st.stages,
+        fechamento: st.fechamento,
+        reservedSlot: st.reservedSlot,
+        actionLog: st.actionLog,
+        history: st.history
+      }));
+    }
+
+    function loadGroupState(grupo) {
+      const raw = localStorage.getItem(STORAGE_KEYS[grupo]);
+      if (!raw) return;
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed && Array.isArray(parsed.stages) && parsed.stages.length === 4) app.groups[grupo].stages = parsed.stages;
+        app.groups[grupo].fechamento = parsed.fechamento || null;
+        app.groups[grupo].actionLog = Array.isArray(parsed.actionLog) ? parsed.actionLog : [];
+        app.groups[grupo].history = Array.isArray(parsed.history) ? parsed.history : [];
+      } catch (_) {}
+      if (grupo === 'especial') {
+        reconcileEspecialFechamento();
+        saveGroupState('especial');
+      }
+      const st = app.groups[grupo];
+      const lastAction = st.actionLog[st.actionLog.length - 1];
+      app.lastPlacement[grupo] = lastAction
+        ? {
+            etapa: lastAction.etapa,
+            posicao: lastAction.posicao,
+            dia: lastAction.dia,
+            regra: lastAction.regra || 'Primeira posição possível',
+            quadrilhaNome: (st.roster.find((q) => q.id === lastAction.quadrilhaId) || {}).nome || '',
+            numero: lastAction.numero
+          }
+        : null;
+    }
+
+    function exportState() {
+      const payload = {
+        schemaVersion: app.schemaVersion,
+        timestamp: new Date().toISOString(),
+        groups: {
+          especial: {
+            stages: app.groups.especial.stages,
+            fechamento: app.groups.especial.fechamento,
+            reservedSlot: app.groups.especial.reservedSlot,
+            actionLog: app.groups.especial.actionLog
+          },
+          acesso: {
+            stages: app.groups.acesso.stages,
+            actionLog: app.groups.acesso.actionLog
+          }
+        },
+        logAcoes: [...app.groups.especial.actionLog, ...app.groups.acesso.actionLog]
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'sorteio-2026-' + new Date().toISOString().replace(/[:.]/g, '-') + '.json';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    function importState(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(String(reader.result || '{}'));
+          if (!data.groups || !data.groups.especial || !data.groups.acesso) throw new Error('JSON inválido');
+          app.groups.especial.stages = data.groups.especial.stages || app.groups.especial.stages;
+          app.groups.especial.fechamento = data.groups.especial.fechamento || null;
+          app.groups.especial.actionLog = data.groups.especial.actionLog || [];
+          app.groups.acesso.stages = data.groups.acesso.stages || app.groups.acesso.stages;
+          app.groups.acesso.actionLog = data.groups.acesso.actionLog || [];
+          saveGroupState('especial');
+          saveGroupState('acesso');
+          renderUI();
+        } catch (err) {
+          fail('Falha ao importar: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function triggerDownload(content, mimeType, filename) {
+      const blob = new Blob([content], { type: mimeType });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        URL.revokeObjectURL(link.href);
+        link.remove();
+      }, 0);
+    }
+
+    function csvEscape(value) {
+      const txt = String(value == null ? '' : value);
+      if (/[;"\n\r,]/.test(txt)) return '"' + txt.replace(/"/g, '""') + '"';
+      return txt;
+    }
+
+    function buildCompleteTableCsv() {
+      const lines = [];
+      lines.push(['grupo', 'etapa', 'posicao', 'dia', 'numero', 'quadrilha', 'quadrilhaId'].map(csvEscape).join(';'));
+      ['especial', 'acesso'].forEach((grupo) => {
+        const st = app.groups[grupo];
+        for (let etapa = 1; etapa <= 4; etapa += 1) {
+          for (let pos = 1; pos <= GROUP_CONFIG[grupo].totalPosicoes; pos += 1) {
+            const entry = st.stages[etapa - 1][pos - 1];
+            const row = [
+              GROUP_CONFIG[grupo].label,
+              etapa,
+              'P' + pos,
+              capitalize(getDiaByPosicao(grupo, pos)),
+              entry ? ('#' + String(entry.numero).padStart(2, '0')) : '',
+              entry ? entry.quadrilhaNome : '',
+              entry ? entry.quadrilhaId : ''
+            ];
+            lines.push(row.map(csvEscape).join(';'));
+          }
+        }
+      });
+      return lines.join('\n');
+    }
+
+    function getRulesForAudit() {
+      return {
+        especial: [
+          'Etapa 1 sequencial (P1..P15).',
+          'P4 da Etapa 1 define FECHAMENTO e reserva E4/P4.',
+          'Sem repeticao da mesma quadrilha na etapa.',
+          'Sem repetir sexta (exceto FECHAMENTO em E4/P4).',
+          'Maximo 2 em sabado e 2 em domingo por quadrilha.',
+          'Comeco = duas primeiras apresentacoes de cada dia; maximo 2 por quadrilha.',
+          'Abertura do dia (P1, P5, P11) no maximo 1 por quadrilha.',
+          'Checagem de viabilidade global para evitar travamento.',
+          'Cotas globais: extras sabado <= 9 e domingo <= 5.'
+        ],
+        acesso: [
+          'Sorteio simples por numero.',
+          'Etapa 1 sequencial (P1..P12).',
+          'Demais etapas: primeira posicao livre da etapa.',
+          'Sem regras extras de viabilidade no Acesso.'
+        ]
+      };
+    }
+
+    function buildAuditPayload() {
+      const nowIso = new Date().toISOString();
+      const statsEspecial = computeStats('especial');
+      const statsAcesso = computeStats('acesso');
+      const mergedLog = [...app.groups.especial.actionLog, ...app.groups.acesso.actionLog]
+        .slice()
+        .sort((a, b) => String(a.dataISO || '').localeCompare(String(b.dataISO || '')))
+        .map((item, idx) => ({ ordem: idx + 1, ...item }));
+
+      return {
+        schemaVersion: app.schemaVersion,
+        geradoEm: nowIso,
+        regras: getRulesForAudit(),
+        grupos: {
+          especial: {
+            roster: app.groups.especial.roster,
+            fechamento: app.groups.especial.fechamento,
+            reservedSlot: app.groups.especial.reservedSlot,
+            stages: app.groups.especial.stages,
+            stats: statsEspecial,
+            actionLog: app.groups.especial.actionLog
+          },
+          acesso: {
+            roster: app.groups.acesso.roster,
+            stages: app.groups.acesso.stages,
+            stats: statsAcesso,
+            actionLog: app.groups.acesso.actionLog
+          }
+        },
+        logAcoes: mergedLog
+      };
+    }
+
+    function downloadCompleteTable() {
+      const csv = buildCompleteTableCsv();
+      const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+      triggerDownload('\ufeff' + csv, 'text/csv;charset=utf-8', 'tabela-completa-sorteio-2026-' + stamp + '.csv');
+    }
+
+    function downloadAuditReport() {
+      const payload = buildAuditPayload();
+      const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+      triggerDownload(JSON.stringify(payload, null, 2), 'application/json', 'auditoria-sorteio-2026-' + stamp + '.json');
+    }
+    function renderTabs() {
+      const tabs = document.getElementById('tabs');
+      tabs.innerHTML = '';
+      ['especial', 'acesso'].forEach((grupo) => {
+        const btn = document.createElement('button');
+        btn.className = 'sorteio-tab' + (app.activeGroup === grupo ? ' active' : '');
+        btn.textContent = GROUP_CONFIG[grupo].label;
+        btn.type = 'button';
+        btn.addEventListener('click', () => { app.activeGroup = grupo; clearError(); renderUI(); });
+        tabs.appendChild(btn);
+      });
+    }
+
+    function renderStageList() {
+      const wrap = document.getElementById('stageList');
+      wrap.innerHTML = '';
+      for (let etapa = 1; etapa <= 4; etapa += 1) {
+        const btn = document.createElement('button');
+        btn.className = 'stage-btn' + (app.activeStage[app.activeGroup] === etapa ? ' active' : '');
+        btn.type = 'button';
+        btn.textContent = 'Etapa ' + etapa;
+        btn.addEventListener('click', () => {
+          app.activeStage[app.activeGroup] = etapa;
+          renderUI();
+        });
+        wrap.appendChild(btn);
+      }
+    }
+
+    function renderRosterList() {
+      const wrap = document.getElementById('rosterList');
+      wrap.innerHTML = app.groups[app.activeGroup].roster.map((q) =>
+        '<div class="roster-item"><img class="mini-logo" src="' + q.logo + '" alt="" onerror="this.style.visibility=\'hidden\'"><strong>#' + String(q.numero).padStart(2, '0') + '</strong> ' + q.nome + '</div>'
+      ).join('');
+    }
+
+    function renderStatus() {
+      const grupo = app.activeGroup;
+      const summary = document.getElementById('statusSummary');
+      const badges = document.getElementById('statusBadges');
+      const lastRuleBox = document.getElementById('lastRuleBox');
+      const stats = computeStats(grupo);
+      badges.innerHTML = '';
+      if (grupo === 'especial') {
+        const ex = calcExtrasEspecial(stats);
+        const aberturaViolacoes = app.groups.especial.roster.filter((q) => (stats[q.id] && stats[q.id].aberturaDia > 1)).length;
+        summary.textContent = app.groups.especial.fechamento
+          ? 'Fechamento: #' + app.groups.especial.fechamento.numero + ' - ' + app.groups.especial.fechamento.nome + ' (reservado E4 / Sexta / P4)'
+          : 'Fechamento: será definido ao finalizar a Etapa 1 (P4).';
+        addBadge(badges, 'info', 'Extras sábado: ' + ex.sab + ' / 9');
+        addBadge(badges, 'info', 'Extras domingo: ' + ex.dom + ' / 5');
+        addBadge(badges, aberturaViolacoes === 0 ? 'ok' : 'warn', 'Abertura (máx 1): ' + (aberturaViolacoes === 0 ? 'OK' : (aberturaViolacoes + ' conflito(s)')));
+        addBadge(badges, viabilityCheckEspecial().ok ? 'ok' : 'warn', viabilityCheckEspecial().ok ? 'Viabilidade OK' : 'Atenção de viabilidade');
+      } else {
+        summary.textContent = 'Acesso: sorteio simples por número. A cada registro, preenche a próxima posição livre da etapa ativa.';
+        addBadge(badges, 'info', 'Sem regras extras no Acesso');
+      }
+
+      const last = app.lastPlacement[grupo];
+      if (!last) {
+        lastRuleBox.textContent = 'Última alocação: -';
+      } else {
+        lastRuleBox.innerHTML =
+          '<strong>Última alocação:</strong> Etapa ' + last.etapa + ' • P' + last.posicao + ' • ' + capitalize(last.dia) +
+          ' • #' + String(last.numero).padStart(2, '0') + ' - ' + last.quadrilhaNome +
+          '<br><strong>Regra aplicada:</strong> ' + (last.regra || 'Primeira posição possível');
+      }
+    }
+
+    function getEspecialBlockReason(quadrilha, etapa, posicao, stats, firstPossiblePos) {
+      const st = app.groups.especial;
+      const statsMap = stats || computeStats('especial');
+      const s = statsMap[quadrilha.id] || { sexta: 0, sabado: 0, domingo: 0, comeco: 0, final: 0, inicioDia: 0, aberturaDia: 0 };
+      const dia = getDiaByPosicao('especial', posicao);
+      const isFech = st.fechamento && st.fechamento.id === quadrilha.id;
+
+      if (st.stages[etapa - 1][posicao - 1]) return 'slot ocupado';
+      if (hasQuadrilhaNaEtapa('especial', etapa, quadrilha.id)) return 'ja na etapa';
+      if (etapa === 4 && posicao === 4 && !isFech) return 'slot reservado';
+      if (etapa === 4 && isFech && posicao !== 4) return 'fechamento P4';
+      if (dia === 'sexta' && s.sexta > 0 && !(etapa === 4 && posicao === 4 && isFech)) return 'sexta repetida';
+      if (dia === 'sabado' && s.sabado >= 2) return 'sabado limite';
+      if (dia === 'domingo' && s.domingo >= 2) return 'domingo limite';
+      if (isDayOpener('especial', posicao) && s.aberturaDia >= 1) return 'abertura usada';
+      if (firstPossiblePos == null) return 'sem viabilidade';
+      if (posicao < firstPossiblePos) return 'viabilidade global';
+      return 'ordem vaga';
+    }
+
+    function getSlotHints(grupo, etapa, quadrilha) {
+      const st = app.groups[grupo];
+      const hints = {};
+      if (!quadrilha) return hints;
+
+      const emptyPositions = [];
+      for (let p = 1; p <= GROUP_CONFIG[grupo].totalPosicoes; p += 1) {
+        if (!st.stages[etapa - 1][p - 1]) emptyPositions.push(p);
+      }
+
+      if (grupo === 'acesso' || etapa === 1) {
+        const first = emptyPositions.length ? emptyPositions[0] : null;
+        emptyPositions.forEach((p) => {
+          if (p === first) hints[p] = { candidate: true, reason: '' };
+          else hints[p] = { candidate: false, reason: 'ordem etapa' };
+        });
+        return hints;
+      }
+
+      let firstPossible = null;
+      const statsEspecial = computeStats('especial');
+      const suggested = suggestSlotEspecial(quadrilha, etapa);
+      if (suggested) firstPossible = suggested.posicao;
+      for (let i = 0; i < emptyPositions.length; i += 1) {
+        const p = emptyPositions[i];
+        const reason = p === firstPossible ? '' : getEspecialBlockReason(quadrilha, etapa, p, statsEspecial, firstPossible);
+        hints[p] = { candidate: false, reason };
+      }
+      if (firstPossible !== null) hints[firstPossible] = { candidate: true, reason: '' };
+      return hints;
+    }
+
+    function renderSlotItem(grupo, etapa, posicao, entry, hint) {
+      const dia = getDiaByPosicao(grupo, posicao);
+      const isLocked = grupo === 'especial' && etapa === 4 && posicao === 4 && !entry;
+      const isLast = app.lastPlacement[grupo] && app.lastPlacement[grupo].etapa === etapa && app.lastPlacement[grupo].posicao === posicao;
+      if (!entry) {
+        const reason = hint && hint.reason ? hint.reason : '';
+        const candidate = hint && hint.candidate;
+        const cls = 'slot-item ' + (isLocked ? 'locked ' : '') + (candidate ? 'candidate ' : '') + (reason ? 'blocked ' : '') + (isLast ? 'slot-last' : '');
+        const secondary = candidate
+          ? '<div class="slot-candidate">posicao possivel</div>'
+          : (reason ? '<div class="slot-reason">bloq: ' + reason + '</div>' : '');
+        return '<li class="' + cls.trim() + '" data-slot="' + etapa + '-' + posicao + '"><div class="slot-top"><span>P' + posicao + '</span><span>' + capitalize(dia) + '</span></div><div class="slot-main">' + (isLocked ? '<span class="lock">Reservado FECHAMENTO</span>' : '<span class="muted">Vazio</span>') + '</div>' + secondary + '</li>';
+      }
+      return '<li class="slot-item filled' + (isLast ? ' slot-last' : '') + '" data-slot="' + etapa + '-' + posicao + '"><div class="slot-top"><span>P' + posicao + '</span><span>' + capitalize(dia) + '</span></div><div class="slot-main"><img class="mini-logo" src="' + entry.quadrilhaLogo + '" alt="" onerror="this.style.visibility=\'hidden\'"><span>#' + String(entry.numero).padStart(2, '0') + ' - ' + entry.quadrilhaNome + '</span></div></li>';
+    }
+
+    function addBadge(container, type, text) {
+      const el = document.createElement('span');
+      el.className = 'badge ' + type;
+      el.textContent = text;
+      container.appendChild(el);
+    }
+
+    function renderDayColumns() {
+      const grupo = app.activeGroup;
+      const etapa = app.activeStage[grupo];
+      const stage = app.groups[grupo].stages[etapa - 1];
+      const days = getDaysForGroup(grupo);
+      const input = document.getElementById('drawNumber');
+      const n = input ? Number(input.value) : NaN;
+      const selectedQuadrilha = Number.isInteger(n) ? getQuadrilhaByNumero(grupo, n) : null;
+      const hints = getSlotHints(grupo, etapa, selectedQuadrilha);
+      const wrap = document.getElementById('dayColumns');
+      wrap.className = 'day-columns' + (days.length === 2 ? ' two-days' : '');
+      wrap.innerHTML = '';
+
+      days.forEach((dia) => {
+        const positions = positionsForDay(grupo, dia);
+        const list = positions.map((pos) => renderSlotItem(grupo, etapa, pos, stage[pos - 1], hints[pos])).join('');
+        const card = document.createElement('article');
+        card.className = 'day-card';
+        card.innerHTML = '<h3 class="day-title">' + capitalize(dia) + '</h3><ul class="slot-list">' + list + '</ul>';
+        wrap.appendChild(card);
+      });
+    }
+
+    function renderCompleteTable() {
+      const grupo = app.activeGroup;
+      const wrap = document.getElementById('completeTableWrap');
+      const btn = document.getElementById('fullTableBtn');
+      const opened = !!app.showCompleteTable[grupo];
+      if (btn) btn.textContent = opened ? 'Fechar tabela completa' : 'Tabela completa';
+      wrap.classList.toggle('is-hidden', !opened);
+      if (!opened) {
+        wrap.innerHTML = '';
+        return;
+      }
+
+      const days = getDaysForGroup(grupo);
+      const st = app.groups[grupo];
+      let html = '<div class="complete-table-grid">';
+      for (let etapa = 1; etapa <= 4; etapa += 1) {
+        html += '<article class="complete-stage-card">';
+        html += '<h3 class="complete-stage-title">Etapa ' + etapa + '</h3>';
+        html += '<div class="complete-day-columns' + (days.length === 2 ? ' two-days' : '') + '">';
+        for (let d = 0; d < days.length; d += 1) {
+          const dia = days[d];
+          const positions = positionsForDay(grupo, dia);
+          const list = positions.map((pos) => renderSlotItem(grupo, etapa, pos, st.stages[etapa - 1][pos - 1], null)).join('');
+          html += '<article class="day-card"><h4 class="day-title">' + capitalize(dia) + '</h4><ul class="slot-list">' + list + '</ul></article>';
+        }
+        html += '</div></article>';
+      }
+      html += '</div>';
+      wrap.innerHTML = html;
+    }
+
+    function updatePreviewAndHints() {
+      const grupo = app.activeGroup;
+      const input = document.getElementById('drawNumber');
+      const hint = document.getElementById('rangeHint');
+      const preview = document.getElementById('previewBox');
+      hint.textContent = 'Faixa valida: 1 a ' + GROUP_CONFIG[grupo].totalQuadrilhas;
+      const n = Number(input.value);
+      if (!Number.isInteger(n)) {
+        preview.textContent = 'Digite um numero para visualizar a quadrilha.';
+        renderDayColumns();
+        return;
+      }
+      const q = getQuadrilhaByNumero(grupo, n);
+      if (!q) {
+        preview.textContent = 'Numero fora da faixa.';
+        renderDayColumns();
+        return;
+      }
+      preview.innerHTML = '<img class="mini-logo" src="' + q.logo + '" alt="" onerror="this.style.visibility=\'hidden\'"><span>#' + String(q.numero).padStart(2, '0') + ' - ' + q.nome + '</span>';
+      renderDayColumns();
+    }
+
+    function handleNumeroInput() {
+      if (app.inputDebounceTimer) clearTimeout(app.inputDebounceTimer);
+      app.inputDebounceTimer = setTimeout(updatePreviewAndHints, 90);
+    }
+
+    function setDrawLocked(locked) {
+      app.drawBusy = Boolean(locked);
+      document.querySelector('.sorteio-portal').classList.toggle('inputs-locked', app.drawBusy);
+      ['drawNumber', 'registerBtn', 'undoBtn', 'resetBtn', 'fullTableBtn', 'downloadTableBtn', 'downloadAuditBtn'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = app.drawBusy;
+      });
+    }
+
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    async function runRevealSequence(payload) {
+      return Promise.resolve(payload);
+    }
+
+    function highlightSlot(etapa, posicao) {
+      const item = document.querySelector('[data-slot="' + etapa + '-' + posicao + '"]');
+      if (!item) return;
+      item.classList.add('slot-hit');
+      item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => item.classList.remove('slot-hit'), 2200);
+    }
+
+    async function onRegister() {
+      if (app.drawBusy) return;
+      const numero = Number(document.getElementById('drawNumber').value);
+      const result = registrarSorteio(numero);
+      if (!result || !result.ok) return;
+      setDrawLocked(true);
+      await runRevealSequence(result);
+      renderUI();
+      highlightSlot(result.destino.etapa, result.destino.posicao);
+      setDrawLocked(false);
+      document.getElementById('drawNumber').focus();
+      document.getElementById('drawNumber').select();
+    }
+
+    function setGrupoAtivo(grupo) {
+      app.activeGroup = grupo;
+      clearError();
+      renderUI();
+    }
+
+    function setEtapaAtiva(etapa) {
+      app.activeStage[app.activeGroup] = etapa;
+      renderUI();
+    }
+
+    function renderUI() {
+      renderTabs();
+      renderStageList();
+      renderDayColumns();
+      renderRosterList();
+      renderStatus();
+      renderCompleteTable();
+      document.getElementById('activeStageLabel').textContent = 'Etapa ' + app.activeStage[app.activeGroup];
+      handleNumeroInput();
+    }
+
+    function fail(msg) {
+      showError(msg);
+      return { ok: false };
+    }
+
+    function capitalize(v) {
+      return v ? v.charAt(0).toUpperCase() + v.slice(1) : '';
+    }
+
+    function showError(msg) {
+      document.getElementById('errorBox').innerHTML = '<div class="alert">' + msg + '</div>';
+    }
+
+    function clearError() {
+      document.getElementById('errorBox').innerHTML = '';
+    }
+
+    function bindEvents() {
+      document.getElementById('drawNumber').addEventListener('input', handleNumeroInput);
+      document.getElementById('drawNumber').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); onRegister(); } });
+      document.getElementById('registerBtn').addEventListener('click', onRegister);
+      document.getElementById('undoBtn').addEventListener('click', () => undo());
+      document.getElementById('resetBtn').addEventListener('click', () => reset());
+      document.getElementById('fullTableBtn').addEventListener('click', () => {
+        const grupo = app.activeGroup;
+        app.showCompleteTable[grupo] = !app.showCompleteTable[grupo];
+        renderCompleteTable();
+      });
+      document.getElementById('downloadTableBtn').addEventListener('click', downloadCompleteTable);
+      document.getElementById('downloadAuditBtn').addEventListener('click', downloadAuditReport);
+    }
+
+    async function init() {
+      try {
+        await Promise.all([buildRoster('especial'), buildRoster('acesso')]);
+        loadGroupState('especial');
+        loadGroupState('acesso');
+        bindEvents();
+        renderUI();
+      } catch (err) {
+        showError('Erro ao iniciar: ' + err.message);
+      }
+    }
+
+    init();
+
+  </script>
+
+  <footer class="site-footer" aria-label="Rodapé">
+    <div class="container footer-grid">
+      <div class="footer-col footer-brand">
+        <div class="logo">
+          <img src="/assets/logos/linq-dfe.png" alt="LINQ-DFE">
+          <span class="logo-text">LINQ-DFE</span>
+        </div>
+        <p>Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/linqdfe" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Institucional</h3>
+        <ul class="footer-links">
+          <li><a href="/index.html">Inicial</a></li>
+          <li><a href="/diretoria.html">Diretoria</a></li>
+          <li><a href="/documentos.html">Documentos</a></li>
+          <li><a href="/portal.html">Portal da Liga</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Circuito</h3>
+        <ul class="footer-links">
+          <li><a href="/circuito.html">Circuito de Quadrilhas</a></li>
+          <li><a href="/grupo-especial.html">Grupo Especial</a></li>
+          <li><a href="/grupo-acesso.html">Grupo de Acesso</a></li>
+          <li><a href="/temporada-2025.html">Ranking e resultados 2025</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Conteúdo</h3>
+        <ul class="footer-links">
+          <li><a href="/quadrilhas.html">Quadrilhas</a></li>
+          <li><a href="/noticias.html">Notícias</a></li>
+          <li><a href="/acervo.html">Acervo</a></li>
+          <li><a href="/sitemap.xml">Sitemap</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+    </div>
+  </footer>
+</body>
+</html>
