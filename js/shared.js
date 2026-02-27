@@ -332,9 +332,9 @@ function setupInstitutionalMenuLinks() {
 
   const links = [
     { href: `${prefix}calendario-temporada.html`, label: "Temporada" },
-    { href: `${prefix}pre-junino/`, label: "Pré São João" },
     { href: `${prefix}trofeu-quadrilheiro/`, label: "Troféu Quadrilheiro" },
     { href: `${prefix}bloco-arriuna/`, label: "Bloco Arriúna" },
+    { href: `${prefix}pre-junino/`, label: "Esquenta São João" },
     { href: `${prefix}confebraq.html`, label: "CONFEBRAQ" },
   ];
 
@@ -371,9 +371,9 @@ function normalizeMainMenu() {
     { href: `${prefix}noticias.html`, label: "Notícias" },
     { href: `${prefix}diretoria.html`, label: "Diretoria" },
     { href: `${prefix}calendario-temporada.html`, label: "Temporada" },
-    { href: `${prefix}pre-junino/`, label: "Pré São João" },
     { href: `${prefix}trofeu-quadrilheiro/`, label: "Troféu Quadrilheiro" },
     { href: `${prefix}bloco-arriuna/`, label: "Bloco Arriúna" },
+    { href: `${prefix}pre-junino/`, label: "Esquenta São João" },
     { href: `${prefix}confebraq.html`, label: "CONFEBRAQ" },
     { href: `${prefix}portal.html`, label: "Portal da Liga" },
   ];
