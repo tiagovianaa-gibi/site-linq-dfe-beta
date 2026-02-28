@@ -41,21 +41,27 @@
       margin: 0;
       display: flex;
       justify-content: flex-end;
+      align-items: center;
     }
 
     .pre-sao-joao-logo {
       width: min(420px, 100%);
+      height: min(420px, 60vw);
       max-width: 420px;
-      height: auto;
+      max-height: 420px;
       display: block;
-      transform: scale(1.2);
-      transform-origin: center right;
+      object-fit: contain;
+      object-position: center;
       filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
     }
 
     @media (max-width: 900px) {
       .pre-sao-joao-logo-wrap {
         justify-content: flex-start;
+      }
+
+      .pre-sao-joao-logo {
+        height: min(320px, 70vw);
       }
     }
   </style>
@@ -98,7 +104,7 @@
             </div>
           </div>
           <div class="pre-sao-joao-logo-wrap">
-            <img class="pre-sao-joao-logo" src="../assets/logos/pre-sao-joao.png" alt="Logo do Esquenta São João" />
+            <img class="pre-sao-joao-logo" src="../assets/logos/esquenta-sao-joao.png" alt="Logo do Esquenta São João" />
           </div>
         </div>
       </div>

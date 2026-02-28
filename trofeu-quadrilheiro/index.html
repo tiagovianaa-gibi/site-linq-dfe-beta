@@ -41,21 +41,27 @@
       margin: 0;
       display: flex;
       justify-content: flex-end;
+      align-items: center;
     }
 
     .trofeu-logo {
       width: min(420px, 100%);
+      height: min(420px, 60vw);
       max-width: 420px;
-      height: auto;
+      max-height: 420px;
       display: block;
-      transform: scale(1.2);
-      transform-origin: center right;
+      object-fit: contain;
+      object-position: center;
       filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
     }
 
     @media (max-width: 900px) {
       .trofeu-logo-wrap {
         justify-content: flex-start;
+      }
+
+      .trofeu-logo {
+        height: min(320px, 70vw);
       }
     }
   </style>
