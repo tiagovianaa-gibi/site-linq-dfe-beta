@@ -840,7 +840,8 @@ const firebaseConfig = window.RUNTIME_CONFIG.firebase;
         id: data.id || null,
         seo: data.seo || { metaTitle: "", metaDescription: "", keywords: [] },
       });
-      if (els.draftBanner) els.draftBanner.hidden = false;
+      // Mantem recuperacao do rascunho sem exibir o aviso visual.
+      if (els.draftBanner) els.draftBanner.hidden = true;
     } catch (err) {
       console.warn("Draft parse failed", err);
     }

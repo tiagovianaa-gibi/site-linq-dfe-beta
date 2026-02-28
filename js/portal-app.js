@@ -521,6 +521,14 @@ const statQuadrilhasAcesso = document.getElementById("statQuadrilhasAcesso");
 
 const statFinanceiroDebito = document.getElementById("statFinanceiroDebito");
 
+// Home dashboard: hide cards de documentos e financeiro
+[statDocsOk, statFinanceiroDebito].forEach((el) => {
+  const card = el?.closest("article.card");
+  if (card) {
+    card.style.display = "none";
+  }
+});
+
 
 
 
@@ -1245,6 +1253,12 @@ const newsForm = document.getElementById("newsForm");
 
 
 const newsFormMessage = document.getElementById("newsFormMessage");
+
+const newsDraftBanner = document.getElementById("newsDraftBanner");
+
+if (newsDraftBanner) {
+  newsDraftBanner.hidden = true;
+}
 
 
 
