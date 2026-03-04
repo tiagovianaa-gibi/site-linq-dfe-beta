@@ -375,6 +375,7 @@ function normalizeMainMenu() {
     { href: `${prefix}bloco-arriuna/`, label: "Bloco Arriúna" },
     { href: `${prefix}pre-junino/`, label: "Esquenta São João" },
     { href: `${prefix}confebraq.html`, label: "CONFEBRAQ" },
+    { href: `${prefix}inscricao-avaliadores-2026.html`, label: "Inscrição Avaliadores" },
     { href: `${prefix}portal.html`, label: "Portal da Liga" },
   ];
 
@@ -734,8 +735,6 @@ export function normalizeImageUrl(value, fallback = '') {
   // Codifica espa?õos e caracteres especiais sem quebrar slashes
   return encodeURI(clean);
 }
-
-
 
 
 
