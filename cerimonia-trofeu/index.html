@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Troféu Quadrilheiro</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <main id="stage" aria-label="Apresentação do Troféu Quadrilheiro">
+    <canvas id="stars-canvas"></canvas>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="luzes luz-a"></div>
+    <div class="luzes luz-b"></div>
+    <div class="luzes luz-c"></div>
+
+    <header class="varal" aria-hidden="true">
+      <div class="corda"></div>
+      <div class="bandeirolas" id="bandeirolas-container"></div>
+    </header>
+
+    <div id="safe-zone">
+      <div class="moldura-palco"></div>
+      <section id="presentation"></section>
+    </div>
+
+    <div class="controls no-print">
+      <button id="btn-prev" type="button" aria-label="Slide anterior">◀</button>
+      <div id="slide-counter">1 / 1</div>
+      <button id="btn-next" type="button" aria-label="Próximo slide">▶</button>
+      <button id="fullscreen-btn" type="button" aria-label="Tela cheia">⛶</button>
+    </div>
+
+    <div id="hint" class="no-print">Enter, espaço ou seta para avançar</div>
+  </main>
+
+  <script src="./js/script.js?v=20260319g"></script>
+</body>
+</html>

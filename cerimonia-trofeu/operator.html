@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operação · Troféu Quadrilheiro</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="./css/operator.css" />
+</head>
+<body>
+  <main class="operator-shell">
+    <aside class="operator-panel">
+      <header class="operator-header">
+        <p class="operator-kicker">Painel de operação</p>
+        <h1>Controle da premiação</h1>
+        <p class="operator-copy">Navegue pelos quesitos, ajuste o formato da tela e refine cada foto em tempo real.</p>
+      </header>
+
+      <section class="operator-section">
+        <div class="section-title">Formato do palco</div>
+        <label class="control-field">
+          <span>Proporção</span>
+          <select id="stage-ratio">
+            <option value="auto">Automático</option>
+            <option value="16:9">16:9</option>
+            <option value="8:3">8:3</option>
+            <option value="4:3">4:3</option>
+          </select>
+        </label>
+        <label class="control-field">
+          <span>Largura do palco <output id="stage-width-value">100%</output></span>
+          <input id="stage-width" type="range" min="40" max="100" step="1" value="100" />
+        </label>
+        <label class="control-field">
+          <span>Altura do palco <output id="stage-height-value">100%</output></span>
+          <input id="stage-height" type="range" min="40" max="100" step="1" value="100" />
+        </label>
+      </section>
+
+      <section class="operator-section">
+        <div class="section-title">Navegação</div>
+        <div class="quick-actions">
+          <button id="go-cover" type="button" class="ghost-btn">Capa</button>
+          <button id="go-current-preview" type="button" class="ghost-btn">Atualizar preview</button>
+        </div>
+        <div id="slide-current" class="current-slide">Carregando apresentação...</div>
+        <div id="quesitos-menu" class="quesitos-menu"></div>
+      </section>
+
+      <section class="operator-section">
+        <div class="section-title">Fotos do slide</div>
+        <div id="photo-controls" class="photo-controls">
+          <p class="empty-state">Selecione um slide com fotos para editar.</p>
+        </div>
+      </section>
+    </aside>
+
+    <section class="operator-preview">
+      <div class="preview-frame">
+        <iframe id="presentation-preview" src="./index.html?operator-preview=1" title="Preview da apresentação"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/operator.js?v=20260319b"></script>
+</body>
+</html>

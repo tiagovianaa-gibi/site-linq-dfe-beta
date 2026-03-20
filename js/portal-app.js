@@ -521,8 +521,8 @@ const statQuadrilhasAcesso = document.getElementById("statQuadrilhasAcesso");
 
 const statFinanceiroDebito = document.getElementById("statFinanceiroDebito");
 
-// Home dashboard: hide cards de documentos e financeiro
-[statDocsOk, statFinanceiroDebito].forEach((el) => {
+// Home dashboard: hide only the documentos card
+[statDocsOk].forEach((el) => {
   const card = el?.closest("article.card");
   if (card) {
     card.style.display = "none";
