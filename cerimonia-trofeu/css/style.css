@@ -2075,14 +2075,6 @@ body.preview-embedded #hint {
   display: none;
 }
 
-#fullscreen-btn {
-  width: 40px;
-  height: 40px;
-  background: rgba(29, 11, 9, 0.82);
-  border: 1px solid rgba(245, 197, 90, 0.18);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.26);
-}
-
 #slide-counter {
   min-width: 90px;
   text-align: center;

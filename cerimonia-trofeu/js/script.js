@@ -1106,13 +1106,37 @@ const SCREEN_RATIO_TOLERANCE = 0.04;
 const container = document.getElementById('presentation');
 const counter = document.getElementById('slide-counter');
 const stage = document.getElementById('stage');
+const soundtrack = document.getElementById('presentation-audio');
 const operatorPreviewMode = new URLSearchParams(window.location.search).has('operator-preview');
+const SOUNDTRACK_VOLUME = 0.72;
+let soundtrackEnabled = !operatorPreviewMode;
 
 if (operatorPreviewMode) {
   document.body.classList.add('preview-embedded');
 }
 
 operatorConfig = getOperatorConfig();
+
+async function tryPlaySoundtrack() {
+  if (!soundtrack || operatorPreviewMode || !soundtrackEnabled) {
+    return false;
+  }
+
+  soundtrack.volume = SOUNDTRACK_VOLUME;
+  soundtrack.loop = true;
+
+  try {
+    await soundtrack.play();
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+function pauseSoundtrack() {
+  if (!soundtrack) return;
+  soundtrack.pause();
+}
 
 function parseRatio(value) {
   if (!value || value === 'auto') return null;
@@ -1323,6 +1347,7 @@ function renderSlide(item) {
 function goTo(index) {
   if (index < 0 || index >= slides.length) return;
 
+  void tryPlaySoundtrack();
   stopConfetti();
 
   const anterior = container.querySelector('.slide.active');
@@ -1370,15 +1395,9 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-document.getElementById('fullscreen-btn').addEventListener('click', async () => {
-  if (!document.fullscreenElement) {
-    try {
-      await document.documentElement.requestFullscreen();
-    } catch (_) {}
-  } else {
-    document.exitFullscreen();
-  }
-});
+document.addEventListener('pointerdown', () => {
+  void tryPlaySoundtrack();
+}, { passive: true });
 
 const starsCanvas = document.getElementById('stars-canvas');
 const starsCtx = starsCanvas.getContext('2d');

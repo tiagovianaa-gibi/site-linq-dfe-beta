@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Troféu Quadrilheiro</title>
   <link rel="icon" href="data:," />
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/style.css?v=20260320a" />
 </head>
 <body>
   <main id="stage" aria-label="Apresentação do Troféu Quadrilheiro">
@@ -26,16 +26,19 @@
       <section id="presentation"></section>
     </div>
 
+    <audio id="presentation-audio" loop preload="auto" playsinline>
+      <source src="./imgens/elementos/trilha/sao-joao-da-liga.wav" type="audio/wav" />
+    </audio>
+
     <div class="controls no-print">
       <button id="btn-prev" type="button" aria-label="Slide anterior">◀</button>
       <div id="slide-counter">1 / 1</div>
       <button id="btn-next" type="button" aria-label="Próximo slide">▶</button>
-      <button id="fullscreen-btn" type="button" aria-label="Tela cheia">⛶</button>
     </div>
 
     <div id="hint" class="no-print">Enter, espaço ou seta para avançar</div>
   </main>
 
-  <script src="./js/script.js?v=20260319g"></script>
+  <script src="./js/script.js?v=20260320a"></script>
 </body>
 </html>
