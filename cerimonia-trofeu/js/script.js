@@ -895,7 +895,6 @@ function renderCardPalmares(q) {
   return `
     <article class="palmares-card">
       <div class="palmares-card-topo">
-        <div class="palmares-ordem">Q${q.numero}</div>
         <h3>${q.icon} ${linhas.join(' ')}</h3>
       </div>
       <div class="palmares-card-corpo">
