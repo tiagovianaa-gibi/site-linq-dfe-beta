@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2LS730BX44"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-2LS730BX44');
+  </script>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logos/linq-dfe.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logos/linq-dfe.png" />
+  <link rel="apple-touch-icon" href="assets/logos/linq-dfe.png" />
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Language" content="pt-BR" />
+  <title>Fotos da Temporada | LINQ-DFE</title>
+  <meta
+    name="description"
+    content="Galerias oficiais de fotos da temporada da LINQ-DFE, com links para eventos especiais e registros do circuito."
+  />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://linqdfe.com.br/fotos.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Fotos da Temporada | LINQ-DFE" />
+  <meta
+    property="og:description"
+    content="Galerias oficiais de fotos da temporada da LINQ-DFE, com links para eventos especiais e registros do circuito."
+  />
+  <meta property="og:url" content="https://linqdfe.com.br/fotos.html" />
+  <meta property="og:image" content="https://linqdfe.com.br/assets/noticias/bloco-arriuna.jpg" />
+  <meta property="og:site_name" content="LINQ-DFE" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fotos da Temporada | LINQ-DFE" />
+  <meta
+    name="twitter:description"
+    content="Galerias oficiais de fotos da temporada da LINQ-DFE, com links para eventos especiais e registros do circuito."
+  />
+  <meta name="twitter:image" content="https://linqdfe.com.br/assets/noticias/bloco-arriuna.jpg" />
+
+  <link rel="stylesheet" href="css/style.min.css" />
+  <style>
+    .fotos-hero-grid {
+      align-items: center;
+    }
+
+    .fotos-hero-panel {
+      display: grid;
+      gap: var(--spacing-sm);
+      padding: clamp(1.1rem, 2vw, 1.5rem);
+      border-radius: 24px;
+      border: 1px solid rgba(17, 24, 39, 0.08);
+      background:
+        radial-gradient(circle at top right, rgba(211, 47, 47, 0.12), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(245, 124, 0, 0.12), transparent 30%),
+        rgba(255, 255, 255, 0.92);
+      box-shadow: 0 18px 40px rgba(17, 24, 39, 0.08);
+    }
+
+    .fotos-hero-stat {
+      padding: 0.95rem 1rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .fotos-hero-stat strong {
+      display: block;
+      font-size: 1.1rem;
+      line-height: 1.1;
+      color: var(--text-primary);
+    }
+
+    .fotos-hero-stat span {
+      display: block;
+      margin-top: 0.35rem;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    .fotos-gallery-section {
+      padding-top: 0;
+    }
+
+    .fotos-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-lg);
+    }
+
+    .foto-album-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      min-height: 100%;
+      padding: clamp(1.15rem, 2vw, 1.45rem);
+      border-radius: 22px;
+      border: 1px solid rgba(17, 24, 39, 0.08);
+      background: var(--bg-card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .foto-album-card--highlight {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.98)),
+        radial-gradient(circle at top right, rgba(22, 163, 74, 0.08), transparent 34%);
+    }
+
+    .foto-album-card--pending {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95)),
+        radial-gradient(circle at top right, rgba(249, 115, 22, 0.08), transparent 34%);
+    }
+
+    .foto-album-card--pending {
+      display: none;
+    }
+
+    .foto-album-card--archive {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.98)),
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 34%);
+    }
+
+    .foto-album-topo {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .foto-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.06);
+      color: var(--text-secondary);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .foto-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .foto-status--live {
+      background: rgba(22, 163, 74, 0.12);
+      color: #166534;
+    }
+
+    .foto-status--pending {
+      background: rgba(249, 115, 22, 0.12);
+      color: #9a3412;
+    }
+
+    .foto-status--archive {
+      background: rgba(59, 130, 246, 0.12);
+      color: #1d4ed8;
+    }
+
+    .foto-album-card h3 {
+      font-size: 1.2rem;
+      line-height: 1.2;
+    }
+
+    .foto-album-meta {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .foto-album-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn.is-disabled {
+      pointer-events: none;
+      opacity: 0.72;
+    }
+
+    .fotos-note {
+      margin-top: var(--spacing-lg);
+      padding: 1rem 1.1rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 900px) {
+      .fotos-hero-panel {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conte&uacute;do</a>
+  <nav>
+    <div class="container">
+      <div class="logo">
+        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+        <span class="logo-text">LINQ-DFE</span>
+      </div>
+      <ul>
+        <li><a href="index.html">Inicial</a></li>
+        <li><a href="circuito.html">Circuito</a></li>
+        <li><a href="quadrilhas.html">Quadrilhas</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+        <li><a href="noticias.html">Not&iacute;cias</a></li>
+        <li><a href="diretoria.html">Diretoria</a></li>
+        <li><a href="calendario-temporada.html">Temporada</a></li>
+        <li><a href="trofeu-quadrilheiro/">Trof&eacute;u Quadrilheiro</a></li>
+        <li><a href="bloco-arriuna/">Bloco Arri&uacute;na</a></li>
+        <li><a href="pre-junino/">Esquenta S&atilde;o Jo&atilde;o</a></li>
+        <li><a href="confebraq.html">CONFEBRAQ</a></li>
+        <li><a href="fotos.html">Fotos</a></li>
+        <li><a href="portal.html">Portal da Liga</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page" id="conteudo">
+    <section class="section competition-hero">
+      <div class="container">
+        <div class="hero-grid fotos-hero-grid">
+          <div>
+            <p class="hero-kicker">Galerias oficiais</p>
+            <h1 class="hero-title">Fotos da Temporada</h1>
+            <p class="hero-lead">
+              Esta p&aacute;gina concentra os links oficiais das galerias de fotos da Liga, com atualiza&ccedil;&atilde;o conforme os &aacute;lbuns forem sendo liberados ao longo da temporada.
+            </p>
+            <div class="hero-actions">
+              <a class="btn" href="#galerias">Ver galerias</a>
+              <a class="btn btn-outline" href="acervo.html">Acervo hist&oacute;rico</a>
+            </div>
+          </div>
+
+          <div class="fotos-hero-panel" aria-label="Resumo das galerias">
+            <div class="fotos-hero-stat">
+              <strong>Galerias oficiais da Liga</strong>
+              <span>Os links publicados ficam reunidos aqui por temporada e por evento.</span>
+            </div>
+            <div class="fotos-hero-stat">
+              <strong>Acesso organizado</strong>
+              <span>As galerias publicadas ficam reunidas em um s&oacute; lugar para consulta r&aacute;pida.</span>
+            </div>
+            <div class="fotos-hero-stat">
+              <strong>Por evento e temporada</strong>
+              <span>Os registros s&atilde;o apresentados de forma clara para facilitar a navega&ccedil;&atilde;o.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fotos-gallery-section" id="galerias">
+      <div class="container">
+        <h2 class="section-title section-title-left">Galerias dispon&iacute;veis</h2>
+        <p class="section-subtitle section-subtitle-left">
+          Sele&ccedil;&atilde;o de galerias e registros fotogr&aacute;ficos dispon&iacute;veis da Liga.
+        </p>
+
+        <div class="fotos-gallery-grid">
+          <article class="foto-album-card foto-album-card--pending">
+            <div class="foto-album-topo">
+              <span class="foto-chip">Temporada 2026</span>
+              <span class="foto-status foto-status--pending">Em breve</span>
+            </div>
+            <h3>Bloco Arri&uacute;na · S&aacute;bado</h3>
+            <p class="foto-album-meta">
+              O link da galeria de s&aacute;bado do Bloco Arri&uacute;na foi retirado temporariamente do site.
+            </p>
+            <div class="foto-album-actions">
+              <span class="btn btn-outline is-disabled" aria-disabled="true">Link indispon&iacute;vel</span>
+              <a class="btn btn-outline" href="bloco-arriuna/">
+                Ver evento
+              </a>
+            </div>
+          </article>
+
+          <article class="foto-album-card foto-album-card--pending">
+            <div class="foto-album-topo">
+              <span class="foto-chip">Temporada 2026</span>
+              <span class="foto-status foto-status--pending">Em breve</span>
+            </div>
+            <h3>Bloco Arri&uacute;na · Domingo</h3>
+            <p class="foto-album-meta">
+              Espa&ccedil;o reservado para a galeria de domingo. Assim que o link oficial chegar, ele entra aqui no mesmo padr&atilde;o.
+            </p>
+            <div class="foto-album-actions">
+              <span class="btn btn-outline is-disabled" aria-disabled="true">Aguardando link</span>
+            </div>
+          </article>
+
+          <article class="foto-album-card foto-album-card--archive">
+            <div class="foto-album-topo">
+              <span class="foto-chip">Arquivo da Liga</span>
+              <span class="foto-status foto-status--archive">Acervo</span>
+            </div>
+            <h3>Circuito 2025 · Google Drive</h3>
+            <p class="foto-album-meta">
+              Galeria geral de fotos do circuito 2025, mantida como acervo para consulta e revisita das imagens da temporada passada.
+            </p>
+            <div class="foto-album-actions">
+              <a class="btn" href="https://drive.google.com/drive/folders/16wyFhrqblzjYa8gHuerUU08ENciXo4Dx?usp=sharing" target="_blank" rel="noopener noreferrer">
+                Abrir galeria
+              </a>
+              <a class="btn btn-outline" href="acervo.html">
+                Ver acervo
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class="fotos-note">
+          <strong>Organiza&ccedil;&atilde;o da p&aacute;gina:</strong>
+          os links desta se&ccedil;&atilde;o ficam separados por evento e temporada, para facilitar a entrada de novas galerias sem espalhar acessos em p&aacute;ginas diferentes.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { setActiveNav } from "./js/shared.min.js";
+    setActiveNav();
+  </script>
+
+  <footer class="site-footer" aria-label="Rodap&eacute;">
+    <div class="container footer-grid">
+      <div class="footer-col footer-brand">
+        <div class="logo">
+          <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE">
+          <span class="logo-text">LINQ-DFE</span>
+        </div>
+        <p>Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/linqdfe" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-title">Institucional</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Inicial</a></li>
+          <li><a href="diretoria.html">Diretoria</a></li>
+          <li><a href="documentos.html">Documentos</a></li>
+          <li><a href="portal.html">Portal da Liga</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-title">Circuito</h3>
+        <ul class="footer-links">
+          <li><a href="circuito.html">Circuito de Quadrilhas</a></li>
+          <li><a href="grupo-especial.html">Grupo Especial</a></li>
+          <li><a href="grupo-acesso.html">Grupo de Acesso</a></li>
+          <li><a href="temporada-2025.html">Ranking e resultados 2025</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-title">Conte&uacute;do</h3>
+        <ul class="footer-links">
+          <li><a href="quadrilhas.html">Quadrilhas</a></li>
+          <li><a href="noticias.html">Not&iacute;cias</a></li>
+          <li><a href="acervo.html">Acervo</a></li>
+          <li><a href="sitemap.xml">Sitemap</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+    </div>
+  </footer>
+</body>
+</html>
