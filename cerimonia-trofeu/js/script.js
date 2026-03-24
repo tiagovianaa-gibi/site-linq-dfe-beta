@@ -614,8 +614,6 @@ function criarSlides() {
     quadrilhas: temporada2026.novasIntegrantesAcesso
   });
   slides.push({ tipo: 'grupos-fotos-2026' });
-  slides.push({ tipo: 'parceiros-liga' });
-  slides.push({ tipo: 'agradecimentos' });
   return slides;
 }
 
@@ -1106,12 +1104,19 @@ const container = document.getElementById('presentation');
 const counter = document.getElementById('slide-counter');
 const stage = document.getElementById('stage');
 const soundtrack = document.getElementById('presentation-audio');
-const operatorPreviewMode = new URLSearchParams(window.location.search).has('operator-preview');
+const searchParams = new URLSearchParams(window.location.search);
+const operatorPreviewMode = searchParams.has('operator-preview');
+const embeddedMode = searchParams.has('embed');
+const requestedSlideParam = Number(searchParams.get('slide'));
 const SOUNDTRACK_VOLUME = 0.72;
 let soundtrackEnabled = !operatorPreviewMode;
 
 if (operatorPreviewMode) {
   document.body.classList.add('preview-embedded');
+}
+
+if (embeddedMode) {
+  document.body.classList.add('presentation-embedded');
 }
 
 operatorConfig = getOperatorConfig();
@@ -1137,6 +1142,33 @@ function pauseSoundtrack() {
   soundtrack.pause();
 }
 
+function isEmbeddedMobileViewport() {
+  return embeddedMode && window.innerWidth <= 768;
+}
+
+function reportEmbedHeight() {
+  if (!isEmbeddedMobileViewport() || !window.parent || window.parent === window) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    const height = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight,
+      stage.scrollHeight
+    );
+
+    window.parent.postMessage({
+      type: 'trofeu:embed-height',
+      height
+    }, '*');
+  });
+}
+
+function syncResponsiveState() {
+  document.body.classList.toggle('presentation-mobile', isEmbeddedMobileViewport());
+}
+
 function parseRatio(value) {
   if (!value || value === 'auto') return null;
   const [w, h] = String(value).split(':').map(Number);
@@ -1158,6 +1190,15 @@ function shouldReserveTopBlock(stageWidth, stageHeight, selectedRatio) {
 }
 
 function applyStageConfig() {
+  if (isEmbeddedMobileViewport()) {
+    stage.style.removeProperty('width');
+    stage.style.removeProperty('height');
+    stage.style.setProperty('--blocked-top', '0%');
+    stage.removeAttribute('data-top-blocked');
+    reportEmbedHeight();
+    return;
+  }
+
   const config = getOperatorConfig();
   const ratio = parseRatio(config.stage.ratio);
   const baseWidth = window.innerWidth * (config.stage.width / 100);
@@ -1286,6 +1327,7 @@ function getSlidesMeta() {
 
 function applyOperatorConfig(options = {}) {
   operatorConfig = readOperatorConfig();
+  syncResponsiveState();
   applyStageConfig();
   initStars();
   if (options.rerender) {
@@ -1362,7 +1404,10 @@ function goTo(index) {
   const novoSlide = wrapper.firstElementChild;
   container.appendChild(novoSlide);
 
-  requestAnimationFrame(() => novoSlide.classList.add('active'));
+  requestAnimationFrame(() => {
+    novoSlide.classList.add('active');
+    reportEmbedHeight();
+  });
   counter.textContent = `${currentIndex + 1} / ${slides.length}`;
   window.dispatchEvent(new CustomEvent('trofeu:slidechange', {
     detail: {
@@ -1375,6 +1420,10 @@ function goTo(index) {
   if (novoSlide.dataset.confetti === 'true') {
     setTimeout(startConfetti, 350);
     setTimeout(stopConfetti, 5000);
+  }
+
+  if (isEmbeddedMobileViewport()) {
+    setTimeout(reportEmbedHeight, 180);
   }
 }
 
@@ -1396,6 +1445,53 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('pointerdown', () => {
   void tryPlaySoundtrack();
+}, { passive: true });
+
+let gestureStart = null;
+
+stage.addEventListener('pointerdown', (event) => {
+  if (!isEmbeddedMobileViewport()) return;
+  if (event.target.closest('.controls')) return;
+  if (event.pointerType === 'mouse' && event.button !== 0) return;
+
+  gestureStart = {
+    x: event.clientX,
+    y: event.clientY
+  };
+}, { passive: true });
+
+stage.addEventListener('pointerup', (event) => {
+  if (!gestureStart || !isEmbeddedMobileViewport()) return;
+  if (event.target.closest('.controls')) {
+    gestureStart = null;
+    return;
+  }
+
+  const deltaX = event.clientX - gestureStart.x;
+  const deltaY = event.clientY - gestureStart.y;
+  const absX = Math.abs(deltaX);
+  const absY = Math.abs(deltaY);
+  const bounds = stage.getBoundingClientRect();
+  const tapX = event.clientX - bounds.left;
+
+  gestureStart = null;
+
+  if (absX > 48 && absX > absY * 1.2) {
+    goTo(currentIndex + (deltaX < 0 ? 1 : -1));
+    return;
+  }
+
+  if (absX < 12 && absY < 12) {
+    if (tapX >= bounds.width * 0.62) {
+      goTo(currentIndex + 1);
+    } else if (tapX <= bounds.width * 0.38) {
+      goTo(currentIndex - 1);
+    }
+  }
+}, { passive: true });
+
+stage.addEventListener('pointercancel', () => {
+  gestureStart = null;
 }, { passive: true });
 
 const starsCanvas = document.getElementById('stars-canvas');
@@ -1430,16 +1526,25 @@ function animateStars() {
   requestAnimationFrame(animateStars);
 }
 
+syncResponsiveState();
 applyStageConfig();
 initStars();
 animateStars();
 window.addEventListener('resize', () => {
+  syncResponsiveState();
   applyStageConfig();
   initStars();
+  reportEmbedHeight();
 });
 window.addEventListener('storage', (event) => {
   if (event.key === OPERATOR_STORAGE_KEY) {
     applyOperatorConfig({ rerender: true });
+  }
+});
+window.addEventListener('load', reportEmbedHeight);
+window.addEventListener('message', (event) => {
+  if (event.data?.type === 'trofeu:request-height') {
+    reportEmbedHeight();
   }
 });
 
@@ -1528,5 +1633,9 @@ setTimeout(() => {
   if (hint) hint.style.opacity = '0';
 }, 5000);
 
-goTo(0);
+const initialSlideIndex = Number.isFinite(requestedSlideParam)
+  ? Math.min(Math.max(Math.trunc(requestedSlideParam) - 1, 0), slides.length - 1)
+  : 0;
+
+goTo(initialSlideIndex);
 

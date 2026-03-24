@@ -1,35 +1,47 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LS730BX44"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-2LS730BX44');
-</script>
-  <link rel="icon" type="image/png" sizes="32x32" href="../assets/logos/linq-dfe.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../assets/logos/linq-dfe.png">
-  <link rel="apple-touch-icon" href="../assets/logos/linq-dfe.png">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2LS730BX44"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-2LS730BX44');
+  </script>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/logos/linq-dfe.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/logos/linq-dfe.png" />
+  <link rel="apple-touch-icon" href="../assets/logos/linq-dfe.png" />
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta http-equiv="Content-Language" content="pt-BR" />
-  <title>Troféu Quadrilheiro | LINQ-DFE</title>
-  <meta name="description" content="O Troféu Quadrilheiro reconhece os destaques da temporada do São João da Liga. Em 2026, acontece no Paranoá/DF em 20 de março, premiando a temporada 2025." />
+  <title>Resultado do Trof&eacute;u Quadrilheiro 2025 | LINQ-DFE</title>
+  <meta
+    name="description"
+    content="Resultado oficial do Trof&eacute;u Quadrilheiro 2025, com os vencedores do Grupo Especial e do Grupo de Acesso."
+  />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://linqdfe.com.br/trofeu-quadrilheiro/" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Troféu Quadrilheiro | LINQ-DFE" />
-  <meta property="og:description" content="O Troféu Quadrilheiro reconhece os destaques da temporada do São João da Liga. Em 2026, acontece no Paranoá/DF em 20 de março, premiando a temporada 2025." />
+  <meta property="og:title" content="Resultado do Trof&eacute;u Quadrilheiro 2025 | LINQ-DFE" />
+  <meta
+    property="og:description"
+    content="Resultado oficial do Trof&eacute;u Quadrilheiro 2025, com os vencedores do Grupo Especial e do Grupo de Acesso."
+  />
   <meta property="og:url" content="https://linqdfe.com.br/trofeu-quadrilheiro/" />
-  <meta property="og:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png" />
+  <meta property="og:image" content="https://linqdfe.com.br/assets/logos/trofeu-quadrilheiro.png" />
   <meta property="og:site_name" content="LINQ-DFE" />
   <meta property="og:locale" content="pt_BR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Troféu Quadrilheiro | LINQ-DFE" />
-  <meta name="twitter:description" content="O Troféu Quadrilheiro reconhece os destaques da temporada do São João da Liga. Em 2026, acontece no Paranoá/DF em 20 de março, premiando a temporada 2025." />
-  <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png" />
+  <meta name="twitter:title" content="Resultado do Trof&eacute;u Quadrilheiro 2025 | LINQ-DFE" />
+  <meta
+    name="twitter:description"
+    content="Resultado oficial do Trof&eacute;u Quadrilheiro 2025, com os vencedores do Grupo Especial e do Grupo de Acesso."
+  />
+  <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/trofeu-quadrilheiro.png" />
+
   <link rel="stylesheet" href="../css/style.min.css" />
   <style>
     .trofeu-hero-grid {
@@ -55,19 +67,127 @@
       filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.12));
     }
 
+    .trofeu-results-section {
+      padding: 0 0 var(--spacing-2xl);
+    }
+
+    .trofeu-results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--spacing-lg);
+      align-items: start;
+    }
+
+    .trofeu-results-card {
+      height: 100%;
+      padding: clamp(1.25rem, 2vw, 1.75rem);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(17, 24, 39, 0.08);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.98)),
+        radial-gradient(circle at top right, rgba(22, 163, 74, 0.08), transparent 42%);
+      box-shadow: 0 18px 40px rgba(17, 24, 39, 0.08);
+    }
+
+    .trofeu-results-card--especial {
+      border-top: 4px solid #d97706;
+    }
+
+    .trofeu-results-card--acesso {
+      border-top: 4px solid #15803d;
+    }
+
+    .trofeu-results-header {
+      margin-bottom: 1.25rem;
+    }
+
+    .trofeu-results-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.06);
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .trofeu-results-title {
+      margin-top: 0.9rem;
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      line-height: 1.05;
+    }
+
+    .trofeu-results-subtitle {
+      margin-top: 0.45rem;
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    .trofeu-results-list {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .trofeu-result-item {
+      padding: 0.95rem 1rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .trofeu-result-item dt {
+      font-weight: 700;
+      color: var(--text-primary);
+      font-size: 0.98rem;
+      line-height: 1.35;
+    }
+
+    .trofeu-result-item dd {
+      margin-top: 0.42rem;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+
     @media (max-width: 900px) {
       .trofeu-logo-wrap {
-        justify-content: flex-start;
+        justify-content: center;
       }
 
       .trofeu-logo {
-        height: min(320px, 70vw);
+        width: min(280px, 72vw);
+        height: auto;
+        max-height: none;
+      }
+
+      .trofeu-results-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .trofeu-hero-grid {
+        gap: var(--spacing-md);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .trofeu-logo {
+        width: min(220px, 62vw);
+      }
+
+      .trofeu-result-item {
+        padding: 0.85rem 0.9rem;
       }
     }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <a class="skip-link" href="#conteudo">Pular para o conte&uacute;do</a>
   <nav>
     <div class="container">
       <div class="logo">
@@ -79,12 +199,11 @@
         <li><a href="../circuito.html">Circuito</a></li>
         <li><a href="../quadrilhas.html">Quadrilhas</a></li>
         <li><a href="../mapa.html">Mapa</a></li>
-        <li><a href="../noticias.html">Notícias</a></li>
+        <li><a href="../noticias.html">Not&iacute;cias</a></li>
         <li><a href="../acervo.html">Acervo</a></li>
         <li><a href="../diretoria.html">Diretoria</a></li>
         <li><a href="../documentos.html">Documentos</a></li>
         <li><a href="../portal.html">Portal da Liga</a></li>
-        
       </ul>
     </div>
   </nav>
@@ -94,116 +213,133 @@
       <div class="container">
         <div class="hero-grid trofeu-hero-grid">
           <div>
-            <p class="hero-kicker">Premiação oficial</p>
-            <h1 class="hero-title">Troféu Quadrilheiro</h1>
-            <p class="hero-lead">Reconhecimento dos destaques da temporada na arena e nos bastidores, valorizando performance, entrega e trabalho coletivo.</p>
-            <div class="hero-actions hero-shortcuts">
-              <a class="btn" href="../circuito-2026.html">Calendário</a>
-              <a class="btn btn-outline" href="../noticias.html">Notícias</a>
-              <a class="btn btn-outline" href="../diretoria.html">Contato</a>
-            </div>
+            <p class="hero-kicker">Resultado oficial</p>
+            <h1 class="hero-title">Resultado do Trof&eacute;u Quadrilheiro 2025</h1>
+            <p class="hero-lead">
+              Confira os vencedores de cada categoria no Grupo Especial e no Grupo de Acesso da edi&ccedil;&atilde;o que premiou a temporada 2025.
+            </p>
           </div>
           <div class="trofeu-logo-wrap">
-            <img class="trofeu-logo" src="../assets/logos/trofeu-quadrilheiro.png" alt="Logo do Troféu Quadrilheiro" />
+            <img class="trofeu-logo" src="../assets/logos/trofeu-quadrilheiro.png" alt="Logo do Trof&eacute;u Quadrilheiro" />
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section trofeu-results-section" aria-labelledby="resultado-trofeu-2025">
       <div class="container">
-        <div class="highlight-grid">
-          <article class="stat-card">
-            <p class="stat-title">Datas</p>
-            <p class="stat-value">20 de março</p>
+        <h2 id="resultado-trofeu-2025" class="section-title section-title-left">Vencedores por categoria</h2>
+        <div class="trofeu-results-grid">
+          <article class="trofeu-results-card trofeu-results-card--especial">
+            <header class="trofeu-results-header">
+              <span class="trofeu-results-kicker">Resultado Trof&eacute;u Quadrilheiro 2025</span>
+              <h3 class="trofeu-results-title">Grupo Especial</h3>
+              <p class="trofeu-results-subtitle">Premiados oficiais por categoria.</p>
+            </header>
+            <dl class="trofeu-results-list">
+              <div class="trofeu-result-item">
+                <dt>Melhor Coreografia/Harmonia</dt>
+                <dd>ARROXA O N&Oacute;</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Marca&ccedil;&atilde;o</dt>
+                <dd>RIBULI&Ccedil;O</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor anima&ccedil;&atilde;o dos Dan&ccedil;arinos</dt>
+                <dd>ARROXA O N&Oacute; e FORMIGA DA RO&Ccedil;A</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Figurino</dt>
+                <dd>ARROXA O N&Oacute;, RIBULI&Ccedil;O e PINGA EM MIM</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Casal de Noivos</dt>
+                <dd>FORMIGA DA RO&Ccedil;A</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Trilha Sonora/Repert&oacute;rio Musical</dt>
+                <dd>AMOR JUNINO, ARROXA O N&Oacute;, CAIPIRADA, FORMIGA DA RO&Ccedil;A, RASGA O FOLE, RIBULI&Ccedil;O, VAI MAS N&Atilde;O VAI e XAMEGAR</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor tem&aacute;tica/Enredo</dt>
+                <dd>RASGA O FOLE</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Quadrilha Disciplina</dt>
+                <dd>FORMIGA DA RO&Ccedil;A</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Quadrilha Revela&ccedil;&atilde;o</dt>
+                <dd>RASGA O FOLE</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Quadrilhas Simpatia</dt>
+                <dd>CAIPIRADA</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Equipe de Produ&ccedil;&atilde;o</dt>
+                <dd>FORMIGA DA RO&Ccedil;A</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Etapa</dt>
+                <dd>TAGUATINGA</dd>
+              </div>
+            </dl>
           </article>
-          <article class="stat-card">
-            <p class="stat-title">Cidade</p>
-            <p class="stat-value">Paranoá/DF</p>
-          </article>
-          <article class="stat-card">
-            <p class="stat-title">Edição/Referência</p>
-            <p class="stat-value">Temporada 2025</p>
-          </article>
-          <article class="stat-card">
-            <p class="stat-title">Participação</p>
-            <p class="stat-value">Quadrilhas filiadas</p>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <section class="section">
-      <div class="container">
-        <h2 class="section-title section-title-left">Informações principais</h2>
-        <div class="grid rich-cards-grid">
-          <article class="card rich-info-card">
-            <div class="card-body">
-              <h3 class="card-title">O que é</h3>
-              <p class="card-text">O Troféu Quadrilheiro premia os destaques do São João da Liga, conforme regras e critérios definidos em regulamento.</p>
-            </div>
-          </article>
-          <article class="card rich-info-card">
-            <div class="card-body">
-              <h3 class="card-title">O que é premiado</h3>
-              <ul>
-                <li>Casal de noivos (destaque da temporada).</li>
-                <li>Marcador (destaque da temporada).</li>
-                <li>Destaques por Grupo Especial e Grupo de Acesso.</li>
-                <li>Outras categorias previstas no regulamento.</li>
-              </ul>
-            </div>
-          </article>
-          <article class="card rich-info-card">
-            <div class="card-body">
-              <h3 class="card-title">Como funciona</h3>
-              <ul>
-                <li>Categorias, critérios e formato publicados pela Liga.</li>
-                <li>Cerimônia com entrega oficial dos troféus.</li>
-                <li>Lista final e registros integrados ao acervo da temporada.</li>
-              </ul>
-            </div>
-          </article>
-          <article class="card rich-info-card">
-            <div class="card-body">
-              <h3 class="card-title">Para quem</h3>
-              <ul>
-                <li>Quadrilhas filiadas e representantes.</li>
-                <li>Quadrilheiros e equipes técnicas.</li>
-                <li>Público, parceiros e imprensa.</li>
-              </ul>
-            </div>
-          </article>
-          <article class="card rich-info-card">
-            <div class="card-body">
-              <h3 class="card-title">Mídia</h3>
-              <p class="card-text">Galeria de fotos e registros oficiais em atualização.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <h2 class="section-title section-title-left">Calendário</h2>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr><th>Data</th><th>Cidade</th><th>Ação</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>20 de março</td><td>Paranoá/DF</td><td>Troféu Quadrilheiro</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="grid rich-day-grid">
-          <article class="card">
-            <div class="card-body">
-              <h3 class="card-title">20 de março</h3>
-              <p class="card-text">Paranoá/DF</p>
-              <span class="badge badge-status badge-status-premiacao">Premiação</span>
-            </div>
+          <article class="trofeu-results-card trofeu-results-card--acesso">
+            <header class="trofeu-results-header">
+              <span class="trofeu-results-kicker">Resultado Trof&eacute;u Quadrilheiro 2025</span>
+              <h3 class="trofeu-results-title">Grupo de Acesso</h3>
+              <p class="trofeu-results-subtitle">Premiados oficiais por categoria.</p>
+            </header>
+            <dl class="trofeu-results-list">
+              <div class="trofeu-result-item">
+                <dt>Melhor Coreografia/Harmonia</dt>
+                <dd>CHINELO DE COURO e JUNINA MATUL&Atilde;O</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Marca&ccedil;&atilde;o</dt>
+                <dd>JUNINA MATUL&Atilde;O</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor anima&ccedil;&atilde;o dos Dan&ccedil;arinos</dt>
+                <dd>CHINELO DE COURO</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Figurino</dt>
+                <dd>JUNINA MATUL&Atilde;O</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Casal de Noivos</dt>
+                <dd>OS CABOCLOS DO SERT&Atilde;O</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Trilha Sonora/Repert&oacute;rio Musical</dt>
+                <dd>JUNINA MATUL&Atilde;O</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Quadrilha Disciplina</dt>
+                <dd>CHINELO DE COURO</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Quadrilha Revela&ccedil;&atilde;o</dt>
+                <dd>MATUL&Atilde;O</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Quadrilhas Simpatia</dt>
+                <dd>CHINELO DE COURO, JUNINA MATUL&Atilde;O e OS CABOCLOS DO SERT&Atilde;O</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Equipe de Produ&ccedil;&atilde;o</dt>
+                <dd>CHINELO DE COURO</dd>
+              </div>
+              <div class="trofeu-result-item">
+                <dt>Melhor Etapa</dt>
+                <dd>TAGUATINGA e SAMAMBAIA</dd>
+              </div>
+            </dl>
           </article>
         </div>
       </div>
@@ -212,7 +348,7 @@
 
   <script type="module" src="../js/shared.min.js"></script>
 
-  <footer class="site-footer" aria-label="Rodapé">
+  <footer class="site-footer" aria-label="Rodap&eacute;">
     <div class="container footer-grid">
       <div class="footer-col footer-brand">
         <div class="logo">
@@ -220,7 +356,9 @@
           <span class="logo-text">LINQ-DFE</span>
         </div>
         <p>Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
-        <div class="footer-social"><a href="https://instagram.com/linqdfe" target="_blank" rel="noopener">Instagram</a></div>
+        <div class="footer-social">
+          <a href="https://instagram.com/linqdfe" target="_blank" rel="noopener">Instagram</a>
+        </div>
       </div>
       <div class="footer-col">
         <h3 class="footer-title">Institucional</h3>
@@ -241,20 +379,18 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h3 class="footer-title">Conteúdo</h3>
+        <h3 class="footer-title">Conte&uacute;do</h3>
         <ul class="footer-links">
           <li><a href="../quadrilhas.html">Quadrilhas</a></li>
-          <li><a href="../noticias.html">Notícias</a></li>
+          <li><a href="../noticias.html">Not&iacute;cias</a></li>
           <li><a href="../acervo.html">Acervo</a></li>
           <li><a href="../sitemap.xml">Sitemap</a></li>
         </ul>
       </div>
     </div>
-    <div class="container footer-bottom"><p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p></div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 LINQ-DFE - Liga Independente de Quadrilhas Juninas do DF e Entorno.</p>
+    </div>
   </footer>
 </body>
 </html>
-
-
-
-
