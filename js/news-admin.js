@@ -1468,7 +1468,7 @@ const firebaseConfig = window.RUNTIME_CONFIG.firebase;
       <div>${html}</div>
     `;
     if (els.previewOpenLink) {
-      els.previewOpenLink.href = `/noticia.html?slug=${post.slug || slugify(title)}`;
+      els.previewOpenLink.href = `/noticias/${post.slug || slugify(title)}`;
     }
     openModal(els.previewModal);
   }

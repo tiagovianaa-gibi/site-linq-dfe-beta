@@ -15,6 +15,7 @@ const TITLE = "Noticias da LINQ-DFE | LINQ-DFE";
 const DESCRIPTION =
   "Noticias da LINQ-DFE com agenda, comunicados e bastidores do circuito de quadrilhas juninas do DF e Entorno, atualizacoes oficiais e projetos.";
 const CANONICAL = "https://linqdfe.com.br/noticias.html";
+const BASE_URL = "https://linqdfe.com.br";
 const OG_IMAGE = "https://linqdfe.com.br/assets/logos/linq-dfe.png";
 
 const ORG_JSONLD = {
@@ -27,7 +28,7 @@ const ORG_JSONLD = {
 
 function readFileSafe(filePath) {
   if (!fs.existsSync(filePath)) return "";
-  return fs.readFileSync(filePath, "utf8");
+  return fs.readFileSync(filePath, "utf8").replace(/^\uFEFF/, "");
 }
 
 function updateCharset(html) {
@@ -69,6 +70,29 @@ function updateCanonical(html, href) {
   const replacement = `<link rel="canonical" href="${href}">`;
   const stripped = html.replace(pattern, "");
   return insertBeforeHeadClose(stripped, replacement);
+}
+
+function toSitePath(value, fallback = "") {
+  let url = String(value || "").trim();
+  if (!url) {
+    url = String(fallback || "").trim();
+  }
+  if (!url) return "";
+  if (/^https?:\/\//i.test(url)) return url;
+  if (/^data:/i.test(url)) {
+    return toSitePath(fallback, "");
+  }
+
+  const clean = encodeURI(url.replace(/^\.?\//, "").replace(/^\/+/, ""));
+  if (!clean) return "";
+  return `/${clean}`;
+}
+
+function toAbsoluteSiteUrl(value, fallback = OG_IMAGE) {
+  const normalized = toSitePath(value, fallback);
+  if (!normalized) return "";
+  if (/^https?:\/\//i.test(normalized)) return normalized;
+  return `${BASE_URL}${normalized}`;
 }
 
 function slugify(text) {
@@ -318,7 +342,9 @@ function normalizeNoticias(items) {
 }
 
 function toListLink(item) {
-  return item.slug ? `noticia/${item.slug}.html` : `noticia.html?id=${encodeURIComponent(item.id)}`;
+  return item.slug
+    ? `/noticia/${encodeURIComponent(item.slug)}.html`
+    : `/noticia.html?id=${encodeURIComponent(item.id)}`;
 }
 
 function buildImageStyle(fit, focoX, focoY) {
@@ -404,7 +430,7 @@ function buildItemListJsonLd(items) {
             "@type": "ListItem",
             position: index + 1,
             name: item.titulo,
-            url: `https://linqdfe.com.br/${toListLink(item)}`,
+            url: `${BASE_URL}${toListLink(item)}`,
           })),
         },
       ],
@@ -475,8 +501,9 @@ function injectNoticiasHtml(html, noticias) {
 function buildNoticiaPage(item) {
   const title = `${item.titulo} | LINQ-DFE`;
   const description = item.resumo || "";
-  const canonical = `https://linqdfe.com.br/noticia/${item.slug}.html`;
-  const image = item.imagem || OG_IMAGE;
+  const canonical = `${BASE_URL}/noticia/${item.slug}.html`;
+  const image = toSitePath(item.imagemCard || item.imagem, "/assets/banners/placeholder.jpg");
+  const socialImage = toAbsoluteSiteUrl(item.imagemCard || item.imagem, OG_IMAGE);
   const heroFit = item.imagemHeroFit || "cover";
   const heroPosX = Number.isFinite(item.imagemHeroFocoX) ? item.imagemHeroFocoX : 50;
   const heroPosY = Number.isFinite(item.imagemHeroFocoY) ? item.imagemHeroFocoY : 35;
@@ -493,7 +520,7 @@ function buildNoticiaPage(item) {
         "@type": "WebPage",
         "@id": canonical,
       },
-      image: [image],
+      image: [socialImage],
       datePublished: item.data || "",
       dateModified: item.data || "",
       author: {
@@ -528,11 +555,11 @@ function buildNoticiaPage(item) {
   html = updateOg(html, "og:description", description);
   html = updateOg(html, "og:type", "article");
   html = updateOg(html, "og:url", canonical);
-  html = updateOg(html, "og:image", image);
+  html = updateOg(html, "og:image", socialImage);
   html = updateMeta(html, "twitter:card", "summary_large_image");
   html = updateMeta(html, "twitter:title", title);
   html = updateMeta(html, "twitter:description", description);
-  html = updateMeta(html, "twitter:image", image);
+  html = updateMeta(html, "twitter:image", socialImage);
 
   const ldScript = `<script type="application/ld+json">\n${ldJson}\n  </script>`;
   const ldPattern = new RegExp('<script type="application\\/ld\\+json">[\\s\\S]*?<\\/script>', "gi");
@@ -543,7 +570,7 @@ function buildNoticiaPage(item) {
       <article class="noticia-page">
         <header class="noticia-hero" style="--capa: url('${image}'); background-position: ${heroPosX}% ${heroPosY}%; background-size: ${heroFit};">
           <div class="noticia-hero__img">
-            <img src="${image}" alt="${item.titulo}" loading="lazy" style="object-fit:${heroFit}; object-position:${heroPosX}% ${heroPosY}%;" onerror="this.src='assets/banners/placeholder.jpg'" />
+            <img src="${image}" alt="${item.titulo}" loading="lazy" style="object-fit:${heroFit}; object-position:${heroPosX}% ${heroPosY}%;" onerror="this.src='/assets/banners/placeholder.jpg'" />
           </div>
           <div class="noticia-hero__overlay">
             ${item.data ? `<p class="noticia-meta">${item.data}</p>` : ""}

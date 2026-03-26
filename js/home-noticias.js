@@ -14,9 +14,11 @@ if (!window.RUNTIME_CONFIG || !window.RUNTIME_CONFIG.firebase) {
 }
 
 const firebaseConfig = window.RUNTIME_CONFIG.firebase;
+const STATIC_NEWS_MANIFEST = "data/noticias-static-slugs.json";
 
 let firebaseApp = null;
 let firestoreDb = null;
+const staticNoticiasSlugs = new Set();
 
 function ensureFirestore() {
   if (firestoreDb) return firestoreDb;
@@ -45,6 +47,38 @@ function getLatestDate(...values) {
     .map(parseDateValue)
     .filter((date) => date)
     .reduce((latest, current) => (!latest || current > latest ? current : latest), null);
+}
+
+function rememberStaticNoticias(items = []) {
+  items.forEach((item) => {
+    const slug = String(
+      typeof item === "string" ? item : item?.slug || ""
+    ).trim();
+    if (slug) {
+      staticNoticiasSlugs.add(slug);
+    }
+  });
+  return items;
+}
+
+async function ensureStaticNoticiasManifest() {
+  if (staticNoticiasSlugs.size) return;
+  const slugs = (await loadJSON(STATIC_NEWS_MANIFEST)) || [];
+  rememberStaticNoticias(slugs);
+}
+
+function getNoticiaUrl(noticia) {
+  const slug = String(noticia?.slug || "").trim();
+  if (slug) {
+    if (staticNoticiasSlugs.has(slug)) {
+      return `/noticia/${encodeURIComponent(slug)}.html`;
+    }
+    return `/noticias/${encodeURIComponent(slug)}`;
+  }
+  if (noticia?.id) {
+    return `/noticia.html?id=${encodeURIComponent(noticia.id)}`;
+  }
+  return "/noticias.html";
 }
 
 async function fetchNoticiasFirestore() {
@@ -107,7 +141,7 @@ async function fetchNoticiasFirestore() {
 }
 
 function mapJsonToNews(jsonList = []) {
-  return jsonList.map((n) => {
+  return rememberStaticNoticias(jsonList.map((n) => {
     const latestDate = getLatestDate(
       n.dataPublicacao,
       n.dataAtualizacao,
@@ -151,19 +185,21 @@ function mapJsonToNews(jsonList = []) {
       data: latestDate ? latestDate.toISOString() : n.data || n.date || "",
       slug: n.slug || "",
     };
-  });
+  }));
 }
 
 async function loadHomeNews() {
   const grid = document.getElementById("home-news-list");
   if (!grid) return;
 
+  await ensureStaticNoticiasManifest();
+  const jsonLocal = (await loadJSON("data/noticias.json")) || [];
+  const localNoticias = mapJsonToNews(jsonLocal);
   let noticias = (await fetchNoticiasFirestore()) || [];
 
   // fallback para JSON local se Firestore falhar
   if (!noticias.length) {
-    const jsonLocal = (await loadJSON("data/noticias.json")) || [];
-    noticias = mapJsonToNews(jsonLocal);
+    noticias = localNoticias;
   }
 
   // ordena por data decrescente
@@ -189,9 +225,7 @@ async function loadHomeNews() {
         : "";
 
       const dataTxt = n.data ? formatDateBR(n.data) : "";
-      const url = n.slug
-        ? `noticia.html?slug=${encodeURIComponent(n.slug)}`
-        : `noticia.html?id=${encodeURIComponent(n.id || "")}`;
+      const url = getNoticiaUrl(n);
 
       return `
         <article class="news-card">

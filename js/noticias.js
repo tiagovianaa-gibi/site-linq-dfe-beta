@@ -15,6 +15,7 @@ import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/fireb
 
 const hasFirebaseConfig = !!(window.RUNTIME_CONFIG && window.RUNTIME_CONFIG.firebase);
 const firebaseConfig = hasFirebaseConfig ? window.RUNTIME_CONFIG.firebase : null;
+const STATIC_NEWS_MANIFEST = 'data/noticias-static-slugs.json';
 
 let firebaseApp = null;
 let firestoreDb = null;
@@ -22,6 +23,7 @@ let noticias = [];
 let currentSearch = '';
 let lastVisible = null;
 let hasMore = false;
+const staticNoticiasSlugs = new Set();
 
 const CACHE_KEY = 'noticiasCacheV1';
 const CACHE_TTL = 10 * 60 * 1000; // 10 minutos
@@ -103,6 +105,8 @@ function mapFirestoreNoticia(docSnap) {
 }
 
 async function loadNoticiasData() {
+  await ensureStaticNoticiasManifest();
+
   if (!hasFirebaseConfig) {
     console.warn('Runtime config ausente: carregando noticias apenas do JSON local.');
   }
@@ -149,14 +153,34 @@ function getImagem(noticia) {
   );
 }
 
+function rememberStaticNoticias(items = []) {
+  items.forEach((item) => {
+    const slug = String(typeof item === 'string' ? item : item?.slug || '').trim();
+    if (slug) {
+      staticNoticiasSlugs.add(slug);
+    }
+  });
+  return items;
+}
+
+async function ensureStaticNoticiasManifest() {
+  if (staticNoticiasSlugs.size) return;
+  const slugs = (await loadJSON(STATIC_NEWS_MANIFEST)) || [];
+  rememberStaticNoticias(slugs);
+}
+
 function getNoticiaUrl(noticia) {
-  if (noticia?.slug) {
-    return `noticia.html?slug=${encodeURIComponent(noticia.slug)}`;
+  const slug = String(noticia?.slug || '').trim();
+  if (slug) {
+    if (staticNoticiasSlugs.has(slug)) {
+      return `/noticia/${encodeURIComponent(slug)}.html`;
+    }
+    return `/noticias/${encodeURIComponent(slug)}`;
   }
   if (noticia?.id) {
-    return `noticia.html?id=${encodeURIComponent(noticia.id)}`;
+    return `/noticia.html?id=${encodeURIComponent(noticia.id)}`;
   }
-  return 'noticias.html';
+  return '/noticias.html';
 }
 
 function readCache() {
@@ -239,12 +263,14 @@ function mapJsonNoticia(item) {
 
 async function loadNoticiasLocal() {
   const local = (await loadJSON('data/noticias.json')) || [];
-  return local
-    .map(mapJsonNoticia)
-    .filter((n) => {
-      const status = (n.status || '').toLowerCase();
-      return !status || status === 'publicada';
-    });
+  return rememberStaticNoticias(
+    local
+      .map(mapJsonNoticia)
+      .filter((n) => {
+        const status = (n.status || '').toLowerCase();
+        return !status || status === 'publicada';
+      })
+  );
 }
 
 async function fetchNoticiasPage(reset = false) {

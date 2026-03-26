@@ -24,12 +24,14 @@ if (!window.RUNTIME_CONFIG || !window.RUNTIME_CONFIG.firebase) {
 }
 
 const firebaseConfig = window.RUNTIME_CONFIG.firebase;
+const STATIC_NEWS_MANIFEST = "data/noticias-static-slugs.json";
 
 let firebaseApp = null;
 let firestoreDb = null;
 let noticiaAtual = null;
 let outrasNoticias = [];
 let noticiasCache = [];
+const staticNoticiasSlugs = new Set();
 const CACHE_KEY = "noticiasCacheV1";
 const CACHE_TTL = 10 * 60 * 1000; // 10 minutos
 
@@ -66,18 +68,42 @@ function buildLeadText(resumo = "") {
   return suffix ? `${base} ${suffix}.` : base;
 }
 
+function rememberStaticNoticias(items = []) {
+  items.forEach((item) => {
+    const slug = String(
+      typeof item === "string" ? item : item?.slug || ""
+    ).trim();
+    if (slug) {
+      staticNoticiasSlugs.add(slug);
+    }
+  });
+  return items;
+}
+
+async function ensureStaticNoticiasManifest() {
+  if (staticNoticiasSlugs.size) return;
+  const local = (await loadJSON(STATIC_NEWS_MANIFEST)) || [];
+  rememberStaticNoticias(local);
+}
+
 function getNoticiaUrl(noticia) {
-  if (noticia?.slug) {
-    return `noticia.html?slug=${encodeURIComponent(noticia.slug)}`;
+  const slug = String(noticia?.slug || "").trim();
+  if (slug) {
+    if (staticNoticiasSlugs.has(slug)) {
+      return `/noticia/${encodeURIComponent(slug)}.html`;
+    }
+    return `/noticias/${encodeURIComponent(slug)}`;
   }
   if (noticia?.id) {
-    return `noticia.html?id=${encodeURIComponent(noticia.id)}`;
+    return `/noticia.html?id=${encodeURIComponent(noticia.id)}`;
   }
-  return "noticias.html";
+  return "/noticias.html";
 }
 
 function getSlugFromPath() {
-  const match = (window.location.pathname || "").match(/\/noticia\/([^/]+)\.html$/);
+  const match = (window.location.pathname || "").match(
+    /\/noticias?\/([^/?#]+?)(?:\.html)?$/
+  );
   return match ? match[1] : "";
 }
 
@@ -160,7 +186,7 @@ function updateSEO(noticia) {
 
   const url = window.location.href;
   const imageUrl = toAbsoluteUrl(
-    normalizeImageUrl(noticia.imagem, "assets/logos/linq-dfe.png")
+    normalizeImageUrl(noticia.imagemCard || noticia.imagem, "assets/logos/linq-dfe.png")
   );
 
   setOrCreateMeta('meta[name="description"]', "name", "description", safeDescription);
@@ -299,6 +325,7 @@ function renderNoticia() {
     categoria,
     conteudo,
     imagem,
+    imagemCard,
     resumo,
     lead,
     tags,
@@ -311,11 +338,11 @@ function renderNoticia() {
   const categoriaLabel = categoria || "";
   const metaText = [dataFormatada, categoriaLabel].filter(Boolean).join(" . ");
 
-  const cover = normalizeImageUrl(imagem, "assets/banners/placeholder.jpg");
+  const cover = normalizeImageUrl(imagem || imagemCard, "assets/banners/placeholder.jpg");
   const heroFit = imagemHeroFit || "cover";
   const heroPosX = Number.isFinite(imagemHeroFocoX) ? imagemHeroFocoX : 50;
   const heroPosY = Number.isFinite(imagemHeroFocoY) ? imagemHeroFocoY : 35;
-  const coverSafe = sanitizeHTML(cover);
+  const coverSafe = sanitizeHTML(toAbsoluteUrl(cover));
   const tituloSafe = sanitizeHTML(titulo);
 
   if (contentEl) {
@@ -343,11 +370,11 @@ function renderNoticia() {
       <aside class="noticia-relacionados">
         <h2>Leia também</h2>
         <ul>
-          <li><a href="circuito.html">Circuito de Quadrilhas Juninas</a></li>
-          <li><a href="temporada-2025.html">Ranking e resultados 2025</a></li>
-          <li><a href="quadrilhas.html">Quadrilhas</a></li>
-          <li><a href="noticias.html">Mais notícias</a></li>
-          <li><a href="documentos.html">Documentos oficiais</a></li>
+          <li><a href="/circuito.html">Circuito de Quadrilhas Juninas</a></li>
+          <li><a href="/temporada-2025.html">Ranking e resultados 2025</a></li>
+          <li><a href="/quadrilhas.html">Quadrilhas</a></li>
+          <li><a href="/noticias.html">Mais notícias</a></li>
+          <li><a href="/documentos.html">Documentos oficiais</a></li>
         </ul>
       </aside>
     `;
@@ -373,7 +400,7 @@ function renderNoticia() {
           <div class="noticia-hero__img">
             <img src="${coverSafe}" alt="${tituloSafe}" loading="lazy"
                  style="object-fit:${heroFit}; object-position:${heroPosX}% ${heroPosY}%;"
-                 onerror="this.src='assets/banners/placeholder.jpg'" />
+                 onerror="this.src='/assets/banners/placeholder.jpg'" />
           </div>
           <div class="noticia-hero__overlay">
             ${metaText ? `<p class="noticia-meta">${metaText}</p>` : ""}
@@ -446,6 +473,12 @@ function mapFirestoreNoticia(docSnap) {
     lead: data.lead || data.paragrafoInicial || "",
     conteudo: data.conteudo || "",
     imagem: data.imagemHeroUrl || data.imagemCapaUrl || data.imagem || "",
+    imagemCard:
+      data.imagemCardUrl ||
+      data.imagemHeroUrl ||
+      data.imagemCapaUrl ||
+      data.imagem ||
+      "",
     imagemHeroFit: data.imagemHeroFit || data.imagemCapaFit || "cover",
     imagemHeroFocoX: Number.isFinite(data.imagemHeroFocoX)
       ? data.imagemHeroFocoX
@@ -477,6 +510,12 @@ function mapJsonNoticia(item) {
     lead: item.lead || item.paragrafoInicial || "",
     conteudo: item.conteudo || "",
     imagem: item.imagemHeroUrl || item.imagemCapaUrl || item.imagem || "",
+    imagemCard:
+      item.imagemCardUrl ||
+      item.imagemHeroUrl ||
+      item.imagemCapaUrl ||
+      item.imagem ||
+      "",
     imagemHeroFit: item.imagemHeroFit || item.imagemCapaFit || "cover",
     imagemHeroFocoX: Number.isFinite(item.imagemHeroFocoX)
       ? item.imagemHeroFocoX
@@ -499,10 +538,12 @@ function mapJsonNoticia(item) {
 
 async function loadNoticiasLocal() {
   const local = (await loadJSON("data/noticias.json")) || [];
-  return local.map(mapJsonNoticia).filter((n) => {
-    const status = (n.status || "").toString().toLowerCase();
-    return !status || status === "publicada";
-  });
+  return rememberStaticNoticias(
+    local.map(mapJsonNoticia).filter((n) => {
+      const status = (n.status || "").toString().toLowerCase();
+      return !status || status === "publicada";
+    })
+  );
 }
 
 async function fetchNoticias() {
@@ -565,6 +606,8 @@ async function loadNoticia() {
   }
 
   try {
+    await ensureStaticNoticiasManifest();
+
     const cached = readCache();
     if (cached) {
       noticiasCache = cached;
