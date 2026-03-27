@@ -71,9 +71,9 @@ function getNoticiaUrl(noticia) {
   const slug = String(noticia?.slug || "").trim();
   if (slug) {
     if (staticNoticiasSlugs.has(slug)) {
-      return `/noticia/${encodeURIComponent(slug)}.html`;
+      return `/noticias/${encodeURIComponent(slug)}/`;
     }
-    return `/noticias/${encodeURIComponent(slug)}`;
+    return `/noticia.html?slug=${encodeURIComponent(slug)}`;
   }
   if (noticia?.id) {
     return `/noticia.html?id=${encodeURIComponent(noticia.id)}`;

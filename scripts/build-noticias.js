@@ -1,11 +1,15 @@
 const fs = require("fs");
 const path = require("path");
+const vm = require("vm");
 
 const ROOT = path.resolve(__dirname, "..");
 const NOTICIAS_HTML = path.join(ROOT, "noticias.html");
 const NOTICIA_TEMPLATE = path.join(ROOT, "noticia.html");
 const NOTICIA_DIR = path.join(ROOT, "noticia");
+const NOTICIAS_DIR = path.join(ROOT, "noticias");
 const DATA_FILE = path.join(ROOT, "data", "noticias.json");
+const STATIC_SLUGS_FILE = path.join(ROOT, "data", "noticias-static-slugs.json");
+const RUNTIME_CONFIG_FILE = path.join(ROOT, "js", "runtime-config.js");
 const JS_CONFIG_FILES = [
   path.join(ROOT, "js", "noticias.js"),
   path.join(ROOT, "js", "noticia.js"),
@@ -14,7 +18,7 @@ const JS_CONFIG_FILES = [
 const TITLE = "Noticias da LINQ-DFE | LINQ-DFE";
 const DESCRIPTION =
   "Noticias da LINQ-DFE com agenda, comunicados e bastidores do circuito de quadrilhas juninas do DF e Entorno, atualizacoes oficiais e projetos.";
-const CANONICAL = "https://linqdfe.com.br/noticias.html";
+const CANONICAL = "https://linqdfe.com.br/noticias/";
 const BASE_URL = "https://linqdfe.com.br";
 const OG_IMAGE = "https://linqdfe.com.br/assets/logos/linq-dfe.png";
 
@@ -72,6 +76,13 @@ function updateCanonical(html, href) {
   return insertBeforeHeadClose(stripped, replacement);
 }
 
+function updateBaseHref(html, href = "/") {
+  const pattern = new RegExp("<base\\s+href=\"[^\"]*\"\\s*\\/?>", "gi");
+  const replacement = `<base href="${href}">`;
+  const stripped = html.replace(pattern, "");
+  return insertBeforeHeadClose(stripped, replacement);
+}
+
 function toSitePath(value, fallback = "") {
   let url = String(value || "").trim();
   if (!url) {
@@ -107,7 +118,29 @@ function slugify(text) {
     .trim();
 }
 
+function extractRuntimeConfig() {
+  const content = readFileSafe(RUNTIME_CONFIG_FILE);
+  if (!content) return null;
+
+  try {
+    const context = { window: {} };
+    vm.runInNewContext(content, context);
+    return context.window.RUNTIME_CONFIG || null;
+  } catch (err) {
+    console.warn("Falha ao ler js/runtime-config.js.", err?.message || err);
+    return null;
+  }
+}
+
 function extractFirebaseConfig() {
+  const runtimeConfig = extractRuntimeConfig();
+  if (runtimeConfig?.firebase?.apiKey && runtimeConfig?.firebase?.projectId) {
+    return {
+      apiKey: runtimeConfig.firebase.apiKey,
+      projectId: runtimeConfig.firebase.projectId,
+    };
+  }
+
   for (const filePath of JS_CONFIG_FILES) {
     const content = readFileSafe(filePath);
     if (!content) continue;
@@ -217,7 +250,7 @@ async function fetchNoticiasFromFirestore() {
   const { apiKey, projectId } = config;
   const url =
     `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/noticias` +
-    `?key=${apiKey}`;
+    `?pageSize=200&key=${apiKey}`;
 
   const response = await fetch(url);
   if (!response.ok) {
@@ -343,7 +376,7 @@ function normalizeNoticias(items) {
 
 function toListLink(item) {
   return item.slug
-    ? `/noticia/${encodeURIComponent(item.slug)}.html`
+    ? `/noticias/${encodeURIComponent(item.slug)}/`
     : `/noticia.html?id=${encodeURIComponent(item.id)}`;
 }
 
@@ -443,6 +476,7 @@ function buildItemListJsonLd(items) {
 function injectNoticiasHtml(html, noticias) {
   let next = html;
   next = updateCharset(next);
+  next = updateBaseHref(next, "/");
   next = updateTitle(next, TITLE);
   next = updateMeta(next, "description", DESCRIPTION);
   next = updateMeta(next, "robots", "index,follow");
@@ -501,7 +535,7 @@ function injectNoticiasHtml(html, noticias) {
 function buildNoticiaPage(item) {
   const title = `${item.titulo} | LINQ-DFE`;
   const description = item.resumo || "";
-  const canonical = `${BASE_URL}/noticia/${item.slug}.html`;
+  const canonical = `${BASE_URL}/noticias/${encodeURIComponent(item.slug)}/`;
   const image = toSitePath(item.imagemCard || item.imagem, "/assets/banners/placeholder.jpg");
   const socialImage = toAbsoluteSiteUrl(item.imagemCard || item.imagem, OG_IMAGE);
   const heroFit = item.imagemHeroFit || "cover";
@@ -547,6 +581,7 @@ function buildNoticiaPage(item) {
 
   let html = template;
   html = updateCharset(html);
+  html = updateBaseHref(html, "/");
   html = updateTitle(html, title);
   html = updateMeta(html, "description", description);
   html = updateMeta(html, "robots", "index,follow");
@@ -606,6 +641,9 @@ async function main() {
   if (!fs.existsSync(NOTICIA_DIR)) {
     fs.mkdirSync(NOTICIA_DIR, { recursive: true });
   }
+  if (!fs.existsSync(NOTICIAS_DIR)) {
+    fs.mkdirSync(NOTICIAS_DIR, { recursive: true });
+  }
 
   const listTemplate = readFileSafe(NOTICIAS_HTML);
   if (!listTemplate) {
@@ -613,15 +651,23 @@ async function main() {
   }
   const listHtml = injectNoticiasHtml(listTemplate, noticias);
   fs.writeFileSync(NOTICIAS_HTML, listHtml, "utf8");
+  fs.writeFileSync(path.join(NOTICIAS_DIR, "index.html"), listHtml, "utf8");
 
+  const staticSlugs = [];
   noticias.forEach((item) => {
     if (!item.slug) return;
+    staticSlugs.push(item.slug);
     const pageHtml = buildNoticiaPage(item);
-    const filePath = path.join(NOTICIA_DIR, `${item.slug}.html`);
-    fs.writeFileSync(filePath, pageHtml, "utf8");
+    fs.writeFileSync(path.join(NOTICIA_DIR, `${item.slug}.html`), pageHtml, "utf8");
+
+    const prettyDir = path.join(NOTICIAS_DIR, item.slug);
+    fs.mkdirSync(prettyDir, { recursive: true });
+    fs.writeFileSync(path.join(prettyDir, "index.html"), pageHtml, "utf8");
   });
 
-  console.log(`Updated ${NOTICIAS_HTML} and ${noticias.length} noticias.`);
+  fs.writeFileSync(STATIC_SLUGS_FILE, JSON.stringify(staticSlugs, null, 2), "utf8");
+
+  console.log(`Updated ${NOTICIAS_HTML}, ${path.join("noticias", "index.html")} and ${noticias.length} noticias.`);
 }
 
 main().catch((err) => {
