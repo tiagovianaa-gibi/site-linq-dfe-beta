@@ -1,11 +1,17 @@
 const admin = require("firebase-admin");
 const { onCall, HttpsError } = require("firebase-functions/v2/https");
+const { onDocumentWritten } = require("firebase-functions/v2/firestore");
+const { defineSecret } = require("firebase-functions/params");
 const logger = require("firebase-functions/logger");
 const crypto = require("crypto");
 
 admin.initializeApp();
 
 const db = admin.firestore();
+const githubDispatchToken = defineSecret("GITHUB_DISPATCH_TOKEN");
+const GITHUB_REPO_OWNER = "tiagovianaa-gibi";
+const GITHUB_REPO_NAME = "site-linq-dfe-beta";
+const NEWS_SYNC_WORKFLOW = "sync-noticias.yml";
 
 const REQUIRED_TAGS = [
   "quadrilha junina",
@@ -30,6 +36,131 @@ function sanitizeText(value) {
     .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
     .replace(/[<>]/g, "")
     .trim();
+}
+
+function normalizeStatus(value) {
+  return sanitizeText(value || "").toLowerCase();
+}
+
+function isPublishedNews(data) {
+  return normalizeStatus(data?.status) === "publicada";
+}
+
+function toComparableValue(value) {
+  if (value == null) return null;
+  if (typeof value?.toMillis === "function") return value.toMillis();
+  if (value instanceof Date) return value.toISOString();
+  if (Array.isArray(value)) return value.map(toComparableValue);
+  if (typeof value === "object") {
+    const sorted = {};
+    Object.keys(value)
+      .sort()
+      .forEach((key) => {
+        sorted[key] = toComparableValue(value[key]);
+      });
+    return sorted;
+  }
+  return value;
+}
+
+function newsSyncFingerprint(data) {
+  if (!data) return "";
+  return JSON.stringify({
+    status: normalizeStatus(data.status),
+    slug: sanitizeText(data.slug || ""),
+    titulo: sanitizeText(data.titulo || ""),
+    resumo: sanitizeText(data.resumo || ""),
+    lead: sanitizeText(data.lead || data.paragrafoInicial || ""),
+    conteudo: sanitizeText(data.conteudo || data.conteudoBruto || ""),
+    imagemHeroUrl: sanitizeText(data.imagemHeroUrl || data.imagemCapaUrl || data.imagem || ""),
+    imagemCardUrl: sanitizeText(
+      data.imagemCardUrl || data.imagemHeroUrl || data.imagemCapaUrl || data.imagem || ""
+    ),
+    tags: Array.isArray(data.tags) ? data.tags.map((tag) => sanitizeText(tag)) : [],
+    categoria: sanitizeText(data.categoria || data.category || ""),
+    destaqueHome: Boolean(data.destaqueHome),
+    seo: toComparableValue(data.seo || null),
+    visibilidade: sanitizeText(data.visibilidade || ""),
+    dataPublicacao: toComparableValue(data.dataPublicacao || null),
+    dataAtualizacao: toComparableValue(data.dataAtualizacao || null),
+    dataCriacao: toComparableValue(data.dataCriacao || null),
+    updatedAt: toComparableValue(data.updatedAt || null),
+  });
+}
+
+async function reserveNewsSyncWindow(minIntervalMs = 60000) {
+  const ref = db.collection("_automation").doc("github_news_sync");
+  const now = Date.now();
+
+  return db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    const last = snap.exists && snap.data()?.lastTriggeredAt?.toMillis
+      ? snap.data().lastTriggeredAt.toMillis()
+      : 0;
+
+    if (last && now - last < minIntervalMs) {
+      return false;
+    }
+
+    tx.set(
+      ref,
+      {
+        lastTriggeredAt: admin.firestore.Timestamp.fromMillis(now),
+      },
+      { merge: true }
+    );
+
+    return true;
+  });
+}
+
+async function dispatchNewsSyncWorkflow(reason) {
+  const token = githubDispatchToken.value();
+  const owner = GITHUB_REPO_OWNER;
+  const repo = GITHUB_REPO_NAME;
+
+  if (!token) {
+    logger.warn("Automacao de noticias sem configuracao do GitHub.", {
+      tokenConfigured: Boolean(token),
+    });
+    return false;
+  }
+
+  const response = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/actions/workflows/${NEWS_SYNC_WORKFLOW}/dispatches`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json",
+        "User-Agent": "linq-dfe-news-sync",
+      },
+      body: JSON.stringify({
+        ref: "main",
+        inputs: {
+          reason: sanitizeText(reason || "firestore_update").slice(0, 120),
+        },
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const text = await response.text();
+    logger.error("Falha ao disparar workflow de sync das noticias.", {
+      status: response.status,
+      response: text,
+    });
+    throw new Error(`Falha ao disparar sync das noticias (${response.status}).`);
+  }
+
+  logger.info("Workflow de sync das noticias disparado com sucesso.", {
+    owner,
+    repo,
+    workflow: NEWS_SYNC_WORKFLOW,
+    reason,
+  });
+  return true;
 }
 
 
@@ -230,6 +361,43 @@ exports.generateNewsDraft = onCall(async (request) => {
     conteudoPortal: normalized,
   };
 });
+
+exports.syncPublishedNewsPages = onDocumentWritten(
+  {
+    document: "noticias/{noticiaId}",
+    region: "southamerica-east1",
+    secrets: [githubDispatchToken],
+  },
+  async (event) => {
+    const before = event.data?.before?.exists ? event.data.before.data() : null;
+    const after = event.data?.after?.exists ? event.data.after.data() : null;
+    const beforePublished = isPublishedNews(before);
+    const afterPublished = isPublishedNews(after);
+
+    if (!beforePublished && !afterPublished) {
+      return;
+    }
+
+    if (newsSyncFingerprint(before) === newsSyncFingerprint(after)) {
+      return;
+    }
+
+    const reserved = await reserveNewsSyncWindow();
+    if (!reserved) {
+      logger.info("Sync de noticias ignorado por janela de debounce.", {
+        noticiaId: event.params?.noticiaId || null,
+      });
+      return;
+    }
+
+    const status = after
+      ? normalizeStatus(after.status)
+      : "removida";
+    const slug = sanitizeText(after?.slug || before?.slug || event.params?.noticiaId || "");
+
+    await dispatchNewsSyncWorkflow(`noticia:${slug}:${status}`);
+  }
+);
 
 exports.createPortalUser = onCall({ cors: true }, async (request) => {
   if (!request.auth) {
