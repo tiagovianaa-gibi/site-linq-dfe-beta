@@ -608,6 +608,12 @@ async function loadNoticia() {
   try {
     await ensureStaticNoticiasManifest();
 
+    if (slugParam && staticNoticiasSlugs.has(slugParam) &&
+        window.location.pathname.endsWith("noticia.html")) {
+      window.location.replace(`/noticias/${encodeURIComponent(slugParam)}/`);
+      return;
+    }
+
     const cached = readCache();
     if (cached) {
       noticiasCache = cached;
