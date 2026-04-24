@@ -10,6 +10,7 @@ const NOTICIAS_DIR = path.join(ROOT, "noticias");
 const DATA_FILE = path.join(ROOT, "data", "noticias.json");
 const STATIC_SLUGS_FILE = path.join(ROOT, "data", "noticias-static-slugs.json");
 const RUNTIME_CONFIG_FILE = path.join(ROOT, "js", "runtime-config.js");
+const ASSETS_NOTICIAS_DIR = path.join(ROOT, "assets", "noticias");
 const JS_CONFIG_FILES = [
   path.join(ROOT, "js", "noticias.js"),
   path.join(ROOT, "js", "noticia.js"),
@@ -629,9 +630,63 @@ function buildNoticiaPage(item) {
   return html;
 }
 
+function isRemoteUrl(url) {
+  return /^https?:\/\//i.test(String(url || ""));
+}
+
+function extractFilenameFromUrl(url) {
+  try {
+    const urlObj = new URL(url);
+    // Firebase Storage: /v0/b/BUCKET/o/ENCODED_PATH
+    const storageMatch = urlObj.pathname.match(/\/o\/(.+)$/);
+    if (storageMatch) {
+      return decodeURIComponent(storageMatch[1]).split("/").pop();
+    }
+    return urlObj.pathname.split("/").pop() || null;
+  } catch {
+    return null;
+  }
+}
+
+async function resolveImageUrl(url) {
+  if (!url || !isRemoteUrl(url)) return url;
+
+  const filename = extractFilenameFromUrl(url);
+  if (!filename) return url;
+
+  const destPath = path.join(ASSETS_NOTICIAS_DIR, filename);
+  if (fs.existsSync(destPath)) return `assets/noticias/${filename}`;
+
+  try {
+    if (!fs.existsSync(ASSETS_NOTICIAS_DIR)) {
+      fs.mkdirSync(ASSETS_NOTICIAS_DIR, { recursive: true });
+    }
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    fs.writeFileSync(destPath, Buffer.from(await res.arrayBuffer()));
+    console.log(`Imagem baixada: ${filename}`);
+    return `assets/noticias/${filename}`;
+  } catch (err) {
+    console.warn(`Falha ao baixar imagem ${url}: ${err.message}`);
+    return url;
+  }
+}
+
+async function resolveNoticiaImages(noticias) {
+  for (const item of noticias) {
+    const heroResolved = await resolveImageUrl(item.imagem);
+    item.imagem = heroResolved;
+    const cardResolved = await resolveImageUrl(
+      item.imagemCard && item.imagemCard !== item.imagem ? item.imagemCard : null
+    );
+    item.imagemCard = cardResolved || heroResolved || item.imagemCard;
+  }
+  return noticias;
+}
+
 async function main() {
   const rawNoticias = await loadNoticias();
-  const noticias = normalizeNoticias(rawNoticias);
+  const noticias = await resolveNoticiaImages(normalizeNoticias(rawNoticias));
 
   if (!fs.existsSync(path.dirname(DATA_FILE))) {
     fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
