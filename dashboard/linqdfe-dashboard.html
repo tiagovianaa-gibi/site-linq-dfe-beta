@@ -25,8 +25,7 @@ body{background:var(--navy);color:var(--text);font-family:'Barlow',sans-serif;mi
 .hstats{display:flex;gap:26px;}
 .hs-n{font-family:'Bebas Neue',cursive;font-size:32px;color:var(--gold);line-height:1;}
 .hs-l{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:2px;margin-top:2px;}
-.live{background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;padding:5px 13px;border-radius:4px;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.live{background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;padding:5px 13px;border-radius:4px;}
 
 /* NAV */
 .nav{background:var(--navy2);border-bottom:1px solid var(--bdr);padding:0 40px;display:flex;overflow-x:auto;}
@@ -247,6 +246,12 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 .qp-compare{background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:10px 14px;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;outline:none;cursor:pointer;appearance:none;min-width:200px;}
 .qp-compare option{background:var(--navy2);}
 .qp-compare:focus{border-color:var(--gold);}
+.qp-quick-grid{padding:8px 0 16px;}
+.qp-quick-group{margin-bottom:24px;}
+.qp-quick-label{font-family:'Bebas Neue',cursive;font-size:18px;letter-spacing:2px;margin-bottom:12px;}
+.qp-quick-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.qp-quick-chip{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:7px;border:1px solid var(--bdr);background:var(--card);color:var(--text);cursor:pointer;transition:all .18s;}
+.qp-quick-chip:hover{border-color:var(--gold);color:var(--gold);background:rgba(245,166,35,.08);}
 
 /* Hero card da quadrilha */
 .qp-hero{background:var(--card);border-radius:12px;border:1px solid var(--bdr);overflow:hidden;margin-bottom:20px;}
@@ -612,12 +617,11 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
       <div><h1>LINQDFE</h1><p>Liga de Quadrilhas do DF e Entorno · Circuito 2022–2025</p></div>
     </div>
     <div class="hstats">
-      <div><div class="hs-n">27</div><div class="hs-l">Filiadas</div></div>
       <div><div class="hs-n">15</div><div class="hs-l">Especial</div></div>
       <div><div class="hs-n">12</div><div class="hs-l">Acesso</div></div>
       <div><div class="hs-n">4</div><div class="hs-l">Temporadas</div></div>
     </div>
-    <div class="live">TEMPORADA 2025</div>
+    <div class="live">DADOS 2022–2025</div>
   </div>
   <div class="hero-search">
     <input class="hero-srch" id="hero-srch-input" type="text" placeholder="🔍 Encontre sua quadrilha..." oninput="heroSearchQ(this.value)" onkeydown="if(event.key==='Enter')heroSearchQ(this.value,true)">
@@ -627,7 +631,7 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 
 <div class="nav">
   <div class="ntab on" onclick="sw('perfis',this)">🎭 Quadrilhas</div>
-  <div class="ntab" data-tab="quadrilha" onclick="sw('quadrilha',this)">🔍 Minha Quadrilha</div>
+  <div class="ntab" data-tab="quadrilha" onclick="sw('quadrilha',this)">🔍 Por Quadrilha</div>
   <div class="ntab" data-tab="expectativa" onclick="sw('expectativa',this)">🔮 Expectativa 2026</div>
   <div class="ntab" onclick="sw('ranking',this)">🏆 Ranking</div>
   <div class="ntab" onclick="sw('temporadas',this)">📅 Temporadas</div>
@@ -640,20 +644,28 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
     <div class="sph3" id="ranking-spot-title">CARREGANDO…</div>
     <div class="spp" id="ranking-spot-desc"></div>
   </div></div>
-  <div class="ib">📌 <strong>27 quadrilhas filiadas</strong> à LINQDFE. Etapas e médias verificadas das planilhas 2022–2025, combinando Acesso + Especial. A <strong>Média Real</strong> aqui é a <strong>média aritmética simples</strong> — todas as temporadas e grupos com peso igual, sem ponderação. Para ver a projeção 2026 com peso de recência e grupo, acesse a aba <strong>Expectativa 2026</strong>.</div>
-  <div class="sh"><div class="st">RANKING · FILIADAS LINQDFE</div><div class="sb sb-g">2022–2025 VERIFICADO</div></div>
+  <div class="ib">📌 Etapas e médias verificadas das planilhas 2022–2025. A <strong>Média Real</strong> é a média aritmética simples — todas as temporadas e grupos com peso igual. Para ver a projeção 2026 com peso de recência, acesse a aba <strong>Expectativa 2026</strong>.</div>
+  <div class="sh"><div class="st" id="r-title">RANKING · FILIADAS LINQDFE</div><div class="sb sb-g" id="r-badge">2022–2025 VERIFICADO</div></div>
+  <div class="fb" style="margin-bottom:8px">
+    <span class="fl">Ano:</span>
+    <button class="btn r-yr on" onclick="frYear('todos',this)">Todos</button>
+    <button class="btn r-yr" onclick="frYear(2022,this)">2022</button>
+    <button class="btn r-yr" onclick="frYear(2023,this)">2023</button>
+    <button class="btn r-yr" onclick="frYear(2024,this)">2024</button>
+    <button class="btn r-yr" onclick="frYear(2025,this)">2025</button>
+  </div>
   <div class="fb">
-    <span class="fl">Filtrar:</span>
-    <button class="btn on" onclick="fr('todos',this)">Todos</button>
-    <button class="btn" onclick="fr('Especial',this)">Especial 2026</button>
-    <button class="btn" onclick="fr('Acesso',this)">Acesso 2026</button>
+    <span class="fl">Grupo:</span>
+    <button class="btn r-gr on" onclick="fr('todos',this)">Todos</button>
+    <button class="btn r-gr" onclick="fr('Especial',this)" id="r-btn-esp">Especial</button>
+    <button class="btn r-gr" onclick="fr('Acesso',this)" id="r-btn-ace">Acesso</button>
     <span style="margin-left:auto"><input class="srch" type="text" placeholder="🔍 Buscar..." oninput="srF(this.value)"></span>
   </div>
   <div class="tw"><table>
-    <thead><tr>
+    <thead><tr id="r-thead-row">
       <th style="text-align:center;width:40px">#</th>
-      <th>Quadrilha</th><th>Grupo 2026</th><th>Etapas</th>
-      <th style="text-align:right">Média Real</th><th>Por Quesito</th><th>Histórico</th>
+      <th>Quadrilha</th><th id="r-th-group">Grupo 2026</th><th id="r-th-etapas">Etapas</th>
+      <th style="text-align:right" id="r-th-media">Média Real</th><th>Por Quesito</th>
     </tr></thead>
     <tbody id="rb"></tbody>
   </table></div>
@@ -711,7 +723,6 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 
   </div></details>
 
-  <div class="ib">📌 A projeção 2026 usa <strong>peso de recência</strong> (2025 » 2024 » 2023 » 2022), valoriza mais as notas do <strong>Grupo Especial</strong> do que as do Acesso e aplica um ajuste leve de <strong>momento recente</strong> para premiar subida ou frear queda.</div>
   <div class="exp-summary-grid" id="e-summary"></div>
   <div class="sh"><div class="st">EXPECTATIVA · TEMPORADA 2026</div><div class="sb sb-e">RECÊNCIA + GRUPO</div></div>
   <div class="fb">
@@ -1250,7 +1261,7 @@ function getQuesitoExp(d){
 }
 
 // State
-let rF='todos',rS='',eF='todos',eS='',tF='todos',qF='todos',qYear='todos',pF='todos',pS='';
+let rF='todos',rS='',rYear='todos',eF='todos',eS='',tF='todos',qF='todos',qYear='todos',pF='todos',pS='';
 let chartEvo=null,chartRadar=null,chartBar=null;
 const QNAME_TO_KEY={COREOGRAFIA:'cor',MARCAÇÃO:'mar',ANIMAÇÃO:'ani',FIGURINO:'fig','CASAL DE NOIVOS':'cas','TRILHA SONORA':'tri'};
 
@@ -1696,6 +1707,12 @@ function seF(v){eS=v;renderE();}
 
 // ─── RANK GERAL ───
 function renderR(){
+  if(rYear!=='todos'){renderRYear();return;}
+  document.getElementById('r-title').textContent='RANKING · FILIADAS LINQDFE';
+  document.getElementById('r-badge').textContent='2022–2025 VERIFICADO';
+  document.getElementById('r-th-group').textContent='Grupo 2026';
+  document.getElementById('r-th-etapas').textContent='Etapas';
+  document.getElementById('r-th-media').textContent='Média Real';
   let scored=[...DATA].filter(x=>x.m!==null);
   let unscored=[...DATA].filter(x=>x.m===null);
   if(rF==='Especial'){scored=scored.filter(x=>ESP26.has(x.q));unscored=unscored.filter(x=>ESP26.has(x.q));}
@@ -1707,13 +1724,11 @@ function renderR(){
   }
   scored.sort((a,b)=>b.m-a.m);
   let d=[...scored,...unscored];
-  // Append historical quadrilhas (not filiadas 2026) at the end in "todos" view
   if(rF==='todos'){
     let hist=DATA_HIST.filter(x=>x.m!==null);
     if(rS){const s=rS.toLowerCase();hist=hist.filter(x=>x.q.toLowerCase().includes(s)||dns(x.q).toLowerCase().includes(s));}
     d=[...scored,...unscored,...hist];
   }
-  // spotlight dinâmico (usa apenas quem tem nota)
   if(scored.length>0){
     const top=scored[0];
     const bestQi=getBestQIndex(top);
@@ -1724,7 +1739,7 @@ function renderR(){
   }
   let rankPos=0;
   document.getElementById('rb').innerHTML=d.map(x=>{
-    const hasScore=x.m!==null&&x.g26; // histórico sem nota não recebe posição
+    const hasScore=x.m!==null&&x.g26;
     const pos=hasScore?++rankPos:null;
     const pc=pos===1?'g':pos===2?'s':pos===3?'b':'';
     const g=x.g26,gc=g==='Especial'?'te':'ta',gi=g==='Especial'?'⭐':'🔵';
@@ -1743,11 +1758,59 @@ function renderR(){
       <td><span class="et">${x.e>0?x.e+' etapas':'Estreante'}</span></td>
       <td><div class="sm">${x.m!==null?t2(x.m):'—'}</div></td>
       <td><div class="qbs">${bars}</div></td>
-      <td style="font-size:10px;color:var(--mut)">${x.hist.length?x.hist.map(h=>h.a).join(', '):'—'}</td>
     </tr>`;
   }).join('');
 }
-function fr(f,b){rF=f;document.querySelectorAll('#tab-ranking .btn').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderR();}
+function renderRYear(){
+  const year=rYear;
+  document.getElementById('r-title').textContent=`RANKING ${year}`;
+  document.getElementById('r-badge').textContent=`TEMPORADA ${year}`;
+  document.getElementById('r-th-group').textContent='Grupo';
+  document.getElementById('r-th-etapas').textContent='Etapas';
+  document.getElementById('r-th-media').textContent='Média';
+  const groups=rF==='Acesso'?['ACE']:rF==='Especial'?['ESP']:['ESP','ACE'];
+  let entries=[];
+  groups.forEach(g=>{
+    const gLabel=g==='ESP'?'Especial':'Acesso';
+    Object.entries(SEASON_QDATA)
+      .filter(([k])=>k.endsWith(`|${year}|${g}`))
+      .forEach(([k,v])=>{
+        const q=SLUG_TO_NAME[k.split('|')[0]]||k.split('|')[0];
+        if(rS){const s=rS.toLowerCase();if(!q.toLowerCase().includes(s)&&!dns(q).toLowerCase().includes(s))return;}
+        const dEntry=ALL_DATA.find(d=>d.q===q);
+        const histEntry=dEntry?.hist.find(h=>h.a===year&&h.g===g);
+        entries.push({q,g:gLabel,et:histEntry?.et??0,...v});
+      });
+  });
+  entries.sort((a,b)=>b.m-a.m||(dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'})));
+  if(entries.length>0){
+    const top=entries[0];
+    const bestQi=QKEYS.reduce((bi,k,i)=>top[k]>top[QKEYS[bi]]?i:bi,0);
+    document.getElementById('ranking-spot-title').textContent=`${dns(top.q)} · 1° em ${year}${rF!=='todos'?' · '+rF:''}`;
+    document.getElementById('ranking-spot-desc').innerHTML=`${top.g} · Média <strong>${t2(top.m)}</strong> · Melhor em ${QLBLS[bestQi]}`;
+  }
+  let rankPos=0;
+  document.getElementById('rb').innerHTML=entries.map(x=>{
+    const pos=++rankPos;
+    const pc=pos===1?'g':pos===2?'s':pos===3?'b':'';
+    const gc=x.g==='Especial'?'te':'ta',gi=x.g==='Especial'?'⭐':'🔵';
+    const bars=QKEYS.map((k,j)=>{
+      const v=x[k];if(!v)return'';
+      const p=((v-9.5)/0.5)*100;
+      return `<div class="qbr"><span class="qbl">${QLBLS[j].slice(0,3)}</span><div class="qbt"><div class="qbf" style="width:${Math.max(0,Math.min(100,p))}%;background:${Object.values(QC)[j]}"></div></div><span class="qbv">${t2(v)}</span></div>`;
+    }).join('');
+    return `<tr onclick="openQP('${x.q.replace(/'/g,"\\'")}')" style="cursor:pointer">
+      <td class="rp ${pc}">${pos}</td>
+      <td><div class="qn">${dns(x.q)}</div></td>
+      <td><span class="gt ${gc}">${gi} ${x.g}</span></td>
+      <td><span class="et">${x.et>0?x.et+' etapas':'—'}</span></td>
+      <td><div class="sm">${t2(x.m)}</div></td>
+      <td><div class="qbs">${bars}</div></td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--mut);font-family:\'Barlow Condensed\',sans-serif;font-size:13px">Sem dados para este filtro</td></tr>';
+}
+function fr(f,b){rF=f;document.querySelectorAll('#tab-ranking .r-gr').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderR();}
+function frYear(y,b){rYear=y;document.querySelectorAll('#tab-ranking .r-yr').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderR();}
 function srF(v){rS=v;renderR();}
 
 // ─── TEMPORADAS ───
@@ -1876,15 +1939,17 @@ function renderQ(){
     }).join('');
   }
   const perfeitas=[
-    {q:"FORMIGA DA ROÇA",g:"Especial",qs:"Animação + Trilha Sonora",a:"2022–2025",e:14},
-    {q:"MATULÃO",g:"Especial 2026",qs:"Figurino + Trilha Sonora",a:"2025",e:3},
-    {q:"VAI MAS NÃO VAI",g:"Especial",qs:"Trilha Sonora",a:"2025 ESP",e:3},
-    {q:"PAIXÃO CANGAÇO",g:"Acesso",qs:"Animação + Marcação",a:"2022",e:4},
+    {q:"FORMIGA DA ROÇA",g:"Especial",qs:"Animação + Trilha Sonora",a:"2022–2025",e:14,yrs:[2022,2023,2024,2025]},
+    {q:"MATULÃO",g:"Especial 2026",qs:"Figurino + Trilha Sonora",a:"2025",e:3,yrs:[2025]},
+    {q:"VAI MAS NÃO VAI",g:"Especial",qs:"Trilha Sonora",a:"2025",e:3,yrs:[2025]},
+    {q:"PAIXÃO CANGAÇO",g:"Acesso",qs:"Animação + Marcação",a:"2022",e:4,yrs:[2022]},
   ];
-  document.getElementById('n10').innerHTML=perfeitas.map(p=>{
+  const filtPerf=qYear==='todos'?perfeitas:perfeitas.filter(p=>p.yrs.includes(Number(qYear)));
+  const n10El=document.getElementById('n10');
+  n10El.innerHTML=filtPerf.length?filtPerf.map(p=>{
     const gc=p.g.includes('Especial')?'te':'ta';
     return`<div class="pc"><div class="ph"><div><div class="pn">${p.q}</div><div style="font-size:10px;color:var(--mut);margin-top:2px">${p.a} · ${p.e} etapas</div></div><div><div class="ps">10</div><div style="font-size:9px;color:var(--mut);text-align:right">NOTA MÁXIMA</div></div></div><div class="pb"><span class="gt ${gc}">${p.g}</span><span style="margin-left:7px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--gold)">📌 ${p.qs}</span></div></div>`;
-  }).join('');
+  }).join(''):'<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:13px;color:var(--mut);padding:12px 4px">Nenhuma nota 10 registrada em '+qYear+'.</div>';
 }
 function fqY(y,b){qYear=y;document.querySelectorAll('#tab-quesitos .q-yr').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderQ();}
 function fq(f,b){qF=f;document.querySelectorAll('#tab-quesitos .q-gr').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderQ();}
@@ -1933,7 +1998,20 @@ function renderQP(){
   const seriesKey=document.getElementById('qp-series-select')?.value||'m';
   const content=document.getElementById('qp-content');
   if(!selVal){
-    content.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--mut);font-family:\'Barlow Condensed\',sans-serif;font-size:16px;letter-spacing:2px;text-transform:uppercase;">← Selecione uma quadrilha para ver a análise completa</div>';
+    const esp=DATA.filter(d=>d.g26==='Especial').sort((a,b)=>dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'}));
+    const ace=DATA.filter(d=>d.g26==='Acesso').sort((a,b)=>dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'}));
+    const mkChip=(d)=>`<button class="qp-quick-chip" onclick="document.getElementById('qp-main-select').value='${d.q.replace(/'/g,"\\'")}';renderQP()">${dns(d.q)}</button>`;
+    content.innerHTML=`
+      <div class="qp-quick-grid">
+        <div class="qp-quick-group">
+          <div class="qp-quick-label" style="color:var(--gold)">⭐ Especial 2026</div>
+          <div class="qp-quick-chips">${esp.map(mkChip).join('')}</div>
+        </div>
+        <div class="qp-quick-group">
+          <div class="qp-quick-label" style="color:var(--ace)">🔵 Acesso 2026</div>
+          <div class="qp-quick-chips">${ace.map(mkChip).join('')}</div>
+        </div>
+      </div>`;
     destroyCharts();return;
   }
   destroyCharts();
@@ -2580,7 +2658,7 @@ document.querySelector('.bnav-item[data-tab="perfis"]')?.classList.add('on');
   </button>
   <button class="bnav-item" data-tab="quadrilha" onclick="sw('quadrilha',this)">
     <span class="bnav-icon">🔍</span>
-    <span class="bnav-label">Minha Quad.</span>
+    <span class="bnav-label">Por Quadrilha</span>
   </button>
   <button class="bnav-item" data-tab="expectativa" onclick="sw('expectativa',this)">
     <span class="bnav-icon">🔮</span>
