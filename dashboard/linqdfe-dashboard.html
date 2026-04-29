@@ -1678,7 +1678,7 @@ function renderE(){
     const mBadgeClass=!scored?'flat':momentClass==='up'?'up':momentClass==='down'?'down':'flat';
     return `<tr${scored?` onclick="openQP('${x.q}')" style="cursor:pointer"`:''}>
       <td class="rp ${pc}">${scored?pos:'—'}</td>
-      <td><div class="qn">${dns(x.q)}</div><div class="qs">${scored?`${x.hist.length} temporada${x.hist.length>1?'s':''} ponderadas`:'Estreante'}</div></td>
+      <td><div class="qn">${dns(x.q)}</div><div class="qs">${scored?`${x.hist.length} temporada${x.hist.length>1?'s':''} (2022–2025)`:'Estreante'}</div></td>
       <td><span class="gt ${gc}">${gi} ${gv}</span></td>
       <td><div class="sm">${scored?t2(exp.score):'—'}</div></td>
       <td><div class="qbs">${qbars}</div></td>
@@ -1960,7 +1960,7 @@ function buildNarrative(d){
   const worstQi=qvals.indexOf(Math.min(...qvals.filter(v=>v)));
   const g=d.g26;
   const ligaPos=[...DATA].filter(x=>x.m).sort((a,b)=>b.m-a.m).findIndex(x=>x.q===d.q)+1;
-  let txt=`<strong>${nm}</strong> compete na liga há <strong>${d.hist.length} temporada${d.hist.length>1?'s':''}</strong> com um total de <strong>${d.e} etapas válidas</strong>. `;
+  let txt=`<strong>${nm}</strong> tem <strong>${d.hist.length} temporada${d.hist.length>1?'s':''} registrada${d.hist.length>1?'s':''} no recorte 2022–2025</strong>, com um total de <strong>${d.e} etapas válidas</strong>. `;
   txt+=ligaPos?`Ocupa a <strong>${ligaPos}ª posição geral</strong> entre as filiadas, com média real consolidada de <strong>${t2(d.m)}</strong>. `:`Média real consolidada de <strong>${t2(d.m)}</strong>. `;
   txt+=`Seu ponto mais forte é a <strong>${QLBLS[bestQi]}</strong> (${t2(qvals[bestQi])}), enquanto a <strong>${QLBLS[worstQi]}</strong> (${t2(qvals[worstQi])}) oferece maior espaço de desenvolvimento. `;
   if(d.hist.length>1){
@@ -2079,7 +2079,7 @@ function renderQP(){
     </div>
     <div class="qp-hero-stats">
       <div class="qp-hs"><div class="qp-hs-n">${d.e}</div><div class="qp-hs-l">Etapas Totais</div></div>
-      <div class="qp-hs"><div class="qp-hs-n">${d.hist.length}</div><div class="qp-hs-l">Temporadas</div></div>
+      <div class="qp-hs"><div class="qp-hs-n">${d.hist.length}</div><div class="qp-hs-l">Temp. (2022–2025)</div></div>
       <div class="qp-hs"><div class="qp-hs-n">${ligaPos?`${ligaPos}°`:'—'}</div><div class="qp-hs-l">Rank Geral</div></div>
       <div class="qp-hs"><div class="qp-hs-n">${posGrupo?`${posGrupo}°`:'—'}</div><div class="qp-hs-l">${g?`Rank ${g}`:'Sem grupo 2026'}</div></div>
       <div class="qp-hs"><div class="qp-hs-n" style="font-size:16px">${bestQi!==null?QLBLS[bestQi].split(' ')[0]:'—'}</div><div class="qp-hs-l">Melhor Quesito</div></div>
