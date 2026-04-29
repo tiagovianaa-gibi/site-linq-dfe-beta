@@ -246,6 +246,14 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 .qp-compare{background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:10px 14px;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;outline:none;cursor:pointer;appearance:none;min-width:200px;}
 .qp-compare option{background:var(--navy2);}
 .qp-compare:focus{border-color:var(--gold);}
+.qp-inline-filter{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;align-items:center;}
+.qp-inline-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;color:var(--mut);text-transform:uppercase;white-space:nowrap;margin-right:1px;}
+.qp-micro-btn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 10px;border-radius:5px;border:1px solid var(--bdr);background:var(--card2);color:var(--mut);cursor:pointer;transition:all .15s;}
+.qp-micro-btn:hover{border-color:var(--gold);color:var(--text);}
+.qp-micro-btn.on{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+.qp-section-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.qp-filter-stack{display:flex;flex-direction:column;gap:5px;align-items:flex-end;}
+.qp-filter-row{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
 .qp-quick-grid{padding:8px 0 16px;}
 .qp-quick-group{margin-bottom:24px;}
 .qp-quick-label{font-family:'Bebas Neue',cursive;font-size:18px;letter-spacing:2px;margin-bottom:12px;}
@@ -796,7 +804,7 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
   <!-- Selector -->
   <div class="qp-select-bar">
     <div class="qp-select-wrap">
-      <select class="qp-select" id="qp-main-select" onchange="renderQP()">
+      <select class="qp-select" id="qp-main-select" onchange="qpBenchmark='auto';qpEvoKey='m';qpQYear='todos';renderQP()">
         <option value="">— Selecione a quadrilha —</option>
       </select>
     </div>
@@ -804,27 +812,6 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
       <span class="qp-compare-label">Comparar com:</span>
       <select class="qp-compare" id="qp-compare-select" onchange="renderQP()">
         <option value="">— Nenhuma —</option>
-      </select>
-    </div>
-    <div class="qp-compare-wrap">
-      <span class="qp-compare-label">Média de referência:</span>
-      <select class="qp-compare" id="qp-benchmark-select" onchange="renderQP()">
-        <option value="auto">Auto da quadrilha</option>
-        <option value="Liga">Liga geral</option>
-        <option value="Especial">Especial</option>
-        <option value="Acesso">Acesso</option>
-      </select>
-    </div>
-    <div class="qp-compare-wrap">
-      <span class="qp-compare-label">Série da evolução:</span>
-      <select class="qp-compare" id="qp-series-select" onchange="renderQP()">
-        <option value="m">Média real</option>
-        <option value="cor">Coreografia</option>
-        <option value="mar">Marcação</option>
-        <option value="ani">Animação</option>
-        <option value="fig">Figurino</option>
-        <option value="cas">Casal de Noivos</option>
-        <option value="tri">Trilha Sonora</option>
       </select>
     </div>
   </div>
@@ -1262,6 +1249,7 @@ function getQuesitoExp(d){
 
 // State
 let rF='todos',rS='',rYear='todos',eF='todos',eS='',tF='todos',qF='todos',qYear='todos',pF='todos',pS='';
+let qpBenchmark='auto',qpEvoKey='m',qpQYear='todos';
 let chartEvo=null,chartRadar=null,chartBar=null;
 const QNAME_TO_KEY={COREOGRAFIA:'cor',MARCAÇÃO:'mar',ANIMAÇÃO:'ani',FIGURINO:'fig','CASAL DE NOIVOS':'cas','TRILHA SONORA':'tri'};
 
@@ -1812,6 +1800,9 @@ function renderRYear(){
 function fr(f,b){rF=f;document.querySelectorAll('#tab-ranking .r-gr').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderR();}
 function frYear(y,b){rYear=y;document.querySelectorAll('#tab-ranking .r-yr').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderR();}
 function srF(v){rS=v;renderR();}
+function setQPEvoKey(k){qpEvoKey=k;renderQP();}
+function setQPBenchmark(v){qpBenchmark=v;renderQP();}
+function setQPQYear(y){qpQYear=y;renderQP();}
 
 // ─── TEMPORADAS ───
 function renderYearCol(entries,group,year){
@@ -1994,8 +1985,8 @@ Chart.defaults.font.family="'Barlow Condensed', sans-serif";
 function renderQP(){
   const selVal=document.getElementById('qp-main-select').value;
   const cmpVal=document.getElementById('qp-compare-select').value;
-  const benchmarkVal=document.getElementById('qp-benchmark-select')?.value||'auto';
-  const seriesKey=document.getElementById('qp-series-select')?.value||'m';
+  const benchmarkVal=qpBenchmark;
+  const seriesKey=qpEvoKey;
   const content=document.getElementById('qp-content');
   if(!selVal){
     const esp=DATA.filter(d=>d.g26==='Especial').sort((a,b)=>dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'}));
@@ -2207,13 +2198,31 @@ function renderQP(){
   </div>
 
   <!-- QUESITOS DETALHES -->
-  <div class="sh"><div class="st">ANÁLISE POR QUESITO</div><div class="sb sb-e">${benchmark.datasetLabel}</div></div>
+  <div class="qp-section-hdr">
+    <div class="sh" style="margin-bottom:0"><div class="st">ANÁLISE POR QUESITO</div></div>
+    <div class="qp-filter-stack">
+      <div class="qp-filter-row">
+        <span class="qp-inline-label">Temporada:</span>
+        <button class="qp-micro-btn${qpQYear==='todos'?' on':''}" onclick="setQPQYear('todos')">Geral</button>
+        ${d.hist.slice().sort((a,b)=>a.a-b.a).map(h=>`<button class="qp-micro-btn${qpQYear===h.a?' on':''}" onclick="setQPQYear(${h.a})">${h.a} <span style="font-size:9px;opacity:.8">${h.g}</span></button>`).join('')}
+      </div>
+      <div class="qp-filter-row">
+        <span class="qp-inline-label">Ref:</span>
+        ${[['auto','Auto'],[`Liga`,'Liga'],['Especial','ESP'],['Acesso','ACE']].map(([v,l])=>`<button class="qp-micro-btn${qpBenchmark===v?' on':''}" onclick="setQPBenchmark('${v}')">${l}</button>`).join('')}
+      </div>
+    </div>
+  </div>
   <div class="q-compare-grid" id="qcmp-grid"></div>
 
   <!-- CHARTS ROW 1 -->
   <div class="chart-grid-2">
     <div class="chart-box">
-      <div class="chart-title">📈 <span>EVOLUÇÃO POR TEMPORADA · ${seriesMeta.label.toUpperCase()}</span></div>
+      <div class="chart-title">📈 <span>EVOLUÇÃO POR TEMPORADA</span></div>
+      <div class="qp-inline-filter">
+        <span class="qp-inline-label">Série:</span>
+        <button class="qp-micro-btn${seriesKey==='m'?' on':''}" onclick="setQPEvoKey('m')">Média</button>
+        ${QKEYS.map((k,i)=>`<button class="qp-micro-btn${seriesKey===k?' on':''}" onclick="setQPEvoKey('${k}')">${QLBLS[i].split(' ')[0]}</button>`).join('')}
+      </div>
       <div class="chart-wrap-tall"><canvas id="chart-evo"></canvas></div>
     </div>
     <div class="chart-box">
@@ -2246,31 +2255,52 @@ function renderQP(){
   // Populate quesito compare grid
   const qcmpGrid=document.getElementById('qcmp-grid');
   const qexp=getQuesitoExp(d);
+  // Year-specific data
+  let qpHistYear=null,qpYearEntry=null,qpYearPool=null,qpYearAvg={};
+  if(qpQYear!=='todos'){
+    qpHistYear=d.hist.find(h=>h.a===qpQYear);
+    if(qpHistYear){
+      qpYearEntry=SEASON_QDATA[`${qSlug(d.q)}|${qpQYear}|${qpHistYear.g}`]||null;
+      qpYearPool=Object.entries(SEASON_QDATA)
+        .filter(([k2])=>k2.endsWith(`|${qpQYear}|${qpHistYear.g}`))
+        .map(([k2,v2])=>({q:SLUG_TO_NAME[k2.split('|')[0]]||k2.split('|')[0],...v2}));
+      if(qpYearPool.length>1){
+        QKEYS.forEach(k=>{
+          const vals=qpYearPool.map(e=>e[k]).filter(x=>x!=null);
+          qpYearAvg[k]=vals.length?vals.reduce((s,v2)=>s+v2,0)/vals.length:null;
+        });
+      }
+    }
+  }
+  const isYearMode=qpQYear!=='todos'&&qpYearEntry!=null;
+  const yearLabel=isYearMode?`${qpQYear} ${qpHistYear.g}`:'';
   qcmpGrid.innerHTML=QKEYS.map((k,j)=>{
-    const v=d[k];
-    const la=groupAvg[k];
+    const v=isYearMode?qpYearEntry[k]:d[k];
+    const refAvg=isYearMode&&qpYearAvg[k]!=null?qpYearAvg[k]:groupAvg[k];
+    const la=refAvg;
     const diff=v!=null&&la!=null?(v-la):null;
-    const isBest=j===bestQi&&v;
+    const baseV=isYearMode?null:d[k]; // for best-q highlight, use overall when year-filtered
+    const isBest=!isYearMode&&j===bestQi&&v;
     const diffStr=diff!==null?(diff>=0?`+${t2(diff)}`:`${t2(diff)}`):null;
     const diffColor=diff>0?'#27AE60':diff<0?'#E74C3C':'var(--mut)';
     const ev=qexp?qexp[k]:null;
     const ediff=ev!=null&&v!=null?(ev-v):null;
     const edeltaClass=ediff===null?'flat':ediff>0.001?'up':ediff<-0.001?'dn':'flat';
     const edeltaStr=ediff!==null?(ediff>0.001?`▲ ${t2(Math.abs(ediff))}`:ediff<-0.001?`▼ ${t2(Math.abs(ediff))}`:'≈ estável'):'—';
-    const groupPool=benchmark.pool.filter(x=>x[k]!=null).sort((a,b)=>b[k]-a[k]||dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'}));
+    const usePool=isYearMode&&qpYearPool?qpYearPool:benchmark.pool;
+    const groupPool=usePool.filter(x=>x[k]!=null).sort((a,b)=>b[k]-a[k]||dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'}));
     const qRank=v!=null?groupPool.findIndex(x=>x.q===d.q)+1:null;
-    const qTotal=benchmark.groupSize??groupPool.length;
+    const rankLabel=isYearMode?(qpHistYear.g==='ESP'?'no ESP':'no ACE'):benchmark.rankLabel;
+    const qTotal=isYearMode?qpYearPool.length:(benchmark.groupSize??groupPool.length);
     const rankColor=qRank===1?'var(--gold)':qRank<=3?'var(--green)':'var(--mut)';
+    const vsLabel=isYearMode?`vs média ${qpHistYear.g} ${qpQYear}`:`vs ${groupLabel}`;
     return `<div class="qcmp${isBest?' best-q':''}">
       <div class="qcmp-icon">${Object.values(QI)[j]}</div>
       <div class="qcmp-name">${QLBLS[j]}</div>
-      <div class="qcmp-val">${v?t2(v):'—'}</div>
-      ${diff!==null?`<div class="qcmp-vs" style="color:${diffColor}">${diffStr} vs ${groupLabel}</div>`:''}
-      ${qRank&&qRank>0?`<div class="qcmp-rank" style="color:${rankColor}">${qRank}° ${benchmark.rankLabel} / ${qTotal}</div>`:''}
-      <div class="qcmp-divider"></div>
-      <div class="qcmp-exp-label">Expectativa 2026</div>
-      <div class="qcmp-exp-val">${ev?t2(ev):'—'}</div>
-      ${ediff!==null?`<div class="qcmp-exp-delta ${edeltaClass}">${edeltaStr}</div>`:''}
+      <div class="qcmp-val">${v!=null?t2(v):'—'}</div>
+      ${diff!==null?`<div class="qcmp-vs" style="color:${diffColor}">${diffStr} ${vsLabel}</div>`:''}
+      ${qRank&&qRank>0?`<div class="qcmp-rank" style="color:${rankColor}">${qRank}° ${rankLabel} / ${qTotal}</div>`:''}
+      ${!isYearMode?`<div class="qcmp-divider"></div><div class="qcmp-exp-label">Expectativa 2026</div><div class="qcmp-exp-val">${ev?t2(ev):'—'}</div>${ediff!==null?`<div class="qcmp-exp-delta ${edeltaClass}">${edeltaStr}</div>`:''}`:``}
     </div>`;
   }).join('');
 
@@ -2571,6 +2601,7 @@ function spF(v){pS=v;renderP();}
 
 // Open quadrilha from profile card
 function openQP(qname){
+  qpBenchmark='auto';qpEvoKey='m';qpQYear='todos';
   const sel=document.getElementById('qp-main-select');
   sel.value=qname;
   document.querySelectorAll('.tab-c').forEach(el=>el.classList.remove('on'));
