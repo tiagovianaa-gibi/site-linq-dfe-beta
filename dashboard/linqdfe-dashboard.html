@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LINQDFE · Cobertura da Temporada Junina</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/logos/linq-dfe.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/logos/linq-dfe.png">
+<link rel="apple-touch-icon" href="../assets/logos/linq-dfe.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
@@ -15,7 +18,7 @@ body{background:var(--navy);color:var(--text);font-family:'Barlow',sans-serif;mi
 .hero{background:linear-gradient(135deg,#0D1B2A,#1A0A00 50%,#0D1B2A);border-bottom:3px solid var(--gold);position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(245,166,35,.12),transparent 60%),radial-gradient(ellipse at 80% 50%,rgba(192,57,43,.10),transparent 60%);}
 .hero-in{position:relative;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;gap:20px;flex-wrap:wrap;}
-.logo{width:58px;height:58px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',cursive;font-size:25px;color:var(--navy);flex-shrink:0;box-shadow:0 0 28px rgba(245,166,35,.4);}
+.logo{width:58px;height:58px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}.logo img{width:100%;height:100%;object-fit:contain;}
 .brand{display:flex;align-items:center;gap:13px;}
 .brand h1{font-family:'Bebas Neue',cursive;font-size:38px;letter-spacing:3px;line-height:1;}
 .brand p{font-family:'Barlow Condensed',sans-serif;font-size:12px;color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-top:2px;}
@@ -519,6 +522,73 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 .metodo-wtable td:nth-child(4){color:var(--gold);font-weight:700;}
 .metodo-wtable tr.esp-row{background:rgba(245,166,35,.04);}
 .metodo-wtable tr.ace-row{background:rgba(52,152,219,.03);}
+
+/* ══ YEAR SELECTOR (Temporadas + Quesitos) ══ */
+.yr-selector{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
+.yr-btn{
+  font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:2px;
+  padding:10px 28px;border-radius:10px;border:2px solid var(--bdr);
+  background:var(--card);color:var(--mut);cursor:pointer;transition:all .2s;line-height:1;flex-shrink:0;
+}
+.yr-btn:hover{border-color:var(--gold);color:var(--text);}
+.yr-btn.on{background:var(--gold);color:var(--navy);border-color:var(--gold);box-shadow:0 0 20px rgba(245,166,35,.35);}
+/* ══ YEAR VIEW (ranking colunas ESP/ACE) ══ */
+.yr-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+@media(max-width:900px){.yr-cols{grid-template-columns:1fr;}}
+.yr-col{background:var(--card);border-radius:12px;overflow:hidden;}
+.yr-col-head{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 18px;
+  font-family:'Bebas Neue',cursive;font-size:16px;letter-spacing:3px;
+}
+.yr-col-esp{background:rgba(245,166,35,.14);color:var(--gold);border-bottom:2px solid rgba(245,166,35,.3);}
+.yr-col-ace{background:rgba(52,152,219,.14);color:var(--ace);border-bottom:2px solid rgba(52,152,219,.3);}
+.yr-row{
+  display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:10px;
+  padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s;
+}
+.yr-row:hover{background:rgba(255,255,255,.04);}
+.yr-row:last-child{border-bottom:none;}
+.yr-pos{font-family:'Bebas Neue',cursive;font-size:18px;text-align:center;color:var(--mut);}
+.yr-pos.g{color:#FFD700;}.yr-pos.s{color:#C0C0C0;}.yr-pos.b{color:#CD7F32;}
+.yr-qname{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--text);}
+.yr-score{font-family:'Bebas Neue',cursive;font-size:20px;color:var(--gold);white-space:nowrap;}
+.yr-arrow{font-size:9px;margin-left:2px;font-family:'Barlow Condensed',sans-serif;}
+.yr-arrow.up{color:var(--green);}.yr-arrow.dn{color:var(--red);}
+/* ══ DESTAQUES POR QUESITO (year view) ══ */
+.yr-q-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+@media(max-width:900px){.yr-q-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.yr-q-grid{grid-template-columns:1fr;}}
+.yr-q-card{
+  background:var(--card);border-radius:10px;padding:14px 16px;
+  border-top:3px solid;cursor:pointer;transition:opacity .15s;
+}
+.yr-q-card:hover{opacity:.85;}
+.yr-q-label{font-family:'Bebas Neue',cursive;font-size:12px;letter-spacing:2px;color:var(--mut);margin-bottom:6px;}
+.yr-q-winner{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);margin-bottom:2px;}
+.yr-q-score{font-family:'Bebas Neue',cursive;font-size:26px;margin-bottom:4px;}
+.yr-q-runner{font-size:10px;color:var(--mut);font-family:'Barlow Condensed',sans-serif;}
+/* ══ MÉDIAS POR ANO ══ */
+.avg-wrap{background:var(--card);border-radius:12px;overflow:hidden;margin-bottom:24px;}
+.avg-table{width:100%;border-collapse:collapse;}
+.avg-table th{
+  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:900;
+  letter-spacing:2px;text-transform:uppercase;color:var(--mut);
+  padding:10px 12px;border-bottom:1px solid var(--bdr);text-align:right;
+}
+.avg-table th:first-child{text-align:left;}
+.avg-table td{
+  font-family:'Barlow Condensed',sans-serif;font-size:13px;
+  padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.04);text-align:right;color:var(--text);
+}
+.avg-table td:first-child{text-align:left;font-weight:700;}
+.avg-table tr:last-child td{border-bottom:none;}
+.avg-table tr.avg-esp td:first-child{color:var(--gold);}
+.avg-table tr.avg-ace td:first-child{color:var(--ace);}
+/* ══ QUESITOS YEAR FILTER BAR ══ */
+.q-filter-bar{display:flex;align-items:center;flex-wrap:wrap;gap:6px 0;margin-bottom:8px;}
+.q-filter-bar .fl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-right:4px;}
+.q-filter-sep{width:1px;height:22px;background:var(--bdr);margin:0 12px;}
+
 .metodo-tag-real{
   display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:9px;
   font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;
@@ -538,7 +608,7 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 <div class="hero">
   <div class="hero-in">
     <div class="brand">
-      <div class="logo">LQ</div>
+      <div class="logo"><img src="../assets/logos/linq-dfe.png" alt="LINQ-DFE"></div>
       <div><h1>LINQDFE</h1><p>Liga de Quadrilhas do DF e Entorno · Circuito 2022–2025</p></div>
     </div>
     <div class="hstats">
@@ -674,29 +744,34 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 
 <!-- ═══ TEMPORADAS ═══ -->
 <div class="tab-c fi" id="tab-temporadas"><div class="box">
-  <div class="ib">📌 Ranking completo do circuito por pontuação média real da temporada. 📚 = histórico não filiado em 2026. ↑ = top 3 do Acesso · ↓ = faixa final do Especial.</div>
+  <div class="ib">📌 Selecione um ano para ver o ranking completo com notas por quesito, os destaques de cada critério e as médias da liga. Visão geral mostra todas as temporadas lado a lado.</div>
   <div class="sh"><div class="st">RESULTADOS POR TEMPORADA</div></div>
-  <div class="fb">
-    <span class="fl">Filtrar:</span>
-    <button class="btn on" onclick="ft('todos',this)">Todas</button>
-    <button class="btn" onclick="ft('2022',this)">2022</button>
-    <button class="btn" onclick="ft('2023',this)">2023</button>
-    <button class="btn" onclick="ft('2024',this)">2024</button>
-    <button class="btn" onclick="ft('2025',this)">2025</button>
-    <button class="btn" onclick="ft('Especial',this)">Especial</button>
-    <button class="btn" onclick="ft('Acesso',this)">Acesso</button>
+  <div class="yr-selector">
+    <button class="yr-btn on" onclick="ft('todos',this)">Todas</button>
+    <button class="yr-btn" onclick="ft(2022,this)">2022</button>
+    <button class="yr-btn" onclick="ft(2023,this)">2023</button>
+    <button class="yr-btn" onclick="ft(2024,this)">2024</button>
+    <button class="yr-btn" onclick="ft(2025,this)">2025</button>
   </div>
   <div id="tgrid" class="tg"></div>
+  <div id="tgrid-year"></div>
 </div></div>
 
 <!-- ═══ QUESITOS ═══ -->
 <div class="tab-c fi" id="tab-quesitos"><div class="box">
-  <div class="sh"><div class="st">DESTAQUES POR QUESITO</div><div class="sb sb-e">MÉDIAS COMBINADAS</div></div>
-  <div class="fb">
+  <div class="sh"><div class="st">DESTAQUES POR QUESITO</div><div class="sb sb-e" id="q-tab-badge">MÉDIAS COMBINADAS 2022–2025</div></div>
+  <div class="q-filter-bar">
+    <span class="fl">Ano:</span>
+    <button class="btn q-yr on" onclick="fqY('todos',this)">Todos</button>
+    <button class="btn q-yr" onclick="fqY(2022,this)">2022</button>
+    <button class="btn q-yr" onclick="fqY(2023,this)">2023</button>
+    <button class="btn q-yr" onclick="fqY(2024,this)">2024</button>
+    <button class="btn q-yr" onclick="fqY(2025,this)">2025</button>
+    <div class="q-filter-sep"></div>
     <span class="fl">Grupo:</span>
-    <button class="btn on" onclick="fq('todos',this)">Todos</button>
-    <button class="btn" onclick="fq('Especial',this)">Especial</button>
-    <button class="btn" onclick="fq('Acesso',this)">Acesso</button>
+    <button class="btn q-gr on" onclick="fq('todos',this)">Todos</button>
+    <button class="btn q-gr" onclick="fq('Especial',this)">Especial</button>
+    <button class="btn q-gr" onclick="fq('Acesso',this)">Acesso</button>
   </div>
   <div class="qg" id="qgrid"></div>
   <div class="sh" style="margin-top:6px"><div class="st">PERFECCIONISTAS — NOTA 10</div></div>
@@ -876,6 +951,48 @@ ALL_DATA.forEach(d=>{
   });
 });
 const SEASON_QDATA=JSON.parse(`{"elite-do-cerrado|2022|ACE":{"m":9.975,"ani":9.958333,"cas":9.991667,"cor":9.925,"fig":9.991667,"mar":9.983333,"tri":10},"eita-bagaceira|2022|ACE":{"m":9.922222,"ani":9.95,"cas":9.975,"cor":9.816667,"fig":9.991667,"mar":9.95,"tri":9.991667},"pinga-em-mim|2022|ACE":{"m":9.897222,"ani":9.933333,"cas":9.9,"cor":9.741667,"fig":9.933333,"mar":9.891667,"tri":9.983333},"chinelo-de-couro|2022|ACE":{"m":9.888889,"ani":9.908333,"cas":9.875,"cor":9.85,"fig":9.983333,"mar":9.783333,"tri":9.975},"coisas-da-roca|2022|ACE":{"m":9.863889,"ani":9.775,"cas":9.866667,"cor":9.683333,"fig":9.916667,"mar":9.958333,"tri":9.983333},"aquarela-nordestina|2022|ACE":{"m":9.852778,"ani":9.908333,"cas":9.85,"cor":9.741667,"fig":9.908333,"mar":9.825,"tri":9.883333},"matingueiros-do-sertao|2022|ACE":{"m":9.751389,"ani":9.6,"cas":9.641667,"cor":9.525,"fig":9.95,"mar":9.816667,"tri":9.975},"os-caboclos-do-sertao|2022|ACE":{"m":9.711111,"ani":9.616667,"cas":9.75,"cor":9.641667,"fig":9.891667,"mar":9.683333,"tri":9.825},"saca-rolha|2022|ACE":{"m":9.665278,"ani":9.716667,"cas":9.583333,"cor":9.483333,"fig":9.716667,"mar":9.758333,"tri":9.775},"mala-veia|2022|ACE":{"m":9.618056,"ani":9.641667,"cas":9.8,"cor":9.575,"fig":9.741667,"mar":9.716667,"tri":9.875},"espalha-brasa|2022|ACE":{"m":9.536111,"ani":9.508333,"cas":9.583333,"cor":9.316667,"fig":9.666667,"mar":9.416667,"tri":9.741667},"triscou-queimou|2022|ACE":{"m":9.509259,"ani":9.355556,"cas":9.466667,"cor":9.322222,"fig":9.8,"mar":9.588889,"tri":9.577778},"flor-do-mamulengo|2022|ACE":{"m":9.425,"ani":9.275,"cas":9.575,"cor":9.1,"fig":9.616667,"mar":9.458333,"tri":9.708333},"mala-veia|2023|ACE":{"m":9.945556,"ani":9.926667,"cas":9.986667,"cor":9.846667,"fig":9.96,"mar":9.966667,"tri":9.986667},"caipirada|2023|ACE":{"m":9.92,"ani":9.9,"cas":9.933333,"cor":9.826667,"fig":9.98,"mar":9.893333,"tri":9.986667},"tico-tico-no-fuba|2023|ACE":{"m":9.86,"ani":9.97,"cas":9.83,"cor":9.77,"fig":9.89,"mar":9.77,"tri":9.95},"xique-xique|2023|ACE":{"m":9.855556,"ani":9.86,"cas":9.873333,"cor":9.7,"fig":9.92,"mar":9.88,"tri":9.966667},"fornalha|2023|ACE":{"m":9.841111,"ani":9.793333,"cas":9.853333,"cor":9.713333,"fig":9.926667,"mar":9.853333,"tri":9.92},"oxente-vixe|2023|ACE":{"m":9.743333,"ani":9.8,"cas":9.68,"cor":9.5,"fig":9.76,"mar":9.72,"tri":10},"vai-mas-nao-vai|2023|ACE":{"m":9.717778,"ani":9.693333,"cas":9.673333,"cor":9.593333,"fig":9.853333,"mar":9.706667,"tri":9.893333},"vai-mas-nao-vai|2024|ACE":{"m":9.876667,"ani":9.915,"cas":9.775,"cor":9.795,"fig":9.965,"mar":9.875,"tri":9.935},"chinelo-de-couro|2024|ACE":{"m":9.836667,"ani":9.84,"cas":9.78,"cor":9.773333,"fig":9.953333,"mar":9.793333,"tri":9.88},"tico-tico-no-fuba|2024|ACE":{"m":9.816667,"ani":9.835,"cas":9.76,"cor":9.735,"fig":9.84,"mar":9.85,"tri":9.905},"espalha-brasa|2024|ACE":{"m":9.775833,"ani":9.75,"cas":9.76,"cor":9.66,"fig":9.82,"mar":9.795,"tri":9.87},"os-caboclos-do-sertao|2024|ACE":{"m":9.773333,"ani":9.765,"cas":9.895,"cor":9.645,"fig":9.885,"mar":9.695,"tri":9.755},"matingueiros-do-sertao|2024|ACE":{"m":9.724167,"ani":9.63,"cas":9.635,"cor":9.585,"fig":9.835,"mar":9.825,"tri":9.835},"bambolea|2024|ACE":{"m":9.611111,"ani":9.613333,"cas":9.593333,"cor":9.52,"fig":9.64,"mar":9.666667,"tri":9.66},"junina-matulao|2025|ACE":{"m":9.955556,"ani":9.966667,"cas":9.944444,"cor":9.855556,"fig":10,"mar":9.966667,"tri":10},"chinelo-de-couro|2025|ACE":{"m":9.918519,"ani":9.977778,"cas":9.9,"cor":9.855556,"fig":9.955556,"mar":9.844444,"tri":9.977778},"xique-xique|2025|ACE":{"m":9.914815,"ani":9.933333,"cas":9.866667,"cor":9.811111,"fig":9.966667,"mar":9.944444,"tri":9.988889},"os-caboclos-do-sertao|2025|ACE":{"m":9.885185,"ani":9.866667,"cas":9.988889,"cor":9.777778,"fig":9.933333,"mar":9.866667,"tri":9.877778},"fornalha|2025|ACE":{"m":9.85,"ani":9.9,"cas":9.844444,"cor":9.7,"fig":9.922222,"mar":9.766667,"tri":9.966667},"matingueiros-do-sertao|2025|ACE":{"m":9.848148,"ani":9.777778,"cas":9.766667,"cor":9.766667,"fig":9.933333,"mar":9.922222,"tri":9.977778},"xem-nhem-nhem|2025|ACE":{"m":9.833333,"ani":9.866667,"cas":9.877778,"cor":9.755556,"fig":9.9,"mar":9.677778,"tri":9.922222},"sol-de-maria|2025|ACE":{"m":9.794444,"ani":9.744444,"cas":9.733333,"cor":9.644444,"fig":9.855556,"mar":9.833333,"tri":9.955556},"tengo-lengo|2025|ACE":{"m":9.753704,"ani":9.711111,"cas":9.766667,"cor":9.633333,"fig":9.8,"mar":9.722222,"tri":9.911111},"furacao|2025|ACE":{"m":9.594444,"ani":9.616667,"cas":9.566667,"cor":9.466667,"fig":9.516667,"mar":9.583333,"tri":9.85},"si-bobia-a-gente-pimba|2022|ESP":{"m":9.990278,"ani":10,"cas":9.991667,"cor":9.958333,"fig":10,"mar":9.991667,"tri":10},"formiga-da-roca|2022|ESP":{"m":9.986111,"ani":10,"cas":9.983333,"cor":9.966667,"fig":9.983333,"mar":9.983333,"tri":10},"paixao-cangaco|2022|ESP":{"m":9.961111,"ani":9.991667,"cas":9.933333,"cor":9.95,"fig":9.933333,"mar":9.991667,"tri":9.966667},"arroxa-o-no|2022|ESP":{"m":9.951389,"ani":9.958333,"cas":9.941667,"cor":9.9,"fig":9.941667,"mar":9.966667,"tri":10},"sabugo-de-milho|2022|ESP":{"m":9.9375,"ani":9.975,"cas":9.933333,"cor":9.933333,"fig":9.958333,"mar":9.858333,"tri":9.966667},"rasga-o-fole|2022|ESP":{"m":9.906944,"ani":9.866667,"cas":9.925,"cor":9.825,"fig":9.941667,"mar":9.9,"tri":9.983333},"ribulico|2022|ESP":{"m":9.902778,"ani":9.883333,"cas":9.841667,"cor":9.866667,"fig":9.916667,"mar":9.95,"tri":9.958333},"arraia-dos-matutos|2022|ESP":{"m":9.883333,"ani":9.875,"cas":9.875,"cor":9.825,"fig":9.9,"mar":9.9,"tri":9.941667},"amor-junino|2022|ESP":{"m":9.870833,"ani":9.858333,"cas":9.783333,"cor":9.825,"fig":9.941667,"mar":9.858333,"tri":9.958333},"sanfona-lascada|2022|ESP":{"m":9.858333,"ani":9.85,"cas":9.825,"cor":9.783333,"fig":9.966667,"mar":9.858333,"tri":9.991667},"xamegar|2022|ESP":{"m":9.840278,"ani":9.816667,"cas":9.808333,"cor":9.775,"fig":9.858333,"mar":9.875,"tri":9.95},"xique-xique|2022|ESP":{"m":9.816667,"ani":9.755556,"cas":9.855556,"cor":9.7,"fig":9.788889,"mar":9.877778,"tri":9.922222},"xem-nhem-nhem|2022|ESP":{"m":9.815278,"ani":9.766667,"cas":9.783333,"cor":9.75,"fig":9.891667,"mar":9.758333,"tri":9.941667},"pula-fogueira|2022|ESP":{"m":9.705556,"ani":9.766667,"cas":9.775,"cor":9.633333,"fig":9.866667,"mar":9.758333,"tri":9.85},"formiga-da-roca|2023|ESP":{"m":9.97963,"ani":10,"cas":9.977778,"cor":9.944444,"fig":10,"mar":9.955556,"tri":10},"arroxa-o-no|2023|ESP":{"m":9.966667,"ani":9.966667,"cas":10,"cor":9.877778,"fig":9.988889,"mar":9.966667,"tri":10},"ribulico|2023|ESP":{"m":9.946296,"ani":10,"cas":9.944444,"cor":9.822222,"fig":9.988889,"mar":9.977778,"tri":10},"sanfona-lascada|2023|ESP":{"m":9.912963,"ani":9.922222,"cas":9.922222,"cor":9.788889,"fig":9.977778,"mar":9.877778,"tri":9.988889},"arraia-dos-matutos|2023|ESP":{"m":9.909259,"ani":9.966667,"cas":9.866667,"cor":9.811111,"fig":9.933333,"mar":9.9,"tri":10},"rasga-o-fole|2023|ESP":{"m":9.903704,"ani":9.944444,"cas":9.888889,"cor":9.833333,"fig":9.955556,"mar":9.911111,"tri":9.955556},"amor-junino|2023|ESP":{"m":9.903704,"ani":9.888889,"cas":9.933333,"cor":9.755556,"fig":10,"mar":9.855556,"tri":9.988889},"eita-bagaceira|2023|ESP":{"m":9.9,"ani":9.922222,"cas":9.966667,"cor":9.744444,"fig":9.955556,"mar":9.833333,"tri":9.977778},"xamegar|2023|ESP":{"m":9.890741,"ani":9.977778,"cas":9.877778,"cor":9.733333,"fig":9.911111,"mar":9.855556,"tri":9.988889},"coisas-da-roca|2023|ESP":{"m":9.864815,"ani":9.866667,"cas":9.877778,"cor":9.7,"fig":9.877778,"mar":9.877778,"tri":9.988889},"xem-nhem-nhem|2023|ESP":{"m":9.864815,"ani":9.866667,"cas":9.944444,"cor":9.722222,"fig":9.911111,"mar":9.8,"tri":9.988889},"pinga-em-mim|2023|ESP":{"m":9.857407,"ani":9.888889,"cas":9.8,"cor":9.688889,"fig":9.955556,"mar":9.9,"tri":9.911111},"chinelo-de-couro|2023|ESP":{"m":9.825926,"ani":9.788889,"cas":9.733333,"cor":9.722222,"fig":9.988889,"mar":9.766667,"tri":9.955556},"os-caboclos-do-sertao|2023|ESP":{"m":9.809259,"ani":9.711111,"cas":9.811111,"cor":9.677778,"fig":9.933333,"mar":9.822222,"tri":9.966667},"matingueiros-do-sertao|2023|ESP":{"m":9.805556,"ani":9.688889,"cas":9.744444,"cor":9.6,"fig":9.933333,"mar":9.866667,"tri":10},"arroxa-o-no|2024|ESP":{"m":9.989286,"ani":10,"cas":9.991667,"cor":9.916667,"fig":9.983333,"mar":9.991667,"tri":9.983333},"formiga-da-roca|2024|ESP":{"m":9.989286,"ani":10,"cas":10,"cor":9.941667,"fig":10,"mar":10,"tri":10},"ribulico|2024|ESP":{"m":9.963095,"ani":9.95,"cas":9.9,"cor":9.833333,"fig":10,"mar":9.958333,"tri":10},"xamegar|2024|ESP":{"m":9.927381,"ani":9.916667,"cas":9.933333,"cor":9.841667,"fig":9.925,"mar":9.891667,"tri":9.941667},"mala-veia|2024|ESP":{"m":9.903571,"ani":9.883333,"cas":9.916667,"cor":9.8,"fig":9.925,"mar":9.833333,"tri":9.95},"rasga-o-fole|2024|ESP":{"m":9.902381,"ani":9.85,"cas":9.85,"cor":9.8,"fig":9.916667,"mar":9.925,"tri":9.983333},"caipirada|2024|ESP":{"m":9.897619,"ani":9.925,"cas":9.9,"cor":9.825,"fig":9.9,"mar":9.891667,"tri":9.933333},"eita-bagaceira|2024|ESP":{"m":9.891667,"ani":9.8,"cas":9.891667,"cor":9.775,"fig":9.925,"mar":9.958333,"tri":9.933333},"amor-junino|2024|ESP":{"m":9.890476,"ani":9.9,"cas":9.891667,"cor":9.833333,"fig":9.908333,"mar":9.866667,"tri":9.933333},"arraia-dos-matutos|2024|ESP":{"m":9.883333,"ani":9.883333,"cas":9.883333,"cor":9.816667,"fig":9.925,"mar":9.808333,"tri":9.95},"pinga-em-mim|2024|ESP":{"m":9.879762,"ani":9.866667,"cas":9.866667,"cor":9.775,"fig":9.916667,"mar":9.791667,"tri":9.925},"coisas-da-roca|2024|ESP":{"m":9.87619,"ani":9.791667,"cas":9.908333,"cor":9.716667,"fig":9.925,"mar":9.916667,"tri":9.933333},"fornalha|2024|ESP":{"m":9.838095,"ani":9.808333,"cas":9.883333,"cor":9.741667,"fig":9.858333,"mar":9.825,"tri":9.908333},"xique-xique|2024|ESP":{"m":9.786905,"ani":9.741667,"cas":9.766667,"cor":9.666667,"fig":9.866667,"mar":9.791667,"tri":9.8},"xem-nhem-nhem|2024|ESP":{"m":9.733333,"ani":9.775,"cas":9.758333,"cor":9.691667,"fig":9.85,"mar":9.65,"tri":9.825},"arroxa-o-no|2025|ESP":{"m":9.987302,"ani":10,"cas":9.977778,"cor":9.977778,"fig":10,"mar":9.988889,"tri":10},"formiga-da-roca|2025|ESP":{"m":9.987302,"ani":10,"cas":10,"cor":9.944444,"fig":9.988889,"mar":10,"tri":10},"ribulico|2025|ESP":{"m":9.974603,"ani":9.977778,"cas":9.922222,"cor":9.944444,"fig":10,"mar":10,"tri":10},"rasga-o-fole|2025|ESP":{"m":9.963492,"ani":9.988889,"cas":9.933333,"cor":9.888889,"fig":9.988889,"mar":9.944444,"tri":10},"caipirada|2025|ESP":{"m":9.95873,"ani":9.977778,"cas":10,"cor":9.844444,"fig":9.988889,"mar":9.955556,"tri":10},"pinga-em-mim|2025|ESP":{"m":9.947619,"ani":9.955556,"cas":9.933333,"cor":9.866667,"fig":10,"mar":9.966667,"tri":9.955556},"xamegar|2025|ESP":{"m":9.936508,"ani":9.977778,"cas":9.933333,"cor":9.844444,"fig":9.977778,"mar":9.911111,"tri":10},"vai-mas-nao-vai|2025|ESP":{"m":9.933333,"ani":9.966667,"cas":9.855556,"cor":9.866667,"fig":9.988889,"mar":9.933333,"tri":10},"amor-junino|2025|ESP":{"m":9.930159,"ani":9.966667,"cas":9.911111,"cor":9.844444,"fig":9.977778,"mar":9.9,"tri":10},"mala-veia|2025|ESP":{"m":9.92381,"ani":9.977778,"cas":9.911111,"cor":9.844444,"fig":9.966667,"mar":9.911111,"tri":9.977778},"eita-bagaceira|2025|ESP":{"m":9.9,"ani":9.933333,"cas":9.888889,"cor":9.822222,"fig":9.988889,"mar":9.866667,"tri":9.911111},"arraia-dos-matutos|2025|ESP":{"m":9.877778,"ani":9.922222,"cas":9.8,"cor":9.811111,"fig":9.911111,"mar":9.855556,"tri":9.977778},"espalha-brasa|2025|ESP":{"m":9.877778,"ani":9.855556,"cas":9.9,"cor":9.766667,"fig":9.944444,"mar":9.833333,"tri":9.977778},"coisas-da-roca|2025|ESP":{"m":9.871429,"ani":9.877778,"cas":9.822222,"cor":9.777778,"fig":9.944444,"mar":9.877778,"tri":9.955556},"tico-tico-no-fuba|2025|ESP":{"m":9.849206,"ani":9.833333,"cas":9.811111,"cor":9.777778,"fig":9.877778,"mar":9.822222,"tri":9.977778}}`);
+
+// Mapa slug → nome oficial (para lookups em SEASON_QDATA)
+const SLUG_TO_NAME=(()=>{const m={};ALL_DATA.forEach(d=>{m[qSlug(d.q)]=d.q;});return m;})();
+
+// ─ Helpers de ano (alimentam Temporadas year-view e Quesitos year-filter) ─
+function getYearRankings(year,group){
+  const sfx=`|${year}|${group}`;
+  return Object.entries(SEASON_QDATA)
+    .filter(([k])=>k.endsWith(sfx))
+    .map(([k,v])=>({q:SLUG_TO_NAME[k.split('|')[0]]||k.split('|')[0],...v}))
+    .sort((a,b)=>b.m-a.m||(dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'})));
+}
+function getYearBestPerQuesito(year){
+  const all=[];
+  ['ESP','ACE'].forEach(g=>{
+    Object.entries(SEASON_QDATA).filter(([k])=>k.endsWith(`|${year}|${g}`)).forEach(([k,v])=>{
+      all.push({q:SLUG_TO_NAME[k.split('|')[0]]||k.split('|')[0],g,...v});
+    });
+  });
+  return QKEYS.map((key,i)=>{
+    const col=Object.values(QC)[i],ico=Object.values(QI)[i];
+    const top=[...all].filter(e=>e[key]!=null).sort((a,b)=>b[key]-a[key]).slice(0,3);
+    return{key,label:QLBLS[i],col,ico,top};
+  });
+}
+function getYearAvgMatrix(year){
+  const mat={};
+  ['ESP','ACE'].forEach(g=>{
+    const ents=Object.entries(SEASON_QDATA).filter(([k])=>k.endsWith(`|${year}|${g}`)).map(([,v])=>v);
+    if(!ents.length){mat[g]=null;return;}
+    mat[g]={};
+    QKEYS.forEach(k=>{const vs=ents.filter(e=>e[k]!=null).map(e=>e[k]);mat[g][k]=vs.length?vs.reduce((s,v)=>s+v,0)/vs.length:null;});
+    const ms=ents.filter(e=>e.m!=null).map(e=>e.m);
+    mat[g].m=ms.length?ms.reduce((s,v)=>s+v,0)/ms.length:null;
+  });
+  const allEnts=Object.entries(SEASON_QDATA).filter(([k])=>k.split('|')[1]===String(year)).map(([,v])=>v);
+  mat.all={};
+  QKEYS.forEach(k=>{const vs=allEnts.filter(e=>e[k]!=null).map(e=>e[k]);mat.all[k]=vs.length?vs.reduce((s,v)=>s+v,0)/vs.length:null;});
+  const ms=allEnts.filter(e=>e.m!=null).map(e=>e.m);
+  mat.all.m=ms.length?ms.reduce((s,v)=>s+v,0)/ms.length:null;
+  return mat;
+}
 
 const QDAT=Object.fromEntries([
   ["COREOGRAFIA","cor"],
@@ -1133,8 +1250,9 @@ function getQuesitoExp(d){
 }
 
 // State
-let rF='todos',rS='',eF='todos',eS='',tF='todos',qF='todos',pF='todos',pS='';
+let rF='todos',rS='',eF='todos',eS='',tF='todos',qF='todos',qYear='todos',pF='todos',pS='';
 let chartEvo=null,chartRadar=null,chartBar=null;
+const QNAME_TO_KEY={COREOGRAFIA:'cor',MARCAÇÃO:'mar',ANIMAÇÃO:'ani',FIGURINO:'fig','CASAL DE NOIVOS':'cas','TRILHA SONORA':'tri'};
 
 function d2(v){
   if(v===null||v===undefined)return'—';
@@ -1633,46 +1751,130 @@ function fr(f,b){rF=f;document.querySelectorAll('#tab-ranking .btn').forEach(x=>
 function srF(v){rS=v;renderR();}
 
 // ─── TEMPORADAS ───
-function renderT(){
-  const keys=Object.keys(TEMP).sort().filter(k=>{
-    const[y,gr]=k.split('-');
-    if(tF==='todos')return true;
-    if(['2022','2023','2024','2025'].includes(tF))return y===tF;
-    return gr===tF;
-  });
-  const g=document.getElementById('tgrid');
-  g.innerHTML=keys.map(k=>{
-    const[y,gr]=k.split('-'),tc=gr==='Especial'?'te':'ta';
-    const entries=[...(TEMP[k]||[])].sort((a,b)=>{
-      if(b.m!==a.m)return b.m-a.m;
-      return dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'});
-    });
-    const tot=entries.length;
-    const rows=entries.map((x,i)=>{
-      const pos=i+1;
-      const pc=pos===1?'g':pos===2?'s':pos===3?'b':'';
-      const up=pos<=3&&gr==='Acesso'?'<span style="color:var(--green);font-size:9px"> ↑</span>':'';
-      const dn=pos>=tot-2&&gr==='Especial'&&tot>=10?'<span style="color:var(--red);font-size:9px"> ↓</span>':'';
-      const histTag=x.isHist?'<span style="font-size:8px;color:var(--mut);margin-left:4px">📚</span>':'';
-      return `<div class="ti"><span class="tp ${pc}">${pos}°</span><span class="tq">${dns(x.q)}${histTag}${up}${dn}</span><span class="ts">${t2(x.m)}</span></div>`;
+function renderYearCol(entries,group,year){
+  if(!entries.length)return`<div class="yr-col">
+    <div class="yr-col-head ${group==='ESP'?'yr-col-esp':'yr-col-ace'}">
+      ${group==='ESP'?'⭐ ESPECIAL':'🔵 ACESSO'} ${year}
+      <span style="font-size:12px;font-weight:400;color:var(--mut)">sem dados</span>
+    </div></div>`;
+  const tot=entries.length;
+  const rows=entries.map((x,i)=>{
+    const pos=i+1,pc=pos===1?'g':pos===2?'s':pos===3?'b':'';
+    const arrow=(pos<=3&&group==='ACE')?'<span class="yr-arrow up"> ▲</span>'
+               :(pos>tot-3&&group==='ESP'&&tot>=8)?'<span class="yr-arrow dn"> ▼</span>':'';
+    const bars=QKEYS.map((k,j)=>{const v=x[k];if(!v)return'';const p=((v-9.5)/0.5)*100;
+      return`<div class="qbr"><span class="qbl">${QLBLS[j].slice(0,3)}</span><div class="qbt"><div class="qbf" style="width:${Math.max(0,Math.min(100,p))}%;background:${Object.values(QC)[j]}"></div></div><span class="qbv">${t2(v)}</span></div>`;
     }).join('');
-    return `<div class="tc"><div class="tch"><span class="ty">${y}</span><span class="tbg ${tc}">${gr.toUpperCase()}</span></div>${rows}</div>`;
+    return`<div class="yr-row" onclick="openQP('${x.q.replace(/'/g,"\\'")}')">
+      <div class="yr-pos ${pc}">${pos}°</div>
+      <div style="min-width:0">
+        <div class="yr-qname">${dns(x.q)}${arrow}</div>
+        <div class="qbs" style="margin-top:3px">${bars}</div>
+      </div>
+      <div class="yr-score">${t2(x.m)}</div>
+    </div>`;
   }).join('');
-  const c=keys.length;
-  g.style.gridTemplateColumns=c>=4?'repeat(4,1fr)':c===3?'repeat(3,1fr)':c===2?'repeat(2,1fr)':'1fr';
+  return`<div class="yr-col">
+    <div class="yr-col-head ${group==='ESP'?'yr-col-esp':'yr-col-ace'}">
+      ${group==='ESP'?'⭐ ESPECIAL':'🔵 ACESSO'} ${year}
+      <span style="font-size:12px;font-weight:400">${tot} quadrilhas</span>
+    </div>
+    <div>${rows}</div>
+  </div>`;
 }
-function ft(f,b){tF=f;document.querySelectorAll('#tab-temporadas .btn').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderT();}
+function renderT(){
+  const g=document.getElementById('tgrid');
+  const gy=document.getElementById('tgrid-year');
+  if(tF==='todos'){
+    g.style.display='';gy.innerHTML='';
+    const keys=Object.keys(TEMP).sort();
+    g.innerHTML=keys.map(k=>{
+      const[y,gr]=k.split('-'),tc=gr==='Especial'?'te':'ta';
+      const entries=[...(TEMP[k]||[])].sort((a,b)=>{if(b.m!==a.m)return b.m-a.m;return dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'});});
+      const tot=entries.length;
+      const rows=entries.map((x,i)=>{
+        const pos=i+1,pc=pos===1?'g':pos===2?'s':pos===3?'b':'';
+        const up=pos<=3&&gr==='Acesso'?'<span style="color:var(--green);font-size:9px"> ↑</span>':'';
+        const dn=pos>=tot-2&&gr==='Especial'&&tot>=10?'<span style="color:var(--red);font-size:9px"> ↓</span>':'';
+        const histTag=x.isHist?'<span style="font-size:8px;color:var(--mut);margin-left:4px">📚</span>':'';
+        return`<div class="ti"><span class="tp ${pc}">${pos}°</span><span class="tq">${dns(x.q)}${histTag}${up}${dn}</span><span class="ts">${t2(x.m)}</span></div>`;
+      }).join('');
+      return`<div class="tc"><div class="tch"><span class="ty">${y}</span><span class="tbg ${tc}">${gr.toUpperCase()}</span></div>${rows}</div>`;
+    }).join('');
+    const c=keys.length;
+    g.style.gridTemplateColumns=c>=4?'repeat(4,1fr)':c===3?'repeat(3,1fr)':c===2?'repeat(2,1fr)':'1fr';
+    return;
+  }
+  // ── Visão de ano específico ──
+  g.style.display='none';
+  const year=tF;
+  const espRank=getYearRankings(year,'ESP');
+  const aceRank=getYearRankings(year,'ACE');
+  const bestQ=getYearBestPerQuesito(year);
+  const avgs=getYearAvgMatrix(year);
+  const qCards=bestQ.map(bq=>{
+    if(!bq.top.length)return'';
+    const w=bq.top[0];
+    const runners=bq.top.slice(1).map(r=>`${dns(r.q)} ${t2(r[bq.key])}`).join(' · ');
+    return`<div class="yr-q-card" style="border-top-color:${bq.col}" onclick="openQP('${w.q.replace(/'/g,"\\'")}')">
+      <div class="yr-q-label">${bq.ico} ${bq.label}</div>
+      <div class="yr-q-winner">${dns(w.q)}</div>
+      <div class="yr-q-score" style="color:${bq.col}">${t2(w[bq.key])}</div>
+      ${runners?`<div class="yr-q-runner">2° ${runners}</div>`:''}
+    </div>`;
+  }).join('');
+  const avgRows=['ESP','ACE','all'].map(k=>{
+    if(!avgs[k])return'';
+    const label=k==='ESP'?'⭐ Especial':k==='ACE'?'🔵 Acesso':'Geral';
+    const cls=k==='ESP'?'avg-esp':k==='ACE'?'avg-ace':'avg-all';
+    return`<tr class="${cls}"><td>${label}</td>${QKEYS.map(q=>`<td>${avgs[k][q]!=null?t2(avgs[k][q]):'—'}</td>`).join('')}<td><strong>${avgs[k].m!=null?t2(avgs[k].m):'—'}</strong></td></tr>`;
+  }).join('');
+  gy.innerHTML=`
+    <div class="yr-cols">${renderYearCol(espRank,'ESP',year)}${renderYearCol(aceRank,'ACE',year)}</div>
+    <div class="sh"><div class="st">MELHORES POR QUESITO · ${year}</div></div>
+    <div class="yr-q-grid">${qCards}</div>
+    <div class="sh"><div class="st">MÉDIAS DA LIGA · ${year}</div></div>
+    <div class="avg-wrap"><table class="avg-table">
+      <thead><tr><th>Grupo</th>${QLBLS.map(l=>`<th>${l.split(' ')[0]}</th>`).join('')}<th>Média</th></tr></thead>
+      <tbody>${avgRows}</tbody>
+    </table></div>`;
+}
+function ft(f,b){tF=f;document.querySelectorAll('#tab-temporadas .yr-btn').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderT();}
 
 // ─── QUESITOS ───
 function renderQ(){
-  document.getElementById('qgrid').innerHTML=Object.entries(QDAT).map(([n,items])=>{
-    const col=QC[n],ico=QI[n];
-    let d=[...items];
-    if(qF!=='todos')d=d.filter(x=>x.g===qF);
-    d.sort((a,b)=>b.m-a.m);
-    const rows=d.slice(0,8).map((x,i)=>`<div class="qit"><span class="qrk ${i===0?'g':''}">${i+1}</span><span style="font-size:9px;color:${x.g==='Especial'?'var(--esp)':'var(--ace)'}">${x.g==='Especial'?'★':'●'}</span><span class="qqn">${dns(x.q)}</span><span class="qv">${x.m===10?'10.00':t2(x.m)}</span></div>`).join('');
-    return `<div class="qcd"><div class="qch" style="border-color:${col}"><span class="qi">${ico}</span><span class="qcn" style="color:${col}">${n}</span></div>${rows}</div>`;
-  }).join('');
+  const badge=document.getElementById('q-tab-badge');
+  if(badge)badge.textContent=qYear==='todos'?'MÉDIAS COMBINADAS 2022–2025':`TEMPORADA ${qYear}`;
+  const qgrEl=document.getElementById('qgrid');
+  if(qYear==='todos'){
+    // Multi-year: usa QDAT pré-computado
+    qgrEl.innerHTML=Object.entries(QDAT).map(([n,items])=>{
+      const col=QC[n],ico=QI[n];
+      let d=[...items];
+      if(qF!=='todos')d=d.filter(x=>x.g===qF);
+      d.sort((a,b)=>b.m-a.m);
+      const rows=d.slice(0,8).map((x,i)=>`<div class="qit"><span class="qrk ${i===0?'g':''}">${i+1}</span><span style="font-size:9px;color:${x.g==='Especial'?'var(--esp)':'var(--ace)'}">${x.g==='Especial'?'★':'●'}</span><span class="qqn">${dns(x.q)}</span><span class="qv">${x.m===10?'10.00':t2(x.m)}</span></div>`).join('');
+      return`<div class="qcd"><div class="qch" style="border-color:${col}"><span class="qi">${ico}</span><span class="qcn" style="color:${col}">${n}</span></div>${rows||'<div class="qit" style="color:var(--mut);font-size:11px">Sem dados</div>'}</div>`;
+    }).join('');
+  } else {
+    // Ano específico: computa de SEASON_QDATA
+    const year=qYear;
+    const allEntries=[];
+    ['ESP','ACE'].forEach(g=>{
+      Object.entries(SEASON_QDATA).filter(([k])=>k.endsWith(`|${year}|${g}`)).forEach(([k,v])=>{
+        const q=SLUG_TO_NAME[k.split('|')[0]]||k.split('|')[0];
+        const gLabel=g==='ESP'?'Especial':'Acesso';
+        if(qF==='todos'||gLabel===qF)allEntries.push({q,g:gLabel,...v});
+      });
+    });
+    qgrEl.innerHTML=Object.keys(QDAT).map(n=>{
+      const col=QC[n],ico=QI[n];
+      const qkey=QNAME_TO_KEY[n];
+      const scored=[...allEntries].filter(e=>e[qkey]!=null).sort((a,b)=>b[qkey]-a[qkey]);
+      const rows=scored.slice(0,8).map((x,i)=>`<div class="qit"><span class="qrk ${i===0?'g':''}">${i+1}</span><span style="font-size:9px;color:${x.g==='Especial'?'var(--esp)':'var(--ace)'}">${x.g==='Especial'?'★':'●'}</span><span class="qqn">${dns(x.q)}</span><span class="qv">${x[qkey]===10?'10.00':t2(x[qkey])}</span></div>`).join('');
+      return`<div class="qcd"><div class="qch" style="border-color:${col}"><span class="qi">${ico}</span><span class="qcn" style="color:${col}">${n}</span></div>${rows||'<div class="qit" style="color:var(--mut);font-size:11px">Sem dados neste filtro</div>'}</div>`;
+    }).join('');
+  }
   const perfeitas=[
     {q:"FORMIGA DA ROÇA",g:"Especial",qs:"Animação + Trilha Sonora",a:"2022–2025",e:14},
     {q:"ARROXA O NÓ",g:"Especial",qs:"7º Quesito (derivado)",a:"2022–2025",e:14},
@@ -1683,10 +1885,11 @@ function renderQ(){
   ];
   document.getElementById('n10').innerHTML=perfeitas.map(p=>{
     const gc=p.g.includes('Especial')?'te':'ta';
-    return `<div class="pc"><div class="ph"><div><div class="pn">${p.q}</div><div style="font-size:10px;color:var(--mut);margin-top:2px">${p.a} · ${p.e} etapas</div></div><div><div class="ps">10</div><div style="font-size:9px;color:var(--mut);text-align:right">NOTA MÁXIMA</div></div></div><div class="pb"><span class="gt ${gc}">${p.g}</span><span style="margin-left:7px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--gold)">📌 ${p.qs}</span></div></div>`;
+    return`<div class="pc"><div class="ph"><div><div class="pn">${p.q}</div><div style="font-size:10px;color:var(--mut);margin-top:2px">${p.a} · ${p.e} etapas</div></div><div><div class="ps">10</div><div style="font-size:9px;color:var(--mut);text-align:right">NOTA MÁXIMA</div></div></div><div class="pb"><span class="gt ${gc}">${p.g}</span><span style="margin-left:7px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--gold)">📌 ${p.qs}</span></div></div>`;
   }).join('');
 }
-function fq(f,b){qF=f;document.querySelectorAll('#tab-quesitos .btn').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderQ();}
+function fqY(y,b){qYear=y;document.querySelectorAll('#tab-quesitos .q-yr').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderQ();}
+function fq(f,b){qF=f;document.querySelectorAll('#tab-quesitos .q-gr').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderQ();}
 
 // ═══════════════════════════════════════════
 // ─── POR QUADRILHA ───
