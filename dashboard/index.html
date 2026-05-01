@@ -10,7 +10,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{--gold:#F5A623;--gold-d:#C47F0A;--red:#E74C3C;--navy:#0D1B2A;--navy2:#1A2D42;--navy3:#243B55;--card:#16253A;--card2:#1E3251;--text:#F0EAD6;--mut:#8BA3BE;--green:#27AE60;--esp:#F5A623;--ace:#3498DB;--bdr:rgba(245,166,35,.2);}
+:root{
+  --bg-main:#081423;
+  --bg-surface:#132338;
+  --bg-surface-2:#1A2D45;
+  --bg-elevated:#243954;
+  --text-main:#F3EAD7;
+  --text-muted:#93A9C0;
+  --brand-gold:#F5A623;
+  --brand-gold-dark:#C47F0A;
+  --group-especial:#F5A623;
+  --group-acesso:#3498DB;
+  --status-up:#27AE60;
+  --status-down:#E74C3C;
+  --status-neutral:#8BA3BE;
+  --border-soft:rgba(147,169,192,.14);
+  --border-strong:rgba(245,166,35,.26);
+  --space-xs:6px;
+  --space-sm:10px;
+  --space-md:16px;
+  --space-lg:24px;
+  --space-xl:36px;
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:18px;
+  --radius-xl:24px;
+  --shadow-card:0 14px 32px rgba(0,0,0,.24);
+  --shadow-card-hover:0 20px 42px rgba(0,0,0,.34);
+  --shadow-glow-gold:0 0 0 1px rgba(245,166,35,.18),0 0 24px rgba(245,166,35,.18);
+  --font-display:'Bebas Neue',cursive;
+  --font-condensed:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+  --gold:var(--brand-gold);
+  --gold-d:var(--brand-gold-dark);
+  --red:var(--status-down);
+  --navy:var(--bg-main);
+  --navy2:var(--bg-surface-2);
+  --navy3:var(--bg-elevated);
+  --card:var(--bg-surface);
+  --card2:#1C2E47;
+  --text:var(--text-main);
+  --mut:var(--text-muted);
+  --green:var(--status-up);
+  --esp:var(--group-especial);
+  --ace:var(--group-acesso);
+  --bdr:var(--border-strong);
+}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--navy);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden;}
 
@@ -614,6 +659,830 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
   border-radius:3px;background:rgba(245,166,35,.12);color:var(--gold);
   border:1px solid rgba(245,166,35,.25);
 }
+
+/* ══ VISUAL REFRESH · SAFE OVERRIDES ══ */
+body{
+  background:
+    radial-gradient(circle at top left,rgba(245,166,35,.08),transparent 28%),
+    radial-gradient(circle at top right,rgba(52,152,219,.08),transparent 24%),
+    linear-gradient(180deg,#07101B 0%,var(--bg-main) 22%,#08111D 100%);
+  color:var(--text-main);
+  font-family:var(--font-body);
+  font-size:14px;
+  line-height:1.5;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font:inherit;}
+img{display:block;max-width:100%;}
+table,th,td,.sm,.season-score,.yr-score,.qp-metric-value,.score-card-score,.exp-card-score-value,.qp-hero-score,.qcmp-val,.qp-expect-score{
+  font-variant-numeric:tabular-nums lining-nums;
+}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+  outline:2px solid rgba(245,166,35,.5);
+  outline-offset:2px;
+}
+
+.hero{
+  background:linear-gradient(135deg,rgba(7,16,28,.98),rgba(16,34,54,.96) 48%,rgba(29,17,4,.95) 100%);
+  border-bottom:1px solid var(--border-strong);
+  box-shadow:0 20px 40px rgba(0,0,0,.26);
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(245,166,35,.62),transparent);
+}
+.hero-in{
+  padding:var(--space-lg) clamp(18px,4vw,40px) var(--space-md);
+}
+.logo{
+  width:64px;
+  height:64px;
+  padding:8px;
+  border-radius:var(--radius-md);
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:var(--shadow-card);
+}
+.brand{gap:var(--space-md);}
+.brand h1{
+  font-family:var(--font-display);
+  font-size:clamp(36px,4vw,48px);
+  letter-spacing:3.5px;
+}
+.brand p{
+  font-family:var(--font-condensed);
+  font-size:12px;
+  color:rgba(243,234,215,.78);
+  letter-spacing:2.6px;
+}
+.hstats{
+  gap:var(--space-lg);
+  padding:10px 14px;
+  border-radius:var(--radius-lg);
+  background:rgba(8,20,35,.38);
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+.hs-n{font-size:34px;}
+.hs-l{font-size:11px;}
+.live{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:999px;
+  box-shadow:0 0 0 1px rgba(231,76,60,.15);
+}
+
+.hero-search{
+  padding:0 clamp(18px,4vw,40px) var(--space-lg);
+  gap:var(--space-sm);
+  flex-wrap:wrap;
+}
+.hero-srch{
+  max-width:560px;
+  min-height:46px;
+  border-radius:var(--radius-md);
+  border-color:rgba(255,255,255,.1);
+  background:rgba(255,255,255,.06);
+  font-size:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+.hero-srch:focus{box-shadow:var(--shadow-glow-gold);}
+.hero-srch-btn{
+  min-height:46px;
+  padding:0 18px;
+  border-radius:var(--radius-md);
+  box-shadow:0 10px 18px rgba(245,166,35,.18);
+}
+
+.nav{
+  padding:0 clamp(18px,4vw,40px);
+  background:rgba(13,28,45,.82);
+  border-bottom:1px solid var(--border-soft);
+  box-shadow:inset 0 -1px 0 rgba(255,255,255,.02);
+  backdrop-filter:blur(12px);
+}
+.ntab{
+  font-family:var(--font-condensed);
+  font-size:12px;
+  letter-spacing:1.8px;
+  padding:16px 18px 14px;
+  color:rgba(147,169,192,.92);
+  position:relative;
+}
+.ntab:hover{
+  color:var(--text-main);
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));
+}
+.ntab.on::after{
+  content:'';
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:-1px;
+  height:3px;
+  border-radius:999px;
+  background:linear-gradient(90deg,rgba(245,166,35,.15),var(--brand-gold),rgba(245,166,35,.15));
+}
+
+.box{
+  max-width:1360px;
+  padding:var(--space-xl) clamp(18px,4vw,40px);
+}
+.sh{
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px 14px;
+  margin-bottom:var(--space-md);
+}
+.st{
+  font-family:var(--font-display);
+  font-size:clamp(24px,3vw,30px);
+  letter-spacing:2px;
+  line-height:1;
+}
+.sb,.gt,.et,.hpill,.exp-confidence,.qp-expect-badge,.qp-note-pill,.hist-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border-radius:999px;
+}
+.sb{
+  padding:5px 10px;
+  border-color:var(--border-soft);
+  backdrop-filter:blur(8px);
+}
+.fb{
+  gap:var(--space-xs);
+  margin-bottom:var(--space-md);
+  padding-top:6px;
+}
+.fl{
+  font-size:12px;
+  letter-spacing:1.6px;
+}
+
+.btn,.qp-micro-btn,.exp-detail-btn,.yr-btn,.qp-quick-chip,.metodo-toggle-btn,.qp-select,.qp-compare,.srch,.hero-srch{
+  transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease,box-shadow .18s ease;
+}
+.btn,.exp-detail-btn{
+  min-height:36px;
+  padding:0 14px;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--border-soft);
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+  color:var(--text-muted);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+.btn:hover,.exp-detail-btn:hover,.qp-micro-btn:hover,.qp-quick-chip:hover{transform:translateY(-1px);}
+.btn.on,.qp-micro-btn.on{
+  box-shadow:0 8px 18px rgba(245,166,35,.22);
+}
+.srch{
+  width:min(100%,250px);
+  min-height:40px;
+  border-radius:var(--radius-sm);
+  border-color:var(--border-soft);
+  background:rgba(255,255,255,.03);
+  color:var(--text-main);
+  font-size:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+.srch:focus,.qp-compare:focus,.qp-select:focus{box-shadow:var(--shadow-glow-gold);}
+
+.spot,.ib,.qp-narrative{
+  border-radius:var(--radius-md);
+  box-shadow:var(--shadow-card);
+}
+.spot{
+  position:relative;
+  overflow:hidden;
+  padding:18px 20px;
+  background:linear-gradient(135deg,rgba(245,166,35,.14),rgba(15,27,43,.92) 55%,rgba(52,152,219,.08));
+  border:1px solid var(--border-strong);
+  border-left:1px solid rgba(245,166,35,.42);
+}
+.spot::after{
+  content:'';
+  position:absolute;
+  inset:0 auto 0 0;
+  width:4px;
+  background:linear-gradient(180deg,var(--brand-gold),rgba(245,166,35,.15));
+}
+.spi{
+  font-size:28px;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.18));
+}
+.sph3{
+  font-size:20px;
+  line-height:1;
+}
+.spp{
+  font-size:13px;
+  color:rgba(243,234,215,.72);
+  max-width:90ch;
+}
+.ib{
+  padding:14px 18px;
+  background:linear-gradient(135deg,rgba(52,152,219,.08),rgba(19,35,56,.94));
+  border:1px solid rgba(52,152,219,.18);
+  font-size:12px;
+  line-height:1.55;
+  color:rgba(243,234,215,.72);
+}
+
+.tw,.pc,.exp-card,.qp-hero,.chart-box,.qcmp,.qp-insight-card,.qp-bench-card,.tc,.qcd,.yr-col,.avg-wrap,.metodo-box{
+  background:linear-gradient(180deg,rgba(25,41,61,.98),rgba(17,30,47,.98));
+  border:1px solid var(--border-soft);
+  box-shadow:var(--shadow-card);
+}
+.tw{
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+}
+table{background:transparent;}
+thead tr{
+  background:linear-gradient(180deg,rgba(37,58,84,.96),rgba(28,47,69,.96));
+}
+th{
+  font-family:var(--font-condensed);
+  font-size:11px;
+  letter-spacing:1.8px;
+  padding:14px 16px;
+  color:rgba(147,169,192,.92);
+  border-bottom:1px solid var(--border-strong);
+}
+td{
+  padding:14px 16px;
+  font-size:14px;
+  color:var(--text-main);
+}
+tbody tr{
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+tbody tr:nth-child(even){
+  background:rgba(255,255,255,.01);
+}
+tbody tr:hover{
+  background:rgba(36,57,84,.58);
+}
+.qn,.pn,.tq,.qqn,.yr-q-winner,.yr-qname{
+  text-transform:none;
+  letter-spacing:.35px;
+}
+.qs,.qbl,.qbv,.hpill,.et,.score-card-score-label,.score-card-highlight-label,.score-card-best-season,.score-card-open,.exp-card-kicker,.exp-card-score-label,.exp-card-stat-label,.qp-card-kicker,.qp-inline-label,.chart-title,.qp-hero-score-label,.qcmp-name,.qcmp-vs,.qcmp-exp-label,.qcmp-rank,.metodo-tag-real,.metodo-tag-exp,.bnav-label{
+  letter-spacing:1.2px;
+}
+
+.cg{gap:18px;}
+#pgrid{grid-template-columns:repeat(auto-fill,minmax(360px,1fr));}
+.pc{
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+}
+.pc:hover{
+  border-color:var(--border-strong);
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-card-hover);
+}
+.score-card{
+  border-radius:20px;
+  background:linear-gradient(180deg,rgba(23,37,58,.98),rgba(16,28,44,.98));
+}
+.score-card-cover{
+  min-height:236px;
+  padding:18px 18px 20px;
+}
+.score-card-cover::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(245,166,35,.18),transparent 34%,transparent 70%,rgba(52,152,219,.14) 100%);
+  opacity:.6;
+}
+.score-card-logo-shell{
+  width:84px;
+  height:84px;
+  padding:8px;
+  border-radius:24px;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 12px 24px rgba(0,0,0,.18);
+}
+.score-card-score{
+  font-size:58px;
+  letter-spacing:.4px;
+}
+.score-card-score-label{font-size:11px;}
+.score-card-body{padding:18px 18px 18px;}
+.score-card-name{
+  font-size:36px;
+  letter-spacing:1.3px;
+}
+.score-card-meta{
+  font-size:12px;
+  color:rgba(243,234,215,.68);
+}
+.score-card-highlight{
+  margin-top:18px;
+  padding:14px 15px;
+  background:linear-gradient(135deg,rgba(245,166,35,.16),rgba(255,255,255,.04) 70%);
+  border-color:rgba(245,166,35,.24);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+.score-card-highlight-value{font-size:15px;}
+.score-card-quesitos{
+  gap:10px;
+  margin-top:16px;
+}
+.score-card-quesito{
+  min-height:72px;
+  border-radius:12px;
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+}
+.score-card-quesito-name{font-size:10px;}
+.score-card-quesito-value{font-size:24px;}
+.score-card-foot{
+  align-items:flex-start;
+}
+.score-card-best-season,.score-card-open{font-size:12px;}
+
+.exp-summary-grid{gap:18px;}
+.exp-card{
+  border-radius:var(--radius-lg);
+  padding:20px;
+  background:linear-gradient(155deg,rgba(27,46,70,.98),rgba(17,28,45,.98));
+}
+.exp-card::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  border:1px solid rgba(245,166,35,.08);
+  pointer-events:none;
+}
+.exp-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-card-hover);
+}
+.exp-card-kicker{font-size:11px;}
+.exp-card-name{font-size:32px;}
+.exp-card-sub{
+  font-size:12px;
+  color:rgba(243,234,215,.7);
+}
+.exp-card-score-value{font-size:56px;}
+.exp-card-stat{
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+}
+.exp-card-stat-label{font-size:10px;}
+.exp-card-stat-value{font-size:24px;}
+.exp-card-note{
+  font-size:13px;
+  color:rgba(243,234,215,.7);
+}
+.exp-card-logo-shell{
+  width:64px;
+  height:64px;
+  padding:6px;
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.qp-select-bar{
+  padding:16px 18px;
+  margin-bottom:22px;
+  border:1px solid var(--border-soft);
+  border-radius:var(--radius-lg);
+  background:linear-gradient(180deg,rgba(19,35,56,.98),rgba(16,29,47,.98));
+  box-shadow:var(--shadow-card);
+}
+.qp-select-wrap{max-width:440px;}
+.qp-select,.qp-compare{
+  min-height:44px;
+  border-radius:var(--radius-md);
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border-soft);
+  color:var(--text-main);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+.qp-select{
+  padding-right:40px;
+  font-size:15px;
+  text-transform:none;
+  letter-spacing:.4px;
+}
+.qp-compare{
+  min-width:220px;
+  font-size:14px;
+  text-transform:none;
+  letter-spacing:.35px;
+}
+.qp-micro-btn{
+  min-height:34px;
+  padding:0 12px;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--border-soft);
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
+  color:var(--text-muted);
+}
+.qp-quick-chip{
+  min-height:38px;
+  padding:0 14px;
+  border-radius:999px;
+  border:1px solid var(--border-soft);
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
+}
+
+.qp-hero{
+  border-radius:22px;
+  overflow:hidden;
+}
+.qp-hero-top{
+  padding:28px 30px;
+  min-height:224px;
+}
+.qp-hero-logo-shell{
+  width:96px;
+  height:96px;
+  padding:8px;
+  border-radius:26px;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 16px 28px rgba(0,0,0,.24);
+}
+.qp-hero-name{
+  font-size:clamp(38px,4vw,52px);
+}
+.qp-hero-meta{
+  margin-top:10px;
+  gap:8px;
+}
+.qp-hero-score-area{padding:10px 0 0 16px;}
+.qp-hero-score{
+  font-size:64px;
+  text-shadow:0 8px 22px rgba(0,0,0,.28);
+}
+.qp-hero-score-label{font-size:12px;}
+.qp-hero-stats{background:rgba(7,15,27,.22);}
+.qp-hs{padding:18px 14px;}
+.qp-hs-n{font-size:32px;}
+.qp-hs-l{font-size:11px;}
+.qp-narrative{
+  font-size:14px;
+  line-height:1.75;
+  color:rgba(243,234,215,.88);
+}
+
+.chart-box{
+  border-radius:18px;
+  padding:20px 20px 18px;
+}
+.chart-title{
+  margin-bottom:18px;
+  color:rgba(147,169,192,.88);
+}
+.chart-title span{color:var(--text-main);}
+
+.season-table th,.avg-table th,.metodo-wtable th{
+  font-size:10px;
+  padding:10px 12px;
+}
+.season-table td,.avg-table td,.metodo-wtable td{
+  font-size:12px;
+  padding:10px 12px;
+}
+.avg-table td{
+  font-size:14px;
+}
+
+.qcmp{
+  border-radius:16px;
+  padding:16px 12px;
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+}
+.qcmp.best-q{
+  box-shadow:inset 0 0 0 1px rgba(245,166,35,.18),0 10px 22px rgba(0,0,0,.18);
+}
+.qcmp-name{
+  min-height:28px;
+  font-size:11px;
+}
+.qcmp-val{font-size:24px;}
+
+.qp-summary-grid{
+  gap:16px;
+}
+.qp-insight-card,.qp-bench-card{
+  border-radius:var(--radius-lg);
+  padding:18px 20px;
+}
+.qp-card-title{
+  font-size:28px;
+}
+.qp-card-lead{
+  font-size:13px;
+  color:rgba(243,234,215,.72);
+}
+.qp-metric-grid{gap:12px;}
+.qp-metric{
+  min-height:96px;
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+}
+.qp-metric-label{font-size:10px;}
+.qp-metric-value{font-size:26px;}
+.qp-metric-note,.qp-tl-group,.qp-matrix-table .qp-cell-sub{font-size:11px;}
+.qp-timeline-item{
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+}
+.qp-note-pill{
+  padding:5px 10px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.tc,.qcd,.yr-col,.avg-wrap{
+  border-radius:16px;
+}
+.tch,.qch,.yr-col-head{
+  padding:14px 16px;
+}
+.yr-btn{
+  min-height:50px;
+  padding:0 24px;
+  border-radius:14px;
+  border-width:1px;
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));
+}
+.yr-btn.on{
+  box-shadow:0 12px 22px rgba(245,166,35,.22);
+}
+.yr-row{
+  padding:12px 16px;
+}
+.yr-q-card{
+  border-radius:16px;
+  border:1px solid var(--border-soft);
+  box-shadow:var(--shadow-card);
+}
+
+.metodo-toggle-btn{
+  min-height:48px;
+  border-radius:var(--radius-md);
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));
+}
+.metodo-box{border-radius:18px;}
+.metodo-col{
+  padding:22px 24px;
+}
+.metodo-col:first-child{
+  background:linear-gradient(180deg,rgba(52,152,219,.07),rgba(19,35,56,.98));
+}
+.metodo-col:last-child{
+  background:linear-gradient(180deg,rgba(245,166,35,.08),rgba(19,35,56,.98));
+}
+.metodo-title{font-size:16px;}
+.metodo-desc{
+  font-size:13px;
+  color:rgba(243,234,215,.72);
+}
+.metodo-formula{
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:12px;
+}
+.metodo-col:first-child .metodo-formula{
+  background:rgba(52,152,219,.08);
+  border-color:rgba(52,152,219,.18);
+}
+.metodo-col:last-child .metodo-formula{
+  background:rgba(245,166,35,.09);
+  border-color:rgba(245,166,35,.18);
+}
+.metodo-wtable th{font-size:10px;}
+.metodo-wtable td{font-size:12px;}
+.metodo-tag-real{
+  background:rgba(52,152,219,.14);
+  color:var(--group-acesso);
+  border-color:rgba(52,152,219,.25);
+}
+
+#r-th-media{
+  background:linear-gradient(180deg,rgba(139,163,190,.16),rgba(36,57,84,.95));
+  color:var(--text-main);
+}
+#exp-table th:nth-child(4){
+  background:linear-gradient(180deg,rgba(245,166,35,.18),rgba(36,57,84,.95));
+  color:var(--text-main);
+}
+
+.bottom-nav{
+  background:rgba(11,22,35,.96);
+  border-top:1px solid var(--border-strong);
+  box-shadow:0 -12px 30px rgba(0,0,0,.24);
+  backdrop-filter:blur(18px);
+  padding:6px 8px calc(8px + env(safe-area-inset-bottom,0px));
+  gap:4px;
+}
+.bnav-item{
+  min-height:54px;
+  border-radius:14px;
+}
+.bnav-item.on{
+  color:var(--gold);
+  background:rgba(245,166,35,.08);
+}
+.bnav-label{
+  font-size:10px;
+  letter-spacing:.9px;
+}
+
+@media(max-width:900px){
+  .hero-in{
+    padding:18px 16px 14px;
+    align-items:flex-start;
+  }
+  .brand{
+    width:100%;
+  }
+  .brand h1{font-size:32px;}
+  .brand p{
+    font-size:11px;
+    letter-spacing:2px;
+  }
+  .hero-search{
+    padding:0 16px 18px;
+  }
+  .hero-srch{max-width:none;}
+  .hero-srch-btn{
+    flex:1 1 180px;
+  }
+  .box{
+    padding:26px 16px;
+  }
+  .sh{
+    align-items:flex-start;
+  }
+  .fb{
+    align-items:stretch;
+  }
+  .srch{
+    width:100%;
+    max-width:none;
+  }
+  #pgrid{
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  }
+  .exp-summary-grid{
+    grid-template-columns:1fr;
+  }
+  .score-card-cover{
+    min-height:214px;
+  }
+  .score-card-name{font-size:32px;}
+  .qp-select-bar{
+    padding:14px;
+  }
+  .qp-select-wrap,.qp-compare-wrap{
+    width:100%;
+    max-width:none;
+  }
+  .qp-compare-wrap{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .qp-compare{
+    width:100%;
+    min-width:0;
+  }
+  .qp-filter-stack{
+    width:100%;
+    align-items:flex-start;
+  }
+  .qp-filter-row{
+    justify-content:flex-start;
+  }
+  .qp-hero-top{
+    padding:22px 20px;
+    flex-direction:column;
+  }
+  .qp-hero-score-area{
+    text-align:left;
+    padding-left:0;
+  }
+  .qp-hero-stats{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .qp-hs{
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .qp-hs:nth-child(2n){border-right:none;}
+  .qp-hs:nth-last-child(-n+2){border-bottom:none;}
+  .chart-box{
+    padding:18px;
+  }
+}
+
+@media(max-width:600px){
+  body{font-size:13px;}
+  .hero-in{gap:14px;}
+  .logo{
+    width:56px;
+    height:56px;
+  }
+  .brand{gap:12px;}
+  .brand h1{
+    font-size:29px;
+    letter-spacing:2.6px;
+  }
+  .live{font-size:11px;}
+  .hero-search{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .hero-srch-btn{width:100%;}
+  .st{font-size:24px;}
+  .tw{border-radius:var(--radius-md);}
+  th{
+    font-size:10px;
+    padding:12px;
+  }
+  td{
+    padding:12px;
+    font-size:13px;
+  }
+  .qn{font-size:14px;}
+  .score-card{
+    border-radius:18px;
+  }
+  .score-card-cover{
+    min-height:198px;
+    padding:16px;
+  }
+  .score-card-logo-shell{
+    width:72px;
+    height:72px;
+    border-radius:20px;
+  }
+  .score-card-score{font-size:50px;}
+  .score-card-name{font-size:30px;}
+  .score-card-meta,.score-card-best-season,.score-card-open,.score-card-highlight-label,.score-card-highlight-value,.qp-card-lead,.exp-card-note,.metodo-desc{
+    font-size:12px;
+  }
+  #pgrid{
+    grid-template-columns:1fr;
+  }
+  .score-card-quesitos,.exp-card-body,.qp-metric-grid{
+    grid-template-columns:1fr;
+  }
+  .score-card-foot{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .qp-hero{
+    border-radius:18px;
+  }
+  .qp-hero-name{font-size:34px;}
+  .qp-hero-logo-shell{
+    width:82px;
+    height:82px;
+    border-radius:22px;
+  }
+  .qp-hero-score{font-size:54px;}
+  .qp-hs{
+    padding:14px 12px;
+  }
+  .qp-summary-grid,.qp-bench-grid,.chart-grid-2,.chart-grid-3,.yr-cols,.yr-q-grid,.exp-summary-grid,.tg,.qg{
+    grid-template-columns:1fr;
+  }
+  .q-compare-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .bottom-nav{
+    padding-left:6px;
+    padding-right:6px;
+  }
+}
+
+@media(max-width:420px){
+  .q-compare-grid,.qp-hero-stats{
+    grid-template-columns:1fr;
+  }
+  .qp-hs{
+    border-right:none;
+  }
+  .qp-hs:nth-last-child(-n+2){border-bottom:1px solid rgba(255,255,255,.06);}
+  .qp-hs:last-child{border-bottom:none;}
+}
 </style>
 </head>
 <body>
@@ -640,8 +1509,8 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 <div class="nav">
   <div class="ntab on" onclick="sw('perfis',this)">🎭 Quadrilhas</div>
   <div class="ntab" data-tab="quadrilha" onclick="sw('quadrilha',this)">🔍 Por Quadrilha</div>
-  <div class="ntab" data-tab="expectativa" onclick="sw('expectativa',this)">🔮 Expectativa 2026</div>
-  <div class="ntab" onclick="sw('ranking',this)">🏆 Ranking</div>
+  <div class="ntab" data-tab="expectativa" onclick="sw('expectativa',this)" style="display:none">🔮 Expectativa 2026</div>
+  <div class="ntab" onclick="sw('ranking',this)">🏆 Desempenho</div>
   <div class="ntab" onclick="sw('temporadas',this)">📅 Temporadas</div>
   <div class="ntab" onclick="sw('quesitos',this)">🎯 Quesitos</div>
 </div>
@@ -652,8 +1521,8 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
     <div class="sph3" id="ranking-spot-title">CARREGANDO…</div>
     <div class="spp" id="ranking-spot-desc"></div>
   </div></div>
-  <div class="ib">📌 Etapas e médias verificadas das planilhas 2022–2025. A <strong>Média Real</strong> é a média aritmética simples — todas as temporadas e grupos com peso igual. Para ver a projeção 2026 com peso de recência, acesse a aba <strong>Expectativa 2026</strong>.</div>
-  <div class="sh"><div class="st" id="r-title">RANKING · FILIADAS LINQDFE</div><div class="sb sb-g" id="r-badge">2022–2025 VERIFICADO</div></div>
+  <div class="ib">📌 Etapas e médias verificadas das planilhas 2022–2025. A <strong>Média Real</strong> é a média aritmética simples — todas as temporadas e grupos com peso igual.</div>
+  <div class="sh"><div class="st" id="r-title">DESEMPENHO · FILIADAS LINQDFE</div><div class="sb sb-g" id="r-badge">2022–2025 VERIFICADO</div></div>
   <div class="fb" style="margin-bottom:8px">
     <span class="fl">Ano:</span>
     <button class="btn r-yr on" onclick="frYear('todos',this)">Todos</button>
@@ -693,7 +1562,7 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
     </summary>
   <div class="metodo-box">
     <div class="metodo-col">
-      <div class="metodo-title"><span class="metodo-tag-real">Aba Ranking</span> 📊 MÉDIA REAL</div>
+      <div class="metodo-title"><span class="metodo-tag-real">Aba Desempenho</span> 📊 MÉDIA REAL</div>
       <div class="metodo-desc">
         Média aritmética simples de <strong>todas as etapas</strong> em que a quadrilha participou no circuito LINQDFE.
         Cada temporada e cada grupo têm <strong>exatamente o mesmo peso</strong>: uma campanha de 2022 no Acesso conta
@@ -1063,7 +1932,7 @@ function getRankInfo_legacy(d){
   const ligaPos=ligaAll.findIndex(x=>x.q===d.q)+1;
   const pool=ligaAll.filter(x=>x.g26===d.g26);
   const posGrupo=pool.findIndex(x=>x.q===d.q)+1;
-  const medal=ligaPos===1?"ðŸ¥‡":ligaPos===2?"ðŸ¥ˆ":ligaPos===3?"ðŸ¥‰":"";
+  const medal="";
   return{ligaPos,posGrupo,medal};
 }
 function coverStyle(photo){
@@ -1116,7 +1985,7 @@ function getRankInfo(d){
   const ligaPos=ligaAll.findIndex(x=>x.q===d.q)+1;
   const pool=ligaAll.filter(x=>x.g26===d.g26);
   const posGrupo=pool.findIndex(x=>x.q===d.q)+1;
-  const medal=ligaPos===1?"🥇":ligaPos===2?"🥈":ligaPos===3?"🥉":"";
+  const medal="";
   return{ligaPos,posGrupo,medal};
 }
 
@@ -1430,17 +2299,9 @@ function buildHeadToHeadNarrative(d,cmp){
 function buildReferenceBenchCard(d,ref){
   const meanDelta=d.m!=null&&ref.mAvg!=null?d.m-ref.mAvg:null;
   const {best,worst}=getBestWorstDiff(getReferenceDiffs(d,ref.avg));
-  const lead=meanDelta==null
-    ? 'Sem base suficiente para comparação.'
-    : meanDelta>.004
-      ? `A quadrilha está acima da referência por ${d2(meanDelta)} na média real.`
-      : meanDelta<-.004
-        ? `A quadrilha está abaixo da referência por ${d2(Math.abs(meanDelta))} na média real.`
-        : 'A média real está praticamente alinhada com a referência.';
   return `<div class="qp-bench-card">
     <div class="qp-card-kicker">Comparação de referência</div>
     <div class="qp-card-title" style="color:${ref.color}">${ref.label}</div>
-    <div class="qp-card-lead">${lead}</div>
     <div class="qp-metric-grid">
       <div class="qp-metric">
         <div class="qp-metric-label">Média da referência</div>
@@ -1478,7 +2339,6 @@ function buildComparatorBenchCard(d,cmp){
   return `<div class="qp-bench-card">
     <div class="qp-card-kicker">Comparação direta</div>
     <div class="qp-card-title">${dns(cmp.q)}</div>
-    <div class="qp-card-lead">${buildHeadToHeadNarrative(d,cmp)}</div>
     <div class="qp-metric-grid">
       <div class="qp-metric">
         <div class="qp-metric-label">Média comparada</div>
@@ -1696,7 +2556,7 @@ function seF(v){eS=v;renderE();}
 // ─── RANK GERAL ───
 function renderR(){
   if(rYear!=='todos'){renderRYear();return;}
-  document.getElementById('r-title').textContent='RANKING · FILIADAS LINQDFE';
+  document.getElementById('r-title').textContent='DESEMPENHO · FILIADAS LINQDFE';
   document.getElementById('r-badge').textContent='2022–2025 VERIFICADO';
   document.getElementById('r-th-group').textContent='Grupo 2026';
   document.getElementById('r-th-etapas').textContent='Etapas';
@@ -1722,7 +2582,7 @@ function renderR(){
     const bestQi=getBestQIndex(top);
     const bestQ=bestQi!==null?QLBLS[bestQi]:'';
     const etiq=rF==='todos'?`${top.e} etapas no circuito (2022–2025)`:`${top.e} etapas · Grupo ${top.g26} 2026`;
-    document.getElementById('ranking-spot-title').textContent=`${dns(top.q)} · líder do ranking${rF!=='todos'?' '+rF:''}`;
+    document.getElementById('ranking-spot-title').textContent=`${dns(top.q)} · maior média${rF!=='todos'?' · '+rF:''}`;
     document.getElementById('ranking-spot-desc').innerHTML=`${etiq} · Média real <strong>${t2(top.m)}</strong>${bestQ?` · Melhor em ${bestQ}`:''}`;
   }
   let rankPos=0;
@@ -1751,7 +2611,7 @@ function renderR(){
 }
 function renderRYear(){
   const year=rYear;
-  document.getElementById('r-title').textContent=`RANKING ${year}`;
+  document.getElementById('r-title').textContent=`DESEMPENHO ${year}`;
   document.getElementById('r-badge').textContent=`TEMPORADA ${year}`;
   document.getElementById('r-th-group').textContent='Grupo';
   document.getElementById('r-th-etapas').textContent='Etapas';
@@ -1774,7 +2634,7 @@ function renderRYear(){
   if(entries.length>0){
     const top=entries[0];
     const bestQi=QKEYS.reduce((bi,k,i)=>top[k]>top[QKEYS[bi]]?i:bi,0);
-    document.getElementById('ranking-spot-title').textContent=`${dns(top.q)} · 1° em ${year}${rF!=='todos'?' · '+rF:''}`;
+    document.getElementById('ranking-spot-title').textContent=`${dns(top.q)} · maior média em ${year}${rF!=='todos'?' · '+rF:''}`;
     document.getElementById('ranking-spot-desc').innerHTML=`${top.g} · Média <strong>${t2(top.m)}</strong> · Melhor em ${QLBLS[bestQi]}`;
   }
   let rankPos=0;
@@ -2017,9 +2877,6 @@ function renderQP(){
   const media=getQuadrilhaMedia(d.q);
   const {ligaPos,posGrupo,medal}=getRankInfo(d);
   const bestSzn=d.hist.length>0?d.hist.reduce((b,h)=>h.m>b.m?h:b,d.hist[0]):null;
-  const exp=getExpectativa2026(d);
-  const expectTier=getExpectationTier(exp.score);
-  const rankCtx=getExpectationRankContext(d);
   const benchmark=getBenchmarkContext(d,benchmarkVal);
   const groupAvg=benchmark.avg;
   const groupLabel=benchmark.label;
@@ -2039,13 +2896,6 @@ function renderQP(){
   const profileValues=qvals.filter(v=>v!=null);
   const profileAmplitude=profileValues.length?Math.max(...profileValues)-Math.min(...profileValues):0;
   const benchmarkCards=BENCHMARK_REFS.map(ref=>buildReferenceBenchCard(d,ref)).join('')+(cmp?buildComparatorBenchCard(d,cmp):'');
-  const expectNotes=[
-    exp.confidence,
-    exp.biasLabel,
-    exp.groupShiftBonus>.01?'Mudança de grupo bem absorvida':null,
-    exp.recentTitleBonus>.01?'Título recente no Acesso':null,
-    exp.last?`Última leitura: ${exp.last.a} ${getGroupLabel(exp.last.g)} · ${t2(exp.last.m)}`:null,
-  ].filter(Boolean);
   const sameGroupNote=d.g26&&posGrupo?`${posGrupo}º no ${d.g26}`:'Sem grupo ativo em 2026';
   const compareDiff=cmp&&d.m!=null&&cmp.m!=null?d.m-cmp.m:null;
   const compareQDiffs=cmp?QKEYS.map((k,i)=>({label:QLBLS[i],delta:d[k]!=null&&cmp[k]!=null?d[k]-cmp[k]:null})).filter(x=>x.delta!=null):[];
@@ -2087,45 +2937,10 @@ function renderQP(){
     </div>
   </div>
 
-  <!-- NARRATIVA -->
-  <div class="qp-narrative">${buildNarrative(d)}</div>
-
   <div class="qp-summary-grid">
-    <div class="qp-insight-card">
-      <div class="qp-card-kicker">Expectativa 2026</div>
-      <div class="qp-card-title">Leitura Projetada</div>
-      <div class="qp-expect-score">${t2(exp.score)}</div>
-      <div class="qp-expect-badge qp-delta ${expectTier.tone}">${expectTier.label} · ${rankCtx.groupPos?`${rankCtx.groupPos}º no ${d.g26}`:'sem grupo 2026'}</div>
-      <div class="qp-card-lead">${buildExpectationNarrative(d,exp)}</div>
-      <div class="qp-metric-grid">
-        <div class="qp-metric">
-          <div class="qp-metric-label">Base ponderada</div>
-          <div class="qp-metric-value">${t2(exp.base)}</div>
-          <div class="qp-metric-note">${exp.confidence}</div>
-        </div>
-        <div class="qp-metric">
-          <div class="qp-metric-label">Pulso recente</div>
-          <div class="qp-metric-value qp-delta ${getValueDeltaClass(exp.recentPulse)}">${fmtDelta(exp.recentPulse)}</div>
-          <div class="qp-metric-note">Momento, colocação e mudança de grupo</div>
-        </div>
-        <div class="qp-metric">
-          <div class="qp-metric-label">Ranking projetado</div>
-          <div class="qp-metric-value">${rankCtx.ligaPos?`${rankCtx.ligaPos}º`:'—'}</div>
-          <div class="qp-metric-note">${rankCtx.ligaPos?`de ${rankCtx.ligaTotal} na liga`:sameGroupNote}</div>
-        </div>
-        <div class="qp-metric">
-          <div class="qp-metric-label">Última referência</div>
-          <div class="qp-metric-value">${exp.last?`${exp.last.a}`:'—'}</div>
-          <div class="qp-metric-note">${exp.last?`${getGroupLabel(exp.last.g)} · ${getPlacementLabel(exp.last)} · ${t2(exp.last.m)}`:'Sem dado oficial'}</div>
-        </div>
-      </div>
-      <div class="qp-note-list">${expectNotes.map(note=>`<span class="qp-note-pill">${note}</span>`).join('')}</div>
-    </div>
-
     <div class="qp-insight-card">
       <div class="qp-card-kicker">Perfil técnico</div>
       <div class="qp-card-title">Mapa de Quesitos</div>
-      <div class="qp-card-lead">${buildTechnicalNarrative(d)}</div>
       <div class="qp-metric-grid">
         <div class="qp-metric">
           <div class="qp-metric-label">Melhor quesito</div>
@@ -2133,7 +2948,7 @@ function renderQP(){
           <div class="qp-metric-note">${bestQi!==null?QLBLS[bestQi]:'Sem leitura'}</div>
         </div>
         <div class="qp-metric">
-          <div class="qp-metric-label">Maior espaço</div>
+          <div class="qp-metric-label">Menor Quesito</div>
           <div class="qp-metric-value">${worstQi!==null?t2(d[QKEYS[worstQi]]):'—'}</div>
           <div class="qp-metric-note">${worstQi!==null?QLBLS[worstQi]:'Sem leitura'}</div>
         </div>
@@ -2151,9 +2966,8 @@ function renderQP(){
     </div>
 
     <div class="qp-insight-card">
-      <div class="qp-card-kicker">${cmp?'Confronto direto':'Leitura competitiva'}</div>
+      <div class="qp-card-kicker">${cmp?'Confronto direto':'Comparação'}</div>
       <div class="qp-card-title">${cmp?dns(cmp.q):'Posicionamento Atual'}</div>
-      <div class="qp-card-lead">${cmp?buildHeadToHeadNarrative(d,cmp):buildLeagueContextNarrative(d,exp,rankCtx)}</div>
       <div class="qp-metric-grid">
         <div class="qp-metric">
           <div class="qp-metric-label">${cmp?'Saldo geral':'vs Liga geral'}</div>
@@ -2166,14 +2980,14 @@ function renderQP(){
           <div class="qp-metric-note">${cmp?`${compareLosses} perdas diretas`:d.g26?`${sameGroupNote}`:'Sem grupo ativo'}</div>
         </div>
         <div class="qp-metric">
-          <div class="qp-metric-label">${cmp?'Maior frente':'Projeção no grupo'}</div>
-          <div class="qp-metric-value ${cmp?`qp-delta ${getValueDeltaClass(compareExtremes.best?.delta??0)}`:''}">${cmp?(compareExtremes.best?fmtDelta(compareExtremes.best.delta):'—'):(rankCtx.groupPos?`${rankCtx.groupPos}º`:'—')}</div>
-          <div class="qp-metric-note">${cmp?(compareExtremes.best?.label||'Sem dados'):(rankCtx.groupPos?`de ${rankCtx.groupTotal} no ${d.g26}`:'Sem grupo')}</div>
+          <div class="qp-metric-label">${cmp?'Maior frente':'Rank no grupo'}</div>
+          <div class="qp-metric-value ${cmp?`qp-delta ${getValueDeltaClass(compareExtremes.best?.delta??0)}`:''}">${cmp?(compareExtremes.best?fmtDelta(compareExtremes.best.delta):'—'):(posGrupo?`${posGrupo}°`:'—')}</div>
+          <div class="qp-metric-note">${cmp?(compareExtremes.best?.label||'Sem dados'):(d.g26?`${d.g26}`:'Sem grupo 2026')}</div>
         </div>
         <div class="qp-metric">
-          <div class="qp-metric-label">${cmp?'Maior gap':'Projeção na liga'}</div>
-          <div class="qp-metric-value ${cmp?`qp-delta ${getValueDeltaClass(compareExtremes.worst?.delta??0)}`:''}">${cmp?(compareExtremes.worst?fmtDelta(compareExtremes.worst.delta):'—'):(rankCtx.ligaPos?`${rankCtx.ligaPos}º`:'—')}</div>
-          <div class="qp-metric-note">${cmp?(compareExtremes.worst?.label||'Sem dados'):(rankCtx.ligaPos?`de ${rankCtx.ligaTotal} na projeção geral`:'Sem projeção')}</div>
+          <div class="qp-metric-label">${cmp?'Maior gap':'Rank na liga'}</div>
+          <div class="qp-metric-value ${cmp?`qp-delta ${getValueDeltaClass(compareExtremes.worst?.delta??0)}`:''}">${cmp?(compareExtremes.worst?fmtDelta(compareExtremes.worst.delta):'—'):(ligaPos?`${ligaPos}°`:'—')}</div>
+          <div class="qp-metric-note">${cmp?(compareExtremes.worst?.label||'Sem dados'):(ligaPos?`de ${DATA.filter(x=>x.m!==null).length} na liga`:'Sem dados')}</div>
         </div>
       </div>
     </div>
@@ -2254,7 +3068,6 @@ function renderQP(){
 
   // Populate quesito compare grid
   const qcmpGrid=document.getElementById('qcmp-grid');
-  const qexp=getQuesitoExp(d);
   // Year-specific data
   let qpHistYear=null,qpYearEntry=null,qpYearPool=null,qpYearAvg={};
   if(qpQYear!=='todos'){
@@ -2283,10 +3096,6 @@ function renderQP(){
     const isBest=!isYearMode&&j===bestQi&&v;
     const diffStr=diff!==null?(diff>=0?`+${t2(diff)}`:`${t2(diff)}`):null;
     const diffColor=diff>0?'#27AE60':diff<0?'#E74C3C':'var(--mut)';
-    const ev=qexp?qexp[k]:null;
-    const ediff=ev!=null&&v!=null?(ev-v):null;
-    const edeltaClass=ediff===null?'flat':ediff>0.001?'up':ediff<-0.001?'dn':'flat';
-    const edeltaStr=ediff!==null?(ediff>0.001?`▲ ${t2(Math.abs(ediff))}`:ediff<-0.001?`▼ ${t2(Math.abs(ediff))}`:'≈ estável'):'—';
     const usePool=isYearMode&&qpYearPool?qpYearPool:benchmark.pool;
     const groupPool=usePool.filter(x=>x[k]!=null).sort((a,b)=>b[k]-a[k]||dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'}));
     const qRank=v!=null?groupPool.findIndex(x=>x.q===d.q)+1:null;
@@ -2300,7 +3109,6 @@ function renderQP(){
       <div class="qcmp-val">${v!=null?t2(v):'—'}</div>
       ${diff!==null?`<div class="qcmp-vs" style="color:${diffColor}">${diffStr} ${vsLabel}</div>`:''}
       ${qRank&&qRank>0?`<div class="qcmp-rank" style="color:${rankColor}">${qRank}° ${rankLabel} / ${qTotal}</div>`:''}
-      ${!isYearMode?`<div class="qcmp-divider"></div><div class="qcmp-exp-label">Expectativa 2026</div><div class="qcmp-exp-val">${ev?t2(ev):'—'}</div>${ediff!==null?`<div class="qcmp-exp-delta ${edeltaClass}">${edeltaStr}</div>`:''}`:``}
     </div>`;
   }).join('');
 
@@ -2313,7 +3121,7 @@ function renderQP(){
       const seasonData=TEMP[key]||[];
       const ligaTop=seasonData[0];
       const diff=ligaTop?h.m-ligaTop.m:null;
-      const pc=h.pos===1?'🥇':h.pos===2?'🥈':h.pos===3?'🥉':h.pos;
+      const pc=h.pos;
       return `<tr>
         <td style="font-family:'Bebas Neue',cursive;font-size:20px;color:var(--gold)">${h.a}</td>
         <td><span class="${gClass}">${h.g==='ESP'?'ESPECIAL':'ACESSO'}</span></td>
@@ -2691,13 +3499,13 @@ document.querySelector('.bnav-item[data-tab="perfis"]')?.classList.add('on');
     <span class="bnav-icon">🔍</span>
     <span class="bnav-label">Por Quadrilha</span>
   </button>
-  <button class="bnav-item" data-tab="expectativa" onclick="sw('expectativa',this)">
+  <button class="bnav-item" data-tab="expectativa" onclick="sw('expectativa',this)" style="display:none">
     <span class="bnav-icon">🔮</span>
     <span class="bnav-label">Expectativa</span>
   </button>
   <button class="bnav-item" data-tab="ranking" onclick="sw('ranking',this)">
     <span class="bnav-icon">🏆</span>
-    <span class="bnav-label">Ranking</span>
+    <span class="bnav-label">Desempenho</span>
   </button>
   <button class="bnav-item" data-tab="temporadas" onclick="sw('temporadas',this)">
     <span class="bnav-icon">📅</span>
