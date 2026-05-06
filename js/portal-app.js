@@ -1853,6 +1853,65 @@ function setText(el, text) {
 
 }
 
+const portalUnauthorizedMessage =
+  "Seu e-mail nao esta cadastrado no Portal da Liga. Procure a sua quadrilha para solicitar o cadastro.";
+const portalStatusStorageKey = "portalLoginStatus";
+
+function persistPortalLoginStatus(message) {
+  try {
+    if (!message) {
+      sessionStorage.removeItem(portalStatusStorageKey);
+      return;
+    }
+    sessionStorage.setItem(portalStatusStorageKey, message);
+  } catch (error) {
+    console.warn("Nao foi possivel salvar o status do portal.", error);
+  }
+}
+
+function normalizePortalEmail(email) {
+  return typeof email === "string" ? email.trim().toLowerCase() : "";
+}
+
+async function findAuthorizedUserDoc(user) {
+  const normalizedEmail = normalizePortalEmail(user?.email);
+  const emailCandidates = normalizedEmail ? [normalizedEmail] : [];
+
+  if (user?.email && normalizedEmail !== user.email) {
+    emailCandidates.push(user.email);
+  }
+
+  for (const email of emailCandidates) {
+    const userRef = doc(db, "users", email);
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+      return { ref: userRef, snap: userSnap };
+    }
+  }
+
+  if (user?.uid) {
+    const legacyRef = doc(db, "users", user.uid);
+    const legacySnap = await getDoc(legacyRef);
+    if (legacySnap.exists()) {
+      return { ref: legacyRef, snap: legacySnap };
+    }
+  }
+
+  return null;
+}
+
+async function blockUnauthorizedPortalAccess() {
+  persistPortalLoginStatus(portalUnauthorizedMessage);
+
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error("Erro ao encerrar sessao sem cadastro no portal:", error);
+  }
+
+  window.location.href = "portal.html";
+}
+
 
 
 
@@ -2982,19 +3041,18 @@ async function loadCurrentUserData(user) {
 
 
 
-  // Primeiro tentamos buscar doc pelo e-mail
+  // Busca perfil autorizado pelo e-mail normalizado e, por compatibilidade, por UID.
 
 
 
 
 
-  let userDocRef = doc(db, "users", user.email);
+  const authorizedUser = await findAuthorizedUserDoc(user);
 
 
 
 
 
-  let userSnap = await getDoc(userDocRef);
 
 
 
@@ -3006,91 +3064,24 @@ async function loadCurrentUserData(user) {
 
 
 
-  // Compat: se não existir pelo e-mail, tenta pelo UID (modelo antigo)
 
 
 
 
 
-  if (!userSnap.exists()) {
 
 
 
 
 
-    const fallbackRef = doc(db, "users", user.uid);
 
+  if (!authorizedUser) {
 
 
 
 
-    const fallbackSnap = await getDoc(fallbackRef);
 
-
-
-
-
-    if (fallbackSnap.exists()) {
-
-
-
-
-
-      userDocRef = fallbackRef;
-
-
-
-
-
-      userSnap = fallbackSnap;
-
-
-
-
-
-    }
-
-
-
-
-
-  }
-
-
-
-
-
-
-
-
-
-
-
-  if (!userSnap.exists()) {
-
-
-
-
-
-    setText(
-
-
-
-
-
-      userRoleTextP,
-
-
-
-
-
-      "Usuário sem perfil cadastrado (coleção 'users'). Fale com a Liga."
-
-
-
-
-
-    );
+    setText(userRoleTextP, portalUnauthorizedMessage);
 
 
 
@@ -3119,6 +3110,8 @@ async function loadCurrentUserData(user) {
 
 
 
+
+  const { snap: userSnap } = authorizedUser;
 
   const data = userSnap.data();
 
@@ -3162,7 +3155,8 @@ async function loadCurrentUserData(user) {
 
 
 
-    userNameSpan.textContent = user.email;
+    userNameSpan.textContent =
+      normalizePortalEmail(user?.email) || user?.email || "";
 
 
 
@@ -19805,7 +19799,12 @@ onAuthStateChanged(auth, async (user) => {
 
 
 
-        await loadCurrentUserData(user);
+    const perfil = await loadCurrentUserData(user);
+
+    if (!perfil) {
+      await blockUnauthorizedPortalAccess();
+      return;
+    }
 
 
 
