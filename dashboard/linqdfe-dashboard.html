@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/logos/linq-dfe.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../assets/logos/linq-dfe.png">
 <link rel="apple-touch-icon" href="../assets/logos/linq-dfe.png">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root{
@@ -40,7 +40,7 @@
   --shadow-glow-gold:0 0 0 1px rgba(245,166,35,.18),0 0 24px rgba(245,166,35,.18);
   --font-display:'Bebas Neue',cursive;
   --font-condensed:'Barlow Condensed',sans-serif;
-  --font-body:'Barlow',sans-serif;
+  --font-body:'Barlow Condensed',sans-serif;
   --gold:var(--brand-gold);
   --gold-d:var(--brand-gold-dark);
   --red:var(--status-down);
@@ -57,7 +57,7 @@
   --bdr:var(--border-strong);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--navy);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden;}
+body{background:var(--navy);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh;overflow-x:hidden;}
 
 /* HERO */
 .hero{background:linear-gradient(135deg,#0D1B2A,#1A0A00 50%,#0D1B2A);border-bottom:3px solid var(--gold);position:relative;overflow:hidden;}
@@ -92,6 +92,70 @@ body{background:var(--navy);color:var(--text);font-family:'Barlow',sans-serif;mi
 .btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;padding:5px 13px;border-radius:5px;border:1px solid var(--bdr);background:var(--card);color:var(--mut);cursor:pointer;transition:all .2s;}
 .btn:hover{border-color:var(--gold);color:var(--text);}
 .btn.on{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700;}
+/* pos delta */
+.pos-delta{font-size:9px;font-weight:700;letter-spacing:.3px;line-height:1.3;margin-top:4px;font-family:'Barlow Condensed',sans-serif;padding:1px 5px;border-radius:3px;display:block;}
+.pos-delta.up{color:#27AE60;background:rgba(39,174,96,.14);}
+.pos-delta.dn{color:#E74C3C;background:rgba(231,76,60,.12);}
+.pos-delta.eq{color:var(--mut);background:rgba(255,255,255,.05);}
+/* gap strip */
+.gap-strip{display:flex;align-items:center;gap:5px;flex-wrap:wrap;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:8px 14px;margin-bottom:14px;}
+.gap-strip-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);font-family:'Barlow Condensed',sans-serif;margin-right:6px;white-space:nowrap;}
+.gap-item{display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 9px;border-radius:5px;min-width:48px;}
+.gap-item.gap-pos{background:rgba(39,174,96,.12);border:1px solid rgba(39,174,96,.28);}
+.gap-item.gap-neg{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.22);}
+.gap-item.gap-neu{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);}
+.gap-qname{font-size:9px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-family:'Barlow Condensed',sans-serif;}
+.gap-val{font-size:13px;font-weight:700;font-family:'Bebas Neue',cursive;line-height:1.1;}
+.gap-item.gap-pos .gap-val{color:#27AE60;}.gap-item.gap-neg .gap-val{color:#E74C3C;}.gap-item.gap-neu .gap-val{color:var(--mut);}
+.gap-item.gap-crit{background:rgba(231,76,60,.18)!important;border-color:rgba(231,76,60,.5)!important;padding:7px 12px;}
+.gap-item.gap-crit .gap-val{font-size:16px;}
+.gap-item.gap-star{background:rgba(39,174,96,.18)!important;border-color:rgba(39,174,96,.5)!important;padding:7px 12px;}
+.gap-item.gap-star .gap-val{font-size:16px;}
+/* rival block */
+.rival-block{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 16px;margin-bottom:14px;}
+.rival-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);font-family:'Barlow Condensed',sans-serif;white-space:nowrap;}
+.rival-name-btn{font-family:'Bebas Neue',cursive;font-size:18px;color:var(--text);background:none;border:none;cursor:pointer;padding:0;letter-spacing:.5px;}
+.rival-name-btn:hover{color:var(--gold);}
+.rival-gap{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:#E74C3C;}
+.rival-focus{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--mut);margin-left:auto;}
+/* pcard rank */
+.pcard-rank-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;color:rgba(245,166,35,.85);text-transform:uppercase;margin-top:5px;display:block;}
+/* data info badge */
+.data-info{margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1px;color:var(--mut);text-transform:uppercase;white-space:nowrap;}
+/* zone separators */
+.zone-sep td{padding:0;border:none!important;}
+.zone-sep-inner{display:flex;align-items:center;gap:10px;padding:4px 13px;}
+.zone-sep-dn{border-top:2px solid rgba(231,76,60,.45);background:rgba(231,76,60,.05);}
+.zone-sep-up{border-bottom:2px solid rgba(39,174,96,.45);background:rgba(39,174,96,.05);}
+.zone-sep-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;white-space:nowrap;}
+.zone-sep-dn .zone-sep-lbl{color:rgba(231,76,60,.9);}.zone-sep-up .zone-sep-lbl{color:rgba(39,174,96,.9);}
+/* quesito trend */
+.qcmp-trend{font-size:10px;font-weight:700;letter-spacing:.3px;margin-top:3px;font-family:'Barlow Condensed',sans-serif;line-height:1.1;}
+.tr-up{color:#27AE60;}.tr-dn{color:#E74C3C;}.tr-eq{color:var(--mut);}
+/* recent official pos badge (ranking todos view) */
+.recent-pos-badge{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:1px 6px;border-radius:3px;display:inline-block;margin:2px 0 3px;}
+.rpb-esp{background:rgba(245,166,35,.15);color:rgba(245,166,35,.9);border:1px solid rgba(245,166,35,.3);}
+.rpb-ace{background:rgba(99,179,237,.13);color:#63b3ed;border:1px solid rgba(99,179,237,.28);}
+.rpb-dj{background:rgba(159,122,234,.13);color:#9f7aea;border:1px solid rgba(159,122,234,.28);}
+/* mr-delta pill (year view — expected vs official) */
+.mrd-pill{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.4px;padding:1px 4px;border-radius:3px;display:block;margin-top:3px;line-height:1.3;}
+.mrd-up{color:#27AE60;background:rgba(39,174,96,.14);}
+.mrd-dn{color:#E74C3C;background:rgba(231,76,60,.12);}
+.mrd-eq{color:var(--mut);background:rgba(255,255,255,.05);}
+/* momento vs historico block */
+.mvh-block{border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.08);margin-bottom:14px;}
+.mvh-block-hdr{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mut);padding:8px 14px 6px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06);}
+.mvh-ytable{width:100%;border-collapse:collapse;background:transparent;}
+.mvh-ytable th{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);padding:6px 12px;text-align:left;background:rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.05);}
+.mvh-ytable th.mvh-th-r{text-align:right;}
+.mvh-ytable td{padding:7px 12px;font-size:12px;vertical-align:middle;border-bottom:1px solid rgba(255,255,255,.03);}
+.mvh-ytable tr:last-child td{border-bottom:none;}
+.mvh-ytable tr:hover td{background:rgba(255,255,255,.02);}
+.mvh-yr{font-family:'Bebas Neue',cursive;font-size:17px;color:var(--text);}
+.mvh-pos{font-family:'Bebas Neue',cursive;font-size:17px;}
+.mvh-tot{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--mut);}
+.mvh-dlt{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-align:right;}
+.mvh-narr{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--mut);text-align:right;}
 
 /* TABLE */
 .tw{overflow-x:auto;border-radius:10px;border:1px solid var(--bdr);}
@@ -270,7 +334,7 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 
 /* MISC */
 .tab-c{display:none;}.tab-c.on{display:block;}
-.srch{background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:8px 13px;color:var(--text);font-family:'Barlow',sans-serif;font-size:13px;width:230px;outline:none;transition:border-color .2s;}
+.srch{background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:8px 13px;color:var(--text);font-size:13px;width:230px;outline:none;transition:border-color .2s;}
 .srch:focus{border-color:var(--gold);}
 .srch::placeholder{color:var(--mut);}
 .spot{background:linear-gradient(135deg,rgba(245,166,35,.12),rgba(192,57,43,.08));border:1px solid var(--bdr);border-left:4px solid var(--gold);border-radius:8px;padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;gap:18px;}
@@ -328,20 +392,21 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 .qp-hero-score{font-family:'Bebas Neue',cursive;font-size:56px;color:var(--gold);line-height:1;}
 .qp-hero-score-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;}
 .qp-hero-stats{display:flex;border-top:1px solid rgba(255,255,255,.06);}
-.qp-hs{flex:1;padding:16px 20px;border-right:1px solid rgba(255,255,255,.06);text-align:center;}
+.qp-hs{flex:1;padding:20px;border-right:1px solid rgba(255,255,255,.06);text-align:center;transition:background .15s;}
+.qp-hs:hover{background:rgba(255,255,255,.03);}
 .qp-hs:last-child{border-right:none;}
-.qp-hs-n{font-family:'Bebas Neue',cursive;font-size:30px;color:var(--gold);line-height:1;}
-.qp-hs-l{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+.qp-hs-n{font-family:'Bebas Neue',cursive;font-size:36px;color:var(--gold);line-height:1;}
+.qp-hs-l{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-top:5px;}
 
 /* Narrative */
 .qp-narrative{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.15);border-radius:8px;padding:16px 20px;margin-bottom:20px;font-size:14px;line-height:1.7;color:var(--text);}
 .qp-narrative strong{color:var(--gold);}
 
 /* Charts grid */
-.chart-grid-2{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:18px;}
-.chart-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:18px;}
-.chart-grid-1{margin-bottom:18px;}
-.chart-box{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:20px;}
+.chart-grid-2{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:24px;}
+.chart-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:24px;}
+.chart-grid-1{margin-bottom:24px;}
+.chart-box{background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:22px 24px;}
 .chart-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
 .chart-title span{color:var(--text);}
 .chart-wrap{position:relative;height:220px;}
@@ -358,23 +423,26 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 .season-group-ace{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:2px 7px;border-radius:3px;background:rgba(52,152,219,.15);color:var(--ace);}
 
 /* Quesito comparison row */
-.q-compare-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px;}
-.qcmp{background:var(--card);border-radius:8px;border:1px solid var(--bdr);padding:14px 12px;text-align:center;}
-.qcmp-icon{font-size:20px;margin-bottom:4px;}
-.qcmp-name{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--mut);text-transform:uppercase;margin-bottom:6px;}
-.qcmp-val{font-family:'Bebas Neue',cursive;font-size:22px;color:var(--gold);}
-.qcmp-vs{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--mut);margin-top:2px;}
+.q-compare-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:24px;}
+.qcmp{background:var(--card);border-radius:8px;border:1px solid var(--bdr);padding:12px 14px;text-align:left;}
+.qcmp-hd{display:flex;align-items:center;gap:5px;margin-bottom:8px;}
+.qcmp-icon{font-size:15px;line-height:1;}
+.qcmp-name{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;color:var(--mut);text-transform:uppercase;}
+.qcmp-primary{display:flex;align-items:baseline;gap:8px;margin-bottom:3px;}
+.qcmp-val{font-family:'Bebas Neue',cursive;font-size:26px;color:var(--gold);}
+.qcmp-vs{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--mut);}
 .qcmp.best-q{border-color:var(--gold);background:rgba(245,166,35,.06);}
 .qcmp-divider{height:1px;background:rgba(255,255,255,.06);margin:8px 0;}
 .qcmp-exp-label{font-family:'Barlow Condensed',sans-serif;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);margin-bottom:2px;}
 .qcmp-exp-val{font-family:'Bebas Neue',cursive;font-size:16px;color:var(--gold);opacity:.8;}
-.qcmp-exp-delta{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;}
-.qcmp-exp-delta.up{color:var(--green);}.qcmp-exp-delta.flat{color:var(--mut);}.qcmp-exp-delta.dn{color:var(--red);}
-.qcmp-rank{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;margin-top:2px;}
-.qp-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px;}
-.qp-bench-grid{display:grid;grid-template-columns:repeat(var(--qp-bench-cols,4),minmax(0,1fr));gap:12px;margin-bottom:18px;}
+.qcmp-exp-delta{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;}.qcmp-exp-delta.up{color:var(--green);}.qcmp-exp-delta.flat{color:var(--mut);}.qcmp-exp-delta.dn{color:var(--red);}
+.qcmp-ft{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:8px;padding-top:7px;border-top:1px solid rgba(255,255,255,.06);}
+.qcmp-rank{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;}
+.qcmp .pct-bar-wrap{margin-top:0;min-width:50px;}
+.qp-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:24px;}
+.qp-bench-grid{display:grid;grid-template-columns:repeat(var(--qp-bench-cols,4),minmax(0,1fr));gap:12px;margin-bottom:24px;}
 .qp-insight-card,.qp-bench-card{
-  background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:16px 18px;
+  background:var(--card);border:1px solid var(--bdr);border-radius:10px;padding:20px 22px;
 }
 .qp-card-kicker{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;color:var(--mut);text-transform:uppercase;}
 .qp-card-title{font-family:'Bebas Neue',cursive;font-size:26px;letter-spacing:1px;color:var(--text);margin-top:6px;line-height:1;}
@@ -403,6 +471,18 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 .qp-matrix-table .qp-row-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);}
 .qp-matrix-table .qp-cell-main{font-family:'Bebas Neue',cursive;font-size:18px;color:var(--text);line-height:1;}
 .qp-matrix-table .qp-cell-sub{margin-top:3px;font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--mut);}
+.qp-matrix-table th:first-child,
+.qp-matrix-table td:first-child{
+  position:sticky;
+  left:0;
+  z-index:1;
+}
+.qp-matrix-table th:first-child{
+  background:rgba(37,58,84,.98);
+}
+.qp-matrix-table td:first-child{
+  background:rgba(20,34,52,.96);
+}
 .qp-expect-score{font-family:'Bebas Neue',cursive;font-size:54px;line-height:.9;color:var(--gold);margin-top:8px;}
 .qp-expect-badge{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:5px 9px;border-radius:999px;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:var(--text);}
 .qp-note-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
@@ -475,7 +555,7 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
   flex:1;max-width:440px;
   background:rgba(255,255,255,.07);border:1px solid var(--bdr);border-radius:8px;
   padding:10px 16px;color:var(--text);
-  font-family:'Barlow',sans-serif;font-size:14px;
+  font-size:14px;
   outline:none;transition:all .2s;
 }
 .hero-srch:focus{border-color:var(--gold);background:rgba(255,255,255,.11);}
@@ -555,7 +635,7 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
   color:var(--gold);margin-bottom:10px;
 }
 .metodo-desc{
-  font-family:'Barlow',sans-serif;font-size:12px;
+  font-size:12px;font-weight:500;
   color:var(--mut);line-height:1.65;margin-bottom:12px;
 }
 .metodo-desc strong{color:var(--text);}
@@ -600,6 +680,7 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 }
 .yr-col-esp{background:rgba(245,166,35,.14);color:var(--gold);border-bottom:2px solid rgba(245,166,35,.3);}
 .yr-col-ace{background:rgba(52,152,219,.14);color:var(--ace);border-bottom:2px solid rgba(52,152,219,.3);}
+.yr-col-dj{background:rgba(99,179,237,.12);color:#63b3ed;border-bottom:2px solid rgba(99,179,237,.4);}
 .yr-row{
   display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:10px;
   padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s;
@@ -1163,18 +1244,15 @@ tbody tr:hover{
 }
 
 .qcmp{
-  border-radius:16px;
-  padding:16px 12px;
+  border-radius:14px;
+  padding:14px 16px;
   background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
 }
 .qcmp.best-q{
   box-shadow:inset 0 0 0 1px rgba(245,166,35,.18),0 10px 22px rgba(0,0,0,.18);
 }
-.qcmp-name{
-  min-height:28px;
-  font-size:11px;
-}
-.qcmp-val{font-size:24px;}
+.qcmp-name{font-size:11px;}
+.qcmp-val{font-size:28px;}
 
 .qp-summary-grid{
   gap:16px;
@@ -1286,23 +1364,23 @@ tbody tr:hover{
 
 .bottom-nav{
   background:rgba(11,22,35,.96);
-  border-top:1px solid var(--border-strong);
+  border-top:1px solid var(--border-soft);
   box-shadow:0 -12px 30px rgba(0,0,0,.24);
   backdrop-filter:blur(18px);
   padding:6px 8px calc(8px + env(safe-area-inset-bottom,0px));
   gap:4px;
 }
 .bnav-item{
-  min-height:54px;
-  border-radius:14px;
+  min-height:48px;
+  border-radius:12px;
 }
 .bnav-item.on{
   color:var(--gold);
   background:rgba(245,166,35,.08);
 }
 .bnav-label{
-  font-size:10px;
-  letter-spacing:.9px;
+  font-size:11px;
+  letter-spacing:.8px;
 }
 
 @media(max-width:900px){
@@ -1483,6 +1561,451 @@ tbody tr:hover{
   .qp-hs:nth-last-child(-n+2){border-bottom:1px solid rgba(255,255,255,.06);}
   .qp-hs:last-child{border-bottom:none;}
 }
+
+/* ══════════════════════════════════════════════════
+   SCOUT ANALYTICS — FEATURE SET
+   ══════════════════════════════════════════════════ */
+
+/* Form bars on Perfis cards */
+.form-strip{display:flex;gap:4px;margin-top:8px;align-items:flex-end;}
+.form-dot{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.form-dot-bar{border-radius:2px 2px 0 0;min-width:18px;transition:all .25s;}
+.form-dot-label{font-family:'Barlow Condensed',sans-serif;font-size:8px;color:var(--mut);letter-spacing:.3px;line-height:1;}
+
+/* Attribute tags */
+.attr-tags{display:flex;flex-wrap:wrap;gap:5px;padding:10px 0 4px;}
+.attr-tag{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1px solid;}
+
+/* Percentile bar */
+.pct-bar-wrap{margin-top:4px;display:flex;align-items:center;gap:5px;}
+.pct-bar-track{flex:1;height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;}
+.pct-bar-fill{height:100%;border-radius:2px;}
+.pct-bar-lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--mut);white-space:nowrap;min-width:30px;text-align:right;}
+
+/* FM24-style season cards */
+.qp-season-strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-top:4px;scrollbar-width:thin;}
+.qp-season-strip::-webkit-scrollbar{height:3px;}
+.qp-season-strip::-webkit-scrollbar-thumb{background:var(--navy3);border-radius:2px;}
+.qp-season-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px 15px;flex-shrink:0;min-width:128px;}
+.qp-sc-year{font-family:'Bebas Neue',cursive;font-size:28px;color:var(--gold);line-height:1;}
+.qp-sc-score{font-family:'Bebas Neue',cursive;font-size:20px;color:var(--text);line-height:1;margin-top:7px;}
+.qp-sc-pos{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--mut);margin-top:3px;}
+.qp-sc-delta{font-family:'Barlow Condensed',sans-serif;font-size:10px;margin-top:3px;}
+
+/* Similar quadrilhas */
+.similar-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.similar-chip{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:8px 12px;cursor:pointer;transition:all .15s;flex:1;min-width:130px;max-width:220px;}
+.similar-chip:hover{border-color:var(--gold);background:rgba(245,166,35,.07);}
+.similar-name{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.4px;}
+.similar-meta{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--mut);margin-top:2px;}
+
+/* Liga records strip */
+.liga-records{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));background:linear-gradient(135deg,rgba(245,166,35,.08),rgba(13,27,42,.98));border:1px solid var(--border-strong);border-radius:var(--radius-md);overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow-card);}
+.liga-rec-item{padding:12px 16px;border-right:1px solid var(--border-soft);}
+.liga-rec-item:last-child{border-right:none;}
+.liga-rec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);}
+.liga-rec-val{font-family:'Bebas Neue',cursive;font-size:20px;color:var(--gold);line-height:1;margin-top:4px;}
+.liga-rec-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(243,234,215,.65);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* Heatmap */
+.heatmap-wrap{overflow-x:auto;border-radius:var(--radius-md);border:1px solid var(--border-soft);box-shadow:var(--shadow-card);margin-bottom:18px;background:var(--bg-surface);}
+.heatmap-table{width:100%;border-collapse:collapse;min-width:520px;}
+.heatmap-table th{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);padding:9px 10px;text-align:center;border-bottom:1px solid var(--border-strong);background:rgba(37,58,84,.97);white-space:nowrap;position:sticky;top:0;z-index:2;}
+.heatmap-table th:first-child{text-align:left;min-width:170px;padding-left:14px;}
+.heatmap-table td{padding:6px 9px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;border-bottom:1px solid rgba(255,255,255,.03);}
+.heatmap-table td:first-child{text-align:left;padding-left:14px;font-size:11px;letter-spacing:.3px;text-transform:uppercase;}
+.heatmap-table tbody tr:hover td{filter:brightness(1.14);}
+.hm-sep-row td{padding-top:10px;border-top:2px solid rgba(245,166,35,.2)!important;}
+
+/* Sort strip */
+.sort-strip{display:flex;align-items:center;gap:5px;margin-bottom:10px;flex-wrap:wrap;}
+.sort-chip{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:4px 11px;border-radius:999px;border:1px solid var(--border-soft);background:rgba(255,255,255,.03);color:var(--mut);cursor:pointer;transition:all .15s;}
+.sort-chip:hover{border-color:var(--gold);color:var(--text);}
+.sort-chip.on{background:rgba(245,166,35,.12);border-color:var(--gold);color:var(--gold);}
+
+/* Season summary (Temporadas) */
+.season-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px;}
+.ss-card{background:linear-gradient(180deg,rgba(25,41,61,.98),rgba(17,30,47,.98));border:1px solid var(--border-soft);border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-card);}
+.ss-lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);}
+.ss-val{font-family:'Bebas Neue',cursive;font-size:22px;color:var(--gold);line-height:1;margin-top:4px;}
+.ss-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(243,234,215,.65);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+@media(max-width:600px){
+  .liga-records{grid-template-columns:repeat(2,1fr);}
+  .liga-rec-item:nth-child(even){border-right:none;}
+  .liga-rec-item:nth-child(n+3){border-top:1px solid var(--border-soft);}
+  .similar-chip{min-width:calc(50% - 4px);}
+  .qp-season-card{min-width:110px;}
+  .season-summary{grid-template-columns:repeat(2,1fr);}
+}
+
+/* Mobile layout refinements */
+.fb-search,
+.fb-actions{
+  margin-left:auto;
+}
+.fb-search{
+  display:flex;
+  align-items:center;
+}
+.fb-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+@media(max-width:900px){
+  .hstats{
+    width:100%;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 16px;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:var(--radius-md);
+    background:rgba(7,15,27,.22);
+  }
+  .hstats>div{
+    flex:1 1 0;
+    min-width:0;
+  }
+  .live{
+    align-self:flex-start;
+  }
+  .sh{
+    flex-wrap:wrap;
+    justify-content:space-between;
+    row-gap:8px;
+  }
+  .spot{
+    align-items:flex-start;
+  }
+  .fb-search,
+  .fb-actions{
+    width:100%;
+    margin-left:0;
+  }
+  .fb-search .srch,
+  .fb-actions .srch{
+    width:100%;
+  }
+  .fb-actions{
+    flex-wrap:wrap;
+  }
+  .hero-srch-btn{
+    flex:0 0 auto;
+  }
+}
+
+@media(max-width:600px){
+  body{
+    padding-bottom:calc(60px + env(safe-area-inset-bottom,0px));
+  }
+  .hero{
+    border-bottom-width:2px;
+  }
+  .hero-in{
+    padding:16px 14px 12px;
+  }
+  .brand{
+    align-items:flex-start;
+  }
+  .brand p{
+    font-size:10px;
+    letter-spacing:1.2px;
+    line-height:1.35;
+    max-width:26ch;
+  }
+  .hstats{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    padding:12px;
+    gap:10px;
+  }
+  .hs-n{
+    font-size:28px;
+  }
+  .hs-l{
+    font-size:9px;
+    letter-spacing:1.1px;
+  }
+  .live{
+    font-size:10px;
+    letter-spacing:1.4px;
+  }
+  .hero-search{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:10px;
+    padding:0 14px 14px;
+    align-items:stretch;
+  }
+  .hero-srch{
+    max-width:none;
+    min-width:0;
+    min-height:46px;
+    padding:0 14px;
+  }
+  .hero-srch-btn{
+    width:auto;
+    min-width:124px;
+    min-height:46px;
+    padding:0 16px;
+    flex:none;
+  }
+  .box{
+    padding:22px 14px 26px;
+  }
+  .sh{
+    margin-bottom:14px;
+  }
+  .st{
+    font-size:22px;
+    line-height:.96;
+  }
+  .sb{
+    max-width:100%;
+  }
+  .spot{
+    flex-direction:column;
+    gap:12px;
+    padding:16px;
+  }
+  .spi{
+    font-size:24px;
+  }
+  .sph3{
+    font-size:18px;
+  }
+  .fb,
+  .q-filter-bar,
+  .sort-strip,
+  .yr-selector,
+  .qp-inline-filter,
+  .qp-filter-row,
+  .qp-quick-chips{
+    gap:8px;
+    align-items:stretch;
+  }
+  .fb>.fl,
+  .q-filter-bar>.fl{
+    width:100%;
+    margin-right:0;
+  }
+  .q-filter-sep{
+    display:none;
+  }
+  .fb .btn,
+  .q-filter-bar .btn,
+  .sort-chip,
+  .yr-btn,
+  .qp-micro-btn,
+  .qp-quick-chip{
+    flex:1 1 calc(50% - 8px);
+    text-align:center;
+  }
+  .fb-actions>*{
+    flex:1 1 100%;
+  }
+  .tw{
+    width:calc(100% + 28px);
+    margin-left:-14px;
+    margin-right:-14px;
+    border-left:none;
+    border-right:none;
+    border-radius:0;
+  }
+  .tw table{
+    min-width:640px;
+  }
+  .chart-box,
+  .qp-select-bar,
+  .metodo-box,
+  .yr-col,
+  .avg-wrap{
+    border-radius:14px;
+  }
+  .qp-select-bar{
+    margin-bottom:18px;
+    padding:12px;
+    gap:10px;
+  }
+  .qp-compare-label{
+    width:100%;
+    font-size:10px;
+    letter-spacing:1.2px;
+  }
+  .qp-select,
+  .qp-compare,
+  .srch,
+  .hero-srch{
+    font-size:14px;
+  }
+  .qp-select,
+  .qp-compare{
+    min-height:42px;
+    padding-top:0;
+    padding-bottom:0;
+  }
+  .qp-filter-stack{
+    width:100%;
+    gap:8px;
+    align-items:stretch;
+  }
+  .qp-filter-row,
+  .qp-inline-filter{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+    align-items:stretch;
+  }
+  .qp-filter-row .qp-inline-label,
+  .qp-inline-filter .qp-inline-label{
+    grid-column:1/-1;
+    margin:0;
+  }
+  .qp-filter-row .qp-micro-btn,
+  .qp-inline-filter .qp-micro-btn{
+    min-height:38px;
+    padding:0 10px;
+  }
+  .qp-hero-top{
+    padding:18px 16px;
+    min-height:auto;
+  }
+  .qp-hero-name{
+    font-size:clamp(28px,10vw,34px);
+    letter-spacing:1px;
+  }
+  .qp-hero-score{
+    font-size:46px;
+  }
+  .qp-hero-stats{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .qp-hs{
+    padding:12px 10px;
+  }
+  .qp-hs-n{
+    font-size:28px;
+  }
+  .qp-hs-l{
+    font-size:9px;
+    letter-spacing:.9px;
+  }
+  .qcmp{
+    padding:10px 12px;
+  }
+  .qcmp-val{
+    font-size:23px;
+  }
+  .qp-matrix-table th,
+  .qp-matrix-table td{
+    padding:10px 9px;
+  }
+  .qp-matrix-table .qp-cell-main{
+    font-size:16px;
+  }
+  .qp-matrix-table .qp-cell-sub{
+    font-size:9px;
+  }
+  .qp-narrative{
+    padding:14px 16px;
+    font-size:13px;
+  }
+  .metodo-toggle-btn{
+    padding:12px 14px;
+    font-size:12px;
+    line-height:1.35;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .bottom-nav{
+    gap:3px;
+    padding-top:4px;
+    padding-bottom:calc(4px + env(safe-area-inset-bottom,0px));
+  }
+  .bnav-item{
+    flex:1 1 0;
+    min-width:0;
+    min-height:42px;
+    padding:6px 2px;
+    border-radius:10px;
+  }
+  .bnav-label{
+    font-size:8px;
+    letter-spacing:.25px;
+    line-height:1.05;
+    text-align:center;
+    white-space:normal;
+  }
+}
+
+@media(max-width:420px){
+  body{
+    padding-bottom:calc(56px + env(safe-area-inset-bottom,0px));
+  }
+  .brand{
+    flex-direction:column;
+    gap:10px;
+  }
+  .hero-search{
+    grid-template-columns:1fr;
+    padding:0 14px 14px;
+  }
+  .hero-srch-btn{
+    width:100%;
+    min-width:0;
+  }
+  .fb .btn,
+  .q-filter-bar .btn,
+  .sort-chip,
+  .yr-btn,
+  .qp-quick-chip{
+    flex-basis:100%;
+  }
+  .q-compare-grid,
+  .qp-hero-stats{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .qp-hs:nth-child(2n){
+    border-right:none;
+  }
+  .qp-hs:nth-last-child(-n+2){
+    border-bottom:none;
+  }
+  .bottom-nav{
+    gap:4px;
+    padding-left:4px;
+    padding-right:4px;
+  }
+  .bnav-item{
+    min-height:40px;
+  }
+  .bnav-label{
+    font-size:7.5px;
+    letter-spacing:.15px;
+  }
+}
+
+@media(max-width:340px){
+  .q-compare-grid,
+  .qp-hero-stats{
+    grid-template-columns:1fr;
+  }
+  .qp-hs{
+    border-right:none;
+  }
+  .qp-hs:nth-last-child(-n+2){
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .qp-hs:last-child{
+    border-bottom:none;
+  }
+  .qp-filter-row,
+  .qp-inline-filter{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
 <body>
@@ -1507,16 +2030,21 @@ tbody tr:hover{
 </div>
 
 <div class="nav">
-  <div class="ntab on" onclick="sw('perfis',this)">🎭 Quadrilhas</div>
-  <div class="ntab" data-tab="quadrilha" onclick="sw('quadrilha',this)">🔍 Por Quadrilha</div>
-  <div class="ntab" data-tab="expectativa" onclick="sw('expectativa',this)" style="display:none">🔮 Expectativa 2026</div>
-  <div class="ntab" onclick="sw('ranking',this)">🏆 Desempenho</div>
-  <div class="ntab" onclick="sw('temporadas',this)">📅 Temporadas</div>
-  <div class="ntab" onclick="sw('quesitos',this)">🎯 Quesitos</div>
+  <div class="ntab on" onclick="sw('perfis',this)">Quadrilhas</div>
+  <div class="ntab" data-tab="quadrilha" onclick="sw('quadrilha',this)">Por Quadrilha</div>
+  <div class="ntab" data-tab="expectativa" onclick="sw('expectativa',this)" style="display:none">Expectativa 2026</div>
+  <div class="ntab" onclick="sw('ranking',this)">Desempenho</div>
+  <div class="ntab" onclick="sw('temporadas',this)">Temporadas</div>
+  <div class="ntab" onclick="sw('quesitos',this)">Quesitos</div>
 </div>
 
 <!-- ═══ RANKING ═══ -->
 <div class="tab-c fi" id="tab-ranking"><div class="box">
+  <div class="liga-records" id="liga-records-strip"></div>
+  <div class="chart-box" id="r-dist-wrap" style="display:none;margin-bottom:18px">
+    <div class="chart-title"><span>DISTRIBUIÇÃO DE MÉDIAS — CAMPO ATUAL</span></div>
+    <div style="height:90px;position:relative"><canvas id="chart-dist"></canvas></div>
+  </div>
   <div class="spot" id="ranking-spot"><div class="spi">👑</div><div>
     <div class="sph3" id="ranking-spot-title">CARREGANDO…</div>
     <div class="spp" id="ranking-spot-desc"></div>
@@ -1536,7 +2064,7 @@ tbody tr:hover{
     <button class="btn r-gr on" onclick="fr('todos',this)">Todos</button>
     <button class="btn r-gr" onclick="fr('Especial',this)" id="r-btn-esp">Especial</button>
     <button class="btn r-gr" onclick="fr('Acesso',this)" id="r-btn-ace">Acesso</button>
-    <span style="margin-left:auto"><input class="srch" type="text" placeholder="🔍 Buscar..." oninput="srF(this.value)"></span>
+    <div class="fb-search"><input class="srch" type="text" placeholder="🔍 Buscar..." oninput="srF(this.value)"></div>
   </div>
   <div class="tw"><table>
     <thead><tr id="r-thead-row">
@@ -1608,10 +2136,10 @@ tbody tr:hover{
     <button class="btn" onclick="fe('Especial',this)">Especial 2026</button>
     <button class="btn" onclick="fe('Acesso',this)">Acesso 2026</button>
     <button class="btn" onclick="fe('sem-base',this)">Sem base</button>
-    <span style="margin-left:auto;display:flex;align-items:center;gap:8px">
+    <div class="fb-actions">
       <button class="exp-detail-btn" id="exp-detail-btn" onclick="toggleExpDetail()">⚙ Detalhes técnicos</button>
       <input class="srch" type="text" placeholder="🔍 Buscar..." oninput="seF(this.value)">
-    </span>
+    </div>
   </div>
   <div class="tw"><table id="exp-table">
     <thead><tr>
@@ -1642,6 +2170,24 @@ tbody tr:hover{
     <button class="yr-btn" onclick="ft(2025,this)">2025</button>
   </div>
   <div id="tgrid" class="tg"></div>
+  <div id="tgrid-bump">
+    <div class="sh" style="margin-top:24px"><div class="st">TRAJETÓRIA DE POSIÇÕES</div><div class="sb">2022–2025</div></div>
+    <div class="chart-grid-2">
+      <div class="chart-box">
+        <div class="chart-title"><span>ESPECIAL · COLOCAÇÃO POR ANO</span></div>
+        <div style="height:280px;position:relative"><canvas id="chart-bump-esp"></canvas></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span>ACESSO · COLOCAÇÃO POR ANO</span></div>
+        <div style="height:280px;position:relative"><canvas id="chart-bump-ace"></canvas></div>
+      </div>
+    </div>
+    <div class="sh"><div class="st">EVOLUÇÃO DA LIGA</div></div>
+    <div class="chart-box" style="margin-bottom:18px">
+      <div class="chart-title"><span>MÉDIA REAL ESPECIAL vs ACESSO · 2022–2025</span></div>
+      <div style="height:180px;position:relative"><canvas id="chart-liga-evo"></canvas></div>
+    </div>
+  </div>
   <div id="tgrid-year"></div>
 </div></div>
 
@@ -1662,6 +2208,13 @@ tbody tr:hover{
     <button class="btn q-gr" onclick="fq('Acesso',this)">Acesso</button>
   </div>
   <div class="qg" id="qgrid"></div>
+  <div id="q-evo-section">
+    <div class="sh"><div class="st">EVOLUÇÃO DAS MÉDIAS POR QUESITO</div></div>
+    <div class="chart-box" style="margin-bottom:20px">
+      <div class="chart-title"><span>MÉDIA DA LIGA POR QUESITO · 2022–2025</span></div>
+      <div style="height:200px;position:relative"><canvas id="chart-q-evo"></canvas></div>
+    </div>
+  </div>
   <div class="sh" style="margin-top:6px"><div class="st">PERFECCIONISTAS — NOTA 10</div></div>
   <div id="n10" class="cg"></div>
 </div></div>
@@ -1697,13 +2250,20 @@ tbody tr:hover{
 <div class="tab-c on fi" id="tab-perfis"><div class="box">
   <div class="ib">📌 Logos e fotos aplicados aos cards padrão de pontuação geral. Clique em uma quadrilha com histórico para abrir a análise completa.</div>
   <div class="sh"><div class="st">CARDS DE PONTUAÇÃO GERAL</div><div class="sb sb-e">FOTO + LOGO</div></div>
+  <div class="sort-strip">
+    <span class="fl">Ordenar:</span>
+    <button class="sort-chip on" onclick="setPSort('media',this)">Média Real</button>
+    <button class="sort-chip" onclick="setPSort('melhor',this)">Melhor Temp.</button>
+    <button class="sort-chip" onclick="setPSort('temporadas',this)">Temporadas</button>
+    <button class="sort-chip" onclick="setPSort('crescimento',this)">Crescimento</button>
+  </div>
   <div class="fb">
     <span class="fl">Filtrar:</span>
     <button class="btn on" onclick="fp('todos',this)">Todas</button>
     <button class="btn" onclick="fp('Especial',this)">Especial 2026</button>
     <button class="btn" onclick="fp('Acesso',this)">Acesso 2026</button>
     <button class="btn" onclick="fp('estreante',this)">Estreante</button>
-    <span style="margin-left:auto"><input class="srch" type="text" placeholder="🔍 Buscar..." oninput="spF(this.value)"></span>
+    <div class="fb-search"><input class="srch" type="text" placeholder="🔍 Buscar..." oninput="spF(this.value)"></div>
   </div>
   <div class="cg" id="pgrid"></div>
   <div id="pgrid-hist-section" style="display:none">
@@ -1727,33 +2287,33 @@ function g26(n){return ESP26.has(n)?"Especial":AC26.has(n)?"Acesso":null;}
 function dns(n){return n==="JUNINA MATULÃO"?"MATULÃO":n;}
 
 const DATA=[
-  {q:"AMOR JUNINO",m:9.897070,e:14,g26:"Especial",cor:9.816667,mar:9.869048,ani:9.900000,fig:9.952381,cas:9.873810,tri:9.966667,hist:[{a:2022,g:"ESP",et:4,m:9.8708,pos:7},{a:2023,g:"ESP",et:3,m:9.9037,pos:6},{a:2024,g:"ESP",et:4,m:9.8905,pos:9},{a:2025,g:"ESP",et:3,m:9.9302,pos:9}]},
-  {q:"ARRAIÁ DOS MATUTOS",m:9.887179,e:14,g26:"Especial",cor:9.816667,mar:9.864286,ani:9.907143,fig:9.916667,cas:9.859524,tri:9.964286,hist:[{a:2022,g:"ESP",et:4,m:9.8833,pos:6},{a:2023,g:"ESP",et:3,m:9.9093,pos:4},{a:2024,g:"ESP",et:4,m:9.8833,pos:10},{a:2025,g:"ESP",et:3,m:9.8778,pos:12}]},
-  {q:"ARROXA O NÓ",m:9.974359,e:14,g26:"Especial",cor:9.916667,mar:9.978571,ani:9.980952,fig:9.976190,cas:9.976190,tri:9.995238,hist:[{a:2022,g:"ESP",et:4,m:9.9514,pos:3},{a:2023,g:"ESP",et:3,m:9.9667,pos:2},{a:2024,g:"ESP",et:4,m:9.9893,pos:1},{a:2025,g:"ESP",et:3,m:9.9873,pos:1}]},
-  {q:"CAIPIRADA",m:9.922363,e:10,g26:"Especial",cor:9.830556,mar:9.908333,ani:9.927778,fig:9.955556,cas:9.938889,tri:9.972222,hist:[{a:2023,g:"ACE",et:3,m:9.9200,pos:2},{a:2024,g:"ESP",et:4,m:9.8976,pos:7},{a:2025,g:"ESP",et:3,m:9.9587,pos:5}]},
-  {q:"CHINELO DE COURO",m:9.864815,e:13,g26:"Especial",cor:9.800000,mar:9.795556,ani:9.875556,fig:9.968889,cas:9.820000,tri:9.940000,hist:[{a:2022,g:"ACE",et:4,m:9.8889,pos:3},{a:2023,g:"ESP",et:3,m:9.8259,pos:12},{a:2024,g:"ACE",et:3,m:9.8367,pos:2},{a:2025,g:"ACE",et:3,m:9.9185,pos:2}]},
-  {q:"EITA BAGACEIRA",m:9.903297,e:14,g26:"Especial",cor:9.790476,mar:9.909524,ani:9.897619,fig:9.964286,cas:9.930952,tri:9.954762,hist:[{a:2022,g:"ACE",et:4,m:9.9222,pos:1},{a:2023,g:"ESP",et:3,m:9.9000,pos:7},{a:2024,g:"ESP",et:4,m:9.8917,pos:8},{a:2025,g:"ESP",et:3,m:9.9000,pos:11}]},
-  {q:"FORMIGA DA ROÇA",m:9.986081,e:14,g26:"Especial",cor:9.950000,mar:9.985714,ani:10.000000,fig:9.992857,cas:9.990476,tri:10.000000,hist:[{a:2022,g:"ESP",et:4,m:9.9861,pos:1},{a:2023,g:"ESP",et:3,m:9.9796,pos:1},{a:2024,g:"ESP",et:4,m:9.9893,pos:2},{a:2025,g:"ESP",et:3,m:9.9873,pos:2}]},
-  {q:"MALA VÉIA",m:9.853398,e:14,g26:"Especial",cor:9.766667,mar:9.860417,ani:9.854167,fig:9.897917,cas:9.908333,tri:9.947917,hist:[{a:2022,g:"ACE",et:4,m:9.6181,pos:7},{a:2023,g:"ACE",et:3,m:9.9456,pos:1},{a:2024,g:"ESP",et:4,m:9.9036,pos:5},{a:2025,g:"ESP",et:3,m:9.9238,pos:10}]},
-  {q:"JUNINA MATULÃO",m:9.955556,e:3,g26:"Especial",cor:9.855556,mar:9.966667,ani:9.966667,fig:10.000000,cas:9.944444,tri:10.000000,hist:[{a:2025,g:"ACE",et:3,m:9.9556,pos:1}]},
-  {q:"PINGA EM MIM",m:9.895604,e:14,g26:"Especial",cor:9.766667,mar:9.880952,ani:9.909524,fig:9.947619,cas:9.876190,tri:9.945238,hist:[{a:2022,g:"ACE",et:4,m:9.8972,pos:2},{a:2023,g:"ESP",et:3,m:9.8574,pos:11},{a:2024,g:"ESP",et:4,m:9.8798,pos:11},{a:2025,g:"ESP",et:3,m:9.9476,pos:6}]},
-  {q:"RASGA O FOLE",m:9.917949,e:14,g26:"Especial",cor:9.833333,mar:9.919048,ani:9.904762,fig:9.947619,cas:9.897619,tri:9.980952,hist:[{a:2022,g:"ESP",et:4,m:9.9069,pos:4},{a:2023,g:"ESP",et:3,m:9.9037,pos:5},{a:2024,g:"ESP",et:4,m:9.9024,pos:6},{a:2025,g:"ESP",et:3,m:9.9635,pos:4}]},
-  {q:"RIBULIÇO",m:9.946520,e:14,g26:"Especial",cor:9.864286,mar:9.969048,ani:9.947619,fig:9.973810,cas:9.897619,tri:9.988095,hist:[{a:2022,g:"ESP",et:4,m:9.9028,pos:5},{a:2023,g:"ESP",et:3,m:9.9463,pos:3},{a:2024,g:"ESP",et:4,m:9.9631,pos:3},{a:2025,g:"ESP",et:3,m:9.9746,pos:3}]},
-  {q:"VAI MAS NÃO VAI",m:9.837363,e:10,g26:"Especial",cor:9.740909,mar:9.829545,ani:9.850000,fig:9.931818,cas:9.756818,tri:9.934091,hist:[{a:2023,g:"ACE",et:3,m:9.7178,pos:5},{a:2024,g:"ACE",et:4,m:9.8767,pos:1},{a:2025,g:"ESP",et:3,m:9.9333,pos:8}]},
-  {q:"XAMEGAR",m:9.899267,e:14,g26:"Especial",cor:9.800000,mar:9.883333,ani:9.914286,fig:9.914286,cas:9.885714,tri:9.966667,hist:[{a:2022,g:"ESP",et:4,m:9.8403,pos:8},{a:2023,g:"ESP",et:3,m:9.8907,pos:8},{a:2024,g:"ESP",et:4,m:9.9274,pos:4},{a:2025,g:"ESP",et:3,m:9.9365,pos:7}]},
-  {q:"XIQUE XIQUE",m:9.839007,e:13,g26:"Especial",cor:9.713333,mar:9.868889,ani:9.822222,fig:9.888889,cas:9.840000,tri:9.917778,hist:[{a:2022,g:"ESP",et:3,m:9.8167,pos:9},{a:2023,g:"ACE",et:3,m:9.8556,pos:3},{a:2024,g:"ESP",et:4,m:9.7869,pos:14},{a:2025,g:"ACE",et:3,m:9.9148,pos:3}]},
+  {q:"AMOR JUNINO",m:9.897070,e:14,g26:"Especial",cor:9.811914,mar:9.876209,ani:9.897638,fig:9.957148,cas:9.871409,tri:9.964288,tem:9.9048,hist:[{a:2022,g:"ESP",et:4,m:9.8708,pos:7},{a:2023,g:"ESP",et:3,m:9.9037,pos:6},{a:2024,g:"ESP",et:4,m:9.8905,pos:9},{a:2025,g:"ESP",et:3,m:9.9302,pos:9},{a:2025,g:"DJ",et:4,m:9.871429,pos:15}]},
+  {q:"ARRAIÁ DOS MATUTOS",m:9.887179,e:14,g26:"Especial",cor:9.821414,mar:9.869057,ani:9.916679,fig:9.921429,cas:9.852379,tri:9.969062,tem:9.9,hist:[{a:2022,g:"ESP",et:4,m:9.8833,pos:6},{a:2023,g:"ESP",et:3,m:9.9093,pos:4},{a:2024,g:"ESP",et:4,m:9.8833,pos:10},{a:2025,g:"ESP",et:3,m:9.8778,pos:12},{a:2025,g:"DJ",et:4,m:9.816883,pos:20}]},
+  {q:"ARROXA O NÓ",m:9.974359,e:14,g26:"Especial",cor:9.926200,mar:9.978591,ani:9.980959,fig:9.978583,cas:9.976205,tri:9.983343,tem:9.9096,hist:[{a:2022,g:"ESP",et:4,m:9.9514,pos:3},{a:2023,g:"ESP",et:3,m:9.9667,pos:2},{a:2024,g:"ESP",et:4,m:9.9893,pos:1},{a:2025,g:"ESP",et:3,m:9.9873,pos:1},{a:2025,g:"DJ",et:4,m:9.998701,pos:1}]},
+  {q:"CAIPIRADA",m:9.922363,e:10,g26:"Especial",cor:9.824640,mar:9.921360,ani:9.923340,fig:9.957350,cas:9.940000,tri:9.996000,tem:9.9714,hist:[{a:2023,g:"ACE",et:3,m:9.9200,pos:2},{a:2024,g:"ESP",et:4,m:9.8976,pos:7},{a:2025,g:"ESP",et:3,m:9.9587,pos:5},{a:2025,g:"DJ",et:4,m:9.892208,pos:13}]},
+  {q:"CHINELO DE COURO",m:9.864815,e:13,g26:"Especial",cor:9.800000,mar:9.795556,ani:9.875556,fig:9.968889,cas:9.820000,tri:9.940000,hist:[{a:2022,g:"ACE",et:4,m:9.8889,pos:3},{a:2023,g:"ESP",et:3,m:9.8259,pos:12},{a:2024,g:"ACE",et:3,m:9.8367,pos:2},{a:2025,g:"ACE",et:3,m:9.9185,pos:2},{a:2025,g:"DJ",et:4,m:9.924675,pos:9}]},
+  {q:"EITA BAGACEIRA",m:9.903297,e:14,g26:"Especial",cor:9.795233,mar:9.904771,ani:9.909521,fig:9.964298,cas:9.935714,tri:9.950012,tem:9.9095,hist:[{a:2022,g:"ACE",et:4,m:9.9222,pos:1},{a:2023,g:"ESP",et:3,m:9.9000,pos:7},{a:2024,g:"ESP",et:4,m:9.8917,pos:8},{a:2025,g:"ESP",et:3,m:9.9000,pos:11},{a:2025,g:"DJ",et:4,m:9.912987,pos:10}]},
+  {q:"FORMIGA DA ROÇA",m:9.986081,e:14,g26:"Especial",cor:9.952362,mar:9.980952,ani:10.000000,fig:9.992859,cas:9.990481,tri:9.980943,tem:9.9286,hist:[{a:2022,g:"ESP",et:4,m:9.9861,pos:1},{a:2023,g:"ESP",et:3,m:9.9796,pos:1},{a:2024,g:"ESP",et:4,m:9.9893,pos:2},{a:2025,g:"ESP",et:3,m:9.9873,pos:2},{a:2025,g:"DJ",et:4,m:9.993506,pos:2}]},
+  {q:"MALA VÉIA",m:9.853398,e:14,g26:"Especial",cor:9.757600,mar:9.847626,ani:9.846205,fig:9.896198,cas:9.904293,tri:9.923329,tem:9.8191,hist:[{a:2022,g:"ACE",et:4,m:9.6181,pos:7},{a:2023,g:"ACE",et:3,m:9.9456,pos:1},{a:2024,g:"ESP",et:4,m:9.9036,pos:5},{a:2025,g:"ESP",et:3,m:9.9238,pos:10},{a:2025,g:"DJ",et:4,m:9.942857,pos:6}]},
+  {q:"JUNINA MATULÃO",m:9.955556,e:3,g26:"Especial",cor:9.855556,mar:9.966667,ani:9.966667,fig:10.000000,cas:9.944444,tri:10.000000,hist:[{a:2025,g:"ACE",et:3,m:9.9556,pos:1},{a:2025,g:"DJ",et:4,m:9.972727,pos:4}]},
+  {q:"PINGA EM MIM",m:9.895604,e:14,g26:"Especial",cor:9.766676,mar:9.888112,ani:9.916688,fig:9.954781,cas:9.876193,tri:9.957159,tem:9.9477,hist:[{a:2022,g:"ACE",et:4,m:9.8972,pos:2},{a:2023,g:"ESP",et:3,m:9.8574,pos:11},{a:2024,g:"ESP",et:4,m:9.8798,pos:11},{a:2025,g:"ESP",et:3,m:9.9476,pos:6},{a:2025,g:"DJ",et:4,m:9.932468,pos:8}]},
+  {q:"RASGA O FOLE",m:9.917949,e:14,g26:"Especial",cor:9.842843,mar:9.916664,ani:9.916669,fig:9.952383,cas:9.902386,tri:9.985724,tem:9.9953,hist:[{a:2022,g:"ESP",et:4,m:9.9069,pos:4},{a:2023,g:"ESP",et:3,m:9.9037,pos:5},{a:2024,g:"ESP",et:4,m:9.9024,pos:6},{a:2025,g:"ESP",et:3,m:9.9635,pos:4},{a:2025,g:"DJ",et:4,m:9.976623,pos:3}]},
+  {q:"RIBULIÇO",m:9.946520,e:14,g26:"Especial",cor:9.876176,mar:9.973814,ani:9.954767,fig:9.973812,cas:9.904748,tri:9.971438,tem:9.9286,hist:[{a:2022,g:"ESP",et:4,m:9.9028,pos:5},{a:2023,g:"ESP",et:3,m:9.9463,pos:3},{a:2024,g:"ESP",et:4,m:9.9631,pos:3},{a:2025,g:"ESP",et:3,m:9.9746,pos:3},{a:2025,g:"DJ",et:4,m:9.972727,pos:5}]},
+  {q:"VAI MAS NÃO VAI",m:9.837363,e:10,g26:"Especial",cor:9.740909,mar:9.829545,ani:9.850000,fig:9.931818,cas:9.756818,tri:9.934091,tem:9.9778,hist:[{a:2023,g:"ACE",et:3,m:9.7178,pos:5},{a:2024,g:"ACE",et:4,m:9.8767,pos:1},{a:2025,g:"ESP",et:3,m:9.9333,pos:8},{a:2025,g:"DJ",et:4,m:9.936364,pos:7}]},
+  {q:"XAMEGAR",m:9.899267,e:14,g26:"Especial",cor:9.804736,mar:9.885721,ani:9.919048,fig:9.921431,cas:9.888102,tri:9.966679,tem:9.919,hist:[{a:2022,g:"ESP",et:4,m:9.8403,pos:8},{a:2023,g:"ESP",et:3,m:9.8907,pos:8},{a:2024,g:"ESP",et:4,m:9.9274,pos:4},{a:2025,g:"ESP",et:3,m:9.9365,pos:7},{a:2025,g:"DJ",et:4,m:9.884416,pos:14}]},
+  {q:"XIQUE XIQUE",m:9.839007,e:13,g26:"Especial",cor:9.715395,mar:9.869744,ani:9.816421,fig:9.886667,cas:9.829744,tri:9.920503,tem:9.8583,hist:[{a:2022,g:"ESP",et:3,m:9.8167,pos:9},{a:2023,g:"ACE",et:3,m:9.8556,pos:3},{a:2024,g:"ESP",et:4,m:9.7869,pos:14},{a:2025,g:"ACE",et:3,m:9.9148,pos:3},{a:2025,g:"DJ",et:4,m:9.907792,pos:11}]},
   {q:"ARRAIÁ CHAPÉU DE PALHA",m:null,e:0,g26:"Acesso",cor:null,mar:null,ani:null,fig:null,cas:null,tri:null,hist:[]},
-  {q:"COISAS DA ROÇA",m:9.869597,e:14,g26:"Acesso",cor:9.716667,mar:9.911905,ani:9.821429,fig:9.916667,cas:9.871429,tri:9.964286,hist:[{a:2022,g:"ACE",et:4,m:9.8639,pos:4},{a:2023,g:"ESP",et:3,m:9.8648,pos:9},{a:2024,g:"ESP",et:4,m:9.8762,pos:12},{a:2025,g:"ESP",et:3,m:9.8714,pos:14}]},
-  {q:"ESPALHA BRASA",m:9.733333,e:11,g26:"Acesso",cor:9.582927,mar:9.692683,ani:9.702439,fig:9.802439,cas:9.739024,tri:9.856098,hist:[{a:2022,g:"ACE",et:4,m:9.5361,pos:8},{a:2024,g:"ACE",et:4,m:9.7758,pos:4},{a:2025,g:"ESP",et:3,m:9.8778,pos:13}]},
-  {q:"FORNALHA",m:9.842105,e:10,g26:"Acesso",cor:9.719444,mar:9.822222,ani:9.825000,fig:9.902778,cas:9.861111,tri:9.927778,hist:[{a:2023,g:"ACE",et:3,m:9.8411,pos:4},{a:2024,g:"ESP",et:4,m:9.8381,pos:13},{a:2025,g:"ACE",et:3,m:9.8500,pos:5}]},
-  {q:"FURACÃO",m:9.594444,e:2,g26:"Acesso",cor:9.466667,mar:9.583333,ani:9.616667,fig:9.516667,cas:9.566667,tri:9.850000,hist:[{a:2025,g:"ACE",et:2,m:9.5944,pos:10}]},
-  {q:"MATINGUEIROS DO SERTÃO",m:9.767667,e:14,g26:"Acesso",cor:9.606000,mar:9.848000,ani:9.660000,fig:9.898000,cas:9.680000,tri:9.924000,hist:[{a:2022,g:"ACE",et:4,m:9.7514,pos:5},{a:2023,g:"ESP",et:3,m:9.8056,pos:14},{a:2024,g:"ACE",et:4,m:9.7242,pos:6},{a:2025,g:"ACE",et:3,m:9.8481,pos:6}]},
-  {q:"OS CABOCLOS DO SERTÃO",m:9.785000,e:14,g26:"Acesso",cor:9.674000,mar:9.746000,ani:9.738000,fig:9.904000,cas:9.862000,tri:9.832000,hist:[{a:2022,g:"ACE",et:4,m:9.7111,pos:6},{a:2023,g:"ESP",et:3,m:9.8093,pos:13},{a:2024,g:"ACE",et:4,m:9.7733,pos:5},{a:2025,g:"ACE",et:3,m:9.8852,pos:4}]},
+  {q:"COISAS DA ROÇA",m:9.869597,e:14,g26:"Acesso",cor:9.721424,mar:9.911924,ani:9.828593,fig:9.919033,cas:9.871419,tri:9.983345,tem:9.9333,hist:[{a:2022,g:"ACE",et:4,m:9.8639,pos:4},{a:2023,g:"ESP",et:3,m:9.8648,pos:9},{a:2024,g:"ESP",et:4,m:9.8762,pos:12},{a:2025,g:"ESP",et:3,m:9.8714,pos:14},{a:2025,g:"DJ",et:4,m:9.842857,pos:18}]},
+  {q:"ESPALHA BRASA",m:9.733333,e:11,g26:"Acesso",cor:9.582927,mar:9.692683,ani:9.702439,fig:9.802439,cas:9.739024,tri:9.856098,tem:9.8667,hist:[{a:2022,g:"ACE",et:4,m:9.5361,pos:8},{a:2024,g:"ACE",et:4,m:9.7758,pos:4},{a:2025,g:"ESP",et:3,m:9.8778,pos:13},{a:2025,g:"DJ",et:4,m:9.851948,pos:17}]},
+  {q:"FORNALHA",m:9.842105,e:10,g26:"Acesso",cor:9.727320,mar:9.826000,ani:9.841320,fig:9.914667,cas:9.856013,tri:9.959320,tem:9.8917,hist:[{a:2023,g:"ACE",et:3,m:9.8411,pos:4},{a:2024,g:"ESP",et:4,m:9.8381,pos:13},{a:2025,g:"ACE",et:3,m:9.8500,pos:5},{a:2025,g:"DJ",et:4,m:9.862338,pos:16}]},
+  {q:"FURACÃO",m:9.594444,e:2,g26:"Acesso",cor:9.466667,mar:9.583333,ani:9.616667,fig:9.516667,cas:9.566667,tri:9.850000,hist:[{a:2025,g:"ACE",et:2,m:9.5944,pos:10},{a:2025,g:"DJ",et:4,m:9.583117,pos:23}]},
+  {q:"MATINGUEIROS DO SERTÃO",m:9.767667,e:14,g26:"Acesso",cor:9.606000,mar:9.848000,ani:9.660000,fig:9.898000,cas:9.680000,tri:9.924000,hist:[{a:2022,g:"ACE",et:4,m:9.7514,pos:5},{a:2023,g:"ESP",et:3,m:9.8056,pos:14},{a:2024,g:"ACE",et:4,m:9.7242,pos:6},{a:2025,g:"ACE",et:3,m:9.8481,pos:6},{a:2025,g:"DJ",et:4,m:9.793506,pos:22}]},
+  {q:"OS CABOCLOS DO SERTÃO",m:9.785000,e:14,g26:"Acesso",cor:9.674000,mar:9.746000,ani:9.738000,fig:9.904000,cas:9.862000,tri:9.832000,hist:[{a:2022,g:"ACE",et:4,m:9.7111,pos:6},{a:2023,g:"ESP",et:3,m:9.8093,pos:13},{a:2024,g:"ACE",et:4,m:9.7733,pos:5},{a:2025,g:"ACE",et:3,m:9.8852,pos:4},{a:2025,g:"DJ",et:4,m:9.901299,pos:12}]},
   {q:"PAIXÃO CANGAÇO",m:9.961111,e:4,g26:"Acesso",cor:9.950000,mar:9.991667,ani:9.991667,fig:9.933333,cas:9.933333,tri:9.966667,hist:[{a:2022,g:"ESP",et:4,m:9.9611,pos:2}]},
-  {q:"SOL DE MARIA",m:9.794444,e:3,g26:"Acesso",cor:9.644444,mar:9.833333,ani:9.744444,fig:9.855556,cas:9.733333,tri:9.955556,hist:[{a:2025,g:"ACE",et:3,m:9.7944,pos:8}]},
-  {q:"TENGO LENGO",m:9.753704,e:3,g26:"Acesso",cor:9.633333,mar:9.722222,ani:9.711111,fig:9.800000,cas:9.766667,tri:9.911111,hist:[{a:2025,g:"ACE",et:3,m:9.7537,pos:9}]},
-  {q:"TICO TICO NO FUBÁ",m:9.835802,e:9,g26:"Acesso",cor:9.753846,mar:9.823077,ani:9.869231,fig:9.861538,cas:9.789744,tri:9.933333,hist:[{a:2023,g:"ACE",et:2,m:9.8600,pos:3},{a:2024,g:"ACE",et:4,m:9.8167,pos:3},{a:2025,g:"ESP",et:3,m:9.8492,pos:15}]},
-  {q:"XEM NHEM NHEM",m:9.803030,e:14,g26:"Acesso",cor:9.728571,mar:9.719048,ani:9.811905,fig:9.885714,cas:9.830952,tri:9.914286,hist:[{a:2022,g:"ESP",et:4,m:9.8153,pos:10},{a:2023,g:"ESP",et:3,m:9.8648,pos:10},{a:2024,g:"ESP",et:4,m:9.7333,pos:15},{a:2025,g:"ACE",et:3,m:9.8333,pos:7}]},
+  {q:"SOL DE MARIA",m:9.794444,e:3,g26:"Acesso",cor:9.644444,mar:9.833333,ani:9.744444,fig:9.855556,cas:9.733333,tri:9.955556,hist:[{a:2025,g:"ACE",et:3,m:9.7944,pos:8},{a:2025,g:"DJ",et:1,m:9.714286,pos:25}]},
+  {q:"TENGO LENGO",m:9.753704,e:3,g26:"Acesso",cor:9.633333,mar:9.722222,ani:9.711111,fig:9.800000,cas:9.766667,tri:9.911111,hist:[{a:2025,g:"ACE",et:3,m:9.7537,pos:9},{a:2025,g:"DJ",et:3,m:9.657143,pos:24}]},
+  {q:"TICO TICO NO FUBÁ",m:9.835802,e:9,g26:"Acesso",cor:9.753846,mar:9.823077,ani:9.869231,fig:9.861538,cas:9.789744,tri:9.933333,tem:9.8444,hist:[{a:2023,g:"ACE",et:2,m:9.8600,pos:3},{a:2024,g:"ACE",et:4,m:9.8167,pos:3},{a:2025,g:"ESP",et:3,m:9.8492,pos:15},{a:2025,g:"DJ",et:4,m:9.794805,pos:21}]},
+  {q:"XEM NHEM NHEM",m:9.803030,e:14,g26:"Acesso",cor:9.723805,mar:9.719048,ani:9.807141,fig:9.876198,cas:9.826190,tri:9.902374,tem:9.7083,hist:[{a:2022,g:"ESP",et:4,m:9.8153,pos:10},{a:2023,g:"ESP",et:3,m:9.8648,pos:10},{a:2024,g:"ESP",et:4,m:9.7333,pos:15},{a:2025,g:"ACE",et:3,m:9.8333,pos:7},{a:2025,g:"DJ",et:4,m:9.828571,pos:19}]},
 ];
 
 // Quadrilhas com histórico na LINQDFE que não estão filiadas em 2026
@@ -1771,6 +2331,7 @@ const DATA_HIST=[
   {q:"FLOR DO MAMULENGO",m:9.425000,e:4,g26:null,cor:9.100000,mar:9.458333,ani:9.275000,fig:9.616667,cas:9.575000,tri:9.708333,hist:[{a:2022,g:"ACE",et:4,m:9.425000,pos:12}]},
 ];
 const ALL_DATA=[...DATA,...DATA_HIST];
+
 
 const TEMP=ALL_DATA.reduce((acc,d)=>{
   d.hist.forEach(h=>{
@@ -1817,10 +2378,14 @@ ALL_DATA.forEach(d=>{
     if(HIST_POS_FIXES[key])h.pos=HIST_POS_FIXES[key];
   });
 });
-const SEASON_QDATA=JSON.parse(`{"elite-do-cerrado|2022|ACE":{"m":9.975,"ani":9.958333,"cas":9.991667,"cor":9.925,"fig":9.991667,"mar":9.983333,"tri":10},"eita-bagaceira|2022|ACE":{"m":9.922222,"ani":9.95,"cas":9.975,"cor":9.816667,"fig":9.991667,"mar":9.95,"tri":9.991667},"pinga-em-mim|2022|ACE":{"m":9.897222,"ani":9.933333,"cas":9.9,"cor":9.741667,"fig":9.933333,"mar":9.891667,"tri":9.983333},"chinelo-de-couro|2022|ACE":{"m":9.888889,"ani":9.908333,"cas":9.875,"cor":9.85,"fig":9.983333,"mar":9.783333,"tri":9.975},"coisas-da-roca|2022|ACE":{"m":9.863889,"ani":9.775,"cas":9.866667,"cor":9.683333,"fig":9.916667,"mar":9.958333,"tri":9.983333},"aquarela-nordestina|2022|ACE":{"m":9.852778,"ani":9.908333,"cas":9.85,"cor":9.741667,"fig":9.908333,"mar":9.825,"tri":9.883333},"matingueiros-do-sertao|2022|ACE":{"m":9.751389,"ani":9.6,"cas":9.641667,"cor":9.525,"fig":9.95,"mar":9.816667,"tri":9.975},"os-caboclos-do-sertao|2022|ACE":{"m":9.711111,"ani":9.616667,"cas":9.75,"cor":9.641667,"fig":9.891667,"mar":9.683333,"tri":9.825},"saca-rolha|2022|ACE":{"m":9.665278,"ani":9.716667,"cas":9.583333,"cor":9.483333,"fig":9.716667,"mar":9.758333,"tri":9.775},"mala-veia|2022|ACE":{"m":9.618056,"ani":9.641667,"cas":9.8,"cor":9.575,"fig":9.741667,"mar":9.716667,"tri":9.875},"espalha-brasa|2022|ACE":{"m":9.536111,"ani":9.508333,"cas":9.583333,"cor":9.316667,"fig":9.666667,"mar":9.416667,"tri":9.741667},"triscou-queimou|2022|ACE":{"m":9.509259,"ani":9.355556,"cas":9.466667,"cor":9.322222,"fig":9.8,"mar":9.588889,"tri":9.577778},"flor-do-mamulengo|2022|ACE":{"m":9.425,"ani":9.275,"cas":9.575,"cor":9.1,"fig":9.616667,"mar":9.458333,"tri":9.708333},"mala-veia|2023|ACE":{"m":9.945556,"ani":9.926667,"cas":9.986667,"cor":9.846667,"fig":9.96,"mar":9.966667,"tri":9.986667},"caipirada|2023|ACE":{"m":9.92,"ani":9.9,"cas":9.933333,"cor":9.826667,"fig":9.98,"mar":9.893333,"tri":9.986667},"tico-tico-no-fuba|2023|ACE":{"m":9.86,"ani":9.97,"cas":9.83,"cor":9.77,"fig":9.89,"mar":9.77,"tri":9.95},"xique-xique|2023|ACE":{"m":9.855556,"ani":9.86,"cas":9.873333,"cor":9.7,"fig":9.92,"mar":9.88,"tri":9.966667},"fornalha|2023|ACE":{"m":9.841111,"ani":9.793333,"cas":9.853333,"cor":9.713333,"fig":9.926667,"mar":9.853333,"tri":9.92},"oxente-vixe|2023|ACE":{"m":9.743333,"ani":9.8,"cas":9.68,"cor":9.5,"fig":9.76,"mar":9.72,"tri":10},"vai-mas-nao-vai|2023|ACE":{"m":9.717778,"ani":9.693333,"cas":9.673333,"cor":9.593333,"fig":9.853333,"mar":9.706667,"tri":9.893333},"vai-mas-nao-vai|2024|ACE":{"m":9.876667,"ani":9.915,"cas":9.775,"cor":9.795,"fig":9.965,"mar":9.875,"tri":9.935},"chinelo-de-couro|2024|ACE":{"m":9.836667,"ani":9.84,"cas":9.78,"cor":9.773333,"fig":9.953333,"mar":9.793333,"tri":9.88},"tico-tico-no-fuba|2024|ACE":{"m":9.816667,"ani":9.835,"cas":9.76,"cor":9.735,"fig":9.84,"mar":9.85,"tri":9.905},"espalha-brasa|2024|ACE":{"m":9.775833,"ani":9.75,"cas":9.76,"cor":9.66,"fig":9.82,"mar":9.795,"tri":9.87},"os-caboclos-do-sertao|2024|ACE":{"m":9.773333,"ani":9.765,"cas":9.895,"cor":9.645,"fig":9.885,"mar":9.695,"tri":9.755},"matingueiros-do-sertao|2024|ACE":{"m":9.724167,"ani":9.63,"cas":9.635,"cor":9.585,"fig":9.835,"mar":9.825,"tri":9.835},"bambolea|2024|ACE":{"m":9.611111,"ani":9.613333,"cas":9.593333,"cor":9.52,"fig":9.64,"mar":9.666667,"tri":9.66},"junina-matulao|2025|ACE":{"m":9.955556,"ani":9.966667,"cas":9.944444,"cor":9.855556,"fig":10,"mar":9.966667,"tri":10},"chinelo-de-couro|2025|ACE":{"m":9.918519,"ani":9.977778,"cas":9.9,"cor":9.855556,"fig":9.955556,"mar":9.844444,"tri":9.977778},"xique-xique|2025|ACE":{"m":9.914815,"ani":9.933333,"cas":9.866667,"cor":9.811111,"fig":9.966667,"mar":9.944444,"tri":9.988889},"os-caboclos-do-sertao|2025|ACE":{"m":9.885185,"ani":9.866667,"cas":9.988889,"cor":9.777778,"fig":9.933333,"mar":9.866667,"tri":9.877778},"fornalha|2025|ACE":{"m":9.85,"ani":9.9,"cas":9.844444,"cor":9.7,"fig":9.922222,"mar":9.766667,"tri":9.966667},"matingueiros-do-sertao|2025|ACE":{"m":9.848148,"ani":9.777778,"cas":9.766667,"cor":9.766667,"fig":9.933333,"mar":9.922222,"tri":9.977778},"xem-nhem-nhem|2025|ACE":{"m":9.833333,"ani":9.866667,"cas":9.877778,"cor":9.755556,"fig":9.9,"mar":9.677778,"tri":9.922222},"sol-de-maria|2025|ACE":{"m":9.794444,"ani":9.744444,"cas":9.733333,"cor":9.644444,"fig":9.855556,"mar":9.833333,"tri":9.955556},"tengo-lengo|2025|ACE":{"m":9.753704,"ani":9.711111,"cas":9.766667,"cor":9.633333,"fig":9.8,"mar":9.722222,"tri":9.911111},"furacao|2025|ACE":{"m":9.594444,"ani":9.616667,"cas":9.566667,"cor":9.466667,"fig":9.516667,"mar":9.583333,"tri":9.85},"si-bobia-a-gente-pimba|2022|ESP":{"m":9.990278,"ani":10,"cas":9.991667,"cor":9.958333,"fig":10,"mar":9.991667,"tri":10},"formiga-da-roca|2022|ESP":{"m":9.986111,"ani":10,"cas":9.983333,"cor":9.966667,"fig":9.983333,"mar":9.983333,"tri":10},"paixao-cangaco|2022|ESP":{"m":9.961111,"ani":9.991667,"cas":9.933333,"cor":9.95,"fig":9.933333,"mar":9.991667,"tri":9.966667},"arroxa-o-no|2022|ESP":{"m":9.951389,"ani":9.958333,"cas":9.941667,"cor":9.9,"fig":9.941667,"mar":9.966667,"tri":10},"sabugo-de-milho|2022|ESP":{"m":9.9375,"ani":9.975,"cas":9.933333,"cor":9.933333,"fig":9.958333,"mar":9.858333,"tri":9.966667},"rasga-o-fole|2022|ESP":{"m":9.906944,"ani":9.866667,"cas":9.925,"cor":9.825,"fig":9.941667,"mar":9.9,"tri":9.983333},"ribulico|2022|ESP":{"m":9.902778,"ani":9.883333,"cas":9.841667,"cor":9.866667,"fig":9.916667,"mar":9.95,"tri":9.958333},"arraia-dos-matutos|2022|ESP":{"m":9.883333,"ani":9.875,"cas":9.875,"cor":9.825,"fig":9.9,"mar":9.9,"tri":9.941667},"amor-junino|2022|ESP":{"m":9.870833,"ani":9.858333,"cas":9.783333,"cor":9.825,"fig":9.941667,"mar":9.858333,"tri":9.958333},"sanfona-lascada|2022|ESP":{"m":9.858333,"ani":9.85,"cas":9.825,"cor":9.783333,"fig":9.966667,"mar":9.858333,"tri":9.991667},"xamegar|2022|ESP":{"m":9.840278,"ani":9.816667,"cas":9.808333,"cor":9.775,"fig":9.858333,"mar":9.875,"tri":9.95},"xique-xique|2022|ESP":{"m":9.816667,"ani":9.755556,"cas":9.855556,"cor":9.7,"fig":9.788889,"mar":9.877778,"tri":9.922222},"xem-nhem-nhem|2022|ESP":{"m":9.815278,"ani":9.766667,"cas":9.783333,"cor":9.75,"fig":9.891667,"mar":9.758333,"tri":9.941667},"pula-fogueira|2022|ESP":{"m":9.705556,"ani":9.766667,"cas":9.775,"cor":9.633333,"fig":9.866667,"mar":9.758333,"tri":9.85},"formiga-da-roca|2023|ESP":{"m":9.97963,"ani":10,"cas":9.977778,"cor":9.944444,"fig":10,"mar":9.955556,"tri":10},"arroxa-o-no|2023|ESP":{"m":9.966667,"ani":9.966667,"cas":10,"cor":9.877778,"fig":9.988889,"mar":9.966667,"tri":10},"ribulico|2023|ESP":{"m":9.946296,"ani":10,"cas":9.944444,"cor":9.822222,"fig":9.988889,"mar":9.977778,"tri":10},"sanfona-lascada|2023|ESP":{"m":9.912963,"ani":9.922222,"cas":9.922222,"cor":9.788889,"fig":9.977778,"mar":9.877778,"tri":9.988889},"arraia-dos-matutos|2023|ESP":{"m":9.909259,"ani":9.966667,"cas":9.866667,"cor":9.811111,"fig":9.933333,"mar":9.9,"tri":10},"rasga-o-fole|2023|ESP":{"m":9.903704,"ani":9.944444,"cas":9.888889,"cor":9.833333,"fig":9.955556,"mar":9.911111,"tri":9.955556},"amor-junino|2023|ESP":{"m":9.903704,"ani":9.888889,"cas":9.933333,"cor":9.755556,"fig":10,"mar":9.855556,"tri":9.988889},"eita-bagaceira|2023|ESP":{"m":9.9,"ani":9.922222,"cas":9.966667,"cor":9.744444,"fig":9.955556,"mar":9.833333,"tri":9.977778},"xamegar|2023|ESP":{"m":9.890741,"ani":9.977778,"cas":9.877778,"cor":9.733333,"fig":9.911111,"mar":9.855556,"tri":9.988889},"coisas-da-roca|2023|ESP":{"m":9.864815,"ani":9.866667,"cas":9.877778,"cor":9.7,"fig":9.877778,"mar":9.877778,"tri":9.988889},"xem-nhem-nhem|2023|ESP":{"m":9.864815,"ani":9.866667,"cas":9.944444,"cor":9.722222,"fig":9.911111,"mar":9.8,"tri":9.988889},"pinga-em-mim|2023|ESP":{"m":9.857407,"ani":9.888889,"cas":9.8,"cor":9.688889,"fig":9.955556,"mar":9.9,"tri":9.911111},"chinelo-de-couro|2023|ESP":{"m":9.825926,"ani":9.788889,"cas":9.733333,"cor":9.722222,"fig":9.988889,"mar":9.766667,"tri":9.955556},"os-caboclos-do-sertao|2023|ESP":{"m":9.809259,"ani":9.711111,"cas":9.811111,"cor":9.677778,"fig":9.933333,"mar":9.822222,"tri":9.966667},"matingueiros-do-sertao|2023|ESP":{"m":9.805556,"ani":9.688889,"cas":9.744444,"cor":9.6,"fig":9.933333,"mar":9.866667,"tri":10},"arroxa-o-no|2024|ESP":{"m":9.989286,"ani":10,"cas":9.991667,"cor":9.916667,"fig":9.983333,"mar":9.991667,"tri":9.983333},"formiga-da-roca|2024|ESP":{"m":9.989286,"ani":10,"cas":10,"cor":9.941667,"fig":10,"mar":10,"tri":10},"ribulico|2024|ESP":{"m":9.963095,"ani":9.95,"cas":9.9,"cor":9.833333,"fig":10,"mar":9.958333,"tri":10},"xamegar|2024|ESP":{"m":9.927381,"ani":9.916667,"cas":9.933333,"cor":9.841667,"fig":9.925,"mar":9.891667,"tri":9.941667},"mala-veia|2024|ESP":{"m":9.903571,"ani":9.883333,"cas":9.916667,"cor":9.8,"fig":9.925,"mar":9.833333,"tri":9.95},"rasga-o-fole|2024|ESP":{"m":9.902381,"ani":9.85,"cas":9.85,"cor":9.8,"fig":9.916667,"mar":9.925,"tri":9.983333},"caipirada|2024|ESP":{"m":9.897619,"ani":9.925,"cas":9.9,"cor":9.825,"fig":9.9,"mar":9.891667,"tri":9.933333},"eita-bagaceira|2024|ESP":{"m":9.891667,"ani":9.8,"cas":9.891667,"cor":9.775,"fig":9.925,"mar":9.958333,"tri":9.933333},"amor-junino|2024|ESP":{"m":9.890476,"ani":9.9,"cas":9.891667,"cor":9.833333,"fig":9.908333,"mar":9.866667,"tri":9.933333},"arraia-dos-matutos|2024|ESP":{"m":9.883333,"ani":9.883333,"cas":9.883333,"cor":9.816667,"fig":9.925,"mar":9.808333,"tri":9.95},"pinga-em-mim|2024|ESP":{"m":9.879762,"ani":9.866667,"cas":9.866667,"cor":9.775,"fig":9.916667,"mar":9.791667,"tri":9.925},"coisas-da-roca|2024|ESP":{"m":9.87619,"ani":9.791667,"cas":9.908333,"cor":9.716667,"fig":9.925,"mar":9.916667,"tri":9.933333},"fornalha|2024|ESP":{"m":9.838095,"ani":9.808333,"cas":9.883333,"cor":9.741667,"fig":9.858333,"mar":9.825,"tri":9.908333},"xique-xique|2024|ESP":{"m":9.786905,"ani":9.741667,"cas":9.766667,"cor":9.666667,"fig":9.866667,"mar":9.791667,"tri":9.8},"xem-nhem-nhem|2024|ESP":{"m":9.733333,"ani":9.775,"cas":9.758333,"cor":9.691667,"fig":9.85,"mar":9.65,"tri":9.825},"arroxa-o-no|2025|ESP":{"m":9.987302,"ani":10,"cas":9.977778,"cor":9.977778,"fig":10,"mar":9.988889,"tri":10},"formiga-da-roca|2025|ESP":{"m":9.987302,"ani":10,"cas":10,"cor":9.944444,"fig":9.988889,"mar":10,"tri":10},"ribulico|2025|ESP":{"m":9.974603,"ani":9.977778,"cas":9.922222,"cor":9.944444,"fig":10,"mar":10,"tri":10},"rasga-o-fole|2025|ESP":{"m":9.963492,"ani":9.988889,"cas":9.933333,"cor":9.888889,"fig":9.988889,"mar":9.944444,"tri":10},"caipirada|2025|ESP":{"m":9.95873,"ani":9.977778,"cas":10,"cor":9.844444,"fig":9.988889,"mar":9.955556,"tri":10},"pinga-em-mim|2025|ESP":{"m":9.947619,"ani":9.955556,"cas":9.933333,"cor":9.866667,"fig":10,"mar":9.966667,"tri":9.955556},"xamegar|2025|ESP":{"m":9.936508,"ani":9.977778,"cas":9.933333,"cor":9.844444,"fig":9.977778,"mar":9.911111,"tri":10},"vai-mas-nao-vai|2025|ESP":{"m":9.933333,"ani":9.966667,"cas":9.855556,"cor":9.866667,"fig":9.988889,"mar":9.933333,"tri":10},"amor-junino|2025|ESP":{"m":9.930159,"ani":9.966667,"cas":9.911111,"cor":9.844444,"fig":9.977778,"mar":9.9,"tri":10},"mala-veia|2025|ESP":{"m":9.92381,"ani":9.977778,"cas":9.911111,"cor":9.844444,"fig":9.966667,"mar":9.911111,"tri":9.977778},"eita-bagaceira|2025|ESP":{"m":9.9,"ani":9.933333,"cas":9.888889,"cor":9.822222,"fig":9.988889,"mar":9.866667,"tri":9.911111},"arraia-dos-matutos|2025|ESP":{"m":9.877778,"ani":9.922222,"cas":9.8,"cor":9.811111,"fig":9.911111,"mar":9.855556,"tri":9.977778},"espalha-brasa|2025|ESP":{"m":9.877778,"ani":9.855556,"cas":9.9,"cor":9.766667,"fig":9.944444,"mar":9.833333,"tri":9.977778},"coisas-da-roca|2025|ESP":{"m":9.871429,"ani":9.877778,"cas":9.822222,"cor":9.777778,"fig":9.944444,"mar":9.877778,"tri":9.955556},"tico-tico-no-fuba|2025|ESP":{"m":9.849206,"ani":9.833333,"cas":9.811111,"cor":9.777778,"fig":9.877778,"mar":9.822222,"tri":9.977778}}`);
+const SEASON_QDATA=JSON.parse(`{"elite-do-cerrado|2022|ACE":{"m":9.975,"ani":9.958333,"cas":9.991667,"cor":9.925,"fig":9.991667,"mar":9.983333,"tri":10},"eita-bagaceira|2022|ACE":{"m":9.922222,"ani":9.95,"cas":9.975,"cor":9.816667,"fig":9.991667,"mar":9.95,"tri":9.991667},"pinga-em-mim|2022|ACE":{"m":9.897222,"ani":9.933333,"cas":9.9,"cor":9.741667,"fig":9.933333,"mar":9.891667,"tri":9.983333},"chinelo-de-couro|2022|ACE":{"m":9.888889,"ani":9.908333,"cas":9.875,"cor":9.85,"fig":9.983333,"mar":9.783333,"tri":9.975},"coisas-da-roca|2022|ACE":{"m":9.863889,"ani":9.775,"cas":9.866667,"cor":9.683333,"fig":9.916667,"mar":9.958333,"tri":9.983333},"aquarela-nordestina|2022|ACE":{"m":9.852778,"ani":9.908333,"cas":9.85,"cor":9.741667,"fig":9.908333,"mar":9.825,"tri":9.883333},"matingueiros-do-sertao|2022|ACE":{"m":9.751389,"ani":9.6,"cas":9.641667,"cor":9.525,"fig":9.95,"mar":9.816667,"tri":9.975},"os-caboclos-do-sertao|2022|ACE":{"m":9.711111,"ani":9.616667,"cas":9.75,"cor":9.641667,"fig":9.891667,"mar":9.683333,"tri":9.825},"saca-rolha|2022|ACE":{"m":9.665278,"ani":9.716667,"cas":9.583333,"cor":9.483333,"fig":9.716667,"mar":9.758333,"tri":9.775},"mala-veia|2022|ACE":{"m":9.618056,"ani":9.641667,"cas":9.8,"cor":9.575,"fig":9.741667,"mar":9.716667,"tri":9.875},"espalha-brasa|2022|ACE":{"m":9.536111,"ani":9.508333,"cas":9.583333,"cor":9.316667,"fig":9.666667,"mar":9.416667,"tri":9.741667},"triscou-queimou|2022|ACE":{"m":9.509259,"ani":9.355556,"cas":9.466667,"cor":9.322222,"fig":9.8,"mar":9.588889,"tri":9.577778},"flor-do-mamulengo|2022|ACE":{"m":9.425,"ani":9.275,"cas":9.575,"cor":9.1,"fig":9.616667,"mar":9.458333,"tri":9.708333},"mala-veia|2023|ACE":{"m":9.945556,"ani":9.926667,"cas":9.986667,"cor":9.846667,"fig":9.96,"mar":9.966667,"tri":9.986667},"caipirada|2023|ACE":{"m":9.92,"ani":9.9,"cas":9.933333,"cor":9.826667,"fig":9.98,"mar":9.893333,"tri":9.986667},"tico-tico-no-fuba|2023|ACE":{"m":9.86,"ani":9.97,"cas":9.83,"cor":9.77,"fig":9.89,"mar":9.77,"tri":9.95},"xique-xique|2023|ACE":{"m":9.855556,"ani":9.86,"cas":9.873333,"cor":9.7,"fig":9.92,"mar":9.88,"tri":9.966667},"fornalha|2023|ACE":{"m":9.841111,"ani":9.793333,"cas":9.853333,"cor":9.713333,"fig":9.926667,"mar":9.853333,"tri":9.92},"oxente-vixe|2023|ACE":{"m":9.743333,"ani":9.8,"cas":9.68,"cor":9.5,"fig":9.76,"mar":9.72,"tri":10},"vai-mas-nao-vai|2023|ACE":{"m":9.717778,"ani":9.693333,"cas":9.673333,"cor":9.593333,"fig":9.853333,"mar":9.706667,"tri":9.893333},"vai-mas-nao-vai|2024|ACE":{"m":9.876667,"ani":9.915,"cas":9.775,"cor":9.795,"fig":9.965,"mar":9.875,"tri":9.935},"chinelo-de-couro|2024|ACE":{"m":9.836667,"ani":9.84,"cas":9.78,"cor":9.773333,"fig":9.953333,"mar":9.793333,"tri":9.88},"tico-tico-no-fuba|2024|ACE":{"m":9.816667,"ani":9.835,"cas":9.76,"cor":9.735,"fig":9.84,"mar":9.85,"tri":9.905},"espalha-brasa|2024|ACE":{"m":9.775833,"ani":9.75,"cas":9.76,"cor":9.66,"fig":9.82,"mar":9.795,"tri":9.87},"os-caboclos-do-sertao|2024|ACE":{"m":9.773333,"ani":9.765,"cas":9.895,"cor":9.645,"fig":9.885,"mar":9.695,"tri":9.755},"matingueiros-do-sertao|2024|ACE":{"m":9.724167,"ani":9.63,"cas":9.635,"cor":9.585,"fig":9.835,"mar":9.825,"tri":9.835},"bambolea|2024|ACE":{"m":9.611111,"ani":9.613333,"cas":9.593333,"cor":9.52,"fig":9.64,"mar":9.666667,"tri":9.66},"junina-matulao|2025|ACE":{"m":9.955556,"ani":9.966667,"cas":9.944444,"cor":9.855556,"fig":10,"mar":9.966667,"tri":10},"chinelo-de-couro|2025|ACE":{"m":9.918519,"ani":9.977778,"cas":9.9,"cor":9.855556,"fig":9.955556,"mar":9.844444,"tri":9.977778},"xique-xique|2025|ACE":{"m":9.914815,"ani":9.933333,"cas":9.866667,"cor":9.811111,"fig":9.966667,"mar":9.944444,"tri":9.988889},"os-caboclos-do-sertao|2025|ACE":{"m":9.885185,"ani":9.866667,"cas":9.988889,"cor":9.777778,"fig":9.933333,"mar":9.866667,"tri":9.877778},"fornalha|2025|ACE":{"m":9.85,"ani":9.9,"cas":9.844444,"cor":9.7,"fig":9.922222,"mar":9.766667,"tri":9.966667},"matingueiros-do-sertao|2025|ACE":{"m":9.848148,"ani":9.777778,"cas":9.766667,"cor":9.766667,"fig":9.933333,"mar":9.922222,"tri":9.977778},"xem-nhem-nhem|2025|ACE":{"m":9.833333,"ani":9.866667,"cas":9.877778,"cor":9.755556,"fig":9.9,"mar":9.677778,"tri":9.922222},"sol-de-maria|2025|ACE":{"m":9.794444,"ani":9.744444,"cas":9.733333,"cor":9.644444,"fig":9.855556,"mar":9.833333,"tri":9.955556},"tengo-lengo|2025|ACE":{"m":9.753704,"ani":9.711111,"cas":9.766667,"cor":9.633333,"fig":9.8,"mar":9.722222,"tri":9.911111},"furacao|2025|ACE":{"m":9.594444,"ani":9.616667,"cas":9.566667,"cor":9.466667,"fig":9.516667,"mar":9.583333,"tri":9.85},"si-bobia-a-gente-pimba|2022|ESP":{"m":9.990278,"ani":10,"cas":9.991667,"cor":9.958333,"fig":10,"mar":9.991667,"tri":10},"formiga-da-roca|2022|ESP":{"m":9.986111,"ani":10,"cas":9.983333,"cor":9.966667,"fig":9.983333,"mar":9.983333,"tri":10},"paixao-cangaco|2022|ESP":{"m":9.961111,"ani":9.991667,"cas":9.933333,"cor":9.95,"fig":9.933333,"mar":9.991667,"tri":9.966667},"arroxa-o-no|2022|ESP":{"m":9.951389,"ani":9.958333,"cas":9.941667,"cor":9.9,"fig":9.941667,"mar":9.966667,"tri":10},"sabugo-de-milho|2022|ESP":{"m":9.9375,"ani":9.975,"cas":9.933333,"cor":9.933333,"fig":9.958333,"mar":9.858333,"tri":9.966667},"rasga-o-fole|2022|ESP":{"m":9.906944,"ani":9.866667,"cas":9.925,"cor":9.825,"fig":9.941667,"mar":9.9,"tri":9.983333},"ribulico|2022|ESP":{"m":9.902778,"ani":9.883333,"cas":9.841667,"cor":9.866667,"fig":9.916667,"mar":9.95,"tri":9.958333},"arraia-dos-matutos|2022|ESP":{"m":9.883333,"ani":9.875,"cas":9.875,"cor":9.825,"fig":9.9,"mar":9.9,"tri":9.941667},"amor-junino|2022|ESP":{"m":9.870833,"ani":9.858333,"cas":9.783333,"cor":9.825,"fig":9.941667,"mar":9.858333,"tri":9.958333},"sanfona-lascada|2022|ESP":{"m":9.858333,"ani":9.85,"cas":9.825,"cor":9.783333,"fig":9.966667,"mar":9.858333,"tri":9.991667},"xamegar|2022|ESP":{"m":9.840278,"ani":9.816667,"cas":9.808333,"cor":9.775,"fig":9.858333,"mar":9.875,"tri":9.95},"xique-xique|2022|ESP":{"m":9.816667,"ani":9.755556,"cas":9.855556,"cor":9.7,"fig":9.788889,"mar":9.877778,"tri":9.922222},"xem-nhem-nhem|2022|ESP":{"m":9.815278,"ani":9.766667,"cas":9.783333,"cor":9.75,"fig":9.891667,"mar":9.758333,"tri":9.941667},"pula-fogueira|2022|ESP":{"m":9.705556,"ani":9.766667,"cas":9.775,"cor":9.633333,"fig":9.866667,"mar":9.758333,"tri":9.85},"formiga-da-roca|2023|ESP":{"m":9.97963,"ani":10,"cas":9.977778,"cor":9.944444,"fig":10,"mar":9.955556,"tri":10},"arroxa-o-no|2023|ESP":{"m":9.966667,"ani":9.966667,"cas":10,"cor":9.877778,"fig":9.988889,"mar":9.966667,"tri":10},"ribulico|2023|ESP":{"m":9.946296,"ani":10,"cas":9.944444,"cor":9.822222,"fig":9.988889,"mar":9.977778,"tri":10},"sanfona-lascada|2023|ESP":{"m":9.912963,"ani":9.922222,"cas":9.922222,"cor":9.788889,"fig":9.977778,"mar":9.877778,"tri":9.988889},"arraia-dos-matutos|2023|ESP":{"m":9.909259,"ani":9.966667,"cas":9.866667,"cor":9.811111,"fig":9.933333,"mar":9.9,"tri":10},"rasga-o-fole|2023|ESP":{"m":9.903704,"ani":9.944444,"cas":9.888889,"cor":9.833333,"fig":9.955556,"mar":9.911111,"tri":9.955556},"amor-junino|2023|ESP":{"m":9.903704,"ani":9.888889,"cas":9.933333,"cor":9.755556,"fig":10,"mar":9.855556,"tri":9.988889},"eita-bagaceira|2023|ESP":{"m":9.9,"ani":9.922222,"cas":9.966667,"cor":9.744444,"fig":9.955556,"mar":9.833333,"tri":9.977778},"xamegar|2023|ESP":{"m":9.890741,"ani":9.977778,"cas":9.877778,"cor":9.733333,"fig":9.911111,"mar":9.855556,"tri":9.988889},"coisas-da-roca|2023|ESP":{"m":9.864815,"ani":9.866667,"cas":9.877778,"cor":9.7,"fig":9.877778,"mar":9.877778,"tri":9.988889},"xem-nhem-nhem|2023|ESP":{"m":9.864815,"ani":9.866667,"cas":9.944444,"cor":9.722222,"fig":9.911111,"mar":9.8,"tri":9.988889},"pinga-em-mim|2023|ESP":{"m":9.857407,"ani":9.888889,"cas":9.8,"cor":9.688889,"fig":9.955556,"mar":9.9,"tri":9.911111},"chinelo-de-couro|2023|ESP":{"m":9.825926,"ani":9.788889,"cas":9.733333,"cor":9.722222,"fig":9.988889,"mar":9.766667,"tri":9.955556},"os-caboclos-do-sertao|2023|ESP":{"m":9.809259,"ani":9.711111,"cas":9.811111,"cor":9.677778,"fig":9.933333,"mar":9.822222,"tri":9.966667},"matingueiros-do-sertao|2023|ESP":{"m":9.805556,"ani":9.688889,"cas":9.744444,"cor":9.6,"fig":9.933333,"mar":9.866667,"tri":10},"arroxa-o-no|2024|ESP":{"m":9.9893,"ani":10,"cas":9.9917,"cor":9.95,"fig":9.9917,"mar":9.9917,"tri":9.9417,"tem":9.8667},"formiga-da-roca|2024|ESP":{"m":9.9893,"ani":10,"cas":10,"cor":9.95,"fig":10,"mar":9.9833,"tri":9.9333,"tem":9.8917},"ribulico|2024|ESP":{"m":9.9631,"ani":9.975,"cas":9.925,"cor":9.875,"fig":10,"mar":9.975,"tri":9.9417,"tem":9.8917},"xamegar|2024|ESP":{"m":9.9274,"ani":9.9333,"cas":9.9417,"cor":9.8583,"fig":9.95,"mar":9.9,"tri":9.9417,"tem":9.925},"mala-veia|2024|ESP":{"m":9.9036,"ani":9.8917,"cas":9.9417,"cor":9.8083,"fig":9.95,"mar":9.8417,"tri":9.8833,"tem":9.775},"rasga-o-fole|2024|ESP":{"m":9.9024,"ani":9.8917,"cas":9.8667,"cor":9.8333,"fig":9.9333,"mar":9.9167,"tri":10,"tem":9.9917},"caipirada|2024|ESP":{"m":9.8976,"ani":9.9,"cas":9.9,"cor":9.8083,"fig":9.9167,"mar":9.9167,"tri":10,"tem":9.9917},"eita-bagaceira|2024|ESP":{"m":9.8917,"ani":9.8417,"cas":9.9083,"cor":9.7917,"fig":9.925,"mar":9.9417,"tri":9.9167,"tem":9.925},"amor-junino|2024|ESP":{"m":9.8905,"ani":9.8917,"cas":9.8833,"cor":9.8167,"fig":9.925,"mar":9.8917,"tri":9.925,"tem":9.9},"arraia-dos-matutos|2024|ESP":{"m":9.8833,"ani":9.9167,"cas":9.8583,"cor":9.8333,"fig":9.9417,"mar":9.825,"tri":9.9667,"tem":9.925},"pinga-em-mim|2024|ESP":{"m":9.8798,"ani":9.8917,"cas":9.8667,"cor":9.775,"fig":9.9417,"mar":9.8167,"tri":9.9667,"tem":9.9417},"coisas-da-roca|2024|ESP":{"m":9.8762,"ani":9.8167,"cas":9.9083,"cor":9.7333,"fig":9.9333,"mar":9.9167,"tri":10,"tem":10},"fornalha|2024|ESP":{"m":9.8381,"ani":9.8333,"cas":9.8667,"cor":9.7583,"fig":9.9,"mar":9.85,"tri":9.9833,"tem":9.8917},"xique-xique|2024|ESP":{"m":9.7869,"ani":9.7417,"cas":9.75,"cor":9.6667,"fig":9.875,"mar":9.8,"tri":9.8333,"tem":9.8583},"xem-nhem-nhem|2024|ESP":{"m":9.7333,"ani":9.7583,"cas":9.7417,"cor":9.675,"fig":9.8167,"mar":9.65,"tri":9.7833,"tem":9.7083},"arroxa-o-no|2025|ESP":{"m":9.987302,"ani":10,"cas":9.977778,"cor":9.977778,"fig":10,"mar":9.988889,"tri":10,"tem":9.9667},"formiga-da-roca|2025|ESP":{"m":9.987302,"ani":10,"cas":10,"cor":9.944444,"fig":9.988889,"mar":10,"tri":10,"tem":9.9778},"ribulico|2025|ESP":{"m":9.974603,"ani":9.977778,"cas":9.922222,"cor":9.944444,"fig":10,"mar":10,"tri":10,"tem":9.9778},"rasga-o-fole|2025|ESP":{"m":9.963492,"ani":9.988889,"cas":9.933333,"cor":9.888889,"fig":9.988889,"mar":9.944444,"tri":10,"tem":10},"caipirada|2025|ESP":{"m":9.95873,"ani":9.977778,"cas":10,"cor":9.844444,"fig":9.988889,"mar":9.955556,"tri":10,"tem":9.9444},"pinga-em-mim|2025|ESP":{"m":9.947619,"ani":9.955556,"cas":9.933333,"cor":9.866667,"fig":10,"mar":9.966667,"tri":9.955556,"tem":9.9556},"xamegar|2025|ESP":{"m":9.936508,"ani":9.977778,"cas":9.933333,"cor":9.844444,"fig":9.977778,"mar":9.911111,"tri":10,"tem":9.9111},"vai-mas-nao-vai|2025|ESP":{"m":9.933333,"ani":9.966667,"cas":9.855556,"cor":9.866667,"fig":9.988889,"mar":9.933333,"tri":10,"tem":9.9778},"amor-junino|2025|ESP":{"m":9.930159,"ani":9.966667,"cas":9.911111,"cor":9.844444,"fig":9.977778,"mar":9.9,"tri":10,"tem":9.9111},"mala-veia|2025|ESP":{"m":9.92381,"ani":9.977778,"cas":9.911111,"cor":9.844444,"fig":9.966667,"mar":9.911111,"tri":9.977778,"tem":9.8778},"eita-bagaceira|2025|ESP":{"m":9.9,"ani":9.933333,"cas":9.888889,"cor":9.822222,"fig":9.988889,"mar":9.866667,"tri":9.911111,"tem":9.8889},"arraia-dos-matutos|2025|ESP":{"m":9.877778,"ani":9.922222,"cas":9.8,"cor":9.811111,"fig":9.911111,"mar":9.855556,"tri":9.977778,"tem":9.8667},"espalha-brasa|2025|ESP":{"m":9.877778,"ani":9.855556,"cas":9.9,"cor":9.766667,"fig":9.944444,"mar":9.833333,"tri":9.977778,"tem":9.8667},"coisas-da-roca|2025|ESP":{"m":9.871429,"ani":9.877778,"cas":9.822222,"cor":9.777778,"fig":9.944444,"mar":9.877778,"tri":9.955556,"tem":9.8444},"tico-tico-no-fuba|2025|ESP":{"m":9.849206,"ani":9.833333,"cas":9.811111,"cor":9.777778,"fig":9.877778,"mar":9.822222,"tri":9.977778,"tem":9.8444},"arroxa-o-no|2025|DJ":{"m":9.998701,"cor":9.990909,"mar":10,"ani":10,"fig":10,"cas":10,"tri":10,"tem":10},"formiga-da-roca|2025|DJ":{"m":9.993506,"cor":9.954545,"mar":10,"ani":10,"fig":10,"cas":10,"tri":10,"tem":10},"rasga-o-fole|2025|DJ":{"m":9.976623,"cor":9.918182,"mar":9.990909,"ani":9.990909,"fig":9.972727,"cas":9.963636,"tri":10,"tem":10},"junina-matulao|2025|DJ":{"m":9.972727,"cor":9.890909,"mar":9.972727,"ani":9.990909,"fig":9.990909,"cas":9.990909,"tri":9.990909,"tem":9.981818},"ribulico|2025|DJ":{"m":9.972727,"cor":9.936364,"mar":10,"ani":10,"fig":9.990909,"cas":9.881818,"tri":10,"tem":10},"mala-veia|2025|DJ":{"m":9.942857,"cor":9.836364,"mar":9.909091,"ani":9.954545,"fig":9.972727,"cas":9.936364,"tri":10,"tem":9.990909},"vai-mas-nao-vai|2025|DJ":{"m":9.936364,"cor":9.863636,"mar":9.918182,"ani":9.981818,"fig":9.990909,"cas":9.818182,"tri":10,"tem":9.981818},"pinga-em-mim|2025|DJ":{"m":9.932468,"cor":9.836364,"mar":9.927273,"ani":9.927273,"fig":9.981818,"cas":9.918182,"tri":9.981818,"tem":9.954545},"chinelo-de-couro|2025|DJ":{"m":9.924675,"cor":9.845455,"mar":9.9,"ani":10,"fig":9.936364,"cas":9.827273,"tri":10,"tem":9.963636},"eita-bagaceira|2025|DJ":{"m":9.912987,"cor":9.818182,"mar":9.945455,"ani":9.918182,"fig":10,"cas":9.890909,"tri":9.890909,"tem":9.945455},"xique-xique|2025|DJ":{"m":9.907792,"cor":9.727273,"mar":9.9,"ani":9.909091,"fig":9.963636,"cas":9.863636,"tri":10,"tem":9.990909},"os-caboclos-do-sertao|2025|DJ":{"m":9.901299,"cor":9.781818,"mar":9.818182,"ani":9.9,"fig":9.927273,"cas":9.981818,"tri":9.981818,"tem":9.918182},"caipirada|2025|DJ":{"m":9.892208,"cor":9.809091,"mar":9.854545,"ani":9.909091,"fig":9.881818,"cas":9.918182,"tri":9.972727,"tem":9.9},"xamegar|2025|DJ":{"m":9.884416,"cor":9.772727,"mar":9.872727,"ani":9.881818,"fig":9.981818,"cas":9.827273,"tri":9.963636,"tem":9.890909},"amor-junino|2025|DJ":{"m":9.871429,"cor":9.736364,"mar":9.872727,"ani":9.945455,"fig":9.918182,"cas":9.818182,"tri":10,"tem":9.809091},"fornalha|2025|DJ":{"m":9.862338,"cor":9.727273,"mar":9.845455,"ani":9.827273,"fig":9.845455,"cas":9.918182,"tri":10,"tem":9.872727},"espalha-brasa|2025|DJ":{"m":9.851948,"cor":9.718182,"mar":9.827273,"ani":9.809091,"fig":9.9,"cas":9.827273,"tri":9.972727,"tem":9.909091},"coisas-da-roca|2025|DJ":{"m":9.842857,"cor":9.672727,"mar":9.9,"ani":9.809091,"fig":9.890909,"cas":9.754545,"tri":9.972727,"tem":9.9},"xem-nhem-nhem|2025|DJ":{"m":9.828571,"cor":9.709091,"mar":9.718182,"ani":9.818182,"fig":9.963636,"cas":9.809091,"tri":9.927273,"tem":9.854545},"arraia-dos-matutos|2025|DJ":{"m":9.816883,"cor":9.663636,"mar":9.809091,"ani":9.827273,"fig":9.927273,"cas":9.718182,"tri":9.954545,"tem":9.818182},"tico-tico-no-fuba|2025|DJ":{"m":9.794805,"cor":9.718182,"mar":9.7,"ani":9.881818,"fig":9.854545,"cas":9.727273,"tri":9.972727,"tem":9.709091},"matingueiros-do-sertao|2025|DJ":{"m":9.793506,"cor":9.663636,"mar":9.881818,"ani":9.772727,"fig":9.881818,"cas":9.654545,"tri":9.9,"tem":9.8},"furacao|2025|DJ":{"m":9.583117,"cor":9.454545,"mar":9.536364,"ani":9.536364,"fig":9.663636,"cas":9.463636,"tri":9.8,"tem":9.627273},"tengo-lengo|2025|DJ":{"m":9.657143,"cor":9.4875,"mar":9.6375,"ani":9.5625,"fig":9.6625,"cas":9.65,"tri":9.85,"tem":9.75},"sol-de-maria|2025|DJ":{"m":9.714286,"cor":9.433333,"mar":9.733333,"ani":9.633333,"fig":9.733333,"cas":9.733333,"tri":9.933333,"tem":9.8}}`);
 
 // Mapa slug → nome oficial (para lookups em SEASON_QDATA)
 const SLUG_TO_NAME=(()=>{const m={};ALL_DATA.forEach(d=>{m[qSlug(d.q)]=d.q;});return m;})();
+
+const DJ_FILTER='circuit';
+
+function getActiveData(){return DATA;}
 
 // ─ Helpers de ano (alimentam Temporadas year-view e Quesitos year-filter) ─
 function getYearRankings(year,group){
@@ -1853,33 +2418,27 @@ function getYearAvgMatrix(year){
     const ms=ents.filter(e=>e.m!=null).map(e=>e.m);
     mat[g].m=ms.length?ms.reduce((s,v)=>s+v,0)/ms.length:null;
   });
-  const allEnts=Object.entries(SEASON_QDATA).filter(([k])=>k.split('|')[1]===String(year)).map(([,v])=>v);
-  mat.all={};
-  QKEYS.forEach(k=>{const vs=allEnts.filter(e=>e[k]!=null).map(e=>e[k]);mat.all[k]=vs.length?vs.reduce((s,v)=>s+v,0)/vs.length:null;});
-  const ms=allEnts.filter(e=>e.m!=null).map(e=>e.m);
-  mat.all.m=ms.length?ms.reduce((s,v)=>s+v,0)/ms.length:null;
+  const allEnts=Object.entries(SEASON_QDATA).filter(([k])=>k.endsWith(`|${year}|ESP`)||k.endsWith(`|${year}|ACE`)).map(([,v])=>v);
+  if(allEnts.length){
+    mat.all={};
+    QKEYS.forEach(k=>{const vs=allEnts.filter(e=>e[k]!=null).map(e=>e[k]);mat.all[k]=vs.length?vs.reduce((s,v)=>s+v,0)/vs.length:null;});
+    const ms=allEnts.filter(e=>e.m!=null).map(e=>e.m);
+    mat.all.m=ms.length?ms.reduce((s,v)=>s+v,0)/ms.length:null;
+  }
   return mat;
 }
 
-const QDAT=Object.fromEntries([
-  ["COREOGRAFIA","cor"],
-  ["MARCAÇÃO","mar"],
-  ["ANIMAÇÃO","ani"],
-  ["FIGURINO","fig"],
-  ["CASAL DE NOIVOS","cas"],
-  ["TRILHA SONORA","tri"],
-].map(([label,key])=>[
-  label,
-  [...DATA]
-    .filter(x=>x[key]!=null)
-    .sort((a,b)=>b[key]-a[key]||dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'}))
-    .slice(0,9)
-    .map(x=>({q:x.q,g:x.g26,m:x[key]}))
-]));
-const QC={COREOGRAFIA:"#E74C3C",MARCAÇÃO:"#3498DB",ANIMAÇÃO:"#2ECC71",FIGURINO:"#9B59B6","CASAL DE NOIVOS":"#F39C12","TRILHA SONORA":"#1ABC9C"};
-const QI={COREOGRAFIA:"💃",MARCAÇÃO:"🎙️",ANIMAÇÃO:"🎉",FIGURINO:"👗","CASAL DE NOIVOS":"💑","TRILHA SONORA":"🎵"};
-const QKEYS=["cor","mar","ani","fig","cas","tri"];
-const QLBLS=["Coreografia","Marcação","Animação","Figurino","Casal de Noivos","Trilha Sonora"];
+function buildQDAT(src){
+  return Object.fromEntries([
+    ["COREOGRAFIA","cor"],["MARCAÇÃO","mar"],["ANIMAÇÃO","ani"],
+    ["FIGURINO","fig"],["CASAL DE NOIVOS","cas"],["TRILHA SONORA","tri"],["TEMÁTICA","tem"],
+  ].map(([label,key])=>[label,[...src].filter(x=>x[key]!=null).sort((a,b)=>b[key]-a[key]||dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'})).slice(0,9).map(x=>({q:x.q,g:x.g26,m:x[key]}))]));
+}
+let QDAT=buildQDAT(getActiveData());
+const QC={COREOGRAFIA:"#E74C3C",MARCAÇÃO:"#3498DB",ANIMAÇÃO:"#2ECC71",FIGURINO:"#9B59B6","CASAL DE NOIVOS":"#F39C12","TRILHA SONORA":"#1ABC9C",TEMÁTICA:"#E91E63"};
+const QI={COREOGRAFIA:"💃",MARCAÇÃO:"🎙️",ANIMAÇÃO:"🎉",FIGURINO:"👗","CASAL DE NOIVOS":"💑","TRILHA SONORA":"🎵",TEMÁTICA:"🎭"};
+const QKEYS=["cor","mar","ani","fig","cas","tri","tem"];
+const QLBLS=["Coreografia","Marcação","Animação","Figurino","Casal de Noivos","Trilha Sonora","Temática"];
 const SERIES_META={
   m:{label:"Média Real",short:"Média Real"},
   cor:{label:"Coreografia",short:"Coreografia"},
@@ -1888,6 +2447,7 @@ const SERIES_META={
   fig:{label:"Figurino",short:"Figurino"},
   cas:{label:"Casal de Noivos",short:"Casal"},
   tri:{label:"Trilha Sonora",short:"Trilha"},
+  tem:{label:"Temática",short:"Temática"},
 };
 
 const QMEDIA_LEGACY={
@@ -1981,7 +2541,7 @@ function qSlug(q){
 function getQuadrilhaMedia(q){return QMEDIA_SLUG[qSlug(q)]||{photo:"",logo:""};}
 function getRankInfo(d){
   if(d.m===null||d.m===undefined)return{ligaPos:null,posGrupo:null,medal:""};
-  const ligaAll=[...DATA].filter(x=>x.m!==null).sort((a,b)=>b.m-a.m);
+  const ligaAll=[...getActiveData()].filter(x=>x.m!==null).sort((a,b)=>b.m-a.m);
   const ligaPos=ligaAll.findIndex(x=>x.q===d.q)+1;
   const pool=ligaAll.filter(x=>x.g26===d.g26);
   const posGrupo=pool.findIndex(x=>x.q===d.q)+1;
@@ -2057,7 +2617,7 @@ function getSeriesValue(q,a,g,key,fallback=null){
   return fallback;
 }
 function getHistoryByYear(d,year){
-  return d.hist.find(h=>h.a===year)||null;
+  return d.hist.find(h=>h.a===year&&h.g!=='DJ')||null;
 }
 function getSeriesPoint(d,year,key){
   const hist=getHistoryByYear(d,year);
@@ -2085,6 +2645,33 @@ function getGroupLabel(g){
   if(g==='ESP'||g==='Especial')return'Especial';
   if(g==='ACE'||g==='Acesso')return'Acesso';
   return'Liga';
+}
+// Returns only circuit (ESP/ACE) hist entries, excluding DJ.
+// DJ and circuit are parallel competitions — a quadrilha can appear in both for the same year.
+function circHistOnly(hist){
+  return hist.filter(h=>h.g!=='DJ');
+}
+function getSeasonYears(hist){
+  return [...new Set(circHistOnly(hist).map(h=>Number(h.a)).filter(Number.isFinite))].sort((a,b)=>a-b);
+}
+function getSeasonCount(hist){
+  return getSeasonYears(hist).length;
+}
+function getSeasonRangeLabel(hist){
+  const years=getSeasonYears(hist);
+  if(!years.length)return'—';
+  return years.length===1?String(years[0]):`${years[0]}–${years[years.length-1]}`;
+}
+// Returns rank (1-based) of qname in that year/group from SEASON_QDATA sorted by score desc.
+// Avoids relying on hist[].pos which may be incorrect for 2025.
+function getSznRank(qname,year,grp){
+  const yk=`|${year}|${grp}`;
+  const pool=Object.entries(SEASON_QDATA)
+    .filter(([k])=>k.endsWith(yk))
+    .map(([k,v])=>({q:SLUG_TO_NAME[k.split('|')[0]]||k.split('|')[0],m:v.m}))
+    .sort((a,b)=>b.m-a.m);
+  const idx=pool.findIndex(x=>x.q===qname);
+  return idx>=0?{pos:idx+1,total:pool.length}:null;
 }
 function getSeasonFieldSize(h){
   const key=`${h.a}-${h.g==='ESP'?'Especial':'Acesso'}`;
@@ -2117,9 +2704,9 @@ function getQuesitoExp(d){
 }
 
 // State
-let rF='todos',rS='',rYear='todos',eF='todos',eS='',tF='todos',qF='todos',qYear='todos',pF='todos',pS='';
+let rF='todos',rS='',rYear='todos',eF='todos',eS='',tF='todos',qF='todos',qYear='todos',pF='todos',pS='',pSort='media';
 let qpBenchmark='auto',qpEvoKey='m',qpQYear='todos';
-let chartEvo=null,chartRadar=null,chartBar=null;
+let chartEvo=null,chartRadar=null,chartBar=null,chartBumpQP=null,chartBumpEsp=null,chartBumpAce=null,chartLigaEvo=null,chartQEvo=null,chartDist=null;
 const QNAME_TO_KEY={COREOGRAFIA:'cor',MARCAÇÃO:'mar',ANIMAÇÃO:'ani',FIGURINO:'fig','CASAL DE NOIVOS':'cas','TRILHA SONORA':'tri'};
 
 function d2(v){
@@ -2276,7 +2863,7 @@ function buildTechnicalNarrative(d){
   const aboveLiga=QKEYS.filter(k=>d[k]!=null&&LIGA_AVG[k]!=null&&d[k]>LIGA_AVG[k]+.001).length;
   const amplitude=vals.length?Math.max(...vals)-Math.min(...vals):0;
   const balanceText=amplitude<=.08?'perfil muito equilibrado':amplitude<=.14?'perfil equilibrado com alguns picos':'perfil mais assimétrico, com pontos fortes bem marcados';
-  return `A base técnica passa por ${QLBLS[bestQi]} (${t2(d[QKEYS[bestQi]])}) e hoje o maior espaço de ajuste está em ${QLBLS[worstQi]} (${t2(d[QKEYS[worstQi]])}). São ${aboveLiga} de 6 quesitos acima da média geral da liga, com ${balanceText}.`;
+  return `A base técnica passa por ${QLBLS[bestQi]} (${t2(d[QKEYS[bestQi]])}) e hoje o maior espaço de ajuste está em ${QLBLS[worstQi]} (${t2(d[QKEYS[worstQi]])}). São ${aboveLiga} de ${QKEYS.filter(k=>d[k]!=null).length} quesitos acima da média geral da liga, com ${balanceText}.`;
 }
 function buildLeagueContextNarrative(d,exp,rankCtx){
   if(d.m==null)return'Sem histórico oficial na liga até aqui.';
@@ -2538,7 +3125,7 @@ function renderE(){
     const mBadgeClass=!scored?'flat':momentClass==='up'?'up':momentClass==='down'?'down':'flat';
     return `<tr${scored?` onclick="openQP('${x.q}')" style="cursor:pointer"`:''}>
       <td class="rp ${pc}">${scored?pos:'—'}</td>
-      <td><div class="qn">${dns(x.q)}</div><div class="qs">${scored?`${x.hist.length} temporada${x.hist.length>1?'s':''} (2022–2025)`:'Estreante'}</div></td>
+      <td><div class="qn">${dns(x.q)}</div><div class="qs">${scored?`${getSeasonCount(x.hist)} temporada${getSeasonCount(x.hist)>1?'s':''} (${getSeasonRangeLabel(x.hist)})`:'Estreante'}</div></td>
       <td><span class="gt ${gc}">${gi} ${gv}</span></td>
       <td><div class="sm">${scored?t2(exp.score):'—'}</div></td>
       <td><div class="qbs">${qbars}</div></td>
@@ -2553,6 +3140,282 @@ function renderE(){
 function fe(f,b){eF=f;document.querySelectorAll('#tab-expectativa .btn').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderE();}
 function seF(v){eS=v;renderE();}
 
+// ════════════════════════════════════════════════════════
+// ─── SCOUT ANALYTICS UTILITIES ───
+// ════════════════════════════════════════════════════════
+
+function getAttrTags(d){
+  const tags=[];
+  if(!d.m){tags.push({label:'Estreante 2026',col:'var(--mut)',bg:'rgba(139,163,190,.12)'});return tags;}
+  const histCircuit=circHistOnly(d.hist).slice().sort((a,b)=>Number(a.a)-Number(b.a));
+  const{ligaPos}=getRankInfo(d);
+  if(ligaPos===1) tags.push({label:'Líder da liga',col:'var(--gold)',bg:'rgba(245,166,35,.18)'});
+  else if(ligaPos&&ligaPos<=3) tags.push({label:'Top 3 geral',col:'var(--gold)',bg:'rgba(245,166,35,.10)'});
+  const bestQi=getBestQIndex(d);
+  if(bestQi!==null){
+    const pool=DATA.filter(x=>x[QKEYS[bestQi]]!=null).sort((a,b)=>b[QKEYS[bestQi]]-a[QKEYS[bestQi]]);
+    const qrank=pool.findIndex(x=>x.q===d.q)+1;
+    if(qrank===1) tags.push({label:`${QLBLS[bestQi].split(' ')[0]} dominante`,col:'var(--gold)',bg:'rgba(245,166,35,.09)'});
+    else if(qrank<=3) tags.push({label:`Top 3 · ${QLBLS[bestQi].split(' ')[0]}`,col:'var(--gold)',bg:'rgba(245,166,35,.07)'});
+  }
+  if(histCircuit.length>=3){
+    const scores=histCircuit.map(h=>h.m);
+    const range=Math.max(...scores)-Math.min(...scores);
+    if(range<0.05) tags.push({label:'Alta consistência',col:'var(--green)',bg:'rgba(39,174,96,.1)'});
+    else if(range>0.12) tags.push({label:'Alta volatilidade',col:'var(--red)',bg:'rgba(231,76,60,.1)'});
+  }
+  const n10k=QKEYS.findIndex(k=>d[k]!=null&&d[k]>=10);
+  if(n10k>=0) tags.push({label:`Nota 10 · ${QLBLS[n10k].split(' ')[0]}`,col:'#9B59B6',bg:'rgba(155,89,182,.1)'});
+  if(histCircuit.length){
+    const last=histCircuit[histCircuit.length-1];
+    if(last.g==='ACE'&&d.g26==='Especial') tags.push({label:'▲ Promovida 2025',col:'var(--green)',bg:'rgba(39,174,96,.1)'});
+    else if(last.g==='ESP'&&d.g26==='Acesso') tags.push({label:'▼ Rebaixada 2025',col:'var(--red)',bg:'rgba(231,76,60,.1)'});
+    if(histCircuit.length>=3){
+      const trend=histCircuit[histCircuit.length-1].m-histCircuit[0].m;
+      if(trend>0.04) tags.push({label:'Trajetória ↑',col:'var(--green)',bg:'rgba(39,174,96,.08)'});
+      else if(trend<-0.04) tags.push({label:'Trajetória ↓',col:'var(--red)',bg:'rgba(231,76,60,.08)'});
+    }
+  }
+  if(d.e>=14) tags.push({label:'Veterana',col:'var(--ace)',bg:'rgba(52,152,219,.1)'});
+  return tags.slice(0,6);
+}
+
+function getSimilarQuadrilhas(d,n=4){
+  if(!d.m) return [];
+  const pool=ALL_DATA.filter(x=>x.q!==d.q&&x.m!=null&&QKEYS.every(k=>x[k]!=null));
+  return pool.map(x=>({d:x,dist:Math.sqrt(QKEYS.reduce((s,k)=>s+Math.pow((d[k]||0)-(x[k]||0),2),0))})).sort((a,b)=>a.dist-b.dist).slice(0,n).map(x=>x.d);
+}
+
+function buildSeasonCardsHtml(d){
+  const circHist=circHistOnly(d.hist).slice().sort((a,b)=>Number(a.a)-Number(b.a));
+  if(!circHist.length) return '<div style="color:var(--mut);font-size:12px;padding:10px 0">Sem temporadas registradas.</div>';
+  return `<div class="qp-season-strip">${circHist.map((h,i)=>{
+    const prev=i>0?circHist[i-1]:null;
+    const key=`${h.a}-${h.g==='ESP'?'Especial':'Acesso'}`;
+    const sd=TEMP[key]||[];
+    const top=sd[0];
+    const delta=top&&h.m!=null?h.m-top.m:null;
+    const gClass=h.g==='ESP'?'season-group-esp':'season-group-ace';
+    let movHtml='';
+    if(prev){
+      if(prev.g==='ACE'&&h.g==='ESP') movHtml=`<div style="color:var(--green);font-size:9px;margin-top:3px">▲ Subiu ao ESP</div>`;
+      else if(prev.g==='ESP'&&h.g==='ACE') movHtml=`<div style="color:var(--red);font-size:9px;margin-top:3px">▼ Desceu ao ACE</div>`;
+    }
+    return `<div class="qp-season-card">
+      <div class="qp-sc-year">${h.a}</div>
+      <div style="margin-top:4px"><span class="${gClass}" style="font-size:9px">${h.g==='ESP'?'ESP':'ACE'}</span></div>
+      ${movHtml}
+      <div class="qp-sc-score">${t2(h.m)}</div>
+      <div class="qp-sc-pos">${h.pos}° · ${h.et} etapas</div>
+      ${delta!==null?`<div class="qp-sc-delta" style="color:${delta<0?'#E74C3C':'var(--mut)'}">${delta===0?'= líder':delta<0?t2(delta)+' do 1°':'+'+t2(delta)}</div>`:''}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function buildLigaRecords(){
+  const scored=DATA.filter(d=>d.m!=null);
+  if(!scored.length) return '';
+  const top=scored.reduce((b,d)=>d.m>b.m?d:b,scored[0]);
+  const bottom=scored.reduce((b,d)=>d.m<b.m?d:b,scored[0]);
+  const most=scored.reduce((b,d)=>d.e>b.e?d:b,scored[0]);
+  const maxSzn=ALL_DATA.flatMap(d=>d.hist).reduce((b,h)=>h.m>b.m?h:b,{m:0,q:'',a:''});
+  const maxSznQ=ALL_DATA.find(d=>d.hist.some(h=>h.m===maxSzn.m&&h.a===maxSzn.a));
+  const allHistM=ALL_DATA.flatMap(d=>d.hist.map(h=>h.m)).filter(Boolean);
+  const leagueHigh=allHistM.length?Math.max(...allHistM):null;
+  return `<div class="liga-rec-item"><div class="liga-rec-lbl">Maior média geral</div><div class="liga-rec-val">${t2(top.m)}</div><div class="liga-rec-sub">${dns(top.q)}</div></div>
+<div class="liga-rec-item"><div class="liga-rec-lbl">Melhor temporada</div><div class="liga-rec-val">${maxSzn.m?t2(maxSzn.m):'—'}</div><div class="liga-rec-sub">${maxSznQ?dns(maxSznQ.q)+' · '+maxSzn.a:'—'}</div></div>
+<div class="liga-rec-item"><div class="liga-rec-lbl">Mais etapas</div><div class="liga-rec-val">${most.e}</div><div class="liga-rec-sub">${dns(most.q)}</div></div>
+<div class="liga-rec-item"><div class="liga-rec-lbl">Menor média</div><div class="liga-rec-val">${t2(bottom.m)}</div><div class="liga-rec-sub">${dns(bottom.q)}</div></div>
+<div class="liga-rec-item"><div class="liga-rec-lbl">Filiadas 2026</div><div class="liga-rec-val">${DATA.length}</div><div class="liga-rec-sub">${DATA.filter(d=>ESP26.has(d.q)).length} ESP · ${DATA.filter(d=>AC26.has(d.q)).length} ACE</div></div>`;
+}
+
+function buildHeatmap(){
+  const ordered=['Especial','Acesso'];
+  const allQ=ordered.flatMap(g=>DATA.filter(d=>d.g26===g&&d.m!=null).sort((a,b)=>b.m-a.m));
+  if(!allQ.length) return '<div style="padding:16px;color:var(--mut);font-size:12px">Sem dados</div>';
+  const allVals=allQ.flatMap(d=>[d.m,...QKEYS.map(k=>d[k]||0)]).filter(v=>v>0);
+  const vMin=Math.min(...allVals),vMax=Math.max(...allVals);
+  function heatBg(v){
+    if(v==null) return 'rgba(255,255,255,.02)';
+    const t=Math.pow((v-vMin)/(vMax-vMin||1),1.8);
+    const r=Math.round(17+t*(245-17)),g2=Math.round(30+t*(130-30)),b=Math.round(47+t*(35-47));
+    return`rgb(${r},${g2},${b})`;
+  }
+  function heatTxt(v){
+    if(v==null) return 'var(--mut)';
+    const t=(v-vMin)/(vMax-vMin||1);
+    return t>0.58?'#0a1520':'rgba(243,234,215,.92)';
+  }
+  let html=`<table class="heatmap-table"><thead><tr>
+    <th>Quadrilha</th><th>Geral</th>${QLBLS.map(l=>`<th>${l.split(' ')[0]}</th>`).join('')}
+  </tr></thead><tbody>`;
+  let lastG='';
+  allQ.forEach((d,i)=>{
+    const isNew=d.g26!==lastG;
+    html+=`<tr${isNew&&i>0?' class="hm-sep-row"':''}>
+      <td style="color:${d.g26==='Especial'?'var(--gold)':'var(--ace)'}">${dns(d.q)}</td>
+      <td style="background:${heatBg(d.m)};color:${heatTxt(d.m)}">${t2(d.m)}</td>
+      ${QKEYS.map(k=>{const v=d[k];return`<td style="background:${heatBg(v)};color:${heatTxt(v)}">${v!=null?t2(v):'—'}</td>`;}).join('')}
+    </tr>`;
+    lastG=d.g26;
+  });
+  html+='</tbody></table>';
+  return html;
+}
+
+function getLeagueYearAvgs(){
+  return [2022,2023,2024,2025].reduce((acc,y)=>{
+    acc[y]={};
+    ['ESP','ACE'].forEach(g=>{
+      const key=`${y}-${g==='ESP'?'Especial':'Acesso'}`;
+      const entries=TEMP[key]||[];
+      acc[y][g]=entries.length?entries.reduce((s,e)=>s+e.m,0)/entries.length:null;
+    });
+    return acc;
+  },{});
+}
+
+function buildSeasonSummaryHtml(year){
+  const espRank=getYearRankings(year,'ESP');
+  const aceRank=getYearRankings(year,'ACE');
+  const all=[...espRank,...aceRank];
+  const avg=all.length?all.reduce((s,e)=>s+e.m,0)/all.length:null;
+  const maxE=all.reduce((b,e)=>e.m>b.m?e:b,all[0]||{m:0,q:''});
+  const allM=all.map(e=>e.m);
+  const range=allM.length?Math.max(...allM)-Math.min(...allM):null;
+  return `<div class="season-summary">
+    <div class="ss-card"><div class="ss-lbl">Campeã Especial</div><div class="ss-val">${espRank[0]?t2(espRank[0].m):'—'}</div><div class="ss-sub">${espRank[0]?dns(espRank[0].q):'—'}</div></div>
+    <div class="ss-card"><div class="ss-lbl">Campeã Acesso</div><div class="ss-val">${aceRank[0]?t2(aceRank[0].m):'—'}</div><div class="ss-sub">${aceRank[0]?dns(aceRank[0].q):'—'}</div></div>
+    <div class="ss-card"><div class="ss-lbl">Média da liga</div><div class="ss-val">${avg!=null?t2(avg):'—'}</div><div class="ss-sub">${all.length} quadrilhas</div></div>
+    <div class="ss-card"><div class="ss-lbl">Maior nota</div><div class="ss-val">${maxE.m?t2(maxE.m):'—'}</div><div class="ss-sub">${maxE.q?dns(maxE.q):'—'}</div></div>
+    <div class="ss-card"><div class="ss-lbl">Dispersão</div><div class="ss-val">${range!=null?t2(range):'—'}</div><div class="ss-sub">range da temporada</div></div>
+  </div>`;
+}
+
+function setPSort(key,btn){
+  pSort=key;
+  document.querySelectorAll('.sort-chip').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  renderP();
+}
+
+function renderBumpGroupChart(ctxId,group){
+  const canvas=document.getElementById(ctxId);
+  if(!canvas) return null;
+  const years=[2022,2023,2024,2025];
+  const allQ=ALL_DATA.filter(d=>d.hist.some(h=>h.g===group));
+  const datasets=allQ.map(d=>{
+    const pts=years.map(y=>{const h=d.hist.find(h2=>h2.a===y&&h2.g===group);return h?{x:y,y:h.pos}:null;}).filter(Boolean);
+    if(pts.length<2) return null;
+    const isActive=d.g26===(group==='ESP'?'Especial':'Acesso');
+    const alpha=isActive?'cc':'55';
+    const col=isActive?(group==='ESP'?`rgba(245,166,35,.${pts.length>=3?'8':'5'})`:`rgba(52,152,219,.${pts.length>=3?'8':'5'})`): 'rgba(139,163,190,.4)';
+    return{label:dns(d.q),data:pts,borderColor:col,backgroundColor:'transparent',borderWidth:isActive?2:1,pointRadius:isActive?4:3,pointHoverRadius:6,tension:.3,spanGaps:false};
+  }).filter(Boolean);
+  if(!datasets.length) return null;
+  const allPos=datasets.flatMap(ds=>ds.data.map(p=>p.y));
+  const maxP=Math.max(...allPos,5);
+  return new Chart(canvas,{
+    type:'line',data:{datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{type:'linear',min:2021.7,max:2025.3,ticks:{stepSize:1,font:{size:10},color:'#8BA3BE',callback:v=>Number.isInteger(v)?String(v):''},grid:{color:'rgba(255,255,255,.05)'}},
+        y:{reverse:true,min:.5,max:maxP+.5,ticks:{stepSize:1,font:{size:10},color:'#8BA3BE',callback:v=>Number.isInteger(v)?v+'°':''},grid:{color:'rgba(255,255,255,.06)'}},
+      },
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y}°`}}},
+      animation:{duration:400},
+    }
+  });
+}
+
+function renderLigaEvoChart(){
+  if(chartLigaEvo){chartLigaEvo.destroy();chartLigaEvo=null;}
+  const canvas=document.getElementById('chart-liga-evo');
+  if(!canvas) return;
+  const yAvgs=getLeagueYearAvgs();
+  const years=[2022,2023,2024,2025];
+  chartLigaEvo=new Chart(canvas,{
+    type:'line',
+    data:{
+      labels:years.map(String),
+      datasets:[
+        {label:'Especial',data:years.map(y=>yAvgs[y].ESP),borderColor:'#F5A623',backgroundColor:'rgba(245,166,35,.10)',borderWidth:2,pointRadius:5,tension:.4,fill:true},
+        {label:'Acesso',data:years.map(y=>yAvgs[y].ACE),borderColor:'#3498DB',backgroundColor:'rgba(52,152,219,.08)',borderWidth:2,pointRadius:5,tension:.4,fill:true},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{ticks:{font:{size:10},color:'#8BA3BE'},grid:{color:'rgba(255,255,255,.05)'}},
+        y:{ticks:{font:{size:10},callback:v=>t2(v),color:'#8BA3BE'},grid:{color:'rgba(255,255,255,.05)'}},
+      },
+      plugins:{legend:{labels:{color:'#F0EAD6',font:{size:10}}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${t2(ctx.parsed.y)}`}}},
+      animation:{duration:500},
+    }
+  });
+}
+
+function renderQEvoChart(){
+  if(chartQEvo){chartQEvo.destroy();chartQEvo=null;}
+  const canvas=document.getElementById('chart-q-evo');
+  if(!canvas) return;
+  const years=[2022,2023,2024,2025];
+  const datasets=QKEYS.map((k,i)=>{
+    const col=Object.values(QC)[i];
+    const data=years.map(y=>{
+      const entries=[];
+      ['ESP','ACE'].forEach(g=>{
+        Object.entries(SEASON_QDATA).filter(([key])=>key.endsWith(`|${y}|${g}`)).forEach(([,v])=>{if(v[k]!=null)entries.push(v[k]);});
+      });
+      return entries.length?entries.reduce((s,v)=>s+v,0)/entries.length:null;
+    });
+    return{label:QLBLS[i].split(' ')[0],data,borderColor:col,backgroundColor:col+'22',borderWidth:2,pointRadius:4,tension:.4,spanGaps:true};
+  });
+  chartQEvo=new Chart(canvas,{
+    type:'line',data:{labels:years.map(String),datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{ticks:{font:{size:10},color:'#8BA3BE'},grid:{color:'rgba(255,255,255,.05)'}},
+        y:{ticks:{font:{size:10},callback:v=>t2(v),color:'#8BA3BE'},grid:{color:'rgba(255,255,255,.05)'}},
+      },
+      plugins:{legend:{labels:{color:'#F0EAD6',font:{size:9},boxWidth:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${t2(ctx.parsed.y)}`}}},
+      animation:{duration:500},
+    }
+  });
+}
+
+function renderDistChart(data){
+  if(chartDist){chartDist.destroy();chartDist=null;}
+  const wrap=document.getElementById('r-dist-wrap');
+  const canvas=document.getElementById('chart-dist');
+  if(!canvas||!data.length){if(wrap)wrap.style.display='none';return;}
+  const bMin=9.50,bStep=0.05;
+  const buckets=[];
+  for(let b=bMin;b<10.01;b+=bStep){
+    const lo=parseFloat(b.toFixed(2)),hi=parseFloat((b+bStep).toFixed(2));
+    buckets.push({label:lo.toFixed(2),count:data.filter(d=>d.m!=null&&d.m>=lo&&d.m<hi).length});
+  }
+  wrap.style.display='block';
+  chartDist=new Chart(canvas,{
+    type:'bar',
+    data:{
+      labels:buckets.map(b=>b.label),
+      datasets:[{data:buckets.map(b=>b.count),backgroundColor:buckets.map(b=>b.count>0?'rgba(245,166,35,.55)':'rgba(255,255,255,.04)'),borderColor:buckets.map(b=>b.count>0?'rgba(245,166,35,.8)':'transparent'),borderWidth:1,borderRadius:3}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{ticks:{font:{size:8},color:'#8BA3BE',maxRotation:0},grid:{display:false}},
+        y:{ticks:{stepSize:1,font:{size:8},color:'#8BA3BE'},grid:{color:'rgba(255,255,255,.05)'},min:0,max:Math.max(...buckets.map(b=>b.count),1)+1},
+      },
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.parsed.y} quadrilha(s)`}}},
+      animation:{duration:300},
+    }
+  });
+}
+
 // ─── RANK GERAL ───
 function renderR(){
   if(rYear!=='todos'){renderRYear();return;}
@@ -2561,8 +3424,11 @@ function renderR(){
   document.getElementById('r-th-group').textContent='Grupo 2026';
   document.getElementById('r-th-etapas').textContent='Etapas';
   document.getElementById('r-th-media').textContent='Média Real';
-  let scored=[...DATA].filter(x=>x.m!==null);
-  let unscored=[...DATA].filter(x=>x.m===null);
+  const ligaRec=document.getElementById('liga-records-strip');
+  if(ligaRec&&!ligaRec.innerHTML) ligaRec.innerHTML=buildLigaRecords();
+  const src=getActiveData();
+  let scored=[...src].filter(x=>x.m!==null);
+  let unscored=[...src].filter(x=>x.m===null);
   if(rF==='Especial'){scored=scored.filter(x=>ESP26.has(x.q));unscored=unscored.filter(x=>ESP26.has(x.q));}
   else if(rF==='Acesso'){scored=scored.filter(x=>AC26.has(x.q));unscored=unscored.filter(x=>AC26.has(x.q));}
   if(rS){
@@ -2577,6 +3443,18 @@ function renderR(){
     if(rS){const s=rS.toLowerCase();hist=hist.filter(x=>x.q.toLowerCase().includes(s)||dns(x.q).toLowerCase().includes(s));}
     d=[...scored,...unscored,...hist];
   }
+  const mVals=scored.map(x=>x.m);
+  const mMin=mVals.length?Math.min(...mVals):9.5;
+  const mMax=mVals.length?Math.max(...mVals):10;
+  function mHeatBg(v){
+    if(v==null) return 'transparent';
+    const t=Math.pow((v-mMin)/(mMax-mMin||0.01),1.8);
+    return`rgb(${Math.round(17+t*228)},${Math.round(30+t*100)},${Math.round(47-t*12)})`;
+  }
+  function mHeatTxt(v){
+    if(v==null) return 'var(--mut)';
+    return((v-mMin)/(mMax-mMin||0.01))>0.58?'#0a1520':'rgba(243,234,215,.92)';
+  }
   if(scored.length>0){
     const top=scored[0];
     const bestQi=getBestQIndex(top);
@@ -2586,7 +3464,12 @@ function renderR(){
     document.getElementById('ranking-spot-desc').innerHTML=`${etiq} · Média real <strong>${t2(top.m)}</strong>${bestQ?` · Melhor em ${bestQ}`:''}`;
   }
   let rankPos=0;
-  document.getElementById('rb').innerHTML=d.map(x=>{
+  const zDangerAt=(rF==='Especial'&&scored.length>=4)?scored.length-2:null;
+  const zPromoAfter=(rF==='Acesso'&&scored.length>=4)?3:null;
+  let zInserted=false;
+  const dangerSep=`<tr class="zone-sep"><td colspan="6"><div class="zone-sep-inner zone-sep-dn"><span class="zone-sep-lbl">▼ Zona de rebaixamento · últimas 3 posições</span></div></td></tr>`;
+  const promoSep=`<tr class="zone-sep"><td colspan="6"><div class="zone-sep-inner zone-sep-up"><span class="zone-sep-lbl">▲ Zona de promoção · primeiras 3 posições acima</span></div></td></tr>`;
+  document.getElementById('rb').innerHTML=d.flatMap(x=>{
     const hasScore=x.m!==null&&x.g26;
     const pos=hasScore?++rankPos:null;
     const pc=pos===1?'g':pos===2?'s':pos===3?'b':'';
@@ -2597,17 +3480,39 @@ function renderR(){
       return `<div class="qbr"><span class="qbl">${QLBLS[j].slice(0,3)}</span><div class="qbt"><div class="qbf" style="width:${Math.max(0,Math.min(100,p))}%;background:${Object.values(QC)[j]}"></div></div><span class="qbv">${t2(v)}</span></div>`;
     }).join('');
     const pills=x.hist.length
-      ? x.hist.map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} (${h.et}et)</span>`).join('')
+      ? x.hist.filter(h=>h.g!=='DJ').map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} (${h.et}et)</span>`).join('')
       : `<span class="hpill hp-a">Estreia 2026</span>`;
-    return `<tr>
-      <td class="rp ${pc}">${pos??'—'}</td>
-      <td><div class="qn">${dns(x.q)}</div><div class="hist-row">${pills}</div></td>
+    const cHist=circHistOnly(x.hist).sort((a,b)=>b.a-a.a);
+    const lastSzn=cHist[0];
+    const prevSzn=lastSzn?cHist.find(h=>h.a<lastSzn.a&&h.g===lastSzn.g):null;
+    let posDelta='';
+    if(hasScore&&lastSzn&&prevSzn){
+      const lr=getSznRank(x.q,lastSzn.a,lastSzn.g);
+      const pr=getSznRank(x.q,prevSzn.a,prevSzn.g);
+      if(lr&&pr){
+        const dlt=pr.pos-lr.pos;
+        if(dlt>0)posDelta=`<div class="pos-delta up">▲${dlt}</div>`;
+        else if(dlt<0)posDelta=`<div class="pos-delta dn">▼${Math.abs(dlt)}</div>`;
+        else posDelta=`<div class="pos-delta eq">—</div>`;
+      }
+    }
+    // Recent badge: most recent season, position from SEASON_QDATA (never hist[].pos)
+    const _lastAny=x.hist.filter(h=>h.g!=='DJ').sort((a,b)=>b.a-a.a)[0];
+    const _lastRank=_lastAny?getSznRank(x.q,_lastAny.a,_lastAny.g):null;
+    const recentBadge=_lastRank?`<span class="recent-pos-badge rpb-${_lastAny.g==='ESP'?'esp':'ace'}">${_lastRank.pos}° ${_lastAny.g} ${String(_lastAny.a).slice(2)}</span>`:'';
+    const row=`<tr>
+      <td class="rp ${pc}">${pos??'—'}${posDelta}</td>
+      <td><div class="qn">${dns(x.q)}</div>${recentBadge}<div class="hist-row">${pills}</div></td>
       <td>${g?`<span class="gt ${gc}">${gi} ${g}</span>`:`<span class="hist-badge">Histórico</span>`}</td>
       <td><span class="et">${x.e>0?x.e+' etapas':'Estreante'}</span></td>
-      <td><div class="sm">${x.m!==null?t2(x.m):'—'}</div></td>
+      <td><div class="sm" style="background:${mHeatBg(x.m)};color:${mHeatTxt(x.m)};border-radius:6px;padding:2px 8px;display:inline-block">${x.m!==null?t2(x.m):'—'}</div></td>
       <td><div class="qbs">${bars}</div></td>
     </tr>`;
+    if(!zInserted&&zDangerAt!==null&&pos===zDangerAt){zInserted=true;return[dangerSep,row];}
+    if(!zInserted&&zPromoAfter!==null&&pos===zPromoAfter+1){zInserted=true;return[promoSep,row];}
+    return[row];
   }).join('');
+  renderDistChart(scored);
 }
 function renderRYear(){
   const year=rYear;
@@ -2616,9 +3521,11 @@ function renderRYear(){
   document.getElementById('r-th-group').textContent='Grupo';
   document.getElementById('r-th-etapas').textContent='Etapas';
   document.getElementById('r-th-media').textContent='Média';
-  const groups=rF==='Acesso'?['ACE']:rF==='Especial'?['ESP']:['ESP','ACE'];
+  const ligaRec=document.getElementById('liga-records-strip');
+  if(ligaRec&&!ligaRec.innerHTML) ligaRec.innerHTML=buildLigaRecords();
+  const circuitGroups=rF==='Acesso'?['ACE']:rF==='Especial'?['ESP']:['ESP','ACE'];
   let entries=[];
-  groups.forEach(g=>{
+  circuitGroups.forEach(g=>{
     const gLabel=g==='ESP'?'Especial':'Acesso';
     Object.entries(SEASON_QDATA)
       .filter(([k])=>k.endsWith(`|${year}|${g}`))
@@ -2631,14 +3538,35 @@ function renderRYear(){
       });
   });
   entries.sort((a,b)=>b.m-a.m||(dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'})));
+  const mVals=entries.map(x=>x.m).filter(Boolean);
+  const mMin=mVals.length?Math.min(...mVals):9.5;
+  const mMax=mVals.length?Math.max(...mVals):10;
+  function mHeatBg(v){
+    if(v==null) return 'transparent';
+    const t=Math.pow((v-mMin)/(mMax-mMin||0.01),1.8);
+    return`rgb(${Math.round(17+t*228)},${Math.round(30+t*100)},${Math.round(47-t*12)})`;
+  }
+  function mHeatTxt(v){
+    if(v==null) return 'var(--mut)';
+    return((v-mMin)/(mMax-mMin||0.01))>0.58?'#0a1520':'rgba(243,234,215,.92)';
+  }
   if(entries.length>0){
     const top=entries[0];
     const bestQi=QKEYS.reduce((bi,k,i)=>top[k]>top[QKEYS[bi]]?i:bi,0);
     document.getElementById('ranking-spot-title').textContent=`${dns(top.q)} · maior média em ${year}${rF!=='todos'?' · '+rF:''}`;
     document.getElementById('ranking-spot-desc').innerHTML=`${top.g} · Média <strong>${t2(top.m)}</strong> · Melhor em ${QLBLS[bestQi]}`;
   }
+  // Precompute expected rank by Média Real (all-time average) for circuit entries
+  const mrExpMap={};
+  const _circE=entries;
+  [..._circE].sort((a,b)=>{const aM=ALL_DATA.find(d=>d.q===a.q)?.m||0,bM=ALL_DATA.find(d=>d.q===b.q)?.m||0;return bM-aM;}).forEach((x,i)=>mrExpMap[x.q]=i+1);
   let rankPos=0;
-  document.getElementById('rb').innerHTML=entries.map(x=>{
+  const yDangerAt=(rF==='Especial'&&entries.length>=4)?entries.length-2:null;
+  const yPromoAfter=(rF==='Acesso'&&entries.length>=4)?3:null;
+  let yZInserted=false;
+  const yDangerSep=`<tr class="zone-sep"><td colspan="6"><div class="zone-sep-inner zone-sep-dn"><span class="zone-sep-lbl">▼ Zona de rebaixamento · últimas 3 posições</span></div></td></tr>`;
+  const yPromoSep=`<tr class="zone-sep"><td colspan="6"><div class="zone-sep-inner zone-sep-up"><span class="zone-sep-lbl">▲ Zona de promoção · primeiras 3 posições acima</span></div></td></tr>`;
+  document.getElementById('rb').innerHTML=entries.flatMap(x=>{
     const pos=++rankPos;
     const pc=pos===1?'g':pos===2?'s':pos===3?'b':'';
     const gc=x.g==='Especial'?'te':'ta',gi=x.g==='Especial'?'⭐':'🔵';
@@ -2647,15 +3575,32 @@ function renderRYear(){
       const p=((v-9.5)/0.5)*100;
       return `<div class="qbr"><span class="qbl">${QLBLS[j].slice(0,3)}</span><div class="qbt"><div class="qbf" style="width:${Math.max(0,Math.min(100,p))}%;background:${Object.values(QC)[j]}"></div></div><span class="qbv">${t2(v)}</span></div>`;
     }).join('');
-    return `<tr onclick="openQP('${x.q.replace(/'/g,"\\'")}')" style="cursor:pointer">
-      <td class="rp ${pc}">${pos}</td>
+    // Delta: year-score rank vs all-time MR rank
+    // mrExp = rank by all-time average (expected); pos = rank by this year's score
+    // delta > 0 → performed better this year than all-time average predicts (▲)
+    // delta < 0 → performed worse this year (▼)
+    const mrExp=mrExpMap[x.q];
+    let mrdPill='';
+    if(mrExp!=null){
+      const delta=mrExp-pos;
+      const abs=Math.abs(delta);
+      if(delta>0)mrdPill=`<div class="mrd-pill mrd-up">▲+${abs} vs MR</div>`;
+      else if(delta<0)mrdPill=`<div class="mrd-pill mrd-dn">▼${abs} vs MR</div>`;
+      else mrdPill=`<div class="mrd-pill mrd-eq">= MR</div>`;
+    }
+    const row=`<tr onclick="openQP('${x.q.replace(/'/g,"\\'")}')" style="cursor:pointer">
+      <td class="rp ${pc}">${pos}${mrdPill}</td>
       <td><div class="qn">${dns(x.q)}</div></td>
       <td><span class="gt ${gc}">${gi} ${x.g}</span></td>
       <td><span class="et">${x.et>0?x.et+' etapas':'—'}</span></td>
-      <td><div class="sm">${t2(x.m)}</div></td>
+      <td><div class="sm" style="background:${mHeatBg(x.m)};color:${mHeatTxt(x.m)};border-radius:6px;padding:2px 8px;display:inline-block">${t2(x.m)}</div></td>
       <td><div class="qbs">${bars}</div></td>
     </tr>`;
+    if(!yZInserted&&yDangerAt!==null&&pos===yDangerAt){yZInserted=true;return[yDangerSep,row];}
+    if(!yZInserted&&yPromoAfter!==null&&pos===yPromoAfter+1){yZInserted=true;return[yPromoSep,row];}
+    return[row];
   }).join('')||'<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--mut);font-family:\'Barlow Condensed\',sans-serif;font-size:13px">Sem dados para este filtro</td></tr>';
+  renderDistChart(entries);
 }
 function fr(f,b){rF=f;document.querySelectorAll('#tab-ranking .r-gr').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderR();}
 function frYear(y,b){rYear=y;document.querySelectorAll('#tab-ranking .r-yr').forEach(x=>x.classList.remove('on'));if(b)b.classList.add('on');renderR();}
@@ -2666,9 +3611,11 @@ function setQPQYear(y){qpQYear=y;renderQP();}
 
 // ─── TEMPORADAS ───
 function renderYearCol(entries,group,year){
+  const headCls=group==='ESP'?'yr-col-esp':'yr-col-ace';
+  const headLabel=group==='ESP'?`⭐ ESPECIAL ${year}`:`🔵 ACESSO ${year}`;
   if(!entries.length)return`<div class="yr-col">
-    <div class="yr-col-head ${group==='ESP'?'yr-col-esp':'yr-col-ace'}">
-      ${group==='ESP'?'⭐ ESPECIAL':'🔵 ACESSO'} ${year}
+    <div class="yr-col-head ${headCls}">
+      ${headLabel}
       <span style="font-size:12px;font-weight:400;color:var(--mut)">sem dados</span>
     </div></div>`;
   const tot=entries.length;
@@ -2689,8 +3636,8 @@ function renderYearCol(entries,group,year){
     </div>`;
   }).join('');
   return`<div class="yr-col">
-    <div class="yr-col-head ${group==='ESP'?'yr-col-esp':'yr-col-ace'}">
-      ${group==='ESP'?'⭐ ESPECIAL':'🔵 ACESSO'} ${year}
+    <div class="yr-col-head ${headCls}">
+      ${headLabel}
       <span style="font-size:12px;font-weight:400">${tot} quadrilhas</span>
     </div>
     <div>${rows}</div>
@@ -2699,10 +3646,12 @@ function renderYearCol(entries,group,year){
 function renderT(){
   const g=document.getElementById('tgrid');
   const gy=document.getElementById('tgrid-year');
+  const bump=document.getElementById('tgrid-bump');
   if(tF==='todos'){
     g.style.display='';gy.innerHTML='';
+    if(bump) bump.style.display='';
     const keys=Object.keys(TEMP).sort();
-    g.innerHTML=keys.map(k=>{
+    const colsHtml=keys.map(k=>{
       const[y,gr]=k.split('-'),tc=gr==='Especial'?'te':'ta';
       const entries=[...(TEMP[k]||[])].sort((a,b)=>{if(b.m!==a.m)return b.m-a.m;return dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'});});
       const tot=entries.length;
@@ -2715,12 +3664,19 @@ function renderT(){
       }).join('');
       return`<div class="tc"><div class="tch"><span class="ty">${y}</span><span class="tbg ${tc}">${gr.toUpperCase()}</span></div>${rows}</div>`;
     }).join('');
+    g.innerHTML=colsHtml;
     const c=keys.length;
     g.style.gridTemplateColumns=c>=4?'repeat(4,1fr)':c===3?'repeat(3,1fr)':c===2?'repeat(2,1fr)':'1fr';
+    if(chartBumpEsp){chartBumpEsp.destroy();chartBumpEsp=null;}
+    if(chartBumpAce){chartBumpAce.destroy();chartBumpAce=null;}
+    chartBumpEsp=renderBumpGroupChart('chart-bump-esp','ESP');
+    chartBumpAce=renderBumpGroupChart('chart-bump-ace','ACE');
+    renderLigaEvoChart();
     return;
   }
   // ── Visão de ano específico ──
   g.style.display='none';
+  if(bump) bump.style.display='none';
   const year=tF;
   const espRank=getYearRankings(year,'ESP');
   const aceRank=getYearRankings(year,'ACE');
@@ -2743,8 +3699,10 @@ function renderT(){
     const cls=k==='ESP'?'avg-esp':k==='ACE'?'avg-ace':'avg-all';
     return`<tr class="${cls}"><td>${label}</td>${QKEYS.map(q=>`<td>${avgs[k][q]!=null?t2(avgs[k][q]):'—'}</td>`).join('')}<td><strong>${avgs[k].m!=null?t2(avgs[k].m):'—'}</strong></td></tr>`;
   }).join('');
+  const colsYr=renderYearCol(espRank,'ESP',year)+renderYearCol(aceRank,'ACE',year);
   gy.innerHTML=`
-    <div class="yr-cols">${renderYearCol(espRank,'ESP',year)}${renderYearCol(aceRank,'ACE',year)}</div>
+    ${buildSeasonSummaryHtml(year)}
+    <div class="yr-cols" style="margin-top:18px">${colsYr}</div>
     <div class="sh"><div class="st">MELHORES POR QUESITO · ${year}</div></div>
     <div class="yr-q-grid">${qCards}</div>
     <div class="sh"><div class="st">MÉDIAS DA LIGA · ${year}</div></div>
@@ -2758,7 +3716,8 @@ function ft(f,b){tF=f;document.querySelectorAll('#tab-temporadas .yr-btn').forEa
 // ─── QUESITOS ───
 function renderQ(){
   const badge=document.getElementById('q-tab-badge');
-  if(badge)badge.textContent=qYear==='todos'?'MÉDIAS COMBINADAS 2022–2025':`TEMPORADA ${qYear}`;
+  const badgeSfx='';
+  if(badge)badge.textContent=qYear==='todos'?`MÉDIAS COMBINADAS 2022–2025${badgeSfx}`:`TEMPORADA ${qYear}${badgeSfx}`;
   const qgrEl=document.getElementById('qgrid');
   if(qYear==='todos'){
     // Multi-year: usa QDAT pré-computado
@@ -2774,7 +3733,8 @@ function renderQ(){
     // Ano específico: computa de SEASON_QDATA
     const year=qYear;
     const allEntries=[];
-    ['ESP','ACE'].forEach(g=>{
+    const circGroups=['ESP','ACE'];
+    circGroups.forEach(g=>{
       Object.entries(SEASON_QDATA).filter(([k])=>k.endsWith(`|${year}|${g}`)).forEach(([k,v])=>{
         const q=SLUG_TO_NAME[k.split('|')[0]]||k.split('|')[0];
         const gLabel=g==='ESP'?'Especial':'Acesso';
@@ -2789,12 +3749,24 @@ function renderQ(){
       return`<div class="qcd"><div class="qch" style="border-color:${col}"><span class="qi">${ico}</span><span class="qcn" style="color:${col}">${n}</span></div>${rows||'<div class="qit" style="color:var(--mut);font-size:11px">Sem dados neste filtro</div>'}</div>`;
     }).join('');
   }
-  const perfeitas=[
-    {q:"FORMIGA DA ROÇA",g:"Especial",qs:"Animação + Trilha Sonora",a:"2022–2025",e:14,yrs:[2022,2023,2024,2025]},
-    {q:"MATULÃO",g:"Especial 2026",qs:"Figurino + Trilha Sonora",a:"2025",e:3,yrs:[2025]},
-    {q:"VAI MAS NÃO VAI",g:"Especial",qs:"Trilha Sonora",a:"2025",e:3,yrs:[2025]},
-    {q:"PAIXÃO CANGAÇO",g:"Acesso",qs:"Animação + Marcação",a:"2022",e:4,yrs:[2022]},
+  // Evo chart: only in todos view
+  const qEvoSec=document.getElementById('q-evo-section');
+  if(qYear==='todos'){
+    if(qEvoSec) qEvoSec.style.display='';
+    renderQEvoChart();
+  } else {
+    if(qEvoSec) qEvoSec.style.display='none';
+    if(chartQEvo){chartQEvo.destroy();chartQEvo=null;}
+  }
+  const perfCirc=[
+    {q:"FORMIGA DA ROÇA",g:"Especial",qs:"Animação + Trilha Sonora",a:"2022–2025",e:14,yrs:[2022,2023,2024,2025],src:'circuit'},
+    {q:"MATULÃO",g:"Especial 2026",qs:"Figurino + Trilha Sonora",a:"2025",e:3,yrs:[2025],src:'circuit'},
+    {q:"VAI MAS NÃO VAI",g:"Especial",qs:"Trilha Sonora",a:"2025",e:3,yrs:[2025],src:'circuit'},
+    {q:"PAIXÃO CANGAÇO",g:"Acesso",qs:"Animação + Marcação",a:"2022",e:4,yrs:[2022],src:'circuit'},
+    {q:"COISAS DA ROÇA",g:"Especial",qs:"Temática",a:"2024",e:4,yrs:[2024],src:'circuit'},
+    {q:"RASGA O FOLE",g:"Especial",qs:"Temática",a:"2025",e:3,yrs:[2025],src:'circuit'},
   ];
+  const perfeitas=perfCirc;
   const filtPerf=qYear==='todos'?perfeitas:perfeitas.filter(p=>p.yrs.includes(Number(qYear)));
   const n10El=document.getElementById('n10');
   n10El.innerHTML=filtPerf.length?filtPerf.map(p=>{
@@ -2811,20 +3783,23 @@ function fq(f,b){qF=f;document.querySelectorAll('#tab-quesitos .q-gr').forEach(x
 
 function buildNarrative(d){
   if(!d.m) return 'Quadrilha estreante na LINQDFE. Aguardando primeira temporada.';
+  const hist=circHistOnly(d.hist).slice().sort((a,b)=>Number(a.a)-Number(b.a));
   const nm=dns(d.q);
-  const bestH=d.hist.reduce((b,h)=>h.m>b.m?h:b,d.hist[0]);
-  const worstH=d.hist.reduce((b,h)=>h.m<b.m?h:b,d.hist[0]);
-  const trend=d.hist.length>=2?d.hist[d.hist.length-1].m-d.hist[0].m:0;
+  const bestH=hist.reduce((b,h)=>h.m>b.m?h:b,hist[0]);
+  const worstH=hist.reduce((b,h)=>h.m<b.m?h:b,hist[0]);
+  const trend=hist.length>=2?hist[hist.length-1].m-hist[0].m:0;
+  const seasonCount=getSeasonCount(d.hist);
+  const seasonRange=getSeasonRangeLabel(d.hist);
   const qvals=QKEYS.map(k=>d[k]);
   const bestQi=qvals.indexOf(Math.max(...qvals.filter(v=>v)));
   const worstQi=qvals.indexOf(Math.min(...qvals.filter(v=>v)));
   const g=d.g26;
-  const ligaPos=[...DATA].filter(x=>x.m).sort((a,b)=>b.m-a.m).findIndex(x=>x.q===d.q)+1;
-  let txt=`<strong>${nm}</strong> tem <strong>${d.hist.length} temporada${d.hist.length>1?'s':''} registrada${d.hist.length>1?'s':''} no recorte 2022–2025</strong>, com um total de <strong>${d.e} etapas válidas</strong>. `;
+  const ligaPos=[...getActiveData()].filter(x=>x.m).sort((a,b)=>b.m-a.m).findIndex(x=>x.q===d.q)+1;
+  let txt=`<strong>${nm}</strong> tem <strong>${seasonCount} temporada${seasonCount>1?'s':''} registrada${seasonCount>1?'s':''} no recorte ${seasonRange}</strong>, com um total de <strong>${d.e} etapas válidas</strong>. `;
   txt+=ligaPos?`Ocupa a <strong>${ligaPos}ª posição geral</strong> entre as filiadas, com média real consolidada de <strong>${t2(d.m)}</strong>. `:`Média real consolidada de <strong>${t2(d.m)}</strong>. `;
   txt+=`Seu ponto mais forte é a <strong>${QLBLS[bestQi]}</strong> (${t2(qvals[bestQi])}), enquanto a <strong>${QLBLS[worstQi]}</strong> (${t2(qvals[worstQi])}) oferece maior espaço de desenvolvimento. `;
-  if(d.hist.length>1){
-    if(trend>0.02) txt+=`A <strong>trajetória é de crescimento consistente</strong>: saiu de ${t2(d.hist[0].m)} em ${d.hist[0].a} para ${t2(d.hist[d.hist.length-1].m)} em ${d.hist[d.hist.length-1].a}. `;
+  if(hist.length>1){
+    if(trend>0.02) txt+=`A <strong>trajetória é de crescimento consistente</strong>: saiu de ${t2(hist[0].m)} em ${hist[0].a} para ${t2(hist[hist.length-1].m)} em ${hist[hist.length-1].a}. `;
     else if(trend<-0.02) txt+=`A quadrilha passou por <strong>oscilação na trajetória</strong>, com melhor marca em ${bestH.a} (${t2(bestH.m)}) e pior em ${worstH.a} (${t2(worstH.m)}). `;
     else txt+=`A quadrilha mantém <strong>desempenho estável</strong> ao longo das temporadas. `;
   }
@@ -2836,11 +3811,28 @@ function destroyCharts(){
   if(chartEvo){chartEvo.destroy();chartEvo=null;}
   if(chartRadar){chartRadar.destroy();chartRadar=null;}
   if(chartBar){chartBar.destroy();chartBar=null;}
+  if(chartBumpQP){chartBumpQP.destroy();chartBumpQP=null;}
+  if(chartBumpEsp){chartBumpEsp.destroy();chartBumpEsp=null;}
+  if(chartBumpAce){chartBumpAce.destroy();chartBumpAce=null;}
+  if(chartLigaEvo){chartLigaEvo.destroy();chartLigaEvo=null;}
+  if(chartQEvo){chartQEvo.destroy();chartQEvo=null;}
+  if(chartDist){chartDist.destroy();chartDist=null;}
 }
 
 Chart.defaults.color='#8BA3BE';
-Chart.defaults.borderColor='rgba(255,255,255,0.06)';
+Chart.defaults.borderColor='rgba(255,255,255,0.05)';
 Chart.defaults.font.family="'Barlow Condensed', sans-serif";
+Chart.defaults.plugins.tooltip.backgroundColor='rgba(10,21,34,.96)';
+Chart.defaults.plugins.tooltip.borderColor='rgba(255,255,255,.12)';
+Chart.defaults.plugins.tooltip.borderWidth=1;
+Chart.defaults.plugins.tooltip.padding=10;
+Chart.defaults.plugins.tooltip.titleFont={family:"'Barlow Condensed',sans-serif",size:12,weight:'bold'};
+Chart.defaults.plugins.tooltip.bodyFont={family:"'Barlow Condensed',sans-serif",size:11};
+Chart.defaults.plugins.tooltip.titleColor='#F0EAD6';
+Chart.defaults.plugins.tooltip.bodyColor='#8BA3BE';
+Chart.defaults.plugins.tooltip.cornerRadius=7;
+Chart.defaults.plugins.tooltip.boxWidth=8;
+Chart.defaults.plugins.tooltip.boxHeight=8;
 
 function renderQP(){
   const selVal=document.getElementById('qp-main-select').value;
@@ -2848,6 +3840,7 @@ function renderQP(){
   const benchmarkVal=qpBenchmark;
   const seriesKey=qpEvoKey;
   const content=document.getElementById('qp-content');
+  try{history.replaceState(null,'',selVal?'?q='+encodeURIComponent(qSlug(selVal)):location.pathname);}catch(e){}
   if(!selVal){
     const esp=DATA.filter(d=>d.g26==='Especial').sort((a,b)=>dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'}));
     const ace=DATA.filter(d=>d.g26==='Acesso').sort((a,b)=>dns(a.q).localeCompare(dns(b.q),'pt-BR',{sensitivity:'base'}));
@@ -2866,7 +3859,9 @@ function renderQP(){
     destroyCharts();return;
   }
   destroyCharts();
-  const d=ALL_DATA.find(x=>x.q===selVal);
+  const baseD=ALL_DATA.find(x=>x.q===selVal);
+  const activeD=null;
+  const d=baseD?(activeD?{...activeD,hist:baseD.hist,g26:baseD.g26}:baseD):null;
   const cmp=cmpVal&&cmpVal!==selVal?ALL_DATA.find(x=>x.q===cmpVal):null;
   if(!d){return;}
 
@@ -2874,9 +3869,12 @@ function renderQP(){
   const gc=g==='Especial'?'te':g==='Acesso'?'ta':'th';
   const gi=g==='Especial'?'⭐':g==='Acesso'?'🔵':'📚';
   const nm=dns(d.q);
+  const histCircuit=circHistOnly(d.hist).slice().sort((a,b)=>Number(a.a)-Number(b.a));
+  const seasonCount=getSeasonCount(d.hist);
+  const seasonRange=getSeasonRangeLabel(d.hist);
   const media=getQuadrilhaMedia(d.q);
   const {ligaPos,posGrupo,medal}=getRankInfo(d);
-  const bestSzn=d.hist.length>0?d.hist.reduce((b,h)=>h.m>b.m?h:b,d.hist[0]):null;
+  const bestSzn=histCircuit.length>0?histCircuit.reduce((b,h)=>h.m>b.m?h:b,histCircuit[0]):null;
   const benchmark=getBenchmarkContext(d,benchmarkVal);
   const groupAvg=benchmark.avg;
   const groupLabel=benchmark.label;
@@ -2902,6 +3900,132 @@ function renderQP(){
   const compareWins=compareQDiffs.filter(x=>x.delta>.001).length;
   const compareLosses=compareQDiffs.filter(x=>x.delta<-.001).length;
   const compareExtremes=getBestWorstDiff(compareQDiffs);
+  // Rival: quadrilha imediatamente acima no mesmo grupo
+  const _grRanked=d.g26?[...getActiveData()].filter(x=>x.m!=null&&x.g26===d.g26).sort((a,b)=>b.m-a.m):[];
+  const _myIdx=_grRanked.findIndex(x=>x.q===d.q);
+  const rival=_myIdx>0?_grRanked[_myIdx-1]:null;
+  const rivalGap=rival?Math.abs(d.m-rival.m):null;
+  const rivalQDiffs=rival?QKEYS.map((k,i)=>({label:QLBLS[i].split(' ')[0],k,delta:d[k]!=null&&rival[k]!=null?d[k]-rival[k]:null})).filter(x=>x.delta!=null):[];
+  const rivalFocus=rivalQDiffs.length?rivalQDiffs.reduce((a,b)=>b.delta<a.delta?b:a):null;
+  const rivalHtml=rival&&rivalGap!=null?`<div class="rival-block">
+  <span class="rival-lbl">⚔ Próximo rival</span>
+  <button class="rival-name-btn" onclick="document.getElementById('qp-compare-select').value='${rival.q.replace(/'/g,"\\'").replace(/\\/g,'\\\\')}';renderQP()">${dns(rival.q)}</button>
+  <span class="rival-gap">▲ ${t2(rivalGap)} à frente</span>
+  ${rivalFocus&&rivalFocus.delta<-0.001?`<span class="rival-focus">Foco: ${rivalFocus.label} (${fmtDelta(rivalFocus.delta)})</span>`:''}
+</div>`:'';
+  // Momento vs Histórico
+  // Compares percentile rank (not absolute position) to handle pool-size differences
+  // between the dashboard dataset and the actual competition field.
+  // pctMR = percentile in MR ranking within dashboard group (1 = best, 0 = worst)
+  // pctOff = percentile in official competition (1 = best, 0 = worst)
+  // delta > 0: performed better officially than MR predicts → ▲ green
+  // delta < 0: performed worse officially → ▼ red
+  // Momento vs Histórico — all circuit seasons
+  // Momento vs Histórico — all seasons (circuit + DJ)
+  // Use all hist entries, deduplicating by year (keep DJ when both exist for same year).
+  // "Expected" = rank by all-time MR among that year's pool (same group code).
+  //   - 2022: all-time MR ≈ 2022 scores only → expected ≈ official → delta ≈ 0
+  //   - 2023+: MR accumulates prior years → meaningful delta
+  // delta > 0: official better than expected → ▲ green; delta < 0: worse → ▼ red
+  // Momento vs Histórico — all seasons (circuit + DJ parallel for 2025).
+  // expPos = rank by PRIOR-years-only MR (avg of scores from years < h.a) within that year's pool.
+  // offPos = rank by that year's score within that year's pool.
+  // Debut year (no prior data for this quadrilha) → row omitted.
+  // delta > 0: performed better than prior MR predicted → ▲ green; delta < 0: worse → ▼ red
+  const _mvhRows=d.hist.filter(h=>h.g!=='DJ').slice().sort((a,b)=>b.a-a.a).map(h=>{
+    const _yk=`|${h.a}|${h.g}`;
+    const _priorMR=(qname)=>{
+      const scores=Object.entries(SEASON_QDATA)
+        .filter(([k])=>{
+          const p=k.split('|');
+          const name=(SLUG_TO_NAME[p[0]]||p[0]);
+          const yr=parseInt(p[1]);
+          const grp=p[2];
+          if(name!==qname)return false;
+          if(grp===h.g&&yr<h.a)return true;
+          return false;
+        })
+        .map(([,v])=>v.m).filter(m=>m!=null);
+      if(scores.length) return scores.reduce((s,m)=>s+m,0)/scores.length;
+      // Cross-group fallback: quadrilha changed groups — use most recent prior year score
+      const cross=Object.entries(SEASON_QDATA)
+        .filter(([k])=>{
+          const p=k.split('|');
+          const name=(SLUG_TO_NAME[p[0]]||p[0]);
+          const yr=parseInt(p[1]);
+          const grp=p[2];
+          if(name!==qname)return false;
+          if(yr>=h.a)return false;
+          if(grp!=='ESP'&&grp!=='ACE')return false;
+          return true;
+        })
+        .map(([k,v])=>({yr:parseInt(k.split('|')[1]),m:v.m}))
+        .filter(x=>x.m!=null);
+      if(!cross.length) return null;
+      cross.sort((a,b)=>b.yr-a.yr);
+      return cross[0].m; // most recent prior-year score, regardless of group
+    };
+    const myPrior=_priorMR(d.q); // null = debut year
+    const _rawPool=Object.entries(SEASON_QDATA)
+      .filter(([k])=>k.endsWith(_yk))
+      .map(([k,v])=>{
+        const q=SLUG_TO_NAME[k.split('|')[0]]||k.split('|')[0];
+        const mr=_priorMR(q)??0;
+        return{q,mr,ym:v.m,...v};
+      });
+    if(!_rawPool.length)return null;
+    const expPool=[..._rawPool].sort((a,b)=>b.mr-a.mr);
+    const offPool=[..._rawPool].sort((a,b)=>b.ym-a.ym);
+    const expIdx=myPrior!=null?expPool.findIndex(x=>x.q===d.q):-1;
+    const offIdx=offPool.findIndex(x=>x.q===d.q);
+    if(offIdx<0)return null;
+    const expPos=expIdx>=0?expIdx+1:null;
+    const offPos=offIdx+1,total=_rawPool.length;
+    const delta=expPos!=null?expPos-offPos:null;
+    const icon=delta==null?'':delta>0?'▲':delta<0?'▼':'=';
+    const color=delta==null?'var(--mut)':delta>0?'#27AE60':delta<0?'#E74C3C':'var(--mut)';
+    const narr=delta==null?'Estreia — sem histórico'
+      :delta>4?`${Math.abs(delta)} pos. acima — em ascensão`
+      :delta>=1?`Acima do esperado`
+      :delta===0?`Condizente`
+      :delta>=-3?`Ligeiramente abaixo`
+      :`${Math.abs(delta)} pos. abaixo — atenção`;
+    const grpLabel=h.g==='ESP'?'Especial':'Acesso';
+    const grpCls=h.g==='ESP'?'te':'ta';
+    return`<tr>
+      <td class="mvh-yr">${h.a}</td>
+      <td><span class="gt ${grpCls}" style="font-size:10px">${grpLabel}</span></td>
+      <td>${expPos!=null?`<span class="mvh-pos" style="color:var(--text)">${expPos}°</span> <span class="mvh-tot">de ${total}</span>`:`<span class="mvh-tot">—</span>`}</td>
+      <td><span class="mvh-pos" style="color:var(--mut)">${offPos}°</span> <span class="mvh-tot">de ${total}</span></td>
+      <td class="mvh-dlt" style="color:${color}">${icon}${delta!=null&&delta!==0?Math.abs(delta):''}</td>
+      <td class="mvh-narr">${narr}</td>
+    </tr>`;
+  }).filter(Boolean);
+  const momentoHtml=_mvhRows.length?`<div class="mvh-block">
+  <div class="mvh-block-hdr">Momento vs Histórico · esperado vs oficial por temporada</div>
+  <table class="mvh-ytable">
+    <thead><tr>
+      <th>Ano</th><th>Grupo</th><th>Esperado (MR)</th><th>Por Nota</th>
+      <th class="mvh-th-r">Δ</th><th class="mvh-th-r">Leitura</th>
+    </tr></thead>
+    <tbody>${_mvhRows.join('')}</tbody>
+  </table>
+</div>`:'';
+  const _gapD=QKEYS.map(k=>{const v=d[k],r=ownGroupAvg[k];return v!=null&&r!=null?{k,delta:v-r}:null;}).filter(Boolean);
+  const _worstK=_gapD.length?_gapD.reduce((a,b)=>b.delta<a.delta?b:a).k:null;
+  const _bestK=_gapD.length?_gapD.reduce((a,b)=>b.delta>a.delta?b:a).k:null;
+  const gapStripHtml=d.g26&&d.m?`<div class="gap-strip">
+  <span class="gap-strip-lbl">GAP vs ${d.g26}</span>
+  ${QKEYS.map((k,i)=>{
+    const v=d[k],ref=ownGroupAvg[k];
+    if(v==null||ref==null)return'';
+    const delta=v-ref;
+    const sign=delta>=0?'+':'';
+    const cls=delta>0.001?'gap-pos':delta<-0.001?'gap-neg':'gap-neu';
+    const extra=k===_worstK?' gap-crit':k===_bestK?' gap-star':'';
+    return`<div class="gap-item ${cls}${extra}"><span class="gap-qname">${QLBLS[i].split(' ')[0]}</span><span class="gap-val">${sign}${t2(delta)}</span></div>`;
+  }).join('')}
+</div>`:'';
 
   content.innerHTML=`
   <!-- HERO -->
@@ -2917,25 +4041,29 @@ function renderQP(){
             </div>
             <div class="qp-hero-name">${nm}</div>
             <div class="qp-hero-meta">
-              ${d.hist.map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} · ${getPlacementLabel(h)} · ${t2(h.m)}</span>`).join('')}
+              ${histCircuit.slice().sort((a,b)=>Number(b.a)-Number(a.a)).map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} · ${getPlacementLabel(h)} · ${t2(h.m)}</span>`).join('')}
             </div>
           </div>
         </div>
         <div class="qp-hero-score-area">
           <div class="qp-hero-score">${d.m?t2(d.m):'—'}</div>
-          <div class="qp-hero-score-label">Média Real Geral</div>
+          <div class="qp-hero-score-label">Média Real</div>
         </div>
       </div>
     </div>
     <div class="qp-hero-stats">
       <div class="qp-hs"><div class="qp-hs-n">${d.e}</div><div class="qp-hs-l">Etapas Totais</div></div>
-      <div class="qp-hs"><div class="qp-hs-n">${d.hist.length}</div><div class="qp-hs-l">Temp. (2022–2025)</div></div>
+      <div class="qp-hs"><div class="qp-hs-n">${seasonCount}</div><div class="qp-hs-l">Temp. (${seasonRange})</div></div>
       <div class="qp-hs"><div class="qp-hs-n">${ligaPos?`${ligaPos}°`:'—'}</div><div class="qp-hs-l">Rank Geral</div></div>
       <div class="qp-hs"><div class="qp-hs-n">${posGrupo?`${posGrupo}°`:'—'}</div><div class="qp-hs-l">${g?`Rank ${g}`:'Sem grupo 2026'}</div></div>
       <div class="qp-hs"><div class="qp-hs-n" style="font-size:16px">${bestQi!==null?QLBLS[bestQi].split(' ')[0]:'—'}</div><div class="qp-hs-l">Melhor Quesito</div></div>
       ${bestSzn?`<div class="qp-hs"><div class="qp-hs-n" style="font-size:22px">${bestSzn.a}</div><div class="qp-hs-l">Melhor Temporada (${t2(bestSzn.m)})</div></div>`:''}
     </div>
   </div>
+  ${getAttrTags(d).length?`<div class="attr-tags">${getAttrTags(d).map(t=>`<span class="attr-tag" style="background:${t.bg};border-color:${t.col};color:${t.col}">${t.label}</span>`).join('')}</div>`:''}
+  ${gapStripHtml}
+  ${momentoHtml}
+  ${rivalHtml}
 
   <div class="qp-summary-grid">
     <div class="qp-insight-card">
@@ -2999,8 +4127,8 @@ function renderQP(){
 
   <div class="chart-grid-1">
     <div class="chart-box">
-      <div class="chart-title">🧭 <span>TRAJETÓRIA DE TEMPORADAS</span></div>
-      ${buildTimelineHtml(d)}
+      <div class="chart-title">🧭 <span>TEMPORADAS</span></div>
+      ${buildSeasonCardsHtml(d)}
     </div>
   </div>
 
@@ -3018,7 +4146,7 @@ function renderQP(){
       <div class="qp-filter-row">
         <span class="qp-inline-label">Temporada:</span>
         <button class="qp-micro-btn${qpQYear==='todos'?' on':''}" onclick="setQPQYear('todos')">Geral</button>
-        ${d.hist.slice().sort((a,b)=>a.a-b.a).map(h=>`<button class="qp-micro-btn${qpQYear===h.a?' on':''}" onclick="setQPQYear(${h.a})">${h.a} <span style="font-size:9px;opacity:.8">${h.g}</span></button>`).join('')}
+        ${histCircuit.map(h=>`<button class="qp-micro-btn${qpQYear===h.a?' on':''}" onclick="setQPQYear(${h.a})">${h.a} <span style="font-size:9px;opacity:.8">${h.g}</span></button>`).join('')}
       </div>
       <div class="qp-filter-row">
         <span class="qp-inline-label">Ref:</span>
@@ -3064,6 +4192,22 @@ function renderQP(){
       <tbody id="season-tbody"></tbody>
     </table>
   </div>
+
+  <!-- BUMP CHART QP -->
+  ${histCircuit.length>0?`<div class="sh"><div class="st">COLOCAÇÕES NO GRUPO</div><div class="sb">BUMP CHART</div></div>
+  <div class="chart-box" style="margin-bottom:20px">
+    <div style="height:200px;position:relative"><canvas id="chart-bump-qp"></canvas></div>
+  </div>`:''}
+
+  <!-- SIMILAR QUADRILHAS -->
+  <div id="similar-section" style="${d.m?'':'display:none'}">
+    <div class="sh"><div class="st">QUADRILHAS SIMILARES</div><div class="sb">POR PERFIL TÉCNICO</div></div>
+    <div class="similar-grid">${getSimilarQuadrilhas(d).map(s=>`<div class="similar-chip" onclick="document.getElementById('qp-main-select').value='${s.q.replace(/'/g,"\\'")}';renderQP()">
+      <div style="font-family:'Bebas Neue',cursive;font-size:22px;color:${s.g26==='Especial'?'var(--gold)':'var(--ace)'}">${t2(s.m)}</div>
+      <div style="font-size:11px;font-weight:600;margin-top:2px">${dns(s.q)}</div>
+      <div style="font-size:10px;color:var(--mut);margin-top:2px">${s.g26||'Histórico'} · ${getSeasonCount(s.hist)} temp.</div>
+    </div>`).join('')}</div>
+  </div>
   `;
 
   // Populate quesito compare grid
@@ -3087,6 +4231,21 @@ function renderQP(){
   }
   const isYearMode=qpQYear!=='todos'&&qpYearEntry!=null;
   const yearLabel=isYearMode?`${qpQYear} ${qpHistYear.g}`:'';
+  // Quesito trend: compare last 2 circuit seasons
+  const qTrend={};
+  if(!isYearMode){
+    const cHistT=circHistOnly(d.hist).sort((a,b)=>b.a-a.a);
+    const lastH=cHistT[0];
+    const prevH=lastH?cHistT.find(h=>h.a<lastH.a):null;
+    if(lastH&&prevH){
+      const lastQD=SEASON_QDATA[`${qSlug(d.q)}|${lastH.a}|${lastH.g}`];
+      const prevQD=SEASON_QDATA[`${qSlug(d.q)}|${prevH.a}|${prevH.g}`];
+      if(lastQD&&prevQD)QKEYS.forEach(k=>{
+        const dlt=lastQD[k]!=null&&prevQD[k]!=null?lastQD[k]-prevQD[k]:null;
+        qTrend[k]=dlt;
+      });
+    }
+  }
   qcmpGrid.innerHTML=QKEYS.map((k,j)=>{
     const v=isYearMode?qpYearEntry[k]:d[k];
     const refAvg=isYearMode&&qpYearAvg[k]!=null?qpYearAvg[k]:groupAvg[k];
@@ -3103,20 +4262,25 @@ function renderQP(){
     const qTotal=isYearMode?qpYearPool.length:(benchmark.groupSize??groupPool.length);
     const rankColor=qRank===1?'var(--gold)':qRank<=3?'var(--green)':'var(--mut)';
     const vsLabel=isYearMode?`vs média ${qpHistYear.g} ${qpQYear}`:`vs ${groupLabel}`;
+    const pctile=v!=null&&groupPool.length>1?Math.round(((groupPool.length-(qRank||1)+1)/groupPool.length)*100):null;
+    const trendVal=!isYearMode?qTrend[k]:null;
+    const trendCls=trendVal>0.001?'tr-up':trendVal<-0.001?'tr-dn':'tr-eq';
+    const trendIcon=trendVal>0.001?'↑':trendVal<-0.001?'↓':'→';
+    const trendHtml=trendVal!=null?`<div class="qcmp-trend ${trendCls}">${trendIcon} ${trendVal>=0?'+':''}${t2(trendVal)}</div>`:'';
     return `<div class="qcmp${isBest?' best-q':''}">
-      <div class="qcmp-icon">${Object.values(QI)[j]}</div>
-      <div class="qcmp-name">${QLBLS[j]}</div>
-      <div class="qcmp-val">${v!=null?t2(v):'—'}</div>
+      <div class="qcmp-hd"><span class="qcmp-icon">${Object.values(QI)[j]}</span><span class="qcmp-name">${QLBLS[j]}</span></div>
+      <div class="qcmp-primary"><span class="qcmp-val">${v!=null?t2(v):'—'}</span>${trendHtml}</div>
       ${diff!==null?`<div class="qcmp-vs" style="color:${diffColor}">${diffStr} ${vsLabel}</div>`:''}
-      ${qRank&&qRank>0?`<div class="qcmp-rank" style="color:${rankColor}">${qRank}° ${rankLabel} / ${qTotal}</div>`:''}
+      ${qRank&&qRank>0?`<div class="qcmp-ft"><span class="qcmp-rank" style="color:${rankColor}">${qRank}° ${rankLabel} / ${qTotal}</span>${pctile!=null?`<div class="pct-bar-wrap"><div class="pct-bar-track"><div class="pct-bar-fill" style="width:${pctile}%;background:${Object.values(QC)[j]}"></div></div></div>`:''}</div>`:''}
     </div>`;
   }).join('');
 
   // Season table
   const stbody=document.getElementById('season-tbody');
   if(d.hist.length>0){
-    stbody.innerHTML=d.hist.map(h=>{
+    stbody.innerHTML=d.hist.filter(h=>h.g!=='DJ').slice().sort((a,b)=>b.a-a.a).map(h=>{
       const gClass=h.g==='ESP'?'season-group-esp':'season-group-ace';
+      const gLabel=h.g==='ESP'?'ESPECIAL':'ACESSO';
       const key=`${h.a}-${h.g==='ESP'?'Especial':'Acesso'}`;
       const seasonData=TEMP[key]||[];
       const ligaTop=seasonData[0];
@@ -3124,10 +4288,10 @@ function renderQP(){
       const pc=h.pos;
       return `<tr>
         <td style="font-family:'Bebas Neue',cursive;font-size:20px;color:var(--gold)">${h.a}</td>
-        <td><span class="${gClass}">${h.g==='ESP'?'ESPECIAL':'ACESSO'}</span></td>
+        <td><span class="${gClass}">${gLabel}</span></td>
         <td><span class="et">${h.et} etapas</span></td>
         <td class="season-score">${t2(h.m)}</td>
-        <td style="font-family:'Bebas Neue',cursive;font-size:18px">${pc}</td>
+        <td style="font-family:'Bebas Neue',cursive;font-size:18px">${pc}°</td>
         <td style="font-size:12px;color:${diff!==null&&diff<0?'#E74C3C':'#8BA3BE'}">${ligaTop?`1º: ${dns(ligaTop.q)} (${t2(ligaTop.m)}) ${diff!==null?(diff===0?'= líder':diff<0?t2(diff)+' do líder':'+'+t2(diff)):''}`:''}</td>
       </tr>`;
     }).join('');
@@ -3181,6 +4345,17 @@ function renderQP(){
           pointMeta:cmpPoints,
           spanGaps:true,
         });
+      }
+    }
+    // Add league avg reference line
+    if(seriesKey==='m'){
+      const yAvgs=getLeagueYearAvgs();
+      const groupKey=d.g26==='Especial'?'ESP':d.g26==='Acesso'?'ACE':null;
+      if(groupKey){
+        const avgVals=years.map(y=>yAvgs[y]?.[groupKey]??null);
+        if(avgVals.some(v=>v!==null)){
+          datasets.push({label:`Média ${d.g26}`,data:avgVals,borderColor:'rgba(255,255,255,.25)',backgroundColor:'transparent',borderWidth:1,borderDash:[4,4],pointRadius:3,pointBackgroundColor:'rgba(255,255,255,.25)',tension:.3,spanGaps:true});
+        }
       }
     }
     const evoRange=getSeriesRange(vals,cmpVals,seriesKey);
@@ -3307,11 +4482,41 @@ function renderQP(){
     });
   }
 
+  // Chart 4: Bump chart for this quadrilha's group
+  const bumpQpCanvas=document.getElementById('chart-bump-qp');
+  if(bumpQpCanvas&&d.hist.length>0){
+    const primaryGroup=d.hist.some(h=>h.g==='ESP')?'ESP':'ACE';
+    const years=[2022,2023,2024,2025];
+    const allQ=ALL_DATA.filter(x=>x.hist.some(h=>h.g===primaryGroup));
+    const bumpDs=allQ.map(x=>{
+      const pts=years.map(y=>{const h=x.hist.find(h2=>h2.a===y&&h2.g===primaryGroup);return h?{x:y,y:h.pos}:null;}).filter(Boolean);
+      if(pts.length<1) return null;
+      const isSel=x.q===d.q;
+      const col=isSel?'#F5A623':(primaryGroup==='ESP'?'rgba(245,166,35,.2)':'rgba(52,152,219,.2)');
+      return{label:dns(x.q),data:pts,borderColor:col,backgroundColor:'transparent',borderWidth:isSel?3:1,pointRadius:isSel?5:2,tension:.3,spanGaps:false,order:isSel?0:1};
+    }).filter(Boolean);
+    if(bumpDs.length){
+      const maxP=Math.max(...bumpDs.flatMap(ds=>ds.data.map(p=>p.y)),5);
+      chartBumpQP=new Chart(bumpQpCanvas,{
+        type:'line',data:{datasets:bumpDs},
+        options:{
+          responsive:true,maintainAspectRatio:false,
+          scales:{
+            x:{type:'linear',min:2021.7,max:2025.3,ticks:{stepSize:1,font:{size:10},color:'#8BA3BE',callback:v=>Number.isInteger(v)?String(v):''},grid:{color:'rgba(255,255,255,.05)'}},
+            y:{reverse:true,min:.5,max:maxP+.5,ticks:{stepSize:1,font:{size:10},color:'#8BA3BE',callback:v=>Number.isInteger(v)?v+'°':''},grid:{color:'rgba(255,255,255,.06)'}},
+          },
+          plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y}°`}}},
+          animation:{duration:400},
+        }
+      });
+    }
+  }
+
   },50);
 }
 
 function renderP(){
-  let d=[...DATA];
+  let d=[...getActiveData()];
   if(pF==='Especial')d=d.filter(x=>ESP26.has(x.q));
   else if(pF==='Acesso')d=d.filter(x=>AC26.has(x.q));
   else if(pF==='estreante')d=d.filter(x=>x.m===null);
@@ -3319,14 +4524,47 @@ function renderP(){
     const s=pS.toLowerCase();
     d=d.filter(x=>x.q.toLowerCase().includes(s)||dns(x.q).toLowerCase().includes(s));
   }
-  d.sort((a,b)=>{if(a.m===null)return 1;if(b.m===null)return -1;return b.m-a.m;});
+  if(pSort==='media'){
+    d.sort((a,b)=>{if(a.m===null)return 1;if(b.m===null)return -1;return b.m-a.m;});
+  } else if(pSort==='melhor'){
+    const bm=x=>{const histCircuit=circHistOnly(x.hist);return histCircuit.length?Math.max(...histCircuit.map(h=>h.m||0)):0;};
+    d.sort((a,b)=>bm(b)-bm(a));
+  } else if(pSort==='temporadas'){
+    d.sort((a,b)=>getSeasonCount(b.hist)-getSeasonCount(a.hist)||((a.m===null?1:-1)-(b.m===null?1:-1)));
+  } else if(pSort==='crescimento'){
+    const growth=x=>{
+      const s=circHistOnly(x.hist).slice().sort((a,b)=>parseInt(a.a)-parseInt(b.a));
+      if(s.length<2) return 0;
+      return s[s.length-1].m-s[0].m;
+    };
+    d.sort((a,b)=>growth(b)-growth(a));
+  }
   document.getElementById('pgrid').innerHTML=d.map(x=>{
     const gv=x.g26,gc=gv==='Especial'?'te':'ta',gi=gv==='Especial'?'⭐':'🔵';
     const nm=dns(x.q);
+    const histCircuit=circHistOnly(x.hist).slice().sort((a,b)=>parseInt(a.a)-parseInt(b.a));
     const media=getQuadrilhaMedia(x.q);
-    const {medal}=getRankInfo(x);
+    const {ligaPos,posGrupo,medal}=getRankInfo(x);
     const bestQi=getBestQIndex(x);
-    const bestSeason=x.hist.length>0?x.hist.reduce((b,h)=>h.m>b.m?h:b,x.hist[0]):null;
+    const bestSeason=histCircuit.length>0?histCircuit.reduce((b,h)=>h.m>b.m?h:b,histCircuit[0]):null;
+    // Group movement tag (compares 2025 group to 2026 group)
+    const last2025=histCircuit.find(h=>String(h.a)==='2025');
+    let groupMovTag='';
+    if(last2025&&gv){
+      const fromG=last2025.g==='ESP'?'Especial':'Acesso';
+      if(fromG!==gv){
+        const arrow=gv==='Especial'?'↑':'↓';
+        const mc=gv==='Especial'?'var(--gold)':'var(--ace)';
+        groupMovTag=`<span class="attr-tag" style="border-color:${mc};color:${mc};font-size:10px;padding:1px 7px;margin-left:6px">${arrow} ${gv}</span>`;
+      }
+    }
+    // Form strip: mini bars for each past season
+    const formStrip=histCircuit.length?`<div class="form-strip">${histCircuit.map(h=>{
+      const pct=Math.max(0,Math.min(100,((h.m-9.5)/0.5)*100));
+      const ht=Math.max(6,Math.round(6+pct*0.26));
+      const col=h.g==='ESP'?'var(--gold)':'var(--ace)';
+      return `<div class="form-dot"><div class="form-dot-bar" style="height:${ht}px;background:${col}90"></div><span style="font-size:8px;color:var(--mut)">${String(h.a).slice(2)}</span></div>`;
+    }).join('')}</div>`:'';
     const quesitoCards=QKEYS.map((k,i)=>{
       const val=x[k];
       const color=Object.values(QC)[i];
@@ -3339,11 +4577,11 @@ function renderP(){
         <div class="score-card-quesito-value" style="color:${color}">${val!==null&&val!==undefined?t2(val):'—'}</div>
       </div>`;
     }).join('');
-    const pills=x.hist.length
-      ? x.hist.map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} · ${t2(h.m)}</span>`).join('')
+    const pills=histCircuit.length
+      ? histCircuit.map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} · ${t2(h.m)}</span>`).join('')
       : '<span class="hpill hp-a">Estreia confirmada em 2026</span>';
-    const historyLine=x.hist.length
-      ? x.hist.map(h=>`${h.a} ${h.g}`).join(' • ')
+    const historyLine=histCircuit.length
+      ? histCircuit.map(h=>`${h.a} ${h.g}`).join(' • ')
       : 'Primeira temporada prevista para 2026';
     const highlightIcon=bestQi!==null?Object.values(QI)[bestQi]:'🆕';
     const highlightValue=x.m===null
@@ -3354,7 +4592,7 @@ function renderP(){
       <div class="score-card-cover" ${coverStyle(media.photo)}>
         <div class="score-card-top">
           <div>
-            <span class="gt ${gc}">${gi} ${gv} 2026</span>
+            <span class="gt ${gc}">${gi} ${gv} 2026</span>${groupMovTag}
             ${medal?`<span class="medal" style="margin-left:8px">${medal}</span>`:''}
           </div>
           ${media.logo?`<div class="score-card-logo-shell"><img class="score-card-logo" src="${media.logo}" alt="Logo ${nm}" loading="lazy"></div>`:''}
@@ -3362,11 +4600,13 @@ function renderP(){
         <div class="score-card-score-block">
           <div class="score-card-score">${x.m!==null?t2(x.m):'—'}</div>
           <div class="score-card-score-label">Pontuação Geral</div>
+          ${posGrupo&&gv?`<div class="pcard-rank-badge">${posGrupo}° ${gv==='Especial'?'ESP':'ACE'}</div>`:''}
         </div>
       </div>
       <div class="score-card-body">
         <div class="score-card-name">${nm}</div>
         <div class="score-card-meta">${historyLine}</div>
+        ${formStrip}
 
         <div class="score-card-highlight">
           <span class="score-card-highlight-icon">${highlightIcon}</span>
@@ -3483,36 +4723,33 @@ function toggleExpDetail(){
 }
 
 // Init
+QDAT=buildQDAT(getActiveData());
 populateSelectors();
 renderR();renderE();renderT();renderQ();renderP();
 // Sincroniza bottom nav com tab inicial (perfis)
 document.querySelector('.bnav-item[data-tab="perfis"]')?.classList.add('on');
+// Handle ?q= URL param — abrir direto no perfil da quadrilha
+(()=>{try{const _uq=new URLSearchParams(location.search).get('q');if(_uq){const _um=ALL_DATA.find(d=>qSlug(d.q)===_uq);if(_um)setTimeout(()=>openQP(_um.q),0);}}catch(e){}})();
 </script>
 
 <!-- ══ BOTTOM NAV (mobile) ══ -->
 <nav class="bottom-nav">
   <button class="bnav-item on" data-tab="perfis" onclick="sw('perfis',this)">
-    <span class="bnav-icon">🎭</span>
     <span class="bnav-label">Quadrilhas</span>
   </button>
   <button class="bnav-item" data-tab="quadrilha" onclick="sw('quadrilha',this)">
-    <span class="bnav-icon">🔍</span>
     <span class="bnav-label">Por Quadrilha</span>
   </button>
   <button class="bnav-item" data-tab="expectativa" onclick="sw('expectativa',this)" style="display:none">
-    <span class="bnav-icon">🔮</span>
     <span class="bnav-label">Expectativa</span>
   </button>
   <button class="bnav-item" data-tab="ranking" onclick="sw('ranking',this)">
-    <span class="bnav-icon">🏆</span>
     <span class="bnav-label">Desempenho</span>
   </button>
   <button class="bnav-item" data-tab="temporadas" onclick="sw('temporadas',this)">
-    <span class="bnav-icon">📅</span>
     <span class="bnav-label">Temporadas</span>
   </button>
   <button class="bnav-item" data-tab="quesitos" onclick="sw('quesitos',this)">
-    <span class="bnav-icon">🎯</span>
     <span class="bnav-label">Quesitos</span>
   </button>
 </nav>
