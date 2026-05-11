@@ -1091,7 +1091,7 @@
     },
     "logo": "arraia-chapeu-de-palha-logo.png"
   },
-    {
+  {
     "id": 27,
     "nome": "Paixão Cangaço",
     "slug": "paixao-cangaco",
@@ -1165,16 +1165,16 @@
   },
   {
     "id": 29,
-    "nome": "Traia V\u00e9ia",
-    "slug": "traia-veia",
-    "cidade": "Luzi\u00e2nia/GO",
+    "nome": "Traíra Véia",
+    "slug": "traira-veia",
+    "cidade": "Luziânia/GO",
     "uf": "GO",
-    "grupo": "Acesso",
-    "grupo_2025": "acesso",
+    "grupo": "Filiada",
+    "grupo_2025": null,
     "posicao_2025": null,
-    "foto": "assets/banners/placeholder.jpg",
-    "foto_capa": "assets/banners/placeholder.jpg",
-    "instagram": "A confirmar",
+    "foto": "traira-veia.jpeg",
+    "foto_capa": "traira-veia-capa.jpeg",
+    "instagram": "@traira.veia",
     "focal": {
       "x": 0.5,
       "y": 0.2
@@ -1189,14 +1189,14 @@
     },
     "historico": [],
     "perfil": {
-      "bio": "A Quadrilha Traia V\u00e9ia \u00e9 de Luzi\u00e2nia/GO e completa 1 ano de hist\u00f3ria em 2026. A Traia V\u00e9ia nasceu da vontade de preservar as ra\u00edzes do S\u00e3o Jo\u00e3o sem ficar parada no tempo. A proposta \u00e9 misturar a simplicidade do matuto com a for\u00e7a dos espet\u00e1culos juninos de hoje, mantendo o respeito pela tradi\u00e7\u00e3o e entregando um trabalho bem feito em cena. O nome \"Traia V\u00e9ia\" \u00e9 uma homenagem direta ao sertanejo, \u00e0s vestimentas e aos costumes que constru\u00edram a cultura nordestina. E no tablado a ideia \u00e9 clara: tradi\u00e7\u00e3o no peito e renova\u00e7\u00e3o no conjunto. A quadrilha aposta em coreografias firmes, figurinos bem trabalhados e uma harmonia de elenco que prende o p\u00fablico do come\u00e7o ao fim. Fundada oficialmente em 28 de julho de 2025, a Traia V\u00e9ia re\u00fane profissionais e entusiastas com experi\u00eancia no movimento junino e em projetos culturais. O grupo nasce com base t\u00e9cnica e paix\u00e3o verdadeira pelo S\u00e3o Jo\u00e3o, levando essa energia para representar Luzi\u00e2nia com for\u00e7a e responsabilidade.",
+      "bio": "A Quadrilha Junina Traíra Véia é de Luziânia/GO e foi fundada oficialmente em 28 de julho de 2025. A Traíra Véia nasceu da vontade de preservar as raízes do São João sem ficar parada no tempo. A proposta é misturar a simplicidade do matuto com a força dos espetáculos juninos de hoje, mantendo o respeito pela tradição e entregando um trabalho bem feito em cena. O nome “Traíra Véia” é uma homenagem direta ao sertanejo, às vestimentas e aos costumes que construíram a cultura nordestina. No tablado a ideia é clara: tradição no peito e renovação no conjunto. Filiada à LINQ-DFE, a quadrilha estreará no Circuito a partir da temporada 2027.",
       "tema_2026": "\"A confirmar\"",
-      "temporada_2026_descricao": "Tradi\u00e7\u00e3o no peito e renova\u00e7\u00e3o no conjunto.",
+      "temporada_2026_descricao": "Tradição no peito e renovação no conjunto.",
       "idade_grupo": "1 ano",
       "elenco_aproximado": "A confirmar",
       "marcador": "A confirmar",
       "casal_noivos_2026": "A confirmar"
     },
-    "logo": "traia-veia.PNG"
+    "logo": "traira-veia-logo.PNG"
   }
 ]

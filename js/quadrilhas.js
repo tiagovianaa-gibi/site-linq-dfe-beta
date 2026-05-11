@@ -16,7 +16,7 @@ let quadrilhas = [];
 let currentFilter = "all"; // 'all' | 'Especial' | 'Acesso'
 let currentSearch = "";
 let currentCity = "";
-const EXCLUDED_SLUGS = new Set(["xuva-de-prata", "traia-veia"]);
+const EXCLUDED_SLUGS = new Set(["xuva-de-prata"]);
 
 window.filterFiliadas = function (grupo) {
   currentFilter = grupo;
@@ -84,6 +84,9 @@ function renderQuadrilhas() {
       img.style.objectPosition = "50% 20%";
     }
 
+    const grupoLabel = quad.grupo === "Especial" ? "Especial"
+      : quad.grupo === "Acesso" ? "Acesso"
+      : quad.grupo || "Filiada";
     const badgeClass =
       quad.grupo === "Especial" ? "badge" : "badge badge-secondary";
 
@@ -93,7 +96,7 @@ function renderQuadrilhas() {
       <h3 class="card-title">${quad.nome}</h3>
       <div class="card-meta">
         <span>${quad.cidade || ""}</span>
-        <span class="${badgeClass}">${quad.grupo}</span>
+        <span class="${badgeClass}">${grupoLabel}</span>
       </div>
     `;
 

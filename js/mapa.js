@@ -262,7 +262,7 @@ window.filterMapa = function filterMapa(grupo) {
 async function init() {
   initMap();
 
-  const excludedSlugs = new Set(['xuva-de-prata', 'traia-veia']);
+  const excludedSlugs = new Set(['xuva-de-prata']);
   const loaded = (await loadJSON('data/quadrilhas.json')) || [];
   quadrilhas = loaded.filter((q) => {
     const slug = (q.slug || slugify(q.nome || '')).toLowerCase();
