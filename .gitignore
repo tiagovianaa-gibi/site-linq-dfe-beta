@@ -19,3 +19,7 @@ js/runtime-config.min.js
 
 # Generated JS (do not commit)
 js/portal-notas.min.js
+
+.firebase-config/
+.firebase-config/service-account.json
+service-account.json
