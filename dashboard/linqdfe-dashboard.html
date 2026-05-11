@@ -4027,6 +4027,10 @@ function renderQP(){
   }).join('')}
 </div>`:'';
 
+  // Axes where the quadrilha actually has data (excludes Temática for ACE-only quadrilhas)
+  const chartQIdxs=QKEYS.map((k,i)=>({k,i})).filter(({k})=>d[k]!=null);
+  const chartQLbls=chartQIdxs.map(({i})=>QLBLS[i]);
+
   content.innerHTML=`
   <!-- HERO -->
   <div class="qp-hero fi">
@@ -4163,7 +4167,7 @@ function renderQP(){
       <div class="qp-inline-filter">
         <span class="qp-inline-label">Série:</span>
         <button class="qp-micro-btn${seriesKey==='m'?' on':''}" onclick="setQPEvoKey('m')">Média</button>
-        ${QKEYS.map((k,i)=>`<button class="qp-micro-btn${seriesKey===k?' on':''}" onclick="setQPEvoKey('${k}')">${QLBLS[i].split(' ')[0]}</button>`).join('')}
+        ${chartQIdxs.map(({k,i})=>`<button class="qp-micro-btn${seriesKey===k?' on':''}" onclick="setQPEvoKey('${k}')">${QLBLS[i].split(' ')[0]}</button>`).join('')}
       </div>
       <div class="chart-wrap-tall"><canvas id="chart-evo"></canvas></div>
     </div>
@@ -4384,7 +4388,7 @@ function renderQP(){
   // Chart 2: Radar
   const radCtx=document.getElementById('chart-radar');
   if(radCtx&&d.m){
-    const radVals=QKEYS.map(k=>d[k]||0);
+    const radVals=chartQIdxs.map(({k})=>d[k]);
     const radDatasets=[{
       label:dns(d.q),
       data:radVals,
@@ -4395,7 +4399,7 @@ function renderQP(){
       pointRadius:4,
     },{
       label:benchmark.datasetLabel,
-      data:QKEYS.map(k=>groupAvg[k]),
+      data:chartQIdxs.map(({k})=>groupAvg[k]),
       borderColor:'rgba(255,255,255,.3)',
       backgroundColor:'rgba(255,255,255,.04)',
       borderWidth:1,
@@ -4406,7 +4410,7 @@ function renderQP(){
     if(cmp&&cmp.m){
       radDatasets.push({
         label:dns(cmp.q),
-        data:QKEYS.map(k=>cmp[k]||0),
+        data:chartQIdxs.map(({k})=>cmp[k]!=null?cmp[k]:groupAvg[k]),
         borderColor:'#E74C3C',
         backgroundColor:'rgba(231,76,60,.10)',
         borderWidth:2,
@@ -4418,13 +4422,13 @@ function renderQP(){
     chartRadar=new Chart(radCtx,{
       type:'radar',
       data:{
-        labels:QLBLS.map(l=>l.split(' ')[0]),
+        labels:chartQLbls.map(l=>l.split(' ')[0]),
         datasets:radDatasets,
       },
       options:{
         responsive:true,maintainAspectRatio:false,
         scales:{r:{
-          min:9.5,max:10.0,
+          min:Math.floor((Math.min(9.5,...radVals.filter(v=>v!=null))-0.05)*10)/10,max:10.0,
           ticks:{stepSize:.1,font:{size:9},color:'#8BA3BE',backdropColor:'transparent'},
           grid:{color:'rgba(255,255,255,.08)'},
           angleLines:{color:'rgba(255,255,255,.08)'},
@@ -4441,14 +4445,14 @@ function renderQP(){
   if(barCtx&&d.m){
     const barDatasets=[{
       label:dns(d.q),
-      data:QKEYS.map(k=>d[k]||0),
-      backgroundColor:Object.values(QC).map(c=>c+'BB'),
-      borderColor:Object.values(QC),
+      data:chartQIdxs.map(({k})=>d[k]||0),
+      backgroundColor:chartQIdxs.map(({i})=>Object.values(QC)[i]+'BB'),
+      borderColor:chartQIdxs.map(({i})=>Object.values(QC)[i]),
       borderWidth:1,
       borderRadius:4,
     },{
       label:benchmark.datasetLabel,
-      data:QKEYS.map(k=>groupAvg[k]),
+      data:chartQIdxs.map(({k})=>groupAvg[k]),
       backgroundColor:'rgba(255,255,255,.08)',
       borderColor:'rgba(255,255,255,.2)',
       borderWidth:1,
@@ -4457,7 +4461,7 @@ function renderQP(){
     if(cmp&&cmp.m){
       barDatasets.push({
         label:dns(cmp.q),
-        data:QKEYS.map(k=>cmp[k]||0),
+        data:chartQIdxs.map(({k})=>cmp[k]||0),
         backgroundColor:'rgba(231,76,60,.3)',
         borderColor:'#E74C3C',
         borderWidth:1,
@@ -4466,12 +4470,12 @@ function renderQP(){
     }
     chartBar=new Chart(barCtx,{
       type:'bar',
-      data:{labels:QLBLS.map(l=>l.split(' ')[0]),datasets:barDatasets},
+      data:{labels:chartQLbls.map(l=>l.split(' ')[0]),datasets:barDatasets},
       options:{
         responsive:true,maintainAspectRatio:false,
         scales:{
           x:{ticks:{color:'#8BA3BE',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}},
-          y:{min:9.5,max:10.01,ticks:{font:{size:10},callback:v=>t2(v)},grid:{color:'rgba(255,255,255,.05)'}},
+          y:{min:Math.min(9.5,...chartQIdxs.map(({k})=>d[k]||9.5).filter(v=>v>0))-0.05,max:10.01,ticks:{font:{size:10},callback:v=>t2(v)},grid:{color:'rgba(255,255,255,.05)'}},
         },
         plugins:{
           legend:{labels:{color:'#F0EAD6',font:{size:10}}},
