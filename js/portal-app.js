@@ -1600,107 +1600,35 @@ let editingFinanceiroId = null;
 
 
 const SAMPLE_QUADRILHAS = [
-
-
-
-
-
-  {
-
-
-
-
-
-    id: "arroxa-o-no",
-
-
-
-
-
-    nome: "Arroxa o Nó",
-
-
-
-
-
-    sigla: "ARROXA",
-
-
-
-
-
-    cidade: "Brasília",
-
-
-
-
-
-    uf: "DF",
-
-
-
-
-
-    grupo_atual: "ESPECIAL",
-
-
-
-
-
-  },
-
-
-
-
-
-  {
-
-
-
-
-
-    id: "arraia-chapeu-de-palha",
-
-
-
-
-
-    nome: "Arraiá Chapéu de Palha",
-
-
-
-
-
-    sigla: "CHAPEU",
-
-
-
-
-
-    cidade: "Samambaia",
-
-
-
-
-
-    uf: "DF",
-
-
-
-
-
-    grupo_atual: "ACESSO",
-
-
-
-
-
-  },
-
-
-
-
-
+  { id: "amor-junino",            nome: "Amor Junino",            cidade: "Águas Lindas de Goiás", uf: "GO", grupo_atual: "ESPECIAL" },
+  { id: "arraia-dos-matutos",     nome: "Arraiá dos Matutos",     cidade: "Planaltina",           uf: "GO", grupo_atual: "ESPECIAL" },
+  { id: "arroxa-o-no",           nome: "Arroxa o Nó",            cidade: "Paranó",               uf: "DF", grupo_atual: "ESPECIAL" },
+  { id: "caipirada",              nome: "Caipirada",              cidade: "Planaltina",           uf: "GO", grupo_atual: "ESPECIAL" },
+  { id: "chinelo-de-couro",       nome: "Chinelo de Couro",       cidade: "São Sebastião",       uf: "DF", grupo_atual: "ACESSO"   },
+  { id: "coisas-da-roca",         nome: "Coisas da Roça",         cidade: "Paranó",               uf: "DF", grupo_atual: "ESPECIAL" },
+  { id: "eita-bagaceira",         nome: "Eita Bagaceira",         cidade: "Ceilândia",            uf: "DF", grupo_atual: "ESPECIAL" },
+  { id: "espalha-brasa",          nome: "Espalha Brasa",          cidade: "Paranó",               uf: "DF", grupo_atual: "ESPECIAL" },
+  { id: "formiga-da-roca",        nome: "Formiga da Roça",        cidade: "São Sebastião",       uf: "DF", grupo_atual: "ESPECIAL" },
+  { id: "fornalha",               nome: "Fornalha",               cidade: "Águas Lindas de Goiás", uf: "GO", grupo_atual: "ACESSO"   },
+  { id: "furacao",                nome: "Furacão",               cidade: "Planaltina",           uf: "GO", grupo_atual: "ACESSO"   },
+  { id: "mala-veia",              nome: "Mala Véia",              cidade: "Ceilândia",            uf: "DF", grupo_atual: "ESPECIAL" },
+  { id: "matingueiros-do-sertao", nome: "Matingueiros do Sertão", cidade: "Samambaia",            uf: "DF", grupo_atual: "ACESSO"   },
+  { id: "matulao",                nome: "Matulão",                cidade: "Taguatinga",           uf: "DF", grupo_atual: "ACESSO"   },
+  { id: "os-caboclos-do-sertao",  nome: "Os Caboclos do Sertão",  cidade: "Planaltina",           uf: "GO", grupo_atual: "ACESSO"   },
+  { id: "pinga-em-mim",           nome: "Pinga em Mim",           cidade: "Paranó",               uf: "DF", grupo_atual: "ESPECIAL" },
+  { id: "rasga-o-fole",           nome: "Rasga o Fole",           cidade: "Valparaíso de Goiás",  uf: "GO", grupo_atual: "ESPECIAL" },
+  { id: "ribulico",               nome: "Ribuliço",              cidade: "Ceilândia",            uf: "DF", grupo_atual: "ESPECIAL" },
+  { id: "sol-de-maria",           nome: "Sol de Maria",           cidade: "Novo Gama",            uf: "GO", grupo_atual: "ACESSO"   },
+  { id: "tengo-lengo",            nome: "Tengo Lengo",            cidade: "Ceilândia",            uf: "DF", grupo_atual: "ACESSO"   },
+  { id: "tico-tico-no-fuba",      nome: "Tico Tico no Fubá",      cidade: "Águas Lindas de Goiás", uf: "GO", grupo_atual: "ESPECIAL" },
+  { id: "vai-mas-nao-vai",        nome: "Vai Mas Não Vai",        cidade: "Luziânia",             uf: "GO", grupo_atual: "ESPECIAL" },
+  { id: "xamegar",                nome: "Xamegar",                cidade: "Paranó",               uf: "DF", grupo_atual: "ESPECIAL" },
+  { id: "xem-nhem-nhem",          nome: "Xém Nhem Nhém",          cidade: "Santa Maria",          uf: "DF", grupo_atual: "ACESSO"   },
+  { id: "xique-xique",            nome: "Xique Xique",            cidade: "Planaltina",           uf: "GO", grupo_atual: "ACESSO"   },
+  { id: "arraia-chapeu-de-palha", nome: "Arraiá Chapéu de Palha", cidade: "Samambaia",            uf: "DF", grupo_atual: "ACESSO"   },
+  { id: "paixao-cangaco",         nome: "Paixão Cangáço",         cidade: "Águas Lindas de Goiás", uf: "GO", grupo_atual: "ACESSO"   },
+  { id: "xuva-de-prata",          nome: "Xuva de Prata",          cidade: "Santa Maria",          uf: "DF", grupo_atual: "ACESSO"   },
+  { id: "traia-veia",             nome: "Traia Véia",             cidade: "Luziânia",             uf: "GO", grupo_atual: "ACESSO"   },
 ];
 
 

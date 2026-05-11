@@ -1,5 +1,26 @@
 {
   "functions": {
     "source": "functions"
-  }
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": [
+    {
+      "target": "fantasy",
+      "public": "fantasy/dist",
+      "ignore": ["firebase.json", "**/node_modules/**", "**/.*"],
+      "rewrites": [
+        { "source": "**", "destination": "/index.html" }
+      ]
+    },
+    {
+      "target": "palpites",
+      "public": "palpites/dist",
+      "ignore": ["firebase.json", "**/node_modules/**", "**/.*"],
+      "rewrites": [
+        { "source": "**", "destination": "/index.html" }
+      ]
+    }
+  ]
 }

@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "portal-da-liga"
-  }
+  },
+  "targets": {
+    "portal-da-liga": {
+      "hosting": {
+        "main": [
+          "portal-da-liga"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

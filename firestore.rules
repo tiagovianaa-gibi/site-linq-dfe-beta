@@ -1,0 +1,142 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Portal da Liga ─────────────────────────────────────────────
+    // Quadrilhas do portal: qualquer usuário autenticado lê, LIGA_ADMIN escreve via portal
+    match /quadrilhas/{id} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Portal users: only the user themselves or an admin Cloud Function
+    match /users/{docId} {
+      allow read, write: if request.auth != null &&
+        (request.auth.uid == docId || request.auth.token.email == docId);
+    }
+
+    // Noticias: public read, write only via Cloud Functions (admin)
+    match /noticias/{docId} {
+      allow read: if true;
+      allow write: if false; // Cloud Functions only
+    }
+
+    // ── Fantasy Junino ─────────────────────────────────────────────
+    // Player profiles: any auth user reads (leaderboard), writes restricted to owner
+    match /fantasy_players/{uid} {
+      allow read:  if request.auth != null;
+      allow create: if request.auth != null && request.auth.uid == uid
+                    && request.resource.data.keys().hasOnly(['uid','displayName','email','photoURL','createdAt','totalPoints','budget'])
+                    && request.resource.data.uid == uid;
+      allow update: if request.auth != null && request.auth.uid == uid
+                    && !request.resource.data.diff(resource.data).affectedKeys()
+                       .hasAny(['uid','createdAt','budget']); // immutable fields
+    }
+
+    // Quadrilhas: any authenticated user can read, no writes from client
+    match /fantasy_quadrilhas/{id} {
+      allow read: if request.auth != null;
+      allow write: if false; // seed script via Admin SDK only
+    }
+
+    // Global config (market window, season settings): any auth user reads
+    match /fantasy_config/{id} {
+      allow read: if request.auth != null;
+      allow write: if false; // admin only
+    }
+
+    // Lineups: user can read/write only their own picks
+    match /fantasy_lineups/{uid}/entries/{stageKey} {
+      allow read:  if request.auth != null && request.auth.uid == uid;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // ── Palpites Juninos ───────────────────────────────────────────
+    // Config do mercado: qualquer auth lê, qualquer auth escreve (admin page)
+    match /palpite_config/{id} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Perfis dos apostadores: qualquer auth lê (ranking), owner escreve
+    match /palpite_users/{uid} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Palpites: qualquer auth lê (ranking + collectionGroup), owner escreve
+    match /palpites/{uid} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /palpites/{uid}/etapas/{key} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+    // Regra wildcard necessária para collectionGroup('etapas') funcionar
+    match /{path=**}/etapas/{key} {
+      allow read: if request.auth != null;
+    }
+
+    // Perfis — histórico de Arriúnas (subcollection)
+    match /palpite_users/{uid}/arriunaHistory/{id} {
+      allow read:  if request.auth != null && request.auth.uid == uid;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Resultados: qualquer auth lê, qualquer auth escreve (admin page)
+    match /palpite_results/{id} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Guard de distribuições: qualquer auth lê, qualquer auth escreve (admin page)
+    match /palpite_distributions/{id} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Palpite Junino: owner lê/escreve seus palpites
+    match /palpitesJuninos/{uid} {
+      allow read:  if request.auth != null && request.auth.uid == uid;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /palpitesJuninos/{uid}/etapas/{key} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Resultados Junino: qualquer auth lê, qualquer auth escreve (admin page)
+    match /junino_results/{id} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Cards — catálogo público para autenticados
+    match /cards/{cardId} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null; // seed via admin page
+    }
+
+    // Contadores de serial dos cards
+    match /cardSerials/{cardId} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Cards do usuário
+    match /userCards/{uid} {
+      allow read:  if request.auth != null && request.auth.uid == uid;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /userCards/{uid}/collection/{id} {
+      allow read:  if request.auth != null && request.auth.uid == uid;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
