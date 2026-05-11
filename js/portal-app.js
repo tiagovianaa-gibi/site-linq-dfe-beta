@@ -3378,6 +3378,18 @@ async function loadCurrentUserData(user) {
       if (btn) btn.closest("li").style.display = "none";
     });
   }
+
+  const dadosBtn = document.getElementById("portalNavDadosBtn");
+  if (dadosBtn) {
+    dadosBtn.addEventListener("click", () => {
+      const quadId = currentUserData?.quadrilhaId;
+      const base = "/dashboard/linqdfe-dashboard.html";
+      const url = (papel === "QUADRILHA_ADMIN" && quadId)
+        ? base + "?q=" + quadId
+        : base;
+      window.open(url, "_blank");
+    });
+  }
   if (portalSectionSorteio && papel !== "LIGA_ADMIN") {
     portalSectionSorteio.style.display = "none";
   }
