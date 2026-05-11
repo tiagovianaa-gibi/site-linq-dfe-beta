@@ -3371,6 +3371,13 @@ async function loadCurrentUserData(user) {
   if (portalNavSorteioItem) {
     portalNavSorteioItem.style.display = "none";
   }
+
+  if (papel === "QUADRILHA_ADMIN") {
+    ["dashboard", "quadrilha", "financeiro", "noticias"].forEach((s) => {
+      const btn = document.querySelector(`.portal-nav-link[data-section="${s}"]`);
+      if (btn) btn.closest("li").style.display = "none";
+    });
+  }
   if (portalSectionSorteio && papel !== "LIGA_ADMIN") {
     portalSectionSorteio.style.display = "none";
   }
@@ -19944,6 +19951,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function showSection(sectionKey) {
     if (sectionKey === "sorteio" && currentUserData?.papel !== "LIGA_ADMIN") {
       sectionKey = "dashboard";
+    }
+    const _quadrilhaRestrito = ["dashboard", "quadrilha", "financeiro", "noticias"];
+    if (currentUserData?.papel === "QUADRILHA_ADMIN" && _quadrilhaRestrito.includes(sectionKey)) {
+      sectionKey = "pessoas";
     }
 
 
