@@ -1628,7 +1628,7 @@ const SAMPLE_QUADRILHAS = [
   { id: "arraia-chapeu-de-palha", nome: "Arraiá Chapéu de Palha", cidade: "Samambaia",            uf: "DF", grupo_atual: "ACESSO"   },
   { id: "paixao-cangaco",         nome: "Paixão Cangáço",         cidade: "Águas Lindas de Goiás", uf: "GO", grupo_atual: "ACESSO"   },
   { id: "xuva-de-prata",          nome: "Xuva de Prata",          cidade: "Santa Maria",          uf: "DF", grupo_atual: "ACESSO"   },
-  { id: "traira-veia",            nome: "Traíra Véia",            cidade: "Luziânia",             uf: "GO", grupo_atual: null       },
+  { id: "traia-vea",              nome: "Traia Véa",              cidade: "Luziânia",             uf: "GO", grupo_atual: null       },
 ];
 
 

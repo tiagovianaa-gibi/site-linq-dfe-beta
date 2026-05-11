@@ -1165,15 +1165,15 @@
   },
   {
     "id": 29,
-    "nome": "Traíra Véia",
-    "slug": "traira-veia",
+    "nome": "Traia Véa",
+    "slug": "traia-vea",
     "cidade": "Luziânia/GO",
     "uf": "GO",
     "grupo": "Filiada",
     "grupo_2025": null,
     "posicao_2025": null,
-    "foto": "traira-veia.jpeg",
-    "foto_capa": "traira-veia-capa.jpeg",
+    "foto": "traia-vea.jpeg",
+    "foto_capa": "traia-vea-capa.jpeg",
     "instagram": "@traira.veia",
     "focal": {
       "x": 0.5,
@@ -1189,7 +1189,7 @@
     },
     "historico": [],
     "perfil": {
-      "bio": "A Quadrilha Junina Traíra Véia é de Luziânia/GO e foi fundada oficialmente em 28 de julho de 2025. A Traíra Véia nasceu da vontade de preservar as raízes do São João sem ficar parada no tempo. A proposta é misturar a simplicidade do matuto com a força dos espetáculos juninos de hoje, mantendo o respeito pela tradição e entregando um trabalho bem feito em cena. O nome “Traíra Véia” é uma homenagem direta ao sertanejo, às vestimentas e aos costumes que construíram a cultura nordestina. No tablado a ideia é clara: tradição no peito e renovação no conjunto. Filiada à LINQ-DFE, a quadrilha estreará no Circuito a partir da temporada 2027.",
+      "bio": "A Quadrilha Junina Traia Véa é de Luziânia/GO e foi fundada oficialmente em 28 de julho de 2025. A Traia Véa nasceu da vontade de preservar as raízes do São João sem ficar parada no tempo. A proposta é misturar a simplicidade do matuto com a força dos espetáculos juninos de hoje, mantendo o respeito pela tradição e entregando um trabalho bem feito em cena. O nome \"Traia Véa\" é uma homenagem direta ao sertanejo, às vestimentas e aos costumes que construíram a cultura nordestina. No tablado a ideia é clara: tradição no peito e renovação no conjunto. Filiada à LINQ-DFE, a quadrilha estreará no Circuito a partir da temporada 2027.",
       "tema_2026": "\"A confirmar\"",
       "temporada_2026_descricao": "Tradição no peito e renovação no conjunto.",
       "idade_grupo": "1 ano",
@@ -1197,6 +1197,6 @@
       "marcador": "A confirmar",
       "casal_noivos_2026": "A confirmar"
     },
-    "logo": "traira-veia-logo.PNG"
+    "logo": "traia-vea-logo.PNG"
   }
 ]
