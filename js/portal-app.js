@@ -3369,7 +3369,7 @@ async function loadCurrentUserData(user) {
   }
 
   if (portalNavSorteioItem) {
-    portalNavSorteioItem.style.display = papel === "LIGA_ADMIN" ? "list-item" : "none";
+    portalNavSorteioItem.style.display = "none";
   }
   if (portalSectionSorteio && papel !== "LIGA_ADMIN") {
     portalSectionSorteio.style.display = "none";
