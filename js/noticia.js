@@ -88,11 +88,21 @@ async function ensureStaticNoticiasManifest() {
 
 function getNoticiaUrl(noticia) {
   const slug = String(noticia?.slug || "").trim();
-  if (slug) {
+  if (slug && staticNoticiasSlugs.has(slug)) {
     return `/noticias/${encodeURIComponent(slug)}/`;
   }
+
+  const params = new URLSearchParams();
   if (noticia?.id) {
-    return `/noticia.html?id=${encodeURIComponent(noticia.id)}`;
+    params.set("id", noticia.id);
+  }
+  if (slug) {
+    params.set("slug", slug);
+  }
+
+  const query = params.toString();
+  if (query) {
+    return `/noticia.html?${query}`;
   }
   return "/noticias.html";
 }
