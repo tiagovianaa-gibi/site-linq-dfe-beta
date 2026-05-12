@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,follow">
+  <title>Página não encontrada | LINQ-DFE</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logos/linq-dfe.png">
+  <link rel="stylesheet" href="/css/style.min.css">
+  <script>
+    (function redirectNoticia404() {
+      var path = window.location.pathname || "";
+      var prettyMatch = path.match(/^\/noticias\/([^/?#]+)\/?$/i);
+      var legacyMatch = path.match(/^\/noticia\/([^/?#]+)\.html$/i);
+      var slug = "";
+
+      if (prettyMatch && prettyMatch[1]) {
+        slug = prettyMatch[1];
+      } else if (legacyMatch && legacyMatch[1]) {
+        slug = legacyMatch[1];
+      }
+
+      if (!slug) {
+        return;
+      }
+
+      try {
+        slug = decodeURIComponent(slug);
+      } catch (error) {
+        // Mantem o valor bruto se a URL vier malformada.
+      }
+
+      window.location.replace("/noticia.html?slug=" + encodeURIComponent(slug));
+    })();
+  </script>
+</head>
+<body>
+  <main class="section">
+    <div class="container" style="max-width: 720px; text-align: center; padding-top: 10vh; padding-bottom: 10vh;">
+      <img src="/assets/logos/linq-dfe.png" alt="LINQ-DFE" style="width: 72px; height: 72px; margin-bottom: 1rem;">
+      <h1>Página não encontrada</h1>
+      <p>O link pode estar desatualizado ou a página ainda não foi gerada.</p>
+      <p>
+        <a class="btn btn-primary" href="/noticias.html">Ir para Notícias</a>
+      </p>
+    </div>
+  </main>
+</body>
+</html>
