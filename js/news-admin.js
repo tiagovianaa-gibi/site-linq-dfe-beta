@@ -228,6 +228,7 @@ const firebaseConfig = window.RUNTIME_CONFIG.firebase;
     posY,
     posXValue,
     posYValue,
+    getSlug,
   }) {
     const applyStyle = () => {
       if (!preview) return;
@@ -279,16 +280,23 @@ const firebaseConfig = window.RUNTIME_CONFIG.firebase;
     }
 
     if (fileInput) {
-      fileInput.addEventListener("change", (event) => {
+      fileInput.addEventListener("change", async (event) => {
         const file = event.target.files?.[0];
         if (!file) return;
-        const url = `assets/noticias/${file.name}`;
-        if (urlInput) urlInput.value = url;
-        setPreview(url);
-        updateSeoChecklist();
-        updateAutoDisplay();
-        showToast("Imagem carregada");
         event.target.value = "";
+        showToast("Enviando imagem…");
+        try {
+          const slug = getSlug?.() || "";
+          const url = await uploadCoverImage(file, slug);
+          if (urlInput) urlInput.value = url;
+          setPreview(url);
+          updateSeoChecklist();
+          updateAutoDisplay();
+          showToast("Imagem carregada");
+        } catch (err) {
+          showToast("Erro ao enviar imagem");
+          console.error(err);
+        }
       });
     }
 
@@ -1341,6 +1349,7 @@ const firebaseConfig = window.RUNTIME_CONFIG.firebase;
       posY: els.coverPosY,
       posXValue: els.coverPosXValue,
       posYValue: els.coverPosYValue,
+      getSlug: () => els.slugInput?.value || slugify(els.titleInput?.value || ""),
     });
 
     cardImageController = createImageController({
@@ -1354,6 +1363,7 @@ const firebaseConfig = window.RUNTIME_CONFIG.firebase;
       posY: els.cardImagePosY,
       posXValue: els.cardImagePosXValue,
       posYValue: els.cardImagePosYValue,
+      getSlug: () => els.slugInput?.value || slugify(els.titleInput?.value || ""),
     });
 
     const syncCardFromHero = () => {
