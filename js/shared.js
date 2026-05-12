@@ -366,7 +366,7 @@ function normalizeMainMenu() {
   const items = [
     { href: `${prefix}index.html`, label: "Inicial" },
     { href: `${prefix}circuito.html`, label: "Circuito" },
-    { href: `${prefix}central-de-dados/`, label: "Central de Dados" },
+    { href: `${prefix}central-de-dados/`, label: "Central de Dados", target: "_blank" },
     { href: `${prefix}quadrilhas.html`, label: "Quadrilhas" },
     { href: `${prefix}mapa.html`, label: "Mapa" },
     { href: `${prefix}noticias.html`, label: "Notícias" },
@@ -381,7 +381,7 @@ function normalizeMainMenu() {
   ];
 
   navList.innerHTML = items
-    .map((item) => `<li><a href="${item.href}">${item.label}</a></li>`)
+    .map((item) => `<li><a href="${item.href}"${item.target ? ` target="${item.target}"` : ""}>${item.label}</a></li>`)
     .join("");
 }
 
