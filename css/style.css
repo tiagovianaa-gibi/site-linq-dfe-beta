@@ -3664,7 +3664,7 @@ body.page-noticia .noticia-page {
     margin-top: var(--spacing-sm);
   }
 
-  .table-wrapper {
+  .table-wrapper:has(+ .rich-day-grid) {
     display: none;
   }
 }
