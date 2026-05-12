@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
@@ -634,6 +635,32 @@ function isRemoteUrl(url) {
   return /^https?:\/\//i.test(String(url || ""));
 }
 
+function isDataImageUrl(url) {
+  return /^data:image\/[a-z0-9.+-]+;base64,/i.test(String(url || ""));
+}
+
+function ensureNoticiasAssetsDir() {
+  if (!fs.existsSync(ASSETS_NOTICIAS_DIR)) {
+    fs.mkdirSync(ASSETS_NOTICIAS_DIR, { recursive: true });
+  }
+}
+
+function sanitizeAssetBasename(value) {
+  return slugify(value || "").replace(/^-+|-+$/g, "") || "noticia";
+}
+
+function extractDataImagePayload(url) {
+  const match = String(url || "").match(/^data:image\/([a-z0-9.+-]+);base64,(.+)$/i);
+  if (!match) return null;
+
+  const rawExtension = String(match[1] || "").toLowerCase();
+  const extension = rawExtension === "jpeg" ? "jpg" : rawExtension;
+  const buffer = Buffer.from(match[2], "base64");
+  if (!buffer.length) return null;
+
+  return { extension, buffer };
+}
+
 function extractFilenameFromUrl(url) {
   try {
     const urlObj = new URL(url);
@@ -648,8 +675,28 @@ function extractFilenameFromUrl(url) {
   }
 }
 
-async function resolveImageUrl(url) {
-  if (!url || !isRemoteUrl(url)) return url;
+async function resolveImageUrl(url, fileBaseName = "noticia") {
+  if (!url) return url;
+
+  if (isDataImageUrl(url)) {
+    const payload = extractDataImagePayload(url);
+    if (!payload) return url;
+
+    const { extension, buffer } = payload;
+    const hash = crypto.createHash("sha1").update(buffer).digest("hex").slice(0, 10);
+    const filename = `${sanitizeAssetBasename(fileBaseName)}-${hash}.${extension}`;
+    const destPath = path.join(ASSETS_NOTICIAS_DIR, filename);
+
+    ensureNoticiasAssetsDir();
+    if (!fs.existsSync(destPath)) {
+      fs.writeFileSync(destPath, buffer);
+      console.log(`Imagem inline salva: ${filename}`);
+    }
+
+    return `assets/noticias/${filename}`;
+  }
+
+  if (!isRemoteUrl(url)) return url;
 
   const filename = extractFilenameFromUrl(url);
   if (!filename) return url;
@@ -658,9 +705,7 @@ async function resolveImageUrl(url) {
   if (fs.existsSync(destPath)) return `assets/noticias/${filename}`;
 
   try {
-    if (!fs.existsSync(ASSETS_NOTICIAS_DIR)) {
-      fs.mkdirSync(ASSETS_NOTICIAS_DIR, { recursive: true });
-    }
+    ensureNoticiasAssetsDir();
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     fs.writeFileSync(destPath, Buffer.from(await res.arrayBuffer()));
@@ -674,10 +719,14 @@ async function resolveImageUrl(url) {
 
 async function resolveNoticiaImages(noticias) {
   for (const item of noticias) {
-    const heroResolved = await resolveImageUrl(item.imagem);
+    const baseName = item.slug || item.id || item.titulo || "noticia";
+    const heroSource = item.imagem;
+    const cardSource = item.imagemCard;
+    const heroResolved = await resolveImageUrl(heroSource, `${baseName}-hero`);
     item.imagem = heroResolved;
     const cardResolved = await resolveImageUrl(
-      item.imagemCard && item.imagemCard !== item.imagem ? item.imagemCard : null
+      cardSource && cardSource !== heroSource ? cardSource : null,
+      `${baseName}-card`
     );
     item.imagemCard = cardResolved || heroResolved || item.imagemCard;
   }

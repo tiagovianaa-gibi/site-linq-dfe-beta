@@ -89,15 +89,16 @@ async function ensureStaticNoticiasManifest() {
 function getNoticiaUrl(noticia) {
   const slug = String(noticia?.slug || "").trim();
   if (slug) {
-    if (staticNoticiasSlugs.has(slug)) {
-      return `/noticias/${encodeURIComponent(slug)}/`;
-    }
-    return `/noticia.html?slug=${encodeURIComponent(slug)}`;
+    return `/noticias/${encodeURIComponent(slug)}/`;
   }
   if (noticia?.id) {
     return `/noticia.html?id=${encodeURIComponent(noticia.id)}`;
   }
   return "/noticias.html";
+}
+
+function isLegacyNoticiaRoute(pathname = window.location.pathname || "") {
+  return /\/noticia(?:\.html)?$/i.test(pathname);
 }
 
 function getSlugFromPath() {
@@ -157,6 +158,14 @@ function toAbsoluteUrl(path) {
   }
 }
 
+function getCanonicalNoticiaUrl(noticia) {
+  try {
+    return new URL(getNoticiaUrl(noticia), window.location.origin).href;
+  } catch (e) {
+    return window.location.href;
+  }
+}
+
 function updateSEO(noticia) {
   if (!noticia) return;
 
@@ -184,7 +193,7 @@ function updateSEO(noticia) {
     meta.setAttribute("content", content);
   }
 
-  const url = window.location.href;
+  const url = getCanonicalNoticiaUrl(noticia);
   const imageUrl = toAbsoluteUrl(
     normalizeImageUrl(noticia.imagemCard || noticia.imagem, "assets/logos/linq-dfe.png")
   );
@@ -608,8 +617,11 @@ async function loadNoticia() {
   try {
     await ensureStaticNoticiasManifest();
 
-    if (slugParam && staticNoticiasSlugs.has(slugParam) &&
-        window.location.pathname.endsWith("noticia.html")) {
+    if (
+      slugParam &&
+      staticNoticiasSlugs.has(slugParam) &&
+      isLegacyNoticiaRoute()
+    ) {
       window.location.replace(`/noticias/${encodeURIComponent(slugParam)}/`);
       return;
     }

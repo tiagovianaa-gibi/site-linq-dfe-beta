@@ -1478,7 +1478,11 @@ const firebaseConfig = window.RUNTIME_CONFIG.firebase;
       <div>${html}</div>
     `;
     if (els.previewOpenLink) {
-      els.previewOpenLink.href = `/noticia.html?slug=${encodeURIComponent(post.slug || slugify(title))}`;
+      const slug = post.slug || slugify(title);
+      els.previewOpenLink.href =
+        post.status === "publicada" && slug
+          ? `/noticias/${encodeURIComponent(slug)}/`
+          : `/noticia.html?slug=${encodeURIComponent(slug)}`;
     }
     openModal(els.previewModal);
   }

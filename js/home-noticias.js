@@ -70,10 +70,7 @@ async function ensureStaticNoticiasManifest() {
 function getNoticiaUrl(noticia) {
   const slug = String(noticia?.slug || "").trim();
   if (slug) {
-    if (staticNoticiasSlugs.has(slug)) {
-      return `/noticias/${encodeURIComponent(slug)}/`;
-    }
-    return `/noticia.html?slug=${encodeURIComponent(slug)}`;
+    return `/noticias/${encodeURIComponent(slug)}/`;
   }
   if (noticia?.id) {
     return `/noticia.html?id=${encodeURIComponent(noticia.id)}`;
