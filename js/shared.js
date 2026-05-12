@@ -366,7 +366,7 @@ function normalizeMainMenu() {
   const items = [
     { href: `${prefix}index.html`, label: "Inicial" },
     { href: `${prefix}circuito.html`, label: "Circuito" },
-    { href: `${prefix}dashboard/index.html`, label: "Central de Dados" },
+    { href: `${prefix}central-de-dados/`, label: "Central de Dados" },
     { href: `${prefix}quadrilhas.html`, label: "Quadrilhas" },
     { href: `${prefix}mapa.html`, label: "Mapa" },
     { href: `${prefix}noticias.html`, label: "Notícias" },
