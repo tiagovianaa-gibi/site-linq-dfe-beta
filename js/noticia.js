@@ -613,14 +613,15 @@ async function loadNoticia() {
   const slugParam = params.get("slug") || getSlugFromPath();
 
   const contentEl = document.getElementById("noticiaContent");
-  if (
-    contentEl?.dataset?.static === "true" &&
-    !idParam &&
-    !params.get("slug")
-  ) {
+  const hasStaticFallback = contentEl?.dataset?.static === "true";
+  const shouldKeepStaticFallback =
+    hasStaticFallback && !idParam && !!slugParam;
+
+  if (hasStaticFallback && !idParam && !slugParam) {
     return;
   }
-  if (contentEl) {
+
+  if (contentEl && !shouldKeepStaticFallback) {
     contentEl.innerHTML = "<p>Carregando Notícia...</p>";
   }
 
@@ -650,7 +651,7 @@ async function loadNoticia() {
     }
 
     if (!Array.isArray(noticiasCache) || !noticiasCache.length) {
-      if (contentEl) {
+      if (contentEl && !shouldKeepStaticFallback) {
         contentEl.innerHTML = "<p>Nenhuma Notícia encontrada.</p>";
       }
       return;
@@ -704,7 +705,7 @@ async function loadNoticia() {
     }
 
     if (!encontrada) {
-      if (contentEl) {
+      if (contentEl && !shouldKeepStaticFallback) {
         contentEl.innerHTML =
           "<p>não encontramos esta Notícia. Verifique se o link est correto.</p>";
       }
@@ -725,7 +726,7 @@ async function loadNoticia() {
     renderNoticia();
   } catch (error) {
     console.error("Erro ao carregar Notícia:", error);
-    if (contentEl) {
+    if (contentEl && !shouldKeepStaticFallback) {
       contentEl.innerHTML =
         "<p>Erro ao carregar a Notícia. Tente novamente mais tarde.</p>";
     }
