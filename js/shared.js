@@ -442,10 +442,14 @@ function setupDropdownClick(li, link) {
   const handleMouseEnter = () => {
     if (isMobileView()) return;
     closeAllDropdowns(li);
+    li.classList.add('open');
+    link.setAttribute('aria-expanded', 'true');
   };
 
   const handleMouseLeave = () => {
     if (isMobileView()) return;
+    li.classList.remove('open');
+    link.setAttribute('aria-expanded', 'false');
     closeAllDropdowns();
   };
 
