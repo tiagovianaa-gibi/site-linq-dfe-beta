@@ -329,6 +329,24 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
   font-size:11px; color:var(--muted); text-align:center; line-height:1.5;
   letter-spacing:.5px;
 }
+
+/* Field labels & hints */
+.field-group { display:flex; flex-direction:column; gap:5px; }
+.field-label {
+  font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:var(--gold); opacity:.75;
+}
+.field-hint {
+  font-size:10px; color:var(--muted); line-height:1.4; margin-top:1px;
+}
+.section-desc {
+  font-size:11px; color:var(--muted); line-height:1.5; margin-bottom:10px;
+}
+/* Attr descriptions */
+.attr-item { display:flex; flex-direction:column; gap:2px; }
+.attr-top { display:flex; align-items:center; gap:6px; }
+.attr-name { flex:1; }
+.attr-desc-text { font-size:9px; color:var(--muted); letter-spacing:.3px; padding-left:2px; }
 </style>
 </head>
 <body>
@@ -351,31 +369,53 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
 
     <div class="ctrl-section">
       <span class="ctrl-label">Identidade</span>
-      <div class="ctrl-row" style="gap:8px">
-        <input class="ctrl-input" id="inp-nome" placeholder="Seu nome" value="João Marcador" maxlength="20" oninput="updateCard()">
-        <select class="ctrl-select" id="inp-cargo" onchange="updateCard()">
-          <option value="Brincante">Brincante</option>
-          <option value="Coreógrafo">Coreógrafo</option>
-          <option value="Noivo">Noivo</option>
-          <option value="Noiva">Noiva</option>
-          <option value="Casal de Noivos">Casal de Noivos</option>
-          <option value="Destaque">Destaque</option>
-          <option value="Produção">Produção</option>
-          <option value="Músico">Músico</option>
-          <option value="Diretoria">Diretoria</option>
-          <option value="Torcida">Torcida</option>
-        </select>
-        <select class="ctrl-select" id="inp-quadrilha" onchange="updateCard()"></select>
-        <select class="ctrl-select" id="inp-temporada" onchange="updateCard()"></select>
+      <div class="ctrl-row" style="gap:12px">
+
+        <div class="field-group">
+          <label class="field-label" for="inp-nome">Nome completo</label>
+          <input class="ctrl-input" id="inp-nome" placeholder="Ex: Maria da Silva" value="João Marcador" maxlength="20" oninput="updateCard()">
+          <span class="field-hint">Nome que aparecerá na carta · máx. 20 caracteres</span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="inp-cargo">Função na quadrilha</label>
+          <select class="ctrl-select" id="inp-cargo" onchange="updateCard()">
+            <option value="Brincante">Brincante</option>
+            <option value="Coreógrafo">Coreógrafo</option>
+            <option value="Noivo">Noivo</option>
+            <option value="Noiva">Noiva</option>
+            <option value="Casal de Noivos">Casal de Noivos</option>
+            <option value="Destaque">Destaque</option>
+            <option value="Produção">Produção</option>
+            <option value="Músico">Músico</option>
+            <option value="Diretoria">Diretoria</option>
+            <option value="Torcida">Torcida</option>
+          </select>
+          <span class="field-hint">Qual é o seu papel dentro da quadrilha</span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="inp-quadrilha">Quadrilha</label>
+          <select class="ctrl-select" id="inp-quadrilha" onchange="updateCard()"></select>
+          <span class="field-hint">Selecione a quadrilha que você representa</span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="inp-temporada">Temporada</label>
+          <select class="ctrl-select" id="inp-temporada" onchange="updateCard()"></select>
+          <span class="field-hint">Ano do circuito de quadrilhas</span>
+        </div>
+
       </div>
     </div>
 
     <div class="ctrl-section">
       <span class="ctrl-label">Foto</span>
+      <p class="section-desc">Envie uma foto sua de frente, bem iluminada. Ela preenche o fundo da carta e pode ser ajustada depois.</p>
       <label class="upload-box" id="photo-upload-box" for="inp-photo">
         <input class="file-input" id="inp-photo" type="file" accept="image/*" onchange="handlePhotoUpload(event)">
-        <span class="upload-box-title" id="photo-upload-title">Selecionar foto</span>
-        <span class="upload-box-desc" id="photo-upload-desc">A foto ocupa toda a arte do card.</span>
+        <span class="upload-box-title" id="photo-upload-title">Toque aqui para selecionar</span>
+        <span class="upload-box-desc" id="photo-upload-desc">JPG ou PNG · preferencialmente retrato</span>
       </label>
       <div class="photo-meta" id="photo-meta">Nenhuma foto carregada.</div>
       <div class="photo-adjustments" id="photo-adjustments">
@@ -454,11 +494,13 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
         <span class="ctrl-label" style="margin-bottom:0">Atributos · 8.5–10</span>
         <span class="attrs-overall" id="sidebar-overall">9.28</span>
       </div>
+      <p class="section-desc" style="margin-top:6px">Avalie cada qualidade de 8.5 a 10. A média forma a nota geral da carta.</p>
       <div class="attr-row" id="attr-sliders"></div>
     </div>
 
     <div class="ctrl-section">
       <span class="ctrl-label">Exportar</span>
+      <p class="section-desc">Tudo pronto? Gere sua carta e compartilhe nas redes sociais!</p>
       <button class="action-btn btn-primary" onclick="downloadStories()">⬇ BAIXAR CARTA</button>
       <button class="action-btn btn-secondary" onclick="shareCard()">↗ COMPARTILHAR</button>
     </div>
@@ -501,12 +543,12 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
 
 <script>
 const ATTRS = [
-  { key:'arr', label:'ARR', full:'Arriúna',  color:'#EC4899' },
-  { key:'ene', label:'ENE', full:'Energia',  color:'#F59E0B' },
-  { key:'ani', label:'ANI', full:'Animação', color:'#22C55E' },
-  { key:'pre', label:'PRE', full:'Presença', color:'#818CF8' },
-  { key:'car', label:'CAR', full:'Carisma',  color:'#EF4444' },
-  { key:'est', label:'EST', full:'Estilo',   color:'#3B82F6' },
+  { key:'arr', label:'ARR', full:'Arriúna',  color:'#EC4899', desc:'Identificação com a cultura e o espírito junino' },
+  { key:'ene', label:'ENE', full:'Energia',  color:'#F59E0B', desc:'Garra, disposição e intensidade na performance' },
+  { key:'ani', label:'ANI', full:'Animação', color:'#22C55E', desc:'Capacidade de animar e envolver o público' },
+  { key:'pre', label:'PRE', full:'Presença', color:'#818CF8', desc:'Impacto visual e postura em quadra' },
+  { key:'car', label:'CAR', full:'Carisma',  color:'#EF4444', desc:'Magnetismo e conexão com a plateia' },
+  { key:'est', label:'EST', full:'Estilo',   color:'#3B82F6', desc:'Elegância no figurino e na apresentação' },
 ];
 
 const LIGAS = [
@@ -593,12 +635,15 @@ function init() {
 function buildAttrSliders() {
   document.getElementById('attr-sliders').innerHTML = ATTRS.map(a => `
     <div class="attr-item">
-      <span class="attr-name">${a.full}</span>
-      <input class="attr-slider" type="range" min="85" max="100" step="1"
-        value="${Math.round(attrValues[a.key] * 10)}"
-        style="accent-color:${a.color}"
-        oninput="setAttr('${a.key}',this.value)">
-      <span class="attr-val" id="av-${a.key}">${attrValues[a.key].toFixed(1)}</span>
+      <div class="attr-top">
+        <span class="attr-name">${a.full}</span>
+        <input class="attr-slider" type="range" min="85" max="100" step="1"
+          value="${Math.round(attrValues[a.key] * 10)}"
+          style="accent-color:${a.color}"
+          oninput="setAttr('${a.key}',this.value)">
+        <span class="attr-val" id="av-${a.key}">${attrValues[a.key].toFixed(1)}</span>
+      </div>
+      <span class="attr-desc-text">${a.desc}</span>
     </div>
   `).join('');
 }
