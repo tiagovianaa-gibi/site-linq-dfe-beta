@@ -1162,16 +1162,32 @@ async function downloadStories() {
   const overlay = document.getElementById('loading-overlay');
   overlay.classList.add('show');
   try {
-    // Renderiza a carta em alta resolução (supersampling 2×: 2160px → 1080px)
-    const OUT_W = 1080;
-    const hiRes = await _buildCardCanvasPure(OUT_W * 2);
+    // Formato feed Instagram 4:5 (1080×1350) — aceito no feed e nos stories
+    const FW = 1080, FH = 1350;
+    const PAD_X = 108, PAD_Y = 60; // margem ao redor da carta
+    const maxCW = FW - PAD_X * 2;  // 864px
+    const maxCH = FH - PAD_Y * 2;  // 1230px
+
+    // Ajusta carta para caber no frame mantendo proporção
+    const hiRes = await _buildCardCanvasPure(maxCW * 2); // supersampling 2×
+    const cardRatio = hiRes.height / hiRes.width;
+    let cw = maxCW, ch = Math.round(maxCW * cardRatio);
+    if (ch > maxCH) { ch = maxCH; cw = Math.round(maxCH / cardRatio); }
+
     const out = document.createElement('canvas');
-    out.width = OUT_W;
-    out.height = Math.round(OUT_W * hiRes.height / hiRes.width);
+    out.width = FW; out.height = FH;
     const ctx = out.getContext('2d');
+
+    // Fundo escuro (cor base do site)
+    ctx.fillStyle = '#060D16';
+    ctx.fillRect(0, 0, FW, FH);
+
+    // Carta centralizada com downscale 2:1
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(hiRes, 0, 0, out.width, out.height);
+    const cx = Math.round((FW - cw) / 2);
+    const cy = Math.round((FH - ch) / 2);
+    ctx.drawImage(hiRes, cx, cy, cw, ch);
 
     const nome = (document.getElementById('inp-nome').value || 'card').replace(/\s+/g, '_');
     const blob = await new Promise((resolve, reject) => {
