@@ -366,15 +366,13 @@ function normalizeMainMenu() {
   const items = [
     { href: `${prefix}index.html`, label: "Inicial" },
     { href: `${prefix}circuito.html`, label: "Circuito" },
+    { href: `${prefix}cartas.html`, label: "Cartas da Liga" },
     { href: `${prefix}central-de-dados/`, label: "Central de Dados", target: "_blank" },
     { href: `${prefix}quadrilhas.html`, label: "Quadrilhas" },
     { href: `${prefix}mapa.html`, label: "Mapa" },
     { href: `${prefix}noticias.html`, label: "Notícias" },
     { href: `${prefix}diretoria.html`, label: "Diretoria" },
     { href: `${prefix}calendario-temporada.html`, label: "Temporada" },
-    { href: `${prefix}trofeu-quadrilheiro/`, label: "Troféu Quadrilheiro" },
-    { href: `${prefix}bloco-arriuna/`, label: "Bloco Arriúna" },
-    { href: `${prefix}pre-junino/`, label: "Esquenta São João" },
     { href: `${prefix}confebraq.html`, label: "CONFEBRAQ" },
     { href: `${prefix}fotos.html`, label: "Fotos" },
     { href: `${prefix}portal.html`, label: "Portal da Liga" },
@@ -612,10 +610,47 @@ function syncNavHeight() {
   }
 }
 
+function setupEventosDropdown() {
+  const navList = document.querySelector('nav ul');
+  if (!navList) return;
+  if (navList.querySelector('.nav-eventos-menu')) return;
+
+  const homeLink = navList.querySelector('a[href$="index.html"]');
+  const homeHref = homeLink ? homeLink.getAttribute('href') || '' : '';
+  let prefix = '';
+  if (homeHref.startsWith('../')) prefix = '../';
+  else if (homeHref.startsWith('/')) prefix = '/';
+
+  const li = document.createElement('li');
+  li.classList.add('has-dropdown');
+
+  const a = document.createElement('a');
+  a.href = '#';
+  a.textContent = 'Eventos';
+  li.appendChild(a);
+
+  const menu = document.createElement('div');
+  menu.className = 'dropdown-menu nav-eventos-menu';
+  menu.innerHTML = [
+    { href: `${prefix}trofeu-quadrilheiro/`, label: 'Troféu Quadrilheiro' },
+    { href: `${prefix}bloco-arriuna/`, label: 'Bloco Arriúna' },
+    { href: `${prefix}pre-junino/`, label: 'Esquenta São João' },
+  ].map(e => `<a href="${e.href}">${e.label}</a>`).join('');
+  li.appendChild(menu);
+
+  const calendarioLink = navList.querySelector('a[href*="calendario-temporada"]');
+  const insertBefore = calendarioLink ? calendarioLink.closest('li') : null;
+  if (insertBefore) navList.insertBefore(li, insertBefore);
+  else navList.appendChild(li);
+
+  setupDropdownClick(li, a);
+}
+
 runWhenReady(normalizeMainMenu);
 runWhenReady(setupFiliadasDropdown);
 runWhenReady(setupCircuitoDropdown);
 runWhenReady(setupDiretoriaDropdown);
+runWhenReady(setupEventosDropdown);
 runWhenReady(syncNavHeight);
 runWhenReady(initRankingFilters);
 runWhenReady(setupAccessibilityHelpers);
