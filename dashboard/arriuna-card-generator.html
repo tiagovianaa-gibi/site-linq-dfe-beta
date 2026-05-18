@@ -1082,10 +1082,32 @@ async function downloadStories() {
         const cr = Math.max(SW / bgImg.naturalWidth, SH / bgImg.naturalHeight);
         const bw = bgImg.naturalWidth * cr, bh = bgImg.naturalHeight * cr;
         const bx = (SW - bw) / 2, by = (SH - bh) / 2;
+
+        // Blur cross-platform (ctx.filter não funciona no iOS Safari):
+        // desenha em canvas minúsculo e estica de volta — interpolação = desfoque
+        const BLUR_SCALE = 14;
+        const tmpW = Math.max(1, Math.ceil(SW / BLUR_SCALE));
+        const tmpH = Math.max(1, Math.ceil(SH / BLUR_SCALE));
+        const tmpCanvas = document.createElement('canvas');
+        tmpCanvas.width = tmpW; tmpCanvas.height = tmpH;
+        const tmpCtx = tmpCanvas.getContext('2d');
+        tmpCtx.imageSmoothingEnabled = true;
+        tmpCtx.imageSmoothingQuality = 'high';
+        tmpCtx.drawImage(bgImg,
+          (bx - 40) * tmpW / SW, (by - 40) * tmpH / SH,
+          (bw + 80) * tmpW / SW, (bh + 80) * tmpH / SH
+        );
         ctx.save();
-        ctx.filter = 'blur(20px) brightness(0.4)';
-        ctx.drawImage(bgImg, bx - 40, by - 40, bw + 80, bh + 80);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(tmpCanvas, bx - 40, by - 40, bw + 80, bh + 80);
         ctx.restore();
+        // Escurecimento via overlay (substitui brightness filter)
+        ctx.save();
+        ctx.fillStyle = 'rgba(0,0,0,0.62)';
+        ctx.fillRect(0, 0, SW, SH);
+        ctx.restore();
+
         bgDrawn = true;
       }
     }
