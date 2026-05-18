@@ -288,6 +288,47 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
   .sidebar-b { order:3; }
   #the-card { width:260px; height:382px; }
 }
+
+/* Share modal */
+.share-modal {
+  display:none; position:fixed; inset:0; z-index:3000;
+  background:rgba(0,0,0,.88); backdrop-filter:blur(8px);
+  align-items:center; justify-content:center; padding:16px;
+}
+.share-modal.open { display:flex; }
+.share-modal-box {
+  background:#0E1A28; border:1px solid rgba(245,166,35,.3);
+  border-radius:18px; padding:20px 18px; max-width:380px; width:100%;
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+  max-height:92vh; overflow-y:auto;
+}
+.share-preview {
+  width:100%; border-radius:10px; object-fit:contain;
+  max-height:52vh; box-shadow:0 8px 32px rgba(0,0,0,.6);
+}
+.share-actions { display:flex; flex-direction:column; gap:10px; width:100%; }
+.share-btn-main {
+  background:var(--gold); color:#000; border:none; border-radius:10px;
+  padding:14px; font-family:'Bebas Neue',cursive; font-size:18px;
+  letter-spacing:2px; cursor:pointer; width:100%; transition:opacity .2s;
+}
+.share-btn-main:active { opacity:.8; }
+.share-btn-save {
+  background:rgba(255,255,255,.07); color:var(--text);
+  border:1px solid rgba(255,255,255,.12); border-radius:10px;
+  padding:12px; font-family:'Bebas Neue',cursive; font-size:15px;
+  letter-spacing:2px; cursor:pointer; width:100%; transition:opacity .2s;
+}
+.share-btn-save:active { opacity:.7; }
+.share-btn-close {
+  background:transparent; color:var(--muted); border:none;
+  font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  cursor:pointer; font-family:'Barlow Condensed',sans-serif; padding:4px 0;
+}
+.share-hint {
+  font-size:11px; color:var(--muted); text-align:center; line-height:1.5;
+  letter-spacing:.5px;
+}
 </style>
 </head>
 <body>
@@ -437,6 +478,18 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
     <p>Depois abra: <strong>http://localhost:8080/dashboard/arriuna-card-generator.html</strong></p>
     <p><strong>Opção 3 — Node.js</strong></p>
     <code>npx serve . -p 8080</code>
+  </div>
+</div>
+
+<div class="share-modal" id="share-modal">
+  <div class="share-modal-box">
+    <img id="share-preview-img" class="share-preview" src="" alt="Carta gerada">
+    <div class="share-actions">
+      <button class="share-btn-main" id="btn-share-native">📤 COMPARTILHAR</button>
+      <button class="share-btn-save" id="btn-share-save">⬇ SALVAR IMAGEM</button>
+    </div>
+    <p class="share-hint" id="share-hint"></p>
+    <button class="share-btn-close" id="btn-share-close">FECHAR</button>
   </div>
 </div>
 
@@ -1137,19 +1190,11 @@ async function downloadStories() {
     ctx.restore();
 
     const nome = (document.getElementById('inp-nome').value || 'card').replace(/\s+/g, '_');
-    await new Promise((resolve, reject) => {
-      stories.toBlob(blob => {
-        if (!blob) { reject(new Error('toBlob falhou')); return; }
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.download = `arriuna_stories_${nome}.png`;
-        link.href = url;
-        link.click();
-        setTimeout(() => URL.revokeObjectURL(url), 5000);
-        resolve();
-      }, 'image/png', 1.0);
+    const blob = await new Promise((resolve, reject) => {
+      stories.toBlob(b => b ? resolve(b) : reject(new Error('toBlob falhou')), 'image/png', 1.0);
     });
-    // Evento GA — funciona tanto no iframe quanto direto
+
+    // Evento GA
     try {
       const _gtag = (typeof gtag === 'function') ? gtag
                   : (window.parent && typeof window.parent.gtag === 'function') ? window.parent.gtag
@@ -1160,7 +1205,8 @@ async function downloadStories() {
         temporada: document.getElementById('inp-temporada').value,
       });
     } catch(_) {}
-    showToast('✅ Carta baixada!');
+
+    openShareModal(blob, `arriuna_carta_${nome}.png`);
   } catch(e) { console.error(e); showToast('⚠️ Erro ao gerar a carta.'); }
   finally { overlay.classList.remove('show'); }
 }
@@ -1186,6 +1232,68 @@ async function shareCard() {
     }, 'image/png');
   } catch { overlay.classList.remove('show'); showToast('⚠️ Erro ao gerar o card.'); }
 }
+
+// ── Share modal ─────────────────────────────────────────
+let _shareBlob = null, _shareObjectUrl = null, _shareFilename = 'arriuna_carta.png';
+
+function openShareModal(blob, filename) {
+  if (_shareObjectUrl) URL.revokeObjectURL(_shareObjectUrl);
+  _shareBlob = blob;
+  _shareFilename = filename || 'arriuna_carta.png';
+  _shareObjectUrl = URL.createObjectURL(blob);
+
+  document.getElementById('share-preview-img').src = _shareObjectUrl;
+
+  const canShare = navigator.share && navigator.canShare &&
+    navigator.canShare({ files: [new File([blob], _shareFilename, { type: 'image/png' })] });
+
+  const hint = document.getElementById('share-hint');
+  if (canShare) {
+    document.getElementById('btn-share-native').textContent = '📤 COMPARTILHAR';
+    hint.textContent = 'Compartilhe direto no WhatsApp, Instagram, e mais.';
+  } else {
+    document.getElementById('btn-share-native').textContent = '⬇ BAIXAR CARTA';
+    hint.textContent = 'Salve a imagem e compartilhe onde quiser.';
+  }
+
+  document.getElementById('share-modal').classList.add('open');
+}
+
+function closeShareModal() {
+  document.getElementById('share-modal').classList.remove('open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btn-share-native').addEventListener('click', async () => {
+    if (!_shareBlob) return;
+    const file = new File([_shareBlob], _shareFilename, { type: 'image/png' });
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: 'Minha Carta ARRIÚNA · LINQ-DFE' });
+      } catch (e) {
+        if (e.name !== 'AbortError') _doDownload();
+      }
+    } else {
+      _doDownload();
+    }
+  });
+
+  document.getElementById('btn-share-save').addEventListener('click', _doDownload);
+  document.getElementById('btn-share-close').addEventListener('click', closeShareModal);
+
+  document.getElementById('share-modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('share-modal')) closeShareModal();
+  });
+});
+
+function _doDownload() {
+  if (!_shareObjectUrl) return;
+  const link = document.createElement('a');
+  link.download = _shareFilename;
+  link.href = _shareObjectUrl;
+  link.click();
+}
+// ────────────────────────────────────────────────────────
 
 function showModal() {
   document.getElementById('server-modal').style.display = 'flex';
