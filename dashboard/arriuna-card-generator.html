@@ -330,23 +330,42 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
   letter-spacing:.5px;
 }
 
-/* Field labels & hints */
+/* Field labels */
 .field-group { display:flex; flex-direction:column; gap:5px; }
 .field-label {
+  display:flex; align-items:center; gap:5px;
   font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
   color:var(--gold); opacity:.75;
 }
-.field-hint {
-  font-size:10px; color:var(--muted); line-height:1.4; margin-top:1px;
+/* Tooltip */
+.tip-btn {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:14px; height:14px; border-radius:50%; flex-shrink:0;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.13);
+  color:var(--muted); font-size:8px; font-weight:700; cursor:pointer;
+  font-family:'Barlow Condensed',sans-serif; line-height:1;
+  transition:background .15s, color .15s; padding:0;
 }
-.section-desc {
-  font-size:11px; color:var(--muted); line-height:1.5; margin-bottom:10px;
+.tip-btn:hover, .tip-btn.active { background:rgba(245,166,35,.2); color:var(--gold); border-color:rgba(245,166,35,.4); }
+.tip-balloon {
+  position:fixed; z-index:9999;
+  background:#1B2D42; border:1px solid rgba(245,166,35,.35);
+  border-radius:9px; padding:9px 12px;
+  font-size:11px; font-family:'Barlow Condensed',sans-serif;
+  color:#C8D8E8; line-height:1.5; max-width:210px;
+  box-shadow:0 6px 20px rgba(0,0,0,.55); opacity:0;
+  transition:opacity .15s; pointer-events:none;
 }
-/* Attr descriptions */
-.attr-item { display:flex; flex-direction:column; gap:2px; }
-.attr-top { display:flex; align-items:center; gap:6px; }
-.attr-name { flex:1; }
-.attr-desc-text { font-size:9px; color:var(--muted); letter-spacing:.3px; padding-left:2px; }
+.tip-balloon.show { opacity:1; pointer-events:auto; }
+.tip-balloon::before {
+  content:''; position:absolute; top:-5px; left:var(--arr, 14px);
+  width:8px; height:8px; background:#1B2D42;
+  border-left:1px solid rgba(245,166,35,.35);
+  border-top:1px solid rgba(245,166,35,.35);
+  transform:rotate(45deg);
+}
+/* Attr layout */
+.attr-item { display:flex; align-items:center; gap:7px; }
 </style>
 </head>
 <body>
@@ -372,13 +391,12 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
       <div class="ctrl-row" style="gap:12px">
 
         <div class="field-group">
-          <label class="field-label" for="inp-nome">Nome completo</label>
+          <label class="field-label" for="inp-nome">Nome completo <button class="tip-btn" type="button" data-tip="Nome que aparecerá na carta. Máx. 20 caracteres.">i</button></label>
           <input class="ctrl-input" id="inp-nome" placeholder="Ex: Maria da Silva" value="João Marcador" maxlength="20" oninput="updateCard()">
-          <span class="field-hint">Nome que aparecerá na carta · máx. 20 caracteres</span>
         </div>
 
         <div class="field-group">
-          <label class="field-label" for="inp-cargo">Função na quadrilha</label>
+          <label class="field-label" for="inp-cargo">Função <button class="tip-btn" type="button" data-tip="Seu papel dentro da quadrilha. Aparece abaixo da nota na carta.">i</button></label>
           <select class="ctrl-select" id="inp-cargo" onchange="updateCard()">
             <option value="Brincante">Brincante</option>
             <option value="Coreógrafo">Coreógrafo</option>
@@ -391,27 +409,23 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
             <option value="Diretoria">Diretoria</option>
             <option value="Torcida">Torcida</option>
           </select>
-          <span class="field-hint">Qual é o seu papel dentro da quadrilha</span>
         </div>
 
         <div class="field-group">
-          <label class="field-label" for="inp-quadrilha">Quadrilha</label>
+          <label class="field-label" for="inp-quadrilha">Quadrilha <button class="tip-btn" type="button" data-tip="Selecione a quadrilha que você representa no circuito LINQ-DFE.">i</button></label>
           <select class="ctrl-select" id="inp-quadrilha" onchange="updateCard()"></select>
-          <span class="field-hint">Selecione a quadrilha que você representa</span>
         </div>
 
         <div class="field-group">
-          <label class="field-label" for="inp-temporada">Temporada</label>
+          <label class="field-label" for="inp-temporada">Temporada <button class="tip-btn" type="button" data-tip="Ano do circuito de quadrilhas ao qual a carta pertence.">i</button></label>
           <select class="ctrl-select" id="inp-temporada" onchange="updateCard()"></select>
-          <span class="field-hint">Ano do circuito de quadrilhas</span>
         </div>
 
       </div>
     </div>
 
     <div class="ctrl-section">
-      <span class="ctrl-label">Foto</span>
-      <p class="section-desc">Envie uma foto sua de frente, bem iluminada. Ela preenche o fundo da carta e pode ser ajustada depois.</p>
+      <span class="ctrl-label">Foto <button class="tip-btn" type="button" data-tip="Envie uma foto sua de frente, bem iluminada. Ela preenche o fundo da carta e pode ser ajustada com zoom e posição.">i</button></span>
       <label class="upload-box" id="photo-upload-box" for="inp-photo">
         <input class="file-input" id="inp-photo" type="file" accept="image/*" onchange="handlePhotoUpload(event)">
         <span class="upload-box-title" id="photo-upload-title">Toque aqui para selecionar</span>
@@ -491,16 +505,14 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
 
     <div class="ctrl-section">
       <div class="attrs-header">
-        <span class="ctrl-label" style="margin-bottom:0">Atributos · 8.5–10</span>
+        <span class="ctrl-label" style="margin-bottom:0">Atributos · 8.5–10 <button class="tip-btn" type="button" data-tip="Avalie cada qualidade de 8.5 a 10. A média dos 6 atributos forma a nota geral da carta.">i</button></span>
         <span class="attrs-overall" id="sidebar-overall">9.28</span>
       </div>
-      <p class="section-desc" style="margin-top:6px">Avalie cada qualidade de 8.5 a 10. A média forma a nota geral da carta.</p>
       <div class="attr-row" id="attr-sliders"></div>
     </div>
 
     <div class="ctrl-section">
       <span class="ctrl-label">Exportar</span>
-      <p class="section-desc">Tudo pronto? Gere sua carta e compartilhe nas redes sociais!</p>
       <button class="action-btn btn-primary" onclick="downloadStories()">⬇ BAIXAR CARTA</button>
       <button class="action-btn btn-secondary" onclick="shareCard()">↗ COMPARTILHAR</button>
     </div>
@@ -635,15 +647,12 @@ function init() {
 function buildAttrSliders() {
   document.getElementById('attr-sliders').innerHTML = ATTRS.map(a => `
     <div class="attr-item">
-      <div class="attr-top">
-        <span class="attr-name">${a.full}</span>
-        <input class="attr-slider" type="range" min="85" max="100" step="1"
-          value="${Math.round(attrValues[a.key] * 10)}"
-          style="accent-color:${a.color}"
-          oninput="setAttr('${a.key}',this.value)">
-        <span class="attr-val" id="av-${a.key}">${attrValues[a.key].toFixed(1)}</span>
-      </div>
-      <span class="attr-desc-text">${a.desc}</span>
+      <span class="attr-name">${a.full} <button class="tip-btn" type="button" data-tip="${a.desc}">i</button></span>
+      <input class="attr-slider" type="range" min="85" max="100" step="1"
+        value="${Math.round(attrValues[a.key] * 10)}"
+        style="accent-color:${a.color}"
+        oninput="setAttr('${a.key}',this.value)">
+      <span class="attr-val" id="av-${a.key}">${attrValues[a.key].toFixed(1)}</span>
     </div>
   `).join('');
 }
@@ -1267,6 +1276,45 @@ function _doDownload() {
   link.href = _shareObjectUrl;
   link.click();
 }
+// ────────────────────────────────────────────────────────
+
+// ── Tooltip ⓘ ───────────────────────────────────────────
+(function() {
+  const balloon = document.createElement('div');
+  balloon.className = 'tip-balloon';
+  document.body.appendChild(balloon);
+  let active = null;
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tip-btn');
+    if (btn) {
+      e.stopPropagation();
+      if (active === btn) { hide(); return; }
+      if (active) active.classList.remove('active');
+      active = btn;
+      btn.classList.add('active');
+      balloon.textContent = btn.dataset.tip;
+      balloon.classList.add('show');
+      const r = btn.getBoundingClientRect();
+      let left = r.left - 12;
+      const maxLeft = window.innerWidth - 218;
+      if (left > maxLeft) left = maxLeft;
+      if (left < 8) left = 8;
+      balloon.style.top  = (r.bottom + 8) + 'px';
+      balloon.style.left = left + 'px';
+      // Arrow alignment
+      const arrowLeft = Math.min(Math.max(r.left - left + r.width/2 - 4, 8), 180);
+      balloon.style.setProperty('--arr', arrowLeft + 'px');
+    } else {
+      hide();
+    }
+  });
+
+  function hide() {
+    balloon.classList.remove('show');
+    if (active) { active.classList.remove('active'); active = null; }
+  }
+})();
 // ────────────────────────────────────────────────────────
 
 function showModal() {
