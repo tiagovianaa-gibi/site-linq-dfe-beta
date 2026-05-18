@@ -15,20 +15,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Language" content="pt-BR">
-  <title>Mapa das Quadrilhas | LINQ-DFE</title>
-  <meta name="description" content="Mapa das quadrilhas juninas da LINQ-DFE no DF e Entorno para encontrar grupos por cidade, regiao e grupo competitivo.">
+  <title>Figurinhas · ARRIÚNA | LINQ-DFE</title>
+  <meta name="description" content="Crie sua figurinha personalizada do Circuito LINQDFE. Monte seu card de quadrilheiro estilo FUT com atributos, foto e visual junino.">
   <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://linqdfe.com.br/mapa.html">
+  <link rel="canonical" href="https://linqdfe.com.br/cartas.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Mapa das Quadrilhas | LINQ-DFE">
-  <meta property="og:description" content="Mapa das quadrilhas juninas da LINQ-DFE no DF e Entorno para encontrar grupos por cidade, regiao e grupo competitivo.">
-  <meta property="og:url" content="https://linqdfe.com.br/mapa.html">
+  <meta property="og:title" content="Figurinhas · ARRIÚNA | LINQ-DFE">
+  <meta property="og:description" content="Crie sua figurinha personalizada do Circuito LINQDFE. Monte seu card de quadrilheiro estilo FUT com atributos, foto e visual junino.">
+  <meta property="og:url" content="https://linqdfe.com.br/cartas.html">
   <meta property="og:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
   <meta property="og:site_name" content="LINQ-DFE">
   <meta property="og:locale" content="pt_BR">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Mapa das Quadrilhas | LINQ-DFE">
-  <meta name="twitter:description" content="Mapa das quadrilhas juninas da LINQ-DFE no DF e Entorno para encontrar grupos por cidade, regiao e grupo competitivo.">
+  <meta name="twitter:title" content="Figurinhas · ARRIÚNA | LINQ-DFE">
+  <meta name="twitter:description" content="Crie sua figurinha personalizada do Circuito LINQDFE. Monte seu card de quadrilheiro estilo FUT com atributos, foto e visual junino.">
   <meta name="twitter:image" content="https://linqdfe.com.br/assets/logos/linq-dfe.png">
   <script type="application/ld+json">
     {
@@ -41,64 +41,57 @@
     }
   </script>
   <link rel="stylesheet" href="css/style.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    #conteudo-principal { padding: 0; }
+    .figurinhas-frame { display: block; width: 100%; border: none; }
+  </style>
 </head>
 <body>
-  <nav>
-    <div class="container">
-      <div class="logo">
-        <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
-        <span class="logo-text">LINQ-DFE</span>
-      </div>
-      <ul>
-        <li><a href="index.html">Inicial</a></li>
-        <li><a href="circuito.html">Circuito</a></li>
-
-
-      <li><a href="dashboard/index.html">Central de Dados</a></li>
-        <li><a href="quadrilhas.html">Quadrilhas</a></li>
-        <li><a href="mapa.html">Mapa</a></li>
-        <li><a href="noticias.html">Not&iacute;cias</a></li>
-        <li><a href="acervo.html">Acervo</a></li>
-      <li><a href="cartas.html">Cartas da Liga</a></li>
-        <li><a href="diretoria.html">Diretoria</a></li>
-        <li><a href="documentos.html">Documentos</a></li>
-        <li><a href="portal.html">Portal da Liga</a></li>
-        
-      </ul>
+<nav>
+  <div class="container">
+    <div class="logo">
+      <img src="assets/logos/linq-dfe.png" alt="LINQ-DFE" onerror="this.style.display='none'">
+      <span class="logo-text">LINQ-DFE</span>
     </div>
-  </nav>
+    <ul>
+      <li><a href="index.html">Inicial</a></li>
+      <li><a href="circuito.html">Circuito</a></li>
+      <li><a href="dashboard/index.html">Central de Dados</a></li>
+      <li><a href="quadrilhas.html">Quadrilhas</a></li>
+      <li><a href="mapa.html">Mapa</a></li>
+      <li><a href="noticias.html">Not&iacute;cias</a></li>
+      <li><a href="acervo.html">Acervo</a></li>
+      <li><a href="cartas.html" class="active">Cartas da Liga</a></li>
+      <li><a href="diretoria.html">Diretoria</a></li>
+      <li><a href="documentos.html">Documentos</a></li>
+      <li><a href="portal.html">Portal da Liga</a></li>
+    </ul>
+  </div>
+</nav>
 
-  <main>
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">Mapa das Quadrilhas</h1>
-        <p class="section-subtitle">Localize todas as quadrilhas no mapa</p>
+<main id="conteudo-principal">
+  <iframe
+    class="figurinhas-frame"
+    src="dashboard/arriuna-card-generator.html"
+    title="ARRIÚNA · Criador de Figurinhas"
+    allow="downloads"
+  ></iframe>
+</main>
 
-        <div class="search-filters" style="margin-bottom: var(--spacing-md);">
-          <input type="text" id="searchMapa" class="search-box" placeholder="Buscar quadrilha...">
-          <div class="filters">
-            <button class="filter-btn active" onclick="filterMapa('all')">Todas</button>
-            <button class="filter-btn" onclick="filterMapa('Especial')">Especial</button>
-            <button class="filter-btn" onclick="filterMapa('Acesso')">Acesso</button>
-          </div>
-        </div>
+<script>
+(function () {
+  var nav = document.querySelector('nav');
+  var frame = document.querySelector('.figurinhas-frame');
+  function resize() {
+    frame.style.height = (window.innerHeight - (nav ? nav.offsetHeight : 62)) + 'px';
+  }
+  window.addEventListener('resize', resize);
+  resize();
+})();
+</script>
 
-        <div id="map"></div>
-
-        <section class="section" style="padding-bottom:0;" aria-label="Lista de cidades e quadrilhas">
-          <h2 class="section-title section-title-left" style="margin-bottom: var(--spacing-sm);">Lista por cidade</h2>
-          <p class="card-text" style="margin-bottom: var(--spacing-md);">Fallback textual para acessibilidade e indexacao.</p>
-          <div id="mapaListaFallback" class="grid" style="margin-top: 0;"></div>
-          <p id="mapaListaEmpty" class="muted hidden" style="margin-top: var(--spacing-sm);">Nenhuma quadrilha encontrada para o filtro atual.</p>
-        </section>
-      </div>
-    </section>
-  </main>
-
-  <script type="module" src="js/mapa.min.js"></script>
-  <script type="module" src="js/shared.min.js"></script>
+<script src="js/runtime-config.js"></script>
+<script type="module" src="js/shared.min.js"></script>
 
 <footer class="site-footer" aria-label="Rodap&eacute;">
 
@@ -172,6 +165,8 @@
 
         <li><a href="acervo.html">Acervo</a></li>
 
+        <li><a href="cartas.html">Cartas da Liga</a></li>
+
         <li><a href="sitemap.xml">Sitemap</a></li>
 
       </ul>
@@ -190,7 +185,3 @@
 
 </body>
 </html>
-
-
-
-
