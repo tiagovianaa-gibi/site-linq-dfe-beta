@@ -1108,93 +1108,22 @@ async function downloadStories() {
   const overlay = document.getElementById('loading-overlay');
   overlay.classList.add('show');
   try {
-    const SW = 1080, SH = 1920;
-
-    // Renderiza 2× o tamanho final e escala para baixo → supersampling 2:1
-    const cwTarget = Math.round(SW * 0.82); // 886px no output final
-    const cardCanvas = await _buildCardCanvasPure(cwTarget * 2); // 1772px internamente
-    const cw = cwTarget;
-    const ch = Math.round(cw * cardCanvas.height / cardCanvas.width);
-
-    const stories = document.createElement('canvas');
-    stories.width = SW; stories.height = SH;
-    const ctx = stories.getContext('2d');
+    // Renderiza a carta em alta resolução (supersampling 2×: 2160px → 1080px)
+    const OUT_W = 1080;
+    const hiRes = await _buildCardCanvasPure(OUT_W * 2);
+    const out = document.createElement('canvas');
+    out.width = OUT_W;
+    out.height = Math.round(OUT_W * hiRes.height / hiRes.width);
+    const ctx = out.getContext('2d');
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
-
-    // Fundo: foto borrada ou preto sólido
-    let bgDrawn = false;
-    if (uploadedArt.dataUrl) {
-      const bgImg = await new Promise(resolve => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => resolve(null);
-        img.src = uploadedArt.dataUrl;
-      });
-      if (bgImg) {
-        const cr = Math.max(SW / bgImg.naturalWidth, SH / bgImg.naturalHeight);
-        const bw = bgImg.naturalWidth * cr, bh = bgImg.naturalHeight * cr;
-        const bx = (SW - bw) / 2, by = (SH - bh) / 2;
-
-        // Blur cross-platform (ctx.filter não funciona no iOS Safari):
-        // desenha em canvas minúsculo e estica de volta — interpolação = desfoque
-        const BLUR_SCALE = 14;
-        const tmpW = Math.max(1, Math.ceil(SW / BLUR_SCALE));
-        const tmpH = Math.max(1, Math.ceil(SH / BLUR_SCALE));
-        const tmpCanvas = document.createElement('canvas');
-        tmpCanvas.width = tmpW; tmpCanvas.height = tmpH;
-        const tmpCtx = tmpCanvas.getContext('2d');
-        tmpCtx.imageSmoothingEnabled = true;
-        tmpCtx.imageSmoothingQuality = 'high';
-        tmpCtx.drawImage(bgImg,
-          (bx - 40) * tmpW / SW, (by - 40) * tmpH / SH,
-          (bw + 80) * tmpW / SW, (bh + 80) * tmpH / SH
-        );
-        ctx.save();
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        ctx.drawImage(tmpCanvas, bx - 40, by - 40, bw + 80, bh + 80);
-        ctx.restore();
-        // Escurecimento via overlay (substitui brightness filter)
-        ctx.save();
-        ctx.fillStyle = 'rgba(0,0,0,0.62)';
-        ctx.fillRect(0, 0, SW, SH);
-        ctx.restore();
-
-        bgDrawn = true;
-      }
-    }
-    if (!bgDrawn) { ctx.fillStyle = '#080808'; ctx.fillRect(0, 0, SW, SH); }
-
-    // Vinheta
-    const vign = ctx.createRadialGradient(SW/2, SH/2, SW*0.2, SW/2, SH/2, SW*0.85);
-    vign.addColorStop(0, 'rgba(0,0,0,0)');
-    vign.addColorStop(1, 'rgba(0,0,0,0.5)');
-    ctx.fillStyle = vign;
-    ctx.fillRect(0, 0, SW, SH);
-
-    // Card: downscale 2:1 com alta qualidade (supersampling)
-    const cx = Math.round((SW - cw) / 2);
-    const cy = Math.round((SH - ch) / 2 - SH * 0.06);
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(cardCanvas, cx, cy, cw, ch);
-
-    // Logo ARRIÚNA discreto no rodapé
-    ctx.save();
-    ctx.font = '700 26px "Bebas Neue", cursive';
-    ctx.letterSpacing = '5px';
-    ctx.fillStyle = 'rgba(245,166,35,0.45)';
-    ctx.textAlign = 'center';
-    ctx.fillText('ARRIÚNA · LINQ-DFE', SW / 2, SH - 54);
-    ctx.restore();
+    ctx.drawImage(hiRes, 0, 0, out.width, out.height);
 
     const nome = (document.getElementById('inp-nome').value || 'card').replace(/\s+/g, '_');
     const blob = await new Promise((resolve, reject) => {
-      stories.toBlob(b => b ? resolve(b) : reject(new Error('toBlob falhou')), 'image/png', 1.0);
+      out.toBlob(b => b ? resolve(b) : reject(new Error('toBlob falhou')), 'image/png', 1.0);
     });
 
-    // Evento GA
     try {
       const _gtag = (typeof gtag === 'function') ? gtag
                   : (window.parent && typeof window.parent.gtag === 'function') ? window.parent.gtag
