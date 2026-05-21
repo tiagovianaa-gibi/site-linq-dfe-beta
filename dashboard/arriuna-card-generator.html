@@ -839,14 +839,32 @@ async function _buildCardCanvasPure(targetW) {
   bg.addColorStop(1,   '#050810');
   ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
 
+  // Vignette radial nas bordas para profundidade
+  const vig = ctx.createRadialGradient(W/2, H*0.42, H*0.2, W/2, H*0.42, H*0.78);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(1, 'rgba(0,0,0,0.38)');
+  ctx.fillStyle = vig; ctx.fillRect(0, 0, W, H);
+
   // ── 2. Textura diagonal sutil ─────────────────────────
   ctx.save();
-  ctx.globalAlpha = 0.028;
+  ctx.globalAlpha = 0.022;
   ctx.strokeStyle = '#F5A623';
   ctx.lineWidth = S;
   const sp = 9 * S;
   for (let x = -H; x < W + H; x += sp) {
     ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + H, H); ctx.stroke();
+  }
+  ctx.restore();
+
+  // Bandeirinhas juninas sutis no topo
+  ctx.save();
+  ctx.globalAlpha = 0.022;
+  const fgW = 10*S, fgH = 7*S;
+  const fgCols = ['rgba(220,180,30,1)','rgba(180,40,40,1)','rgba(30,140,60,1)','rgba(20,70,180,1)'];
+  for (let xi = -fgW; xi < W + fgW; xi += fgW) {
+    ctx.fillStyle = fgCols[Math.abs(Math.floor(xi / fgW)) % fgCols.length];
+    ctx.beginPath(); ctx.moveTo(xi, 0); ctx.lineTo(xi + fgW/2, fgH); ctx.lineTo(xi + fgW, 0);
+    ctx.closePath(); ctx.fill();
   }
   ctx.restore();
 
@@ -866,13 +884,13 @@ async function _buildCardCanvasPure(targetW) {
   grd.addColorStop(0,    'rgba(8,14,26,0.22)');
   grd.addColorStop(0.28, 'rgba(0,0,0,0)');
   grd.addColorStop(0.50, 'rgba(0,0,0,0.38)');
-  grd.addColorStop(0.72, 'rgba(0,0,0,0.72)');
-  grd.addColorStop(1.0,  'rgba(0,0,0,0.95)');
+  grd.addColorStop(0.72, 'rgba(0,0,0,0.58)');
+  grd.addColorStop(1.0,  'rgba(0,0,0,0.86)');
   ctx.fillStyle = grd; ctx.fillRect(0, 0, W, H);
 
   const warm = ctx.createLinearGradient(0, H * 0.55, 0, H);
   warm.addColorStop(0, 'rgba(160,80,0,0)');
-  warm.addColorStop(1, 'rgba(70,32,0,0.22)');
+  warm.addColorStop(1, 'rgba(70,32,0,0.30)');
   ctx.fillStyle = warm; ctx.fillRect(0, H * 0.55, W, H * 0.45);
 
   // ── 5. Badge flutuante (nota, cargo, ano) ─────────────
@@ -905,12 +923,21 @@ async function _buildCardCanvasPure(targetW) {
   ctx.font = fEd; lsp(2); ctx.fillStyle = 'rgba(245,166,35,0.82)';
   ctx.fillText(edition, bCX, ty);
 
+  // Separador ornamental flanqueando o role (─── BRINCANTE ───)
   ctx.save();
-  ctx.strokeStyle = 'rgba(245,166,35,0.72)'; ctx.lineWidth = 1.5*S;
-  ctx.beginPath();
-  ctx.moveTo(bx + bPX * 0.5, by + 46*S + 2.5*S);
-  ctx.lineTo(bx + bW - bPX * 0.5, by + 46*S + 2.5*S);
-  ctx.stroke();
+  const sepY = by + 44*S + 5.5*S; // centro vertical do role text
+  const textHalf = roW / 2 + 3*S;
+  const lineIL = bCX - textHalf, lineOL = bx + bPX * 0.2;
+  const lineIR = bCX + textHalf, lineOR = bx + bW - bPX * 0.2;
+  ctx.strokeStyle = 'rgba(245,166,35,0.62)'; ctx.lineWidth = 0.8*S;
+  ctx.beginPath(); ctx.moveTo(lineOL, sepY); ctx.lineTo(lineIL - 3*S, sepY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(lineIR + 3*S, sepY); ctx.lineTo(lineOR, sepY); ctx.stroke();
+  ctx.fillStyle = 'rgba(245,166,35,0.70)';
+  [lineIL - 1.5*S, lineIR + 1.5*S].forEach(dx => {
+    ctx.save(); ctx.translate(dx, sepY); ctx.rotate(Math.PI / 4);
+    const ds = 2*S; ctx.fillRect(-ds/2, -ds/2, ds, ds);
+    ctx.restore();
+  });
   ctx.restore();
 
   // ── 6. Logos institucionais (top-right) ───────────────
@@ -947,6 +974,13 @@ async function _buildCardCanvasPure(targetW) {
   const statRowH = 16.5*S;
   const stTop    = H - 12*S - (3*statRowH + 2*S);
 
+  // Fundo sutil atrás do grid de stats
+  ctx.save();
+  const stPad = 7*S;
+  _roundedPath(ctx, stLeft - stPad, stTop - stPad * 0.6, leftW + 10*S + sepW + 10*S + rightW + stPad * 2, 3*statRowH + 2*S + stPad, 4*S);
+  ctx.fillStyle = 'rgba(0,0,0,0.30)'; ctx.fill();
+  ctx.restore();
+
   ctx.save(); lsp(0);
   ctx.strokeStyle = 'rgba(245,166,35,0.5)'; ctx.lineWidth = sepW;
   ctx.beginPath(); ctx.moveTo(sepX, stTop); ctx.lineTo(sepX, stTop + 3*statRowH + 2*S); ctx.stroke();
@@ -978,12 +1012,20 @@ async function _buildCardCanvasPure(targetW) {
     }
   }
 
-  // HR
+  // HR ornamental com diamantes centrais
   const hrY    = stTop - 7*S;
-  const hrHalf = W * 0.175;
+  const hrHalf = W * 0.155;
+  const hrGap  = 4.5*S;
   ctx.save(); lsp(0);
-  ctx.strokeStyle = 'rgba(255,180,0,0.4)'; ctx.lineWidth = S;
-  ctx.beginPath(); ctx.moveTo(W/2 - hrHalf, hrY); ctx.lineTo(W/2 + hrHalf, hrY); ctx.stroke();
+  ctx.strokeStyle = 'rgba(255,180,0,0.38)'; ctx.lineWidth = S;
+  ctx.beginPath(); ctx.moveTo(W/2 - hrHalf, hrY); ctx.lineTo(W/2 - hrGap, hrY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(W/2 + hrGap, hrY); ctx.lineTo(W/2 + hrHalf, hrY); ctx.stroke();
+  ctx.fillStyle = 'rgba(255,180,0,0.52)';
+  [-2.8*S, 0, 2.8*S].forEach(dx => {
+    ctx.save(); ctx.translate(W/2 + dx, hrY); ctx.rotate(Math.PI/4);
+    const ds = 1.8*S; ctx.fillRect(-ds/2, -ds/2, ds, ds);
+    ctx.restore();
+  });
   ctx.restore();
 
   // Fila da quadrilha
