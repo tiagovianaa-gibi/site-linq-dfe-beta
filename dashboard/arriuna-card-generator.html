@@ -680,6 +680,15 @@ function init() {
   switchTab('identidade');
   updateHeaderHeight();
   window.addEventListener('resize', updateHeaderHeight, { passive: true });
+
+  // Detecta drag de sliders → preview em baixa resolução durante arrasto
+  document.addEventListener('pointerdown', e => {
+    if (e.target.matches('input[type=range]')) _isDragging = true;
+  });
+  document.addEventListener('pointerup', () => {
+    if (_isDragging) { _isDragging = false; _schedulePreview(); } // render final em alta res
+  });
+  document.addEventListener('pointercancel', () => { _isDragging = false; });
 }
 
 function buildAttrSliders() {
@@ -722,23 +731,38 @@ function updateHeaderHeight() {
 }
 
 // ── Preview canvas (idêntico ao export) ──────────────────────────────────
-let _previewTimer = null;
+let _rafId       = null;   // requestAnimationFrame pendente
+let _rendering   = false;  // render em progresso
+let _needsRender = false;  // solicitado enquanto renderizava
+let _isDragging  = false;  // slider ativo → resolução reduzida
+
 function _schedulePreview() {
-  clearTimeout(_previewTimer);
-  _previewTimer = setTimeout(_renderPreview, 30);
+  _needsRender = true;
+  if (_rafId) return;                   // já agendado
+  _rafId = requestAnimationFrame(() => {
+    _rafId = null;
+    if (!_rendering) _renderPreview();  // só roda se não há render ativo
+  });
 }
+
 async function _renderPreview() {
   const previewCanvas = document.getElementById('preview-canvas');
   if (!previewCanvas) return;
+  _rendering = true; _needsRender = false;
   const cardDiv = previewCanvas.parentElement;
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const pixW = Math.round((cardDiv ? cardDiv.offsetWidth : 280) * dpr);
+  const cssW = (cardDiv ? cardDiv.offsetWidth : 280) || 280;
+  // Durante drag: 1× (4× mais rápido). Em repouso: até 2× (nítido).
+  const dpr  = _isDragging ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+  const pixW = Math.round(cssW * dpr);
   try {
     const card = await _buildCardCanvasPure(pixW);
-    previewCanvas.width = card.width;
+    previewCanvas.width  = card.width;
     previewCanvas.height = card.height;
     previewCanvas.getContext('2d').drawImage(card, 0, 0);
   } catch (e) { console.error('Preview render error:', e); }
+  _rendering = false;
+  // Se chegou nova solicitação enquanto renderizava, faz mais um render
+  if (_needsRender) _schedulePreview();
 }
 
 function updateCard() {
