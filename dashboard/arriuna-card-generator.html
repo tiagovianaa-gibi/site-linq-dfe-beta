@@ -280,13 +280,59 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
 @keyframes spin { to { transform:rotate(360deg); } }
 .loading-text { font-family:'Bebas Neue',cursive; font-size:18px; letter-spacing:3px; color:var(--gold); }
 
+/* ── Tab bar (mobile only) ──────────────────────────────── */
+.mobile-tab-bar { display:none; }
+
+/* ── Mobile layout ──────────────────────────────────────── */
 @media(max-width:700px) {
-  .app { display:flex; flex-direction:column; }
-  .sidebar { width:100%; border-right:none; border-bottom:1px solid rgba(255,255,255,.04); }
-  .sidebar-a { order:1; }
-  .main     { order:2; }
-  .sidebar-b { order:3; }
-  #the-card { width:260px; height:325px; }
+  .app {
+    display:flex; flex-direction:column;
+  }
+
+  /* Preview sticky no topo */
+  .main {
+    order:1;
+    position:sticky;
+    top:var(--header-h, 58px);
+    z-index:50;
+    background:#060D16;
+    padding:10px 16px 0;
+    border-bottom:1px solid rgba(245,166,35,0.10);
+    box-shadow:0 4px 24px rgba(0,0,0,0.7);
+  }
+  .preview-title { display:none; }
+  .card-wrap { display:flex; justify-content:center; }
+
+  /* Card maior no mobile */
+  #the-card {
+    width:min(78vw, 290px);
+    height:calc(min(78vw, 290px) * 1.25);
+  }
+
+  /* Tab bar dentro do .main */
+  .mobile-tab-bar {
+    display:flex;
+    margin:10px -16px 0;
+    border-top:1px solid rgba(255,255,255,0.04);
+  }
+  .tab-btn {
+    flex:1; padding:9px 4px; border:none; background:transparent;
+    color:rgba(255,255,255,0.45); font-family:'Barlow Condensed',sans-serif;
+    font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    cursor:pointer; border-bottom:2px solid transparent; transition:color .15s,border-color .15s;
+  }
+  .tab-btn.active { color:var(--gold); border-bottom-color:var(--gold); }
+
+  /* Sidebars viram área de conteúdo das tabs */
+  .sidebar-a, .sidebar-b {
+    order:2;
+    width:100%; border-right:none; border-bottom:none;
+    background:transparent; padding:16px;
+  }
+
+  /* Seções com data-tab: apenas a ativa aparece */
+  .ctrl-section[data-tab] { display:none; }
+  .ctrl-section[data-tab].tab-active { display:block; }
 }
 
 /* Share modal */
@@ -386,7 +432,7 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
 
   <div class="sidebar sidebar-a">
 
-    <div class="ctrl-section">
+    <div class="ctrl-section" data-tab="identidade">
       <span class="ctrl-label">Identidade</span>
       <div class="ctrl-row" style="gap:12px">
 
@@ -424,7 +470,7 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
       </div>
     </div>
 
-    <div class="ctrl-section">
+    <div class="ctrl-section" data-tab="foto">
       <span class="ctrl-label">Foto <button class="tip-btn" type="button" data-tip="Envie uma foto sua de frente, bem iluminada. Ela preenche o fundo da carta e pode ser ajustada com zoom e posição.">i</button></span>
       <label class="upload-box" id="photo-upload-box" for="inp-photo">
         <input class="file-input" id="inp-photo" type="file" accept="image/*" onchange="handlePhotoUpload(event)">
@@ -473,11 +519,18 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
         </div>
       </div>
     </div>
+
+    <nav class="mobile-tab-bar" aria-label="Seções do formulário">
+      <button class="tab-btn active" data-tab="identidade" onclick="switchTab('identidade')">Identidade</button>
+      <button class="tab-btn" data-tab="foto" onclick="switchTab('foto')">Foto</button>
+      <button class="tab-btn" data-tab="atributos" onclick="switchTab('atributos')">Atributos</button>
+      <button class="tab-btn" data-tab="exportar" onclick="switchTab('exportar')">Exportar</button>
+    </nav>
   </div>
 
   <div class="sidebar sidebar-b">
 
-    <div class="ctrl-section">
+    <div class="ctrl-section" data-tab="atributos">
       <div class="attrs-header">
         <span class="ctrl-label" style="margin-bottom:0">Atributos · 8.5–10 <button class="tip-btn" type="button" data-tip="Avalie cada qualidade de 8.5 a 10. A média dos 6 atributos forma a nota geral da carta.">i</button></span>
         <span class="attrs-overall" id="sidebar-overall">9.28</span>
@@ -485,7 +538,7 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
       <div class="attr-row" id="attr-sliders"></div>
     </div>
 
-    <div class="ctrl-section">
+    <div class="ctrl-section" data-tab="exportar">
       <span class="ctrl-label">Exportar</span>
       <button class="action-btn btn-primary" onclick="downloadStories()">⬇ BAIXAR CARTA</button>
       <button class="action-btn btn-secondary" onclick="shareCard()">↗ COMPARTILHAR</button>
@@ -578,6 +631,7 @@ const CARGO_EMOJI = {
 
 let attrValues = { ene:9.2, arr:9.5, ani:9.1, pre:9.3, car:9.4, est:9.2 };
 let uploadedArt = { dataUrl:'', name:'', zoom:100, x:50, y:20 };
+let _photoCache = { dataUrl:'', img:null };
 
 function init() {
   const selTemporada = document.getElementById('inp-temporada');
@@ -621,6 +675,11 @@ function init() {
   document.querySelectorAll('#card-data .card-inst-logo').forEach(img => {
     if (!img.complete) img.addEventListener('load', () => _schedulePreview(), { once: true });
   });
+
+  // Tabs mobile: inicia na primeira, mede altura do header
+  switchTab('identidade');
+  updateHeaderHeight();
+  window.addEventListener('resize', updateHeaderHeight, { passive: true });
 }
 
 function buildAttrSliders() {
@@ -647,11 +706,26 @@ function calcOverall() {
   return (ATTRS.reduce((s, a) => s + attrValues[a.key], 0) / ATTRS.length).toFixed(2);
 }
 
+// ── Mobile tabs ──────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.ctrl-section[data-tab]').forEach(s => {
+    s.classList.toggle('tab-active', s.dataset.tab === name);
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === name);
+  });
+}
+
+function updateHeaderHeight() {
+  const h = document.querySelector('.header');
+  if (h) document.documentElement.style.setProperty('--header-h', h.offsetHeight + 'px');
+}
+
 // ── Preview canvas (idêntico ao export) ──────────────────────────────────
 let _previewTimer = null;
 function _schedulePreview() {
   clearTimeout(_previewTimer);
-  _previewTimer = setTimeout(_renderPreview, 80);
+  _previewTimer = setTimeout(_renderPreview, 30);
 }
 async function _renderPreview() {
   const previewCanvas = document.getElementById('preview-canvas');
@@ -746,6 +820,7 @@ function updatePhotoControl(key, value) { uploadedArt[key] = Number(value); upda
 
 function clearPhoto() {
   uploadedArt = { dataUrl:'', name:'', zoom:100, x:50, y:20 };
+  _photoCache = { dataUrl:'', img:null };
   const input = document.getElementById('inp-photo');
   if (input) input.value = '';
   syncPhotoControls(); updateCard(); showToast('Foto removida.');
@@ -814,7 +889,14 @@ async function _buildCardCanvasPure(targetW) {
 
   await document.fonts.ready;
 
-  const photoImg = uploadedArt.dataUrl ? await loadImg(uploadedArt.dataUrl) : null;
+  let photoImg = null;
+  if (uploadedArt.dataUrl) {
+    if (uploadedArt.dataUrl !== _photoCache.dataUrl) {
+      _photoCache.img = await loadImg(uploadedArt.dataUrl);
+      _photoCache.dataUrl = uploadedArt.dataUrl;
+    }
+    photoImg = _photoCache.img;
+  }
 
   // ── Clip ao shape do card ─────────────────────────────
   ctx.save();
