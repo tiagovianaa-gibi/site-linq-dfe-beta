@@ -103,7 +103,7 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
 .card-wrap { perspective:1100px; }
 
 #the-card {
-  width:280px; height:410px; border-radius:13px;
+  width:280px; height:350px; border-radius:13px;
   position:relative; overflow:hidden;
   background:#080808;
   box-shadow:
@@ -286,7 +286,7 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
   .sidebar-a { order:1; }
   .main     { order:2; }
   .sidebar-b { order:3; }
-  #the-card { width:260px; height:382px; }
+  #the-card { width:260px; height:325px; }
 }
 
 /* Share modal */
@@ -793,7 +793,7 @@ function _cardRoundedClip(ctx, W, H, r) { _roundedPath(ctx, 0, 0, W, H, r); }
 async function _buildCardCanvasPure(targetW) {
   const S = targetW / 280;
   const W = targetW;
-  const H = Math.round(410 * S);
+  const H = Math.round(350 * S);
 
   const canvas = document.createElement('canvas');
   canvas.width = W; canvas.height = H;
@@ -816,17 +816,15 @@ async function _buildCardCanvasPure(targetW) {
   const playerName = document.getElementById('card-player-name').textContent.trim();
   const quadName   = document.getElementById('card-quadrilha-name').textContent.trim();
 
-  // Usa imagens já carregadas no DOM — evita qualquer problema de recarregamento/CORS
   function domImg(el) { return (el && el.complete && el.naturalWidth > 0) ? el : null; }
   const instLogos  = Array.from(document.querySelectorAll('.card-inst-logo'));
-  const logoConf   = domImg(instLogos[0]); // confebraq
-  const logoLinq   = domImg(instLogos[1]); // linq-dfe
+  const logoConf   = domImg(instLogos[0]);
+  const logoLinq   = domImg(instLogos[1]);
   const quadLogoEl = document.getElementById('card-quad-logo-xs');
   const logoQuad   = domImg(quadLogoEl && quadLogoEl.style.display !== 'none' ? quadLogoEl : null);
 
   await document.fonts.ready;
 
-  // Apenas a foto precisa ser carregada (vem de dataUrl, não está no DOM como img)
   const photoImg = uploadedArt.dataUrl ? await loadImg(uploadedArt.dataUrl) : null;
 
   // ── Clip ao shape do card ─────────────────────────────
@@ -834,11 +832,25 @@ async function _buildCardCanvasPure(targetW) {
   _roundedPath(ctx, 0, 0, W, H, 13 * S);
   ctx.clip();
 
-  // ── 1. Background ─────────────────────────────────────
-  ctx.fillStyle = '#080808';
-  ctx.fillRect(0, 0, W, H);
+  // ── 1. Background gradient ────────────────────────────
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0,   '#111A2E');
+  bg.addColorStop(0.5, '#0A1020');
+  bg.addColorStop(1,   '#050810');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
 
-  // ── 2. Foto ───────────────────────────────────────────
+  // ── 2. Textura diagonal sutil ─────────────────────────
+  ctx.save();
+  ctx.globalAlpha = 0.028;
+  ctx.strokeStyle = '#F5A623';
+  ctx.lineWidth = S;
+  const sp = 9 * S;
+  for (let x = -H; x < W + H; x += sp) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + H, H); ctx.stroke();
+  }
+  ctx.restore();
+
+  // ── 3. Foto ───────────────────────────────────────────
   if (photoImg) {
     const px = uploadedArt.x / 100, py = uploadedArt.y / 100, zoom = uploadedArt.zoom / 100;
     const cr = Math.max(W / photoImg.naturalWidth, H / photoImg.naturalHeight);
@@ -849,15 +861,21 @@ async function _buildCardCanvasPure(targetW) {
     ctx.restore();
   }
 
-  // ── 3. Gradiente overlay ──────────────────────────────
+  // ── 4. Gradiente overlay cinematográfico ──────────────
   const grd = ctx.createLinearGradient(0, 0, 0, H);
-  grd.addColorStop(0,    'rgba(0,0,0,0)');
-  grd.addColorStop(0.30, 'rgba(0,0,0,0)');
-  grd.addColorStop(0.55, 'rgba(0,0,0,0.55)');
-  grd.addColorStop(1.0,  'rgba(0,0,0,0.92)');
+  grd.addColorStop(0,    'rgba(8,14,26,0.22)');
+  grd.addColorStop(0.28, 'rgba(0,0,0,0)');
+  grd.addColorStop(0.50, 'rgba(0,0,0,0.38)');
+  grd.addColorStop(0.72, 'rgba(0,0,0,0.72)');
+  grd.addColorStop(1.0,  'rgba(0,0,0,0.95)');
   ctx.fillStyle = grd; ctx.fillRect(0, 0, W, H);
 
-  // ── 4. Badge (nota, cargo, ano) ───────────────────────
+  const warm = ctx.createLinearGradient(0, H * 0.55, 0, H);
+  warm.addColorStop(0, 'rgba(160,80,0,0)');
+  warm.addColorStop(1, 'rgba(70,32,0,0.22)');
+  ctx.fillStyle = warm; ctx.fillRect(0, H * 0.55, W, H * 0.45);
+
+  // ── 5. Badge flutuante (nota, cargo, ano) ─────────────
   const fOv = `400 ${44*S}px "Bebas Neue",cursive`;
   const fRo = `400 ${11*S}px "Bebas Neue",cursive`;
   const fEd = `400 ${9*S}px "Bebas Neue",cursive`;
@@ -867,33 +885,36 @@ async function _buildCardCanvasPure(targetW) {
   ctx.font = fRo; lsp(1);
   const roW = ctx.measureText(role).width;
 
-  const bPX = 10*S, bPYT = 5*S, bPYB = 6*S;
+  const bPX = 10*S;
   const bW  = Math.max(ovW, roW) + bPX * 2;
-  const bH  = bPYT + 44*S + 11*S + 3*S + 9*S + bPYB;
   const bx  = 11*S, by = 11*S, bCX = bx + bW / 2;
 
-  ctx.save();
-  _roundedPath(ctx, bx, by, bW, bH, 9*S);
-  ctx.fillStyle = 'rgba(0,0,0,0.42)'; ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = S; ctx.stroke();
-  ctx.restore();
-
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  let ty = by + bPYT;
+  let ty = by;
 
   ctx.font = fOv; lsp(-1); ctx.fillStyle = '#fff';
-  ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 10*S; ctx.shadowOffsetY = 2*S;
+  ctx.shadowColor = 'rgba(0,0,0,0.95)'; ctx.shadowBlur = 14*S; ctx.shadowOffsetY = 3*S;
   ctx.fillText(overall, bCX, ty); ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
   ty += 44*S;
 
   ctx.font = fRo; lsp(1); ctx.fillStyle = 'rgba(255,255,255,0.95)';
-  ctx.fillText(role, bCX, ty); ty += 11*S + 3*S;
+  ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 8*S;
+  ctx.fillText(role, bCX, ty); ctx.shadowBlur = 0;
+  ty += 11*S + 3*S;
 
-  ctx.font = fEd; lsp(2); ctx.fillStyle = 'rgba(245,166,35,0.75)';
+  ctx.font = fEd; lsp(2); ctx.fillStyle = 'rgba(245,166,35,0.82)';
   ctx.fillText(edition, bCX, ty);
 
-  // ── 5. Logos institucionais (top-right) ───────────────
-  const lSz = Math.floor((bW - 4*S) / 2 * 0.85);
+  ctx.save();
+  ctx.strokeStyle = 'rgba(245,166,35,0.72)'; ctx.lineWidth = 1.5*S;
+  ctx.beginPath();
+  ctx.moveTo(bx + bPX * 0.5, by + 46*S + 2.5*S);
+  ctx.lineTo(bx + bW - bPX * 0.5, by + 46*S + 2.5*S);
+  ctx.stroke();
+  ctx.restore();
+
+  // ── 6. Logos institucionais (top-right) ───────────────
+  const lSz = Math.floor(24 * S);
   const lR  = lSz / 2, lCY = 11*S + lR;
   let   lCX = W - 11*S - lR;
 
@@ -906,11 +927,10 @@ async function _buildCardCanvasPure(targetW) {
     lCX -= lSz + 4*S;
   }
 
-  // ── 6. Seção inferior ─────────────────────────────────
+  // ── 7. Seção inferior ─────────────────────────────────
   const fSV  = `400 ${14*S}px "Bebas Neue",cursive`;
   const fSK  = `900 ${7*S}px "Barlow Condensed",sans-serif`;
 
-  // Medir colunas de stats para centralizar o grid
   function statRowW(attr) {
     ctx.font = fSV; lsp(0.3);
     const vw = ctx.measureText(attrValues[attr.key].toFixed(1)).width;
@@ -924,11 +944,9 @@ async function _buildCardCanvasPure(targetW) {
   const sepX   = stLeft + leftW + 10*S;
   const rStart = sepX + sepW + 10*S;
 
-  // Posições verticais (cálculo de baixo para cima, espelhando CSS)
-  const statRowH = 18*S; // 14px fonte + 2+2 padding
-  const stTop    = H - 14*S - (3*statRowH + 2*S); // 3 linhas + 2 bordas internas
+  const statRowH = 16.5*S;
+  const stTop    = H - 12*S - (3*statRowH + 2*S);
 
-  // Separador vertical de colunas
   ctx.save(); lsp(0);
   ctx.strokeStyle = 'rgba(245,166,35,0.5)'; ctx.lineWidth = sepW;
   ctx.beginPath(); ctx.moveTo(sepX, stTop); ctx.lineTo(sepX, stTop + 3*statRowH + 2*S); ctx.stroke();
@@ -969,7 +987,7 @@ async function _buildCardCanvasPure(targetW) {
   ctx.restore();
 
   // Fila da quadrilha
-  const qCY   = hrY - 5*S - 6*S - 7*S; // margem HR + margem quad + meia altura
+  const qCY   = hrY - 5*S - 6*S - 7*S;
   const qSz   = 14*S;
   ctx.font = `900 ${8*S}px "Barlow Condensed",sans-serif`; lsp(2);
   const qNW   = ctx.measureText(quadName).width;
@@ -1003,11 +1021,15 @@ async function _buildCardCanvasPure(targetW) {
 
   ctx.restore(); // main clip
 
-  // ── 7. Borda dourada ──────────────────────────────────
+  // ── 8. Borda dupla dourada ────────────────────────────
   ctx.save();
-  _roundedPath(ctx, 0, 0, W, H, 13*S); ctx.clip();
   _roundedPath(ctx, 0, 0, W, H, 13*S);
-  ctx.strokeStyle = 'rgba(245,166,35,0.45)'; ctx.lineWidth = 2*S; ctx.stroke();
+  ctx.strokeStyle = 'rgba(245,166,35,0.72)'; ctx.lineWidth = 2*S; ctx.stroke();
+  ctx.restore();
+  ctx.save();
+  const innerOff = 1.8*S;
+  _roundedPath(ctx, innerOff, innerOff, W - 2*innerOff, H - 2*innerOff, 11.5*S);
+  ctx.strokeStyle = 'rgba(245,166,35,0.22)'; ctx.lineWidth = S; ctx.stroke();
   ctx.restore();
 
   return canvas;
@@ -1162,32 +1184,14 @@ async function downloadStories() {
   const overlay = document.getElementById('loading-overlay');
   overlay.classList.add('show');
   try {
-    // Formato feed Instagram 4:5 (1080×1350) — aceito no feed e nos stories
-    const FW = 1080, FH = 1350;
-    const PAD_X = 108, PAD_Y = 60; // margem ao redor da carta
-    const maxCW = FW - PAD_X * 2;  // 864px
-    const maxCH = FH - PAD_Y * 2;  // 1230px
-
-    // Ajusta carta para caber no frame mantendo proporção
-    const hiRes = await _buildCardCanvasPure(maxCW * 2); // supersampling 2×
-    const cardRatio = hiRes.height / hiRes.width;
-    let cw = maxCW, ch = Math.round(maxCW * cardRatio);
-    if (ch > maxCH) { ch = maxCH; cw = Math.round(maxCH / cardRatio); }
-
+    // Carta 4:5 nativa — exporta diretamente em 1080×1350 (feed Instagram, stories)
+    const hiRes = await _buildCardCanvasPure(1080 * 2); // 2160px supersampling
     const out = document.createElement('canvas');
-    out.width = FW; out.height = FH;
+    out.width = 1080; out.height = 1350;
     const ctx = out.getContext('2d');
-
-    // Fundo escuro (cor base do site)
-    ctx.fillStyle = '#060D16';
-    ctx.fillRect(0, 0, FW, FH);
-
-    // Carta centralizada com downscale 2:1
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
-    const cx = Math.round((FW - cw) / 2);
-    const cy = Math.round((FH - ch) / 2);
-    ctx.drawImage(hiRes, cx, cy, cw, ch);
+    ctx.drawImage(hiRes, 0, 0, 1080, 1350);
 
     const nome = (document.getElementById('inp-nome').value || 'card').replace(/\s+/g, '_');
     const blob = await new Promise((resolve, reject) => {
