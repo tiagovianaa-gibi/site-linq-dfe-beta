@@ -1034,7 +1034,14 @@ async function _buildCardCanvasPure(targetW) {
   ctx.fillText(role, bCX, ty); ctx.shadowBlur = 0;
   ty += 11*S + 3*S;
 
-  ctx.font = fEd; lsp(2); ctx.fillStyle = 'rgba(245,166,35,0.82)';
+  ctx.font = fEd; lsp(2);
+  const edW = ctx.measureText(edition).width;
+  const edPX = 5*S, edPY = 2*S;
+  ctx.save();
+  _roundedPath(ctx, bCX - edW/2 - edPX, ty - edPY, edW + edPX*2, 9*S + edPY*2, 3*S);
+  ctx.fillStyle = 'rgba(0,0,0,0.38)'; ctx.fill();
+  ctx.restore();
+  ctx.fillStyle = 'rgba(245,166,35,0.92)';
   ctx.fillText(edition, bCX, ty);
 
   // Separador ornamental flanqueando o role (─── BRINCANTE ───)
