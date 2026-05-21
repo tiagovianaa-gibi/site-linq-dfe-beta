@@ -456,47 +456,21 @@ body { background:#060D16; color:var(--text); font-family:'Barlow Condensed',san
 
     <div class="card-wrap">
       <div id="the-card">
-
-        <div class="card-bg"></div>
-
-        <div class="card-photo-layer" id="card-photo-layer">
-          <img class="card-photo-img" id="card-photo-img" alt="">
+        <canvas id="preview-canvas" style="display:block;width:100%;height:100%;"></canvas>
+        <!-- Dados lidos pelo canvas render (visualmente oculto) -->
+        <div id="card-data" aria-hidden="true" style="display:none">
+          <div id="card-overall">9.28</div>
+          <div id="card-role">BRINCANTE</div>
+          <div id="card-edition">2026</div>
+          <div id="card-player-name">JOÃO MARCADOR</div>
+          <span id="card-quadrilha-name">FORMIGA DA ROÇA</span>
+          <img class="card-inst-logo" src="../assets/logos/confebraq.png" alt="">
+          <img class="card-inst-logo" src="../assets/logos/linq-dfe.png" alt="">
+          <img id="card-quad-logo-xs" src="" alt="">
+          <div id="card-quad-initial-xs">F</div>
+          <span id="card-emoji">🎙️</span>
+          <div id="card-stats"></div>
         </div>
-
-        <div class="card-emoji-layer" id="card-emoji-layer">
-          <span class="card-emoji" id="card-emoji">🎙️</span>
-        </div>
-
-        <div class="card-overlay"></div>
-
-        <div class="card-top-left">
-          <div class="card-rating-badge">
-            <div class="card-overall" id="card-overall">9.28</div>
-            <div class="card-role" id="card-role">MARCADOR</div>
-            <div class="card-edition" id="card-edition">2026</div>
-          </div>
-        </div>
-
-        <div class="card-top-right">
-          <img class="card-inst-logo" src="../assets/logos/confebraq.png" alt="Confebraq">
-          <img class="card-inst-logo" src="../assets/logos/linq-dfe.png" alt="LINQ-DFE">
-        </div>
-
-        <div class="card-bottom">
-          <div class="card-player-name" id="card-player-name">JOÃO MARCADOR</div>
-          <div class="card-quadrilha-row">
-            <div class="card-quad-badge-xs">
-              <img class="card-quad-logo-xs" id="card-quad-logo-xs" src="" alt="" style="display:none">
-              <div class="card-quad-initial-xs" id="card-quad-initial-xs">F</div>
-            </div>
-            <span class="card-quadrilha-name" id="card-quadrilha-name">FORMIGA DA ROÇA</span>
-          </div>
-          <hr class="card-hr-sep">
-          <div class="card-stats" id="card-stats"></div>
-        </div>
-
-        <div class="card-frame"></div>
-
       </div>
     </div>
   </div>
@@ -642,6 +616,11 @@ function init() {
 
   buildAttrSliders();
   updateCard();
+
+  // Re-renderiza quando logos institucionais carregam (podem chegar após o primeiro render)
+  document.querySelectorAll('#card-data .card-inst-logo').forEach(img => {
+    if (!img.complete) img.addEventListener('load', () => _schedulePreview(), { once: true });
+  });
 }
 
 function buildAttrSliders() {
@@ -666,6 +645,26 @@ function setAttr(key, raw) {
 
 function calcOverall() {
   return (ATTRS.reduce((s, a) => s + attrValues[a.key], 0) / ATTRS.length).toFixed(2);
+}
+
+// ── Preview canvas (idêntico ao export) ──────────────────────────────────
+let _previewTimer = null;
+function _schedulePreview() {
+  clearTimeout(_previewTimer);
+  _previewTimer = setTimeout(_renderPreview, 80);
+}
+async function _renderPreview() {
+  const previewCanvas = document.getElementById('preview-canvas');
+  if (!previewCanvas) return;
+  const cardDiv = previewCanvas.parentElement;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const pixW = Math.round((cardDiv ? cardDiv.offsetWidth : 280) * dpr);
+  try {
+    const card = await _buildCardCanvasPure(pixW);
+    previewCanvas.width = card.width;
+    previewCanvas.height = card.height;
+    previewCanvas.getContext('2d').drawImage(card, 0, 0);
+  } catch (e) { console.error('Preview render error:', e); }
 }
 
 function updateCard() {
@@ -694,6 +693,7 @@ function updateCard() {
 
   updateArtImage();
   updateStats();
+  _schedulePreview();
 }
 
 function updateStats() {
@@ -716,7 +716,7 @@ function setQuadLogo(logoPath, initial) {
     if (logoPath) {
       img.style.display = 'none';
       ini.style.display = 'flex';
-      img.onload  = () => { img.style.display = 'block'; ini.style.display = 'none'; };
+      img.onload  = () => { img.style.display = 'block'; ini.style.display = 'none'; _schedulePreview(); };
       img.onerror = () => { img.style.display = 'none';  ini.style.display = 'flex'; };
       img.src = logoPath;
     } else {
@@ -726,18 +726,7 @@ function setQuadLogo(logoPath, initial) {
 }
 
 function updateArtImage() {
-  const img       = document.getElementById('card-photo-img');
-  const emojiLayer = document.getElementById('card-emoji-layer');
-  if (uploadedArt.dataUrl) {
-    img.src = uploadedArt.dataUrl;
-    img.style.objectPosition  = `${uploadedArt.x}% ${uploadedArt.y}%`;
-    img.style.transform       = `scale(${uploadedArt.zoom / 100})`;
-    img.style.transformOrigin = `${uploadedArt.x}% ${uploadedArt.y}%`;
-    img.style.opacity         = '1';
-    emojiLayer.style.opacity  = '0';
-  } else {
-    img.src = ''; img.style.opacity = '0'; emojiLayer.style.opacity = '1';
-  }
+  // Preview agora é canvas — sem-op (dados lidos de uploadedArt diretamente)
 }
 
 function handlePhotoUpload(event) {
