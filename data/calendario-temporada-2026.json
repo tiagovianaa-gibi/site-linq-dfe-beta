@@ -38,6 +38,18 @@
       ]
     },
     {
+      "id": "abertura-temporada-2026",
+      "dateStart": "2026-03-28",
+      "period": "28/03/2026",
+      "title": "Abertura da Temporada",
+      "tag": "Abertura",
+      "badge": "Abertura",
+      "location": "World Brasília — SIA, Brasília - DF",
+      "details": [
+        "Evento oficial de abertura da temporada 2026."
+      ]
+    },
+    {
       "id": "pre-sao-joao-2026-dia-1",
       "dateStart": "2026-04-10",
       "period": "10/04/2026",
@@ -74,48 +86,46 @@
       ]
     },
     {
-      "id": "circuito-2026-etapa-1",
-      "dateStart": "2026-05-29",
-      "period": "29/05 a 07/06/2026",
-      "title": "Acesso e Especial - Paranoá - 1ª Etapa",
+      "id": "circuito-2026-especial-1",
+      "dateStart": "2026-06-05",
+      "period": "05/06 a 07/06/2026",
+      "title": "Grupo Especial - Paranoá - 1ª Etapa",
       "tag": "Circuito",
-      "badge": "Acesso + Especial",
-      "location": "Praça Central, s/n - lt 1 - Paranoá, Brasília - DF, 71570-050 - Estacionamento da Administração Regional - Paranoá",
+      "badge": "Grupo Especial",
+      "location": "Estacionamento da Administração Regional do Paranoá — Paranoá, Brasília - DF",
       "details": [
-        "Grupo Especial: 29/05 a 31/05",
-        "Grupo de Acesso: 06/06 a 07/06"
+        "Grupo Especial: 05/06 a 07/06"
       ]
     },
     {
-      "id": "circuito-2026-etapa-2",
-      "dateStart": "2026-06-05",
-      "period": "05/06 a 14/06/2026",
-      "title": "Acesso e Especial - Santa Maria - 2ª Etapa",
+      "id": "circuito-2026-acesso-1",
+      "dateStart": "2026-06-13",
+      "period": "13/06 a 14/06/2026",
+      "title": "Grupo de Acesso - Santa Maria - 1ª Etapa",
       "tag": "Circuito",
-      "badge": "Acesso + Especial",
-      "location": "QC 1 - Santa Maria, Brasília - DF - Estacionamento do Ginásio Poliesportivo de Santa Maria",
+      "badge": "Grupo de Acesso",
+      "location": "Estacionamento do Ginásio Poliesportivo de Santa Maria — Santa Maria, Brasília - DF",
       "details": [
-        "Grupo Especial: 05/06 a 07/06",
         "Grupo de Acesso: 13/06 a 14/06"
       ]
     },
     {
-      "id": "circuito-2026-etapa-3-especial",
+      "id": "circuito-2026-especial-2",
       "dateStart": "2026-06-19",
       "period": "19/06 a 21/06/2026",
-      "title": "Grupo Especial - Taguatinga - 3ª Etapa",
+      "title": "Grupo Especial - Taguatinga - 2ª Etapa",
       "tag": "Circuito",
       "badge": "Grupo Especial",
-      "location": "Centro Metropolitano - Taguatinga, Brasília - DF, 72158-000 - Estacionamento do Estádio Serejão - Taguatinga",
+      "location": "Estacionamento do Estádio Serejão — Taguatinga, Brasília - DF",
       "details": [
         "Grupo Especial: 19/06 a 21/06"
       ]
     },
     {
-      "id": "circuito-2026-etapa-3-acesso",
+      "id": "circuito-2026-acesso-2",
       "dateStart": "2026-06-20",
       "period": "20/06 a 21/06/2026",
-      "title": "Grupo Acesso - Águas Lindas/GO - 3ª Etapa",
+      "title": "Grupo de Acesso - 2ª Etapa",
       "tag": "Circuito",
       "badge": "Grupo de Acesso",
       "location": "A confirmar",
@@ -124,15 +134,26 @@
       ]
     },
     {
-      "id": "circuito-2026-etapa-4-final",
+      "id": "circuito-2026-especial-3",
       "dateStart": "2026-06-26",
-      "period": "26/06 a 05/07/2026",
-      "title": "Acesso e Especial - Ceilândia - Final - 4ª Etapa",
+      "period": "26/06 a 28/06/2026",
+      "title": "Grupo Especial - Ceilândia - 3ª Etapa (Final)",
       "tag": "Circuito",
-      "badge": "Acesso + Especial",
-      "location": "St. M QNM 13 - Ceilândia, Brasília - DF, 72215-130 - Praça do Trabalhador - Administração Regional de Ceilândia",
+      "badge": "Grupo Especial",
+      "location": "Praça do Trabalhador — Administração Regional de Ceilândia, Brasília - DF",
       "details": [
-        "Grupo Especial - Final: 26/06 a 28/06",
+        "Grupo Especial - Final: 26/06 a 28/06"
+      ]
+    },
+    {
+      "id": "circuito-2026-acesso-3",
+      "dateStart": "2026-07-04",
+      "period": "04/07 a 05/07/2026",
+      "title": "Grupo de Acesso - Ceilândia - 3ª Etapa (Final)",
+      "tag": "Circuito",
+      "badge": "Grupo de Acesso",
+      "location": "Praça do Trabalhador — Administração Regional de Ceilândia, Brasília - DF",
+      "details": [
         "Grupo de Acesso - Final: 04/07 a 05/07"
       ]
     }
