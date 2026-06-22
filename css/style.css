@@ -704,6 +704,62 @@ main {
   font-weight: 600;
 }
 
+/* Ranking detalhado (com colunas por etapa) */
+.ranking-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 0.25rem 0 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ranking-detail-header .ranking-detail-quad {
+  flex: 1;
+}
+
+.ranking-detail-etapa {
+  min-width: 58px;
+  text-align: right;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.ranking-detail-total {
+  min-width: 52px;
+  text-align: right;
+  font-weight: 700;
+}
+
+.ranking-pos {
+  min-width: 22px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.ranking-pos-header {
+  font-size: 0.75rem;
+}
+
+.ranking-item-detail .ranking-name {
+  flex: 1;
+}
+
+.ranking-item-detail .ranking-score {
+  min-width: 52px;
+  text-align: right;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
 .card-meta {
   font-size: 0.85rem;
   color: var(--text-secondary);
