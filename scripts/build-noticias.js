@@ -538,8 +538,8 @@ function buildNoticiaPage(item) {
   const title = `${item.titulo} | LINQ-DFE`;
   const description = item.resumo || "";
   const canonical = `${BASE_URL}/noticias/${encodeURIComponent(item.slug)}/`;
-  const image = toSitePath(item.imagemCard || item.imagem, "/assets/banners/placeholder.jpg");
-  const socialImage = toAbsoluteSiteUrl(item.imagemCard || item.imagem, OG_IMAGE);
+  const image = toSitePath(item.imagemCardUrl || item.imagemHeroUrl || item.imagem, "/assets/banners/placeholder.jpg");
+  const socialImage = toAbsoluteSiteUrl(item.imagemCardUrl || item.imagemHeroUrl || item.imagem, OG_IMAGE);
   const heroFit = item.imagemHeroFit || "cover";
   const heroPosX = Number.isFinite(item.imagemHeroFocoX) ? item.imagemHeroFocoX : 50;
   const heroPosY = Number.isFinite(item.imagemHeroFocoY) ? item.imagemHeroFocoY : 35;
