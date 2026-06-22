@@ -91,18 +91,8 @@ function getNoticiaUrl(noticia) {
   if (slug && staticNoticiasSlugs.has(slug)) {
     return `/noticias/${encodeURIComponent(slug)}/`;
   }
-
-  const params = new URLSearchParams();
-  if (noticia?.id) {
-    params.set("id", noticia.id);
-  }
   if (slug) {
-    params.set("slug", slug);
-  }
-
-  const query = params.toString();
-  if (query) {
-    return `/noticia.html?${query}`;
+    return `/noticia.html?slug=${encodeURIComponent(slug)}`;
   }
   return "/noticias.html";
 }
@@ -174,6 +164,78 @@ function getCanonicalNoticiaUrl(noticia) {
   } catch (e) {
     return window.location.href;
   }
+}
+
+function getCurrentShareUrl() {
+  return window.location.href;
+}
+
+function shareNoticia(target) {
+  const shareUrl = getCurrentShareUrl();
+  const encodedUrl = encodeURIComponent(shareUrl);
+  const encodedTitle = encodeURIComponent(document.title || "LINQ-DFE");
+
+  if (target === "whatsapp") {
+    window.open(
+      `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    return;
+  }
+
+  if (target === "facebook") {
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    return;
+  }
+
+  if (target === "instagram") {
+    window.open(
+      "https://www.instagram.com/",
+      "_blank",
+      "noopener,noreferrer"
+    );
+    return;
+  }
+
+  if (target === "copy") {
+    const copyButton = document.querySelector('[data-share-target="copy"]');
+    const originalLabel = copyButton?.textContent || "Copiar link";
+
+    const copyText = async () => {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(shareUrl);
+        } else {
+          window.prompt("Copie este link:", shareUrl);
+          return;
+        }
+
+        if (copyButton) {
+          copyButton.textContent = "Link copiado!";
+          setTimeout(() => {
+            copyButton.textContent = originalLabel;
+          }, 1800);
+        }
+      } catch (error) {
+        console.error("Erro ao copiar link da notícia:", error);
+      }
+    };
+
+    copyText();
+  }
+}
+
+function bindShareButtons() {
+  document.querySelectorAll('[data-share-target]').forEach((button) => {
+    button.addEventListener("click", () => {
+      shareNoticia(button.getAttribute("data-share-target"));
+    });
+  });
 }
 
 function updateSEO(noticia) {
@@ -380,6 +442,15 @@ function renderNoticia() {
            </div>`
         : "";
 
+    const shareButtonsHtml = `
+      <div style="display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.75rem;">
+        <button type="button" data-share-target="whatsapp" style="border:0; border-radius:999px; padding:.55rem .85rem; background:#25D366; color:#fff; font-weight:700; cursor:pointer;">WhatsApp</button>
+        <button type="button" data-share-target="instagram" style="border:0; border-radius:999px; padding:.55rem .85rem; background:#E1306C; color:#fff; font-weight:700; cursor:pointer;">Instagram</button>
+        <button type="button" data-share-target="facebook" style="border:0; border-radius:999px; padding:.55rem .85rem; background:#1877F2; color:#fff; font-weight:700; cursor:pointer;">Facebook</button>
+        <button type="button" data-share-target="copy" style="border:0; border-radius:999px; padding:.55rem .85rem; background:#444; color:#fff; font-weight:700; cursor:pointer;">Copiar link</button>
+      </div>
+    `;
+
     const resumoHtml = safeResumo
       ? `<p class="noticia-resumo">${safeResumo}</p>`
       : "";
@@ -426,6 +497,7 @@ function renderNoticia() {
             <h1>${tituloSafe}</h1>
             ${resumoHtml}
             ${htmlTags}
+            ${shareButtonsHtml}
           </div>
         </header>
 
@@ -474,6 +546,7 @@ function renderNoticia() {
     }
   }
 
+  bindShareButtons();
   updateSEO(noticiaAtual);
 }
 
@@ -713,6 +786,15 @@ async function loadNoticia() {
     }
 
     noticiaAtual = encontrada;
+
+    // Limpa a URL para remover o ?id= do Firebase — mantém só ?slug=
+    const cleanSlug = String(encontrada.slug || "").trim();
+    if (cleanSlug && !staticNoticiasSlugs.has(cleanSlug)) {
+      const cleanUrl = `/noticia.html?slug=${encodeURIComponent(cleanSlug)}`;
+      if (window.location.search !== `?slug=${encodeURIComponent(cleanSlug)}`) {
+        try { history.replaceState(null, "", cleanUrl); } catch (_) {}
+      }
+    }
 
     outrasNoticias = noticiasCache
       .filter((item) => String(item.id) !== String(encontrada.id))
