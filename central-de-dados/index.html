@@ -2292,7 +2292,7 @@ function entryOpenHist(){
 
 <!-- ═══ QUESITOS ═══ -->
 <div class="tab-c fi" id="tab-quesitos"><div class="box">
-  <div class="sh"><div class="st">DESTAQUES POR QUESITO</div><div class="sb sb-e" id="q-tab-badge">MÉDIAS COMBINADAS 2022–2025</div></div>
+  <div class="sh"><div class="st">DESTAQUES POR QUESITO</div><div class="sb sb-e" id="q-tab-badge">MÉDIAS COMBINADAS 2022–2026</div></div>
   <div class="q-filter-bar">
     <span class="fl">Ano:</span>
     <button class="btn q-yr on" onclick="fqY('todos',this)">Todos</button>
@@ -2300,6 +2300,7 @@ function entryOpenHist(){
     <button class="btn q-yr" onclick="fqY(2023,this)">2023</button>
     <button class="btn q-yr" onclick="fqY(2024,this)">2024</button>
     <button class="btn q-yr" onclick="fqY(2025,this)">2025</button>
+    <button class="btn q-yr" onclick="fqY(2026,this)">2026</button>
     <div class="q-filter-sep"></div>
     <span class="fl">Grupo:</span>
     <button class="btn q-gr on" onclick="fq('todos',this)">Todos</button>
@@ -3824,7 +3825,7 @@ function ft(f,b){tF=f;document.querySelectorAll('#tab-temporadas .yr-btn').forEa
 function renderQ(){
   const badge=document.getElementById('q-tab-badge');
   const badgeSfx='';
-  if(badge)badge.textContent=qYear==='todos'?`MÉDIAS COMBINADAS 2022–2025${badgeSfx}`:`TEMPORADA ${qYear}${badgeSfx}`;
+  if(badge)badge.textContent=qYear==='todos'?`MÉDIAS COMBINADAS 2022–2026${badgeSfx}`:qYear>=2026?`TEMPORADA ${qYear} · EM CURSO${badgeSfx}`:`TEMPORADA ${qYear}${badgeSfx}`;
   const qgrEl=document.getElementById('qgrid');
   if(qYear==='todos'){
     // Multi-year: usa QDAT pré-computado
