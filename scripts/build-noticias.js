@@ -254,9 +254,11 @@ async function fetchNoticiasFromFirestore() {
     `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/noticias` +
     `?pageSize=200&key=${apiKey}`;
 
+  console.log(`[build] Firestore REST: ${url.replace(apiKey, 'KEY_HIDDEN')}`);
   const response = await fetch(url);
   if (!response.ok) {
-    console.warn(`Falha ao carregar noticias via REST: ${response.status}`);
+    const body = await response.text().catch(() => '');
+    console.warn(`[build] Falha Firestore REST: HTTP ${response.status} — ${body.slice(0,200)}`);
     return null;
   }
   const payload = await response.json();
@@ -316,13 +318,17 @@ function loadNoticiasLocal() {
 async function loadNoticias() {
   const adminData = await fetchNoticiasFromAdmin();
   if (adminData && adminData.length) {
+    console.log(`[build] Fonte: firebase-admin (${adminData.length} artigos)`);
     return adminData;
   }
   const remote = await fetchNoticiasFromFirestore();
   if (remote && remote.length) {
+    console.log(`[build] Fonte: Firestore REST (${remote.length} artigos)`);
     return remote;
   }
-  return loadNoticiasLocal();
+  const local = loadNoticiasLocal();
+  console.warn(`[build] AVISO: usando noticias.json local (${local.length} artigos) — Firestore inacessível`);
+  return local;
 }
 
 function normalizeNoticias(items) {
