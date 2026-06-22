@@ -495,6 +495,24 @@ td{padding:11px 13px;font-size:13px;vertical-align:middle;}
 
 ::-webkit-scrollbar{width:5px;height:5px;}
 
+/* ══ BREADCRUMB ══ */
+.qp-breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:16px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut);}
+.qp-breadcrumb-home{cursor:pointer;color:var(--mut);background:none;border:none;font:inherit;letter-spacing:inherit;text-transform:inherit;padding:0;transition:color .15s;}
+.qp-breadcrumb-home:hover{color:var(--gold);}
+.qp-breadcrumb-sep{opacity:.35;}
+.qp-breadcrumb-current{color:var(--text);font-weight:700;}
+
+/* ══ COLLAPSIBLE SECTION ══ */
+.qp-collapse{margin-bottom:24px;}
+.qp-collapse-toggle{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:10px;padding:12px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut);list-style:none;transition:all .2s;}
+.qp-collapse-toggle::-webkit-details-marker{display:none;}
+.qp-collapse-toggle:hover{border-color:rgba(245,166,35,.35);color:var(--text);}
+details[open]>.qp-collapse-toggle{border-bottom-left-radius:0;border-bottom-right-radius:0;color:var(--gold);border-color:rgba(245,166,35,.35);}
+.qp-collapse-body{border:1px solid var(--bdr);border-top:none;border-radius:0 0 10px 10px;padding:16px 0 4px;}
+details[open]>.qp-collapse-body{border-color:rgba(245,166,35,.35);}
+.qp-collapse-arrow{transition:transform .25s;font-style:normal;}
+details[open]>.qp-collapse-toggle .qp-collapse-arrow{transform:rotate(180deg);}
+
 /* ══ ENTRY OVERLAY ══ */
 #entry-overlay{position:fixed;inset:0;z-index:9999;background:rgba(7,16,28,.97);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fi .4s ease;}
 #entry-overlay.hidden{display:none;}
@@ -4109,6 +4127,13 @@ function renderQP(){
 </div>`:'';
 
   content.innerHTML=`
+  <!-- BREADCRUMB -->
+  <div class="qp-breadcrumb">
+    <button class="qp-breadcrumb-home" onclick="document.getElementById('qp-main-select').value='';renderQP()">Central de Dados</button>
+    <span class="qp-breadcrumb-sep">›</span>
+    <span class="qp-breadcrumb-current">${nm}</span>
+  </div>
+
   <!-- HERO -->
   <div class="qp-hero fi">
     <div class="qp-hero-cover" ${heroStyle(media.photo)}>
@@ -4143,7 +4168,6 @@ function renderQP(){
   </div>
   ${getAttrTags(d).length?`<div class="attr-tags">${getAttrTags(d).map(t=>`<span class="attr-tag" style="background:${t.bg};border-color:${t.col};color:${t.col}">${t.label}</span>`).join('')}</div>`:''}
   ${gapStripHtml}
-  ${momentoHtml}
   ${rivalHtml}
 
   <div class="qp-summary-grid">
@@ -4202,9 +4226,17 @@ function renderQP(){
     </div>
   </div>
 
-  <div class="qp-bench-grid" style="--qp-bench-cols:${cmp?4:3}">
-    ${benchmarkCards}
-  </div>
+  <details class="qp-collapse">
+    <summary class="qp-collapse-toggle">
+      <span>Comparação de referência</span>
+      <i class="qp-collapse-arrow">▾</i>
+    </summary>
+    <div class="qp-collapse-body">
+      <div class="qp-bench-grid" style="--qp-bench-cols:${cmp?4:3};padding:0 0 0 0">
+        ${benchmarkCards}
+      </div>
+    </div>
+  </details>
 
   <div class="chart-grid-1">
     <div class="chart-box">
@@ -4219,6 +4251,8 @@ function renderQP(){
       <div class="tw">${buildComparisonMatrix(d,cmp)}</div>
     </div>
   </div>
+
+  ${momentoHtml}
 
   <!-- QUESITOS DETALHES -->
   <div class="qp-section-hdr">
