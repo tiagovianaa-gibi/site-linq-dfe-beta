@@ -2110,7 +2110,7 @@ function entryOpenHist(){
 <div class="hero">
   <div class="hero-in">
     <div class="brand">
-      <div class="logo"><img src="../assets/logos/linq-dfe.png" alt="LINQ-DFE"></div>
+      <div class="logo" onclick="document.getElementById('entry-overlay').classList.remove('hidden')" style="cursor:pointer" title="Voltar ao menu inicial"><img src="../assets/logos/linq-dfe.png" alt="LINQ-DFE"></div>
       <div><h1>LINQDFE</h1><p>Liga de Quadrilhas do DF e Entorno · Circuito 2022–2026</p></div>
     </div>
     <div class="hstats">
@@ -2147,7 +2147,7 @@ function entryOpenHist(){
     <div class="spp" id="ranking-spot-desc"></div>
   </div></div>
   <div class="ib">📌 Etapas e médias verificadas das planilhas 2022–2025. A <strong>Média Real</strong> é a média aritmética simples — todas as temporadas e grupos com peso igual.</div>
-  <div class="sh"><div class="st" id="r-title">DESEMPENHO · FILIADAS LINQDFE</div><div class="sb sb-g" id="r-badge">2022–2025 VERIFICADO</div></div>
+  <div class="sh"><div class="st" id="r-title">DESEMPENHO · FILIADAS LINQDFE</div><div class="sb sb-g" id="r-badge" title="Dados consolidados das planilhas oficiais de 2022 a 2026">2022–2026 VERIFICADO</div></div>
   <div class="fb" style="margin-bottom:8px">
     <span class="fl">Ano:</span>
     <button class="btn r-yr on" onclick="frYear('todos',this)">Todos</button>
@@ -2630,6 +2630,7 @@ const QMEDIA_SLUG={
   "xem-nhem-nhem":{photo:"/assets/fotos-quadrilhas/xem-nhem-nhem-capa.jpg",logo:"/assets/logos-quadrilhas/xem-nhem-nhem-logo.png"},
   "xique-xique":{photo:"/assets/fotos-quadrilhas/xique-xique-capa.jpg",logo:"/assets/logos-quadrilhas/xique-xique-logo.jpg"},
 };
+function gLabel(g){return g==='ESP'?'Especial':g==='ACE'?'Acesso':g==='DJ'?'Dist. Junino':g;}
 function qSlug(q){
   return q.toLowerCase()
     .normalize('NFD')
@@ -3205,7 +3206,7 @@ function renderE(){
     const pc=pos===1?'g':pos===2?'s':pos===3?'b':'';
     const gv=x.g26,gc=gv==='Especial'?'te':'ta',gi=gv==='Especial'?'⭐':'🔵';
     const pills=scored
-      ? exp.weightedSeasons.map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} ×${d2(h.weight)}</span>`).join('')
+      ? exp.weightedSeasons.map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${gLabel(h.g)} ×${d2(h.weight)}</span>`).join('')
       : '<span class="hpill hp-a">Estreante 2026 · sem base histórica</span>';
     const momentClass=expMomentClass(exp.recentPulse||0);
     const leitura=scored
@@ -3382,9 +3383,16 @@ function buildSeasonSummaryHtml(year){
   const maxE=all.reduce((b,e)=>e.m>b.m?e:b,all[0]||{m:0,q:''});
   const allM=all.map(e=>e.m);
   const range=allM.length?Math.max(...allM)-Math.min(...allM):null;
+  const isLive=year>=2026;
+  const lbl1=isLive?'Líder Especial':'Campeã Especial';
+  const lbl2=isLive?'Líder Acesso':'Campeã Acesso';
+  const liveBanner=isLive?`<div style="grid-column:1/-1;background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.2);border-radius:8px;padding:10px 14px;font-family:'Barlow Condensed',sans-serif;font-size:12px;color:var(--mut);letter-spacing:.5px;">
+    ⏳ <strong style="color:var(--gold)">Temporada em curso</strong> · 2 de 3 etapas concluídas · Grande Final 26–28/06 (Especial) e 05–06/07 (Acesso) · Classificações são parciais.
+  </div>`:'';
   return `<div class="season-summary">
-    <div class="ss-card"><div class="ss-lbl">Campeã Especial</div><div class="ss-val">${espRank[0]?t2(espRank[0].m):'—'}</div><div class="ss-sub">${espRank[0]?dns(espRank[0].q):'—'}</div></div>
-    <div class="ss-card"><div class="ss-lbl">Campeã Acesso</div><div class="ss-val">${aceRank[0]?t2(aceRank[0].m):'—'}</div><div class="ss-sub">${aceRank[0]?dns(aceRank[0].q):'—'}</div></div>
+    ${liveBanner}
+    <div class="ss-card"><div class="ss-lbl">${lbl1}</div><div class="ss-val">${espRank[0]?t2(espRank[0].m):'—'}</div><div class="ss-sub">${espRank[0]?dns(espRank[0].q):'A definir'}</div></div>
+    <div class="ss-card"><div class="ss-lbl">${lbl2}</div><div class="ss-val">${aceRank[0]?t2(aceRank[0].m):'—'}</div><div class="ss-sub">${aceRank[0]?dns(aceRank[0].q):'A definir'}</div></div>
     <div class="ss-card"><div class="ss-lbl">Média da liga</div><div class="ss-val">${avg!=null?t2(avg):'—'}</div><div class="ss-sub">${all.length} quadrilhas</div></div>
     <div class="ss-card"><div class="ss-lbl">Maior nota</div><div class="ss-val">${maxE.m?t2(maxE.m):'—'}</div><div class="ss-sub">${maxE.q?dns(maxE.q):'—'}</div></div>
     <div class="ss-card"><div class="ss-lbl">Dispersão</div><div class="ss-val">${range!=null?t2(range):'—'}</div><div class="ss-sub">range da temporada</div></div>
@@ -3579,7 +3587,7 @@ function renderR(){
       return `<div class="qbr"><span class="qbl">${QLBLS[j].slice(0,3)}</span><div class="qbt"><div class="qbf" style="width:${Math.max(0,Math.min(100,p))}%;background:${Object.values(QC)[j]}"></div></div><span class="qbv">${t2(v)}</span></div>`;
     }).join('');
     const pills=x.hist.length
-      ? x.hist.filter(h=>h.g!=='DJ').map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} (${h.et}et)</span>`).join('')
+      ? x.hist.filter(h=>h.g!=='DJ').map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${gLabel(h.g)} (${h.et}et)</span>`).join('')
       : `<span class="hpill hp-a">Estreia 2026</span>`;
     const cHist=circHistOnly(x.hist).sort((a,b)=>b.a-a.a);
     const lastSzn=cHist[0];
@@ -3736,7 +3744,7 @@ function renderYearCol(entries,group,year){
   }).join('');
   return`<div class="yr-col">
     <div class="yr-col-head ${headCls}">
-      ${headLabel}
+      ${headLabel}${year>=2026?` <span style="font-size:10px;font-weight:600;opacity:.7;letter-spacing:1px">EM CURSO</span>`:''}
       <span style="font-size:12px;font-weight:400">${tot} quadrilhas</span>
     </div>
     <div>${rows}</div>
@@ -4147,7 +4155,7 @@ function renderQP(){
             </div>
             <div class="qp-hero-name">${nm}</div>
             <div class="qp-hero-meta">
-              ${histCircuit.slice().sort((a,b)=>Number(b.a)-Number(a.a)).map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} · ${getPlacementLabel(h)} · ${t2(h.m)}</span>`).join('')}
+              ${histCircuit.slice().sort((a,b)=>Number(b.a)-Number(a.a)).map(h=>{const gl=h.g==='ESP'?'Especial':h.g==='ACE'?'Acesso':'Dist. Junino';return`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${gl} · ${getPlacementLabel(h)} · ${t2(h.m)}</span>`;}).join('')}
             </div>
           </div>
         </div>
@@ -4261,7 +4269,7 @@ function renderQP(){
       <div class="qp-filter-row">
         <span class="qp-inline-label">Temporada:</span>
         <button class="qp-micro-btn${qpQYear==='todos'?' on':''}" onclick="setQPQYear('todos')">Geral</button>
-        ${histCircuit.map(h=>`<button class="qp-micro-btn${qpQYear===h.a?' on':''}" onclick="setQPQYear(${h.a})">${h.a} <span style="font-size:9px;opacity:.8">${h.g}</span></button>`).join('')}
+        ${histCircuit.map(h=>`<button class="qp-micro-btn${qpQYear===h.a?' on':''}" onclick="setQPQYear(${h.a})">${h.a} <span style="font-size:9px;opacity:.8">${gLabel(h.g)}</span></button>`).join('')}
       </div>
       <div class="qp-filter-row">
         <span class="qp-inline-label">Ref:</span>
@@ -4693,10 +4701,10 @@ function renderP(){
       </div>`;
     }).join('');
     const pills=histCircuit.length
-      ? histCircuit.map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} · ${t2(h.m)}</span>`).join('')
+      ? histCircuit.map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${gLabel(h.g)} · ${t2(h.m)}</span>`).join('')
       : '<span class="hpill hp-a">Estreia confirmada em 2026</span>';
     const historyLine=histCircuit.length
-      ? histCircuit.map(h=>`${h.a} ${h.g}`).join(' • ')
+      ? histCircuit.map(h=>`${h.a} ${gLabel(h.g)}`).join(' • ')
       : 'Primeira temporada prevista para 2026';
     const highlightIcon=bestQi!==null?Object.values(QI)[bestQi]:'🆕';
     const highlightValue=x.m===null
@@ -4715,7 +4723,7 @@ function renderP(){
         <div class="score-card-score-block">
           <div class="score-card-score">${x.m!==null?t2(x.m):'—'}</div>
           <div class="score-card-score-label">Pontuação Geral</div>
-          ${posGrupo&&gv?`<div class="pcard-rank-badge">${posGrupo}° ${gv==='Especial'?'ESP':'ACE'}</div>`:''}
+          ${posGrupo&&gv?`<div class="pcard-rank-badge">${posGrupo}° ${gv}</div>`:''}
         </div>
       </div>
       <div class="score-card-body">
@@ -4751,9 +4759,9 @@ function renderP(){
       const media=getQuadrilhaMedia(x.q);
       const bestQi=getBestQIndex(x);
       const bestSeason=x.hist.length>0?x.hist.reduce((b,h)=>h.m>b.m?h:b,x.hist[0]):null;
-      const pills=x.hist.length?x.hist.map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${h.g} · ${t2(h.m)}</span>`).join(''):'<span class="hpill" style="color:var(--mut)">Sem dados</span>';
+      const pills=x.hist.length?x.hist.map(h=>`<span class="hpill ${h.g==='ESP'?'hp-e':'hp-a'}">${h.a} ${gLabel(h.g)} · ${t2(h.m)}</span>`).join(''):'<span class="hpill" style="color:var(--mut)">Sem dados</span>';
       const quesitoCards=QKEYS.map((k,i)=>{const val=x[k];const color=Object.values(QC)[i];const icon=Object.values(QI)[i];return `<div class="score-card-quesito" style="background:${color}14;border-color:${color}40;"><div class="score-card-quesito-top"><span class="score-card-quesito-icon">${icon}</span><span class="score-card-quesito-name">${QLBLS[i]}</span></div><div class="score-card-quesito-value" style="color:${color}">${val!==null&&val!==undefined?t2(val):'—'}</div></div>`;}).join('');
-      return `<div class="pc score-card"${x.m!==null?` onclick="openQP('${x.q}')"`:''}><div class="score-card-cover" ${coverStyle(media.photo)}><div class="score-card-top"><div><span class="hist-badge">📚 Histórico</span></div>${media.logo?`<div class="score-card-logo-shell"><img class="score-card-logo" src="${media.logo}" alt="${nm}" loading="lazy"></div>`:''}</div><div class="score-card-score-block"><div class="score-card-score">${x.m!==null?t2(x.m):'—'}</div><div class="score-card-score-label">Média Real</div></div></div><div class="score-card-body"><div class="score-card-name">${nm}</div><div class="score-card-meta">${x.hist.length?x.hist.map(h=>`${h.a} ${h.g}`).join(' • '):'Sem histórico registrado'}</div><div class="score-card-highlight"><span class="score-card-highlight-icon">${bestQi!==null?Object.values(QI)[bestQi]:'📚'}</span><div><div class="score-card-highlight-label">${x.m?'Melhor quesito':'Status'}</div><div class="score-card-highlight-value">${bestQi!==null?`${QLBLS[bestQi]} · ${t2(x[QKEYS[bestQi]])}`:'Sem dados por quesito'}</div></div></div><div class="score-card-quesitos">${quesitoCards}</div><div class="hist-row score-card-pills">${pills}</div><div class="score-card-foot"><div class="score-card-best-season">${bestSeason?`Melhor temporada ${bestSeason.a} · ${t2(bestSeason.m)}`:'—'}</div><div class="score-card-open">${x.m!==null?'Abrir análise':'Sem histórico'}</div></div></div></div>`;
+      return `<div class="pc score-card"${x.m!==null?` onclick="openQP('${x.q}')"`:''}><div class="score-card-cover" ${coverStyle(media.photo)}><div class="score-card-top"><div><span class="hist-badge">📚 Histórico</span></div>${media.logo?`<div class="score-card-logo-shell"><img class="score-card-logo" src="${media.logo}" alt="${nm}" loading="lazy"></div>`:''}</div><div class="score-card-score-block"><div class="score-card-score">${x.m!==null?t2(x.m):'—'}</div><div class="score-card-score-label">Média Real</div></div></div><div class="score-card-body"><div class="score-card-name">${nm}</div><div class="score-card-meta">${x.hist.length?x.hist.map(h=>`${h.a} ${gLabel(h.g)}`).join(' • '):'Sem histórico registrado'}</div><div class="score-card-highlight"><span class="score-card-highlight-icon">${bestQi!==null?Object.values(QI)[bestQi]:'📚'}</span><div><div class="score-card-highlight-label">${x.m?'Melhor quesito':'Status'}</div><div class="score-card-highlight-value">${bestQi!==null?`${QLBLS[bestQi]} · ${t2(x[QKEYS[bestQi]])}`:'Sem dados por quesito'}</div></div></div><div class="score-card-quesitos">${quesitoCards}</div><div class="hist-row score-card-pills">${pills}</div><div class="score-card-foot"><div class="score-card-best-season">${bestSeason?`Melhor temporada ${bestSeason.a} · ${t2(bestSeason.m)}`:'—'}</div><div class="score-card-open">${x.m!==null?'Abrir análise':'Sem histórico'}</div></div></div></div>`;
     }).join('');
   } else {
     histSec.style.display='none';
