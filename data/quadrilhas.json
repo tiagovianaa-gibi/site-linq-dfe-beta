@@ -28,6 +28,11 @@
         "ano": 2025,
         "pontos": 625.6,
         "pos": 9
+      },
+      {
+        "ano": 2026,
+        "pontos": 537,
+        "pos": 5
       }
     ],
     "perfil": {
@@ -39,7 +44,10 @@
       "marcador": "Cesinha",
       "casal_noivos_2025": "Susane Araújo e Juan Teles"
     },
-    "logo": "amor-junino-logo.png"
+    "logo": "amor-junino-logo.png",
+    "grupo_2026": "especial",
+    "posicao_2026": 5,
+    "pontos2026": 537
   },
   {
     "id": 2,
@@ -70,6 +78,11 @@
         "ano": 2025,
         "pontos": 622.3,
         "pos": 12
+      },
+      {
+        "ano": 2026,
+        "pontos": 533.6,
+        "pos": 11
       }
     ],
     "perfil": {
@@ -81,7 +94,10 @@
       "marcador": "Kauã Meireles",
       "casal_noivos_2025": "Alanny Oliveira e Jhonantan Oliver"
     },
-    "logo": "arraia-dos-matutos-logo.jpeg"
+    "logo": "arraia-dos-matutos-logo.jpeg",
+    "grupo_2026": "especial",
+    "posicao_2026": 11,
+    "pontos2026": 533.6
   },
   {
     "id": 3,
@@ -112,6 +128,11 @@
         "ano": 2025,
         "pontos": 629.2,
         "pos": 1
+      },
+      {
+        "ano": 2026,
+        "pontos": 539.5,
+        "pos": 1
       }
     ],
     "perfil": {
@@ -123,7 +144,10 @@
       "marcador": "Waguinho",
       "casal_noivos_2025": "Ingrid e Walter"
     },
-    "logo": "arroxa-o-no-logo.png"
+    "logo": "arroxa-o-no-logo.png",
+    "grupo_2026": "especial",
+    "posicao_2026": 1,
+    "pontos2026": 539.5
   },
   {
     "id": 4,
@@ -154,6 +178,11 @@
         "ano": 2025,
         "pontos": 627.4,
         "pos": 5
+      },
+      {
+        "ano": 2026,
+        "pontos": 534.6,
+        "pos": 9
       }
     ],
     "perfil": {
@@ -165,7 +194,10 @@
       "marcador": "Chacal",
       "casal_noivos_2025": "Paulo Vitor e Ludy"
     },
-    "logo": "caipirada-logo.png"
+    "logo": "caipirada-logo.png",
+    "grupo_2026": "especial",
+    "posicao_2026": 9,
+    "pontos2026": 534.6
   },
   {
     "id": 5,
@@ -197,6 +229,11 @@
         "pontos": 535.6,
         "pos": 2,
         "grupo": "Acesso"
+      },
+      {
+        "ano": 2026,
+        "pontos": 531,
+        "pos": 13
       }
     ],
     "perfil": {
@@ -208,7 +245,10 @@
       "marcador": "Gildivan",
       "casal_noivos_2025": "Xandão e Julya"
     },
-    "logo": "chinelo-de-couro-logo.png"
+    "logo": "chinelo-de-couro-logo.png",
+    "grupo_2026": "especial",
+    "posicao_2026": 13,
+    "pontos2026": 531
   },
   {
     "id": 6,
@@ -240,6 +280,11 @@
         "pontos": 621.9,
         "pos": 14,
         "grupo": "Especial"
+      },
+      {
+        "ano": 2026,
+        "pontos": 358.2,
+        "pos": 10
       }
     ],
     "perfil": {
@@ -251,7 +296,10 @@
       "marcador": "Maycolla",
       "casal_noivos_2025": "Marcela Lemos e Jonathas Sousa"
     },
-    "logo": "coisas-da-roca-logo.png"
+    "logo": "coisas-da-roca-logo.png",
+    "grupo_2026": "acesso",
+    "posicao_2026": 10,
+    "pontos2026": 358.2
   },
   {
     "id": 7,
@@ -282,6 +330,11 @@
         "ano": 2025,
         "pontos": 623.7,
         "pos": 11
+      },
+      {
+        "ano": 2026,
+        "pontos": 531.1,
+        "pos": 12
       }
     ],
     "perfil": {
@@ -293,7 +346,10 @@
       "marcador": "Johnni Sousa",
       "casal_noivos_2025": "Kalyne e Zaka"
     },
-    "logo": "eita-bagaceira-logo.jpg"
+    "logo": "eita-bagaceira-logo.jpg",
+    "grupo_2026": "especial",
+    "posicao_2026": 12,
+    "pontos2026": 531.1
   },
   {
     "id": 8,
@@ -325,6 +381,11 @@
         "pontos": 622.3,
         "pos": 13,
         "grupo": "Especial"
+      },
+      {
+        "ano": 2026,
+        "pontos": 537,
+        "pos": 3
       }
     ],
     "perfil": {
@@ -336,7 +397,10 @@
       "marcador": "Pablo Ruan Bastos Felix",
       "casal_noivos_2025": "Hellen Nere e Felipe Lima"
     },
-    "logo": "espalha-brasa-logo.png"
+    "logo": "espalha-brasa-logo.png",
+    "grupo_2026": "acesso",
+    "posicao_2026": 3,
+    "pontos2026": 537
   },
   {
     "id": 9,
@@ -367,6 +431,11 @@
         "ano": 2025,
         "pontos": 629.2,
         "pos": 2
+      },
+      {
+        "ano": 2026,
+        "pontos": 538.4,
+        "pos": 3
       }
     ],
     "perfil": {
@@ -378,7 +447,10 @@
       "marcador": "Daniel Brito",
       "casal_noivos_2025": "Gabrielle Rosa e Hiago Gomes"
     },
-    "logo": "formiga-da-roca-logo.png"
+    "logo": "formiga-da-roca-logo.png",
+    "grupo_2026": "especial",
+    "posicao_2026": 3,
+    "pontos2026": 538.4
   },
   {
     "id": 10,
@@ -409,6 +481,11 @@
         "ano": 2025,
         "pontos": 531.9,
         "pos": 5
+      },
+      {
+        "ano": 2026,
+        "pontos": 536.5,
+        "pos": 5
       }
     ],
     "perfil": {
@@ -420,7 +497,10 @@
       "marcador": "Michael",
       "casal_noivos_2025": "Paulo Victor / Denise Lúcia"
     },
-    "logo": "fornalha-logo.jpeg"
+    "logo": "fornalha-logo.jpeg",
+    "grupo_2026": "acesso",
+    "posicao_2026": 5,
+    "pontos2026": 536.5
   },
   {
     "id": 11,
@@ -451,6 +531,11 @@
         "ano": 2025,
         "pontos": 345.4,
         "pos": 10
+      },
+      {
+        "ano": 2026,
+        "pontos": 526,
+        "pos": 9
       }
     ],
     "perfil": {
@@ -462,7 +547,10 @@
       "marcador": "Rhayane Santos",
       "casal_noivos_2025": "Victor Júnior e Samya Maria"
     },
-    "logo": "furacao-logo.jpg"
+    "logo": "furacao-logo.jpg",
+    "grupo_2026": "acesso",
+    "posicao_2026": 9,
+    "pontos2026": 526
   },
   {
     "id": 12,
@@ -493,6 +581,11 @@
         "ano": 2025,
         "pontos": 625.2,
         "pos": 10
+      },
+      {
+        "ano": 2026,
+        "pontos": 537.3,
+        "pos": 4
       }
     ],
     "perfil": {
@@ -504,7 +597,10 @@
       "marcador": "Denis",
       "casal_noivos_2025": "Laura e Ramon"
     },
-    "logo": "mala-veia-logo.png"
+    "logo": "mala-veia-logo.png",
+    "grupo_2026": "especial",
+    "posicao_2026": 4,
+    "pontos2026": 537.3
   },
   {
     "id": 13,
@@ -535,6 +631,11 @@
         "ano": 2025,
         "pontos": 531.8,
         "pos": 6
+      },
+      {
+        "ano": 2026,
+        "pontos": 534.8,
+        "pos": 7
       }
     ],
     "perfil": {
@@ -546,7 +647,10 @@
       "marcador": "Álisson Santos",
       "casal_noivos_2025": "Ariel e Ana Clara"
     },
-    "logo": "matingueiros-do-sertao-logo.png"
+    "logo": "matingueiros-do-sertao-logo.png",
+    "grupo_2026": "acesso",
+    "posicao_2026": 7,
+    "pontos2026": 534.8
   },
   {
     "id": 14,
@@ -578,6 +682,11 @@
         "pontos": 537.6,
         "pos": 1,
         "grupo": "Acesso"
+      },
+      {
+        "ano": 2026,
+        "pontos": 538.6,
+        "pos": 2
       }
     ],
     "perfil": {
@@ -589,7 +698,10 @@
       "marcador": "Marcos Mendes",
       "casal_noivos_2025": "Érica Caldeira e Bruno Alves"
     },
-    "logo": "matulao-logo.png"
+    "logo": "matulao-logo.png",
+    "grupo_2026": "especial",
+    "posicao_2026": 2,
+    "pontos2026": 538.6
   },
   {
     "id": 15,
@@ -620,6 +732,11 @@
         "ano": 2025,
         "pontos": 533.8,
         "pos": 4
+      },
+      {
+        "ano": 2026,
+        "pontos": 536.4,
+        "pos": 6
       }
     ],
     "perfil": {
@@ -631,7 +748,10 @@
       "marcador": "Genildo Duarte",
       "casal_noivos_2025": "Brayan e Ana Pula"
     },
-    "logo": "os-caboclos-do-sertao-logo.png"
+    "logo": "os-caboclos-do-sertao-logo.png",
+    "grupo_2026": "acesso",
+    "posicao_2026": 6,
+    "pontos2026": 536.4
   },
   {
     "id": 16,
@@ -662,6 +782,11 @@
         "ano": 2025,
         "pontos": 626.7,
         "pos": 6
+      },
+      {
+        "ano": 2026,
+        "pontos": 536.5,
+        "pos": 7
       }
     ],
     "perfil": {
@@ -673,7 +798,10 @@
       "marcador": "Carliomar Alves",
       "casal_noivos_2025": "Anderson Ferreira e Ruth Janiele"
     },
-    "logo": "pinga-em-mim-logo.png"
+    "logo": "pinga-em-mim-logo.png",
+    "grupo_2026": "especial",
+    "posicao_2026": 7,
+    "pontos2026": 536.5
   },
   {
     "id": 17,
@@ -704,6 +832,11 @@
         "ano": 2025,
         "pontos": 627.7,
         "pos": 4
+      },
+      {
+        "ano": 2026,
+        "pontos": 536.5,
+        "pos": 6
       }
     ],
     "perfil": {
@@ -715,7 +848,10 @@
       "marcador": "João Calmoni",
       "casal_noivos_2025": "Kadu Benattar e Jessica Soares"
     },
-    "logo": "rasga-o-fole-logo.png"
+    "logo": "rasga-o-fole-logo.png",
+    "grupo_2026": "especial",
+    "posicao_2026": 6,
+    "pontos2026": 536.5
   },
   {
     "id": 18,
@@ -746,6 +882,11 @@
         "ano": 2025,
         "pontos": 628.4,
         "pos": 3
+      },
+      {
+        "ano": 2026,
+        "pontos": 535,
+        "pos": 8
       }
     ],
     "perfil": {
@@ -757,7 +898,10 @@
       "marcador": "Aurélio Sam",
       "casal_noivos_2025": "Maria Eduarda e João Victor"
     },
-    "logo": "ribulico-logo.png"
+    "logo": "ribulico-logo.png",
+    "grupo_2026": "especial",
+    "posicao_2026": 8,
+    "pontos2026": 535
   },
   {
     "id": 19,
@@ -830,6 +974,11 @@
         "ano": 2025,
         "pontos": 526.7,
         "pos": 9
+      },
+      {
+        "ano": 2026,
+        "pontos": 343.2,
+        "pos": 11
       }
     ],
     "perfil": {
@@ -841,7 +990,10 @@
       "marcador": "Ighor Magdalena",
       "casal_noivos_2025": "Julia e Daniel"
     },
-    "logo": "tengo-lengo-logo.png"
+    "logo": "tengo-lengo-logo.png",
+    "grupo_2026": "acesso",
+    "posicao_2026": 11,
+    "pontos2026": 343.2
   },
   {
     "id": 21,
@@ -873,6 +1025,11 @@
         "pontos": 620.5,
         "pos": 15,
         "grupo": "Especial"
+      },
+      {
+        "ano": 2026,
+        "pontos": 536.5,
+        "pos": 4
       }
     ],
     "perfil": {
@@ -884,7 +1041,10 @@
       "marcador": "Marcinho",
       "casal_noivos_2025": "Mel e João"
     },
-    "logo": "tico-tico-no-fuba-logo.png"
+    "logo": "tico-tico-no-fuba-logo.png",
+    "grupo_2026": "acesso",
+    "posicao_2026": 4,
+    "pontos2026": 536.5
   },
   {
     "id": 22,
@@ -915,6 +1075,11 @@
         "ano": 2025,
         "pontos": 625.8,
         "pos": 8
+      },
+      {
+        "ano": 2026,
+        "pontos": 534,
+        "pos": 10
       }
     ],
     "perfil": {
@@ -926,7 +1091,10 @@
       "marcador": "Fabiano",
       "casal_noivos_2025": "Gilmara Brito e Rony Lopes"
     },
-    "logo": "vai-mas-nao-vai-logo.jpeg"
+    "logo": "vai-mas-nao-vai-logo.jpeg",
+    "grupo_2026": "especial",
+    "posicao_2026": 10,
+    "pontos2026": 534
   },
   {
     "id": 23,
@@ -957,6 +1125,11 @@
         "ano": 2025,
         "pontos": 626,
         "pos": 7
+      },
+      {
+        "ano": 2026,
+        "pontos": 529.7,
+        "pos": 15
       }
     ],
     "perfil": {
@@ -968,7 +1141,10 @@
       "marcador": "Diego Almeida",
       "casal_noivos_2025": "Lidiane Souza e Joadson Almeida"
     },
-    "logo": "xamegar-logo.jpg"
+    "logo": "xamegar-logo.jpg",
+    "grupo_2026": "especial",
+    "posicao_2026": 15,
+    "pontos2026": 529.7
   },
   {
     "id": 24,
@@ -999,6 +1175,11 @@
         "ano": 2025,
         "pontos": 531,
         "pos": 7
+      },
+      {
+        "ano": 2026,
+        "pontos": 538.4,
+        "pos": 2
       }
     ],
     "perfil": {
@@ -1010,7 +1191,10 @@
       "marcador": "Tilika",
       "casal_noivos_2025": "Gabriel e Tamires"
     },
-    "logo": "xem-nhem-nhem-logo.png"
+    "logo": "xem-nhem-nhem-logo.png",
+    "grupo_2026": "acesso",
+    "posicao_2026": 2,
+    "pontos2026": 538.4
   },
   {
     "id": 25,
@@ -1042,6 +1226,11 @@
         "pontos": 535.4,
         "pos": 3,
         "grupo": "Acesso"
+      },
+      {
+        "ano": 2026,
+        "pontos": 530.6,
+        "pos": 14
       }
     ],
     "perfil": {
@@ -1053,7 +1242,10 @@
       "marcador": "Weslley Silva",
       "casal_noivos_2025": "Denilde Moreira e Thiago Xavier"
     },
-    "logo": "xique-xique-logo.jpg"
+    "logo": "xique-xique-logo.jpg",
+    "grupo_2026": "especial",
+    "posicao_2026": 14,
+    "pontos2026": 530.6
   },
   {
     "id": 26,
@@ -1079,7 +1271,13 @@
     "notas_2025": {
       "total": null
     },
-    "historico": [],
+    "historico": [
+      {
+        "ano": 2026,
+        "pontos": 532.6,
+        "pos": 8
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Arraiá Chapéu de Palha é de Samambaia/DF e completa 36 anos de história em 2026. O Grêmio Recreativo Arraiá Chapéu de Palha surgiu da união de três amigos que, como muitos outros habitantes de Brasília, vieram do Nordeste e tinham em comum o amor pelas festividades e pela quadrilha junina. Em 1990 surgiu o primeiro grupo, Arraiá Cabaças Quebradas, e as primeiras apresentações eram realizadas em igrejas e quermesses organizadas pela comunidade, que sempre esteve presente e foi de fundamental importância na estruturação do grupo. Em 1991 virou Arraiá Esperança, quando o marcador Júnior assumiu o posto de onde nunca mais sairia. Em 1992 adotou o nome de Arraiá Chapéu de Palha e atuou em concursos e apresentações até 2001, quando, com outros líderes de grupos do DF, fundou e filiou-se à LINQ-DFE.",
       "tema_2025": "Boi Garantido e Caprichoso - Cultura Amazonense",
@@ -1089,7 +1287,10 @@
       "marcador": "Júnior",
       "casal_noivos_2025": "Luciana Nascimento e Luan Barros"
     },
-    "logo": "arraia-chapeu-de-palha-logo.png"
+    "logo": "arraia-chapeu-de-palha-logo.png",
+    "grupo_2026": "acesso",
+    "posicao_2026": 8,
+    "pontos2026": 532.6
   },
   {
     "id": 27,
@@ -1115,7 +1316,13 @@
     "notas_2025": {
       "total": null
     },
-    "historico": [],
+    "historico": [
+      {
+        "ano": 2026,
+        "pontos": 538.5,
+        "pos": 1
+      }
+    ],
     "perfil": {
       "bio": "A Quadrilha Paixão Cangaço é de Águas Lindas de Goiás/GO e completa 18 anos de história em 2026. Fundada em 08 de agosto de 2008, a Quadrilha Junina Paixão Cangaço nasceu da iniciativa de amigos com o propósito de transformar vidas por meio da cultura. Desde sua criação, o grupo atua no resgate de jovens em situação de vulnerabilidade social, promovendo acesso à arte, ao convívio comunitário e ao sentimento de pertencimento. Ao longo de sua trajetória, consolidou-se como um importante agente cultural do município, representando a cidade em festivais regionais, distritais e nacionais. Em 2026, a Paixão Cangaço celebra 18 anos de história, marcados por resistência cultural, evolução artística e importantes conquistas, reafirmando seu compromisso com a valorização da cultura junina e nordestina.",
       "tema_2024": "Entre encontros e Partidas",
@@ -1125,7 +1332,10 @@
       "marcador": "Netinho Sousa",
       "casal_noivos_2024": "Geysa Pereira e Jean Morais"
     },
-    "logo": "paixao-cangaco.png"
+    "logo": "paixao-cangaco.png",
+    "grupo_2026": "acesso",
+    "posicao_2026": 1,
+    "pontos2026": 538.5
   },
   {
     "id": 28,

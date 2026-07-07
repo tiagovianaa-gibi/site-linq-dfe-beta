@@ -77,10 +77,10 @@ function lazyLoadHero() {
  */
 function renderQuadrilhaCard(quad, destacado = false) {
   const photo = getQuadrilhaPhoto(quad);
-  const posicao = quad.posicao_2025 || quad.posicao;
+  const posicao = quad.posicao_2026 || quad.posicao;
   const grupoLabel = (() => {
-    if (quad.grupo_2025) {
-      return quad.grupo_2025.toLowerCase() === 'acesso' ? 'Acesso' : 'Especial';
+    if (quad.grupo_2026) {
+      return quad.grupo_2026.toLowerCase() === 'acesso' ? 'Acesso' : 'Especial';
     }
     return quad.grupo || '';
   })();
@@ -147,8 +147,8 @@ function renderHighlights() {
 
   if (especialGrid) {
     const especial = quadrilhas
-      .filter((q) => (q.grupo_2025 ? q.grupo_2025.toLowerCase() === 'especial' : q.grupo === 'Especial'))
-      .sort((a, b) => (b.pontos2025 || 0) - (a.pontos2025 || 0))
+      .filter((q) => (q.grupo_2026 ? q.grupo_2026.toLowerCase() === 'especial' : q.grupo === 'Especial'))
+      .sort((a, b) => (b.pontos2026 || 0) - (a.pontos2026 || 0))
       .slice(0, 6);
 
     especialGrid.innerHTML = '';
@@ -159,8 +159,8 @@ function renderHighlights() {
 
   if (acessoGrid) {
     const acesso = quadrilhas
-      .filter((q) => (q.grupo_2025 ? q.grupo_2025.toLowerCase() === 'acesso' : q.grupo === 'Acesso'))
-      .sort((a, b) => (b.pontos2025 || 0) - (a.pontos2025 || 0))
+      .filter((q) => (q.grupo_2026 ? q.grupo_2026.toLowerCase() === 'acesso' : q.grupo === 'Acesso'))
+      .sort((a, b) => (b.pontos2026 || 0) - (a.pontos2026 || 0))
       .slice(0, 6);
 
     acessoGrid.innerHTML = '';
