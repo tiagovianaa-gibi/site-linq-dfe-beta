@@ -148,7 +148,7 @@ function renderHighlights() {
   if (especialGrid) {
     const especial = quadrilhas
       .filter((q) => (q.grupo_2026 ? q.grupo_2026.toLowerCase() === 'especial' : q.grupo === 'Especial'))
-      .sort((a, b) => (b.pontos2026 || 0) - (a.pontos2026 || 0))
+      .sort((a, b) => (a.posicao_2026 || 999) - (b.posicao_2026 || 999))
       .slice(0, 6);
 
     especialGrid.innerHTML = '';
@@ -160,7 +160,7 @@ function renderHighlights() {
   if (acessoGrid) {
     const acesso = quadrilhas
       .filter((q) => (q.grupo_2026 ? q.grupo_2026.toLowerCase() === 'acesso' : q.grupo === 'Acesso'))
-      .sort((a, b) => (b.pontos2026 || 0) - (a.pontos2026 || 0))
+      .sort((a, b) => (a.posicao_2026 || 999) - (b.posicao_2026 || 999))
       .slice(0, 6);
 
     acessoGrid.innerHTML = '';
