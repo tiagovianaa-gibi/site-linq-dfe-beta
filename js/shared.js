@@ -231,7 +231,7 @@ async function initQuadrilhaDropdown(dataUrl) {
     return;
   }
 
-  const excludedSlugs = new Set(["xuva-de-prata"]);
+  const excludedSlugs = new Set(["xuva-de-prata", "sol-de-maria"]);
   const sorted = [...data]
     .filter((q) => !excludedSlugs.has((q.slug || slugify(q.nome || "")).toLowerCase()))
     .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));

@@ -16,7 +16,7 @@ let quadrilhas = [];
 let currentFilter = "all"; // 'all' | 'Especial' | 'Acesso'
 let currentSearch = "";
 let currentCity = "";
-const EXCLUDED_SLUGS = new Set(["xuva-de-prata"]);
+const EXCLUDED_SLUGS = new Set(["xuva-de-prata", "sol-de-maria"]);
 
 window.filterFiliadas = function (grupo) {
   currentFilter = grupo;
