@@ -295,6 +295,40 @@ function setupCircuitoDropdown() {
   setupDropdownClick(li, circuitoLink);
 }
 
+function setupCentralDadosDropdown() {
+  const cdLink = document.querySelector('nav a[href$="central-de-dados/"]');
+  if (!cdLink) return;
+  const li = cdLink.closest('li') || cdLink.parentElement;
+  if (!li) return;
+
+  const navList = document.querySelector('nav ul');
+  const homeLink = navList ? navList.querySelector('a[href$="index.html"]') : null;
+  const homeHref = homeLink ? homeLink.getAttribute('href') || '' : '';
+  let prefix = '';
+  if (homeHref.startsWith('../')) prefix = '../';
+  else if (homeHref.startsWith('/')) prefix = '/';
+
+  li.classList.add('has-dropdown');
+
+  if (!li.querySelector('.nav-central-menu')) {
+    const menu = document.createElement('div');
+    menu.className = 'dropdown-menu nav-central-menu';
+    li.appendChild(menu);
+  }
+
+  const links = [
+    { href: `${prefix}central-de-dados/`, label: 'Central de Dados', target: '_blank' },
+    { href: `${prefix}cartas.html`, label: 'Cartas da Liga' },
+  ];
+
+  const menu = li.querySelector('.nav-central-menu');
+  menu.innerHTML = links
+    .map(item => `<a href="${item.href}"${item.target ? ` target="${item.target}"` : ''}>${item.label}</a>`)
+    .join('');
+
+  setupDropdownClick(li, cdLink);
+}
+
 function setupDiretoriaDropdown() {
   const diretoriaLink = document.querySelector('nav a[href$="diretoria.html"]');
   if (!diretoriaLink) return;
@@ -366,7 +400,7 @@ function normalizeMainMenu() {
   const items = [
     { href: `${prefix}index.html`, label: "Inicial" },
     { href: `${prefix}circuito.html`, label: "Circuito" },
-    { href: `${prefix}cartas.html`, label: "Cartas da Liga" },
+    { href: `${prefix}novas-filiacoes.html`, label: "Novas Filiações" },
     { href: `${prefix}central-de-dados/`, label: "Central de Dados", target: "_blank" },
     { href: `${prefix}quadrilhas.html`, label: "Quadrilhas" },
     { href: `${prefix}mapa.html`, label: "Mapa" },
@@ -649,6 +683,7 @@ function setupEventosDropdown() {
 runWhenReady(normalizeMainMenu);
 runWhenReady(setupFiliadasDropdown);
 runWhenReady(setupCircuitoDropdown);
+runWhenReady(setupCentralDadosDropdown);
 runWhenReady(setupDiretoriaDropdown);
 runWhenReady(setupEventosDropdown);
 runWhenReady(syncNavHeight);
